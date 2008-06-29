@@ -31,7 +31,7 @@ class PageSequence;
 namespace deskew
 {
 	class Task;
-	class ThumbnailTask;
+	class CacheDrivenTask;
 }
 
 namespace page_split
@@ -39,7 +39,7 @@ namespace page_split
 
 class OptionsWidget;
 class Task;
-class ThumbnailTask;
+class CacheDrivenTask;
 class Settings;
 class Params;
 
@@ -67,8 +67,8 @@ public:
 		IntrusivePtr<deskew::Task> const& next_task,
 		bool batch_processing, bool debug);
 	
-	IntrusivePtr<ThumbnailTask> createThumbnailTask(
-		IntrusivePtr<deskew::ThumbnailTask> const& next_task);
+	IntrusivePtr<CacheDrivenTask> createCacheDrivenTask(
+		IntrusivePtr<deskew::CacheDrivenTask> const& next_task);
 	
 	OptionsWidget* optionsWidget() { return m_ptrOptionsWidget.get(); }
 private:

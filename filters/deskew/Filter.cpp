@@ -20,11 +20,11 @@
 #include "FilterUiInterface.h"
 #include "OptionsWidget.h"
 #include "Task.h"
+#include "CacheDrivenTask.h"
 #include "Settings.h"
 #include "ProjectReader.h"
 #include "ProjectWriter.h"
 #include "PageId.h"
-#include "ThumbnailTask.h"
 #include <boost/lambda/lambda.hpp>
 #include <boost/lambda/bind.hpp>
 #include <QString>
@@ -61,7 +61,7 @@ void
 Filter::preUpdateUI(FilterUiInterface* const ui, PageId const& page_id)
 {
 	m_ptrOptionsWidget->preUpdateUI(page_id);
-	ui->setOptionsWidget(m_ptrOptionsWidget.get());
+	ui->setOptionsWidget(m_ptrOptionsWidget.get(), ui->KEEP_OWNERSHIP);
 }
 
 QDomElement
@@ -150,12 +150,12 @@ Filter::createTask(
 	);
 }
 
-IntrusivePtr<ThumbnailTask>
-Filter::createThumbnailTask(
-	IntrusivePtr<select_content::ThumbnailTask> const& next_task)
+IntrusivePtr<CacheDrivenTask>
+Filter::createCacheDrivenTask(
+	IntrusivePtr<select_content::CacheDrivenTask> const& next_task)
 {
-	return IntrusivePtr<ThumbnailTask>(
-		new ThumbnailTask(m_ptrSettings, next_task)
+	return IntrusivePtr<CacheDrivenTask>(
+		new CacheDrivenTask(m_ptrSettings, next_task)
 	);
 }
 

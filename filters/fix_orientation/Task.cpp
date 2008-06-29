@@ -116,7 +116,7 @@ Task::UiUpdater::updateUI(FilterUiInterface* ui)
 	
 	OptionsWidget* const opt_widget = m_ptrFilter->optionsWidget();
 	opt_widget->postUpdateUI(m_xform.preRotation());
-	ui->setOptionsWidget(opt_widget);
+	ui->setOptionsWidget(opt_widget, ui->KEEP_OWNERSHIP);
 	
 	ui->invalidateThumbnail(PageId(m_imageId));
 	
@@ -125,7 +125,7 @@ Task::UiUpdater::updateUI(FilterUiInterface* ui)
 	}
 	
 	ImageView* view = new ImageView(m_image, m_xform);
-	ui->setImageWidget(view);
+	ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP);
 	QObject::connect(
 		opt_widget, SIGNAL(rotated(OrthogonalRotation)),
 		view, SLOT(setPreRotation(OrthogonalRotation))

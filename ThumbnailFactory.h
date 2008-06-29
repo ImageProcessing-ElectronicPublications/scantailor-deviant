@@ -26,13 +26,9 @@
 #include <memory>
 
 class PageInfo;
+class CompositeCacheDrivenTask;
 class ThumbnailPixmapCache;
 class QGraphicsItem;
-
-namespace fix_orientation
-{
-	class ThumbnailTask;
-}
 
 class ThumbnailFactory : public RefCountable
 {
@@ -40,15 +36,17 @@ class ThumbnailFactory : public RefCountable
 public:
 	ThumbnailFactory(
 		ThumbnailPixmapCache& pixmap_cache, QSizeF const& max_size,
-		IntrusivePtr<fix_orientation::ThumbnailTask> const& task_chain);
+		IntrusivePtr<CompositeCacheDrivenTask> const& task);
 	
 	virtual ~ThumbnailFactory();
 	
 	std::auto_ptr<QGraphicsItem> get(PageInfo const& page_info);
 private:
+	class Collector;
+	
 	ThumbnailPixmapCache& m_rPixmapCache;
 	QSizeF m_maxSize;
-	IntrusivePtr<fix_orientation::ThumbnailTask> m_ptrTaskChain;
+	IntrusivePtr<CompositeCacheDrivenTask> m_ptrTask;
 };
 
 #endif

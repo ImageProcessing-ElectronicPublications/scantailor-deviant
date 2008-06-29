@@ -38,6 +38,11 @@ extern double const DEG2RAD;
 extern double const RAD2DEG;
 
 /**
+ * mm = inch * INCH2MM
+ */
+extern double const INCH2MM;
+
+/**
  * dots_per_meter = dots_per_inch * DPI2DPM
  */
 extern double const DPI2DPM;
