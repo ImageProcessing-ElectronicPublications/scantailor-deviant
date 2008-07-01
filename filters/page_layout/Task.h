@@ -23,10 +23,12 @@
 #include "RefCountable.h"
 #include "FilterResult.h"
 #include "PageId.h"
+#include <QSizeF>
 
 class TaskStatus;
 class FilterData;
 class DebugImages;
+class QRectF;
 
 namespace page_layout
 {
@@ -40,11 +42,14 @@ class Task : public RefCountable
 public:
 	Task(IntrusivePtr<Filter> const& filter,
 		//IntrusivePtr<Settings> const& settings,
-		PageId const& page_id, bool batch, bool debug);
+		PageId const& page_id, QSizeF const& aggregated_content_size_mm,
+		bool batch, bool debug);
 	
 	virtual ~Task();
 	
-	FilterResultPtr process(TaskStatus const& status, FilterData const& data);
+	FilterResultPtr process(
+		TaskStatus const& status, FilterData const& data,
+		QRectF const& content_rect);
 private:
 	class UiUpdater;
 	
@@ -52,6 +57,7 @@ private:
 	//IntrusivePtr<Settings> m_ptrSettings;
 	//std::auto_ptr<DebugImages> m_ptrDbg;
 	PageId m_pageId;
+	QSizeF m_aggregatedContentSizeMM;
 	bool m_batchProcessing;
 };
 
