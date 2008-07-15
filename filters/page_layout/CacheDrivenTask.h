@@ -23,7 +23,7 @@
 #include "RefCountable.h"
 #include "IntrusivePtr.h"
 
-class QSizeF;
+class QRectF;
 class PageInfo;
 class AbstractFilterDataCollector;
 class ImageTransformation;
@@ -31,19 +31,21 @@ class ImageTransformation;
 namespace page_layout
 {
 
+class Settings;
+
 class CacheDrivenTask : public RefCountable
 {
 	DECLARE_NON_COPYABLE(CacheDrivenTask)
 public:
-	CacheDrivenTask();
+	CacheDrivenTask(IntrusivePtr<Settings> const& settings);
 	
 	virtual ~CacheDrivenTask();
 	
 	void process(
 		PageInfo const& page_info, AbstractFilterDataCollector* collector,
-		ImageTransformation const& xform);
+		ImageTransformation const& xform, QRectF const& content_rect);
 private:
-	//IntrusivePtr<Settings> m_ptrSettings;
+	IntrusivePtr<Settings> m_ptrSettings;
 };
 
 } // namespace page_layout
