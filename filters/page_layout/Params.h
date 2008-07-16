@@ -21,7 +21,6 @@
 
 #include "Margins.h"
 #include "Alignment.h"
-#include <QRectF>
 #include <QSizeF>
 
 namespace page_layout
@@ -31,19 +30,16 @@ class Params
 {
 	// Member-wise copying is OK.
 public:
-	Params(Margins const& hard_margins_mm, QRectF const& content_rect,
+	Params(Margins const& hard_margins_mm,
 		QSizeF const& content_size_mm, Alignment const& alignment);
 	
 	Margins const& hardMarginsMM() const { return m_hardMarginsMM; }
-	
-	QRectF const& contentRect() const { return m_contentRect; }
 	
 	QSizeF const& contentSizeMM() const { return m_contentSizeMM; }
 	
 	Alignment const& alignment() const { return m_alignment; }
 private:
 	Margins m_hardMarginsMM;
-	QRectF m_contentRect;
 	QSizeF m_contentSizeMM;
 	Alignment m_alignment;
 };
