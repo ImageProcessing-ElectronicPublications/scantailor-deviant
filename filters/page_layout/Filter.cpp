@@ -147,20 +147,24 @@ Filter::loadSettings(ProjectReader const& reader, QDomElement const& filters_el)
 
 IntrusivePtr<Task>
 Filter::createTask(
-	PageId const& page_id, bool const batch, bool const debug)
+	PageId const& page_id, IntrusivePtr<output::Task> const& next_task,
+	bool const batch, bool const debug)
 {
 	return IntrusivePtr<Task>(
 		new Task(
-			IntrusivePtr<Filter>(this), m_ptrSettings,
-			page_id, batch, debug
+			IntrusivePtr<Filter>(this), next_task,
+			m_ptrSettings, page_id, batch, debug
 		)
 	);
 }
 
 IntrusivePtr<CacheDrivenTask>
-Filter::createCacheDrivenTask()
+Filter::createCacheDrivenTask(
+	IntrusivePtr<output::CacheDrivenTask> const& next_task)
 {
-	return IntrusivePtr<CacheDrivenTask>(new CacheDrivenTask(m_ptrSettings));
+	return IntrusivePtr<CacheDrivenTask>(
+		new CacheDrivenTask(next_task, m_ptrSettings)
+	);
 }
 
 } // namespace page_layout

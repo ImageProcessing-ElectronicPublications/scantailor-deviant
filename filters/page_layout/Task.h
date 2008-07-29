@@ -23,12 +23,16 @@
 #include "RefCountable.h"
 #include "FilterResult.h"
 #include "PageId.h"
-#include <QSizeF>
 
 class TaskStatus;
 class FilterData;
 class ImageTransformation;
 class QRectF;
+
+namespace output
+{
+	class Task;
+}
 
 namespace page_layout
 {
@@ -41,6 +45,7 @@ class Task : public RefCountable
 	DECLARE_NON_COPYABLE(Task)
 public:
 	Task(IntrusivePtr<Filter> const& filter,
+		IntrusivePtr<output::Task> const& next_task,
 		IntrusivePtr<Settings> const& settings,
 		PageId const& page_id, bool batch, bool debug);
 	
@@ -53,6 +58,7 @@ private:
 	class UiUpdater;
 	
 	IntrusivePtr<Filter> m_ptrFilter;
+	IntrusivePtr<output::Task> m_ptrNextTask;
 	IntrusivePtr<Settings> m_ptrSettings;
 	PageId m_pageId;
 	bool m_batchProcessing;

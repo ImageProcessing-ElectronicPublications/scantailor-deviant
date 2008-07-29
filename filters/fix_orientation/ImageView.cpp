@@ -18,7 +18,6 @@
 
 #include "ImageView.h.moc"
 #include "ImageTransformation.h"
-#include <QRect>
 
 namespace fix_orientation
 {

@@ -52,6 +52,9 @@ void
 ApplyDialog::onSubmit()
 {
 	emit accepted(m_scope);
+	
+	// We assume the default connection from accepted() to accept()
+	// was removed.
 	accept();
 }
 

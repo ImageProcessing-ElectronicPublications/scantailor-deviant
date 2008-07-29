@@ -28,6 +28,12 @@ class PageId;
 class PageSequence;
 class QString;
 
+namespace output
+{
+	class Task;
+	class CacheDrivenTask;
+}
+
 namespace page_layout
 {
 
@@ -57,9 +63,12 @@ public:
 		ProjectReader const& reader, QDomElement const& filters_el);
 	
 	IntrusivePtr<Task> createTask(
-		PageId const& page_id, bool batch, bool debug);
+		PageId const& page_id,
+		IntrusivePtr<output::Task> const& next_task,
+		bool batch, bool debug);
 	
-	IntrusivePtr<CacheDrivenTask> createCacheDrivenTask();
+	IntrusivePtr<CacheDrivenTask> createCacheDrivenTask(
+		IntrusivePtr<output::CacheDrivenTask> const& next_task);
 	
 	OptionsWidget* optionsWidget() { return m_ptrOptionsWidget.get(); }
 private:
