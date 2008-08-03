@@ -22,6 +22,7 @@
 #include "NonCopyable.h"
 #include "RefCountable.h"
 #include "IntrusivePtr.h"
+#include <QString>
 
 class QPolygonF;
 class PageInfo;
@@ -37,15 +38,18 @@ class CacheDrivenTask : public RefCountable
 {
 	DECLARE_NON_COPYABLE(CacheDrivenTask)
 public:
-	CacheDrivenTask();
+	CacheDrivenTask(QString const& out_dir);
 	
 	virtual ~CacheDrivenTask();
 	
 	void process(
-		PageInfo const& page_info, AbstractFilterDataCollector* collector,
+		PageInfo const& page_info, int page_num,
+		AbstractFilterDataCollector* collector,
 		ImageTransformation const& xform,
 		QPolygonF const& content_rect_phys,
 		QPolygonF const& page_rect_phys);
+private:
+	QString m_outDir;
 };
 
 } // namespace output
