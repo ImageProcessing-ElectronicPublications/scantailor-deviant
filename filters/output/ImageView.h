@@ -34,8 +34,6 @@ public:
 	ImageView(QImage const& image);
 	
 	virtual ~ImageView();
-public slots:
-	void tonesChanged(QColor const& light, QColor const& dark);
 protected:
 	virtual void wheelEvent(QWheelEvent* event);
 	
@@ -44,12 +42,6 @@ protected:
 	virtual void mouseReleaseEvent(QMouseEvent* event);
 	
 	virtual void mouseMoveEvent(QMouseEvent* event);
-public:
-	QImage m_bitonalImage;
-	int m_lightIdx;
-	int m_darkIdx;
-	QColor m_lightColor;
-	QColor m_darkColor;
 };
 
 } // namespace output
