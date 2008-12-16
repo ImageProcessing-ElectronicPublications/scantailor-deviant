@@ -32,11 +32,19 @@ public:
 	
 	QSize const& size() const { return m_size; }
 	
+	void setSize(QSize const& size) { m_size = size; }
+	
 	Dpi const& dpi() const { return m_dpi; }
 	
 	void setDpi(Dpi const& dpi) { m_dpi = dpi; }
 	
 	bool isUndefinedDpi() const { return m_dpi.isNull(); }
+	
+	bool operator==(ImageMetadata const& other) const;
+	
+	bool operator!=(ImageMetadata const& other) const {
+		return !(*this == other);
+	}
 private:
 	QSize m_size;
 	Dpi m_dpi;
