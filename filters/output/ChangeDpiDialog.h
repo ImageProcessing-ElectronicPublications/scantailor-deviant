@@ -22,6 +22,7 @@
 #include "ui_OutputChangeDpiDialog.h"
 #include "Scope.h"
 #include <QDialog>
+#include <QString>
 
 class Dpi;
 
@@ -40,11 +41,12 @@ signals:
 private slots:
 	void dpiSelectionChanged(int index);
 	
-	void customDpiChanged(QString const& dpi_str);
+	void dpiEditTextChanged(QString const& text);
 	
 	void onSubmit();
 private:
 	int m_customItemIdx;
+	QString m_customDpiString;
 };
 
 } // namespace output
