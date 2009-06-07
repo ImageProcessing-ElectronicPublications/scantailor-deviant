@@ -1,6 +1,6 @@
 /*
     Scan Tailor - Interactive post-processing tool for scanned pages.
-    Copyright (C) 2007-2008  Joseph Artsimovich <joseph_a@mail.ru>
+    Copyright (C) 2007-2009  Joseph Artsimovich <joseph_a@mail.ru>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,6 +37,26 @@ ColorGrayscaleOptions::toXml(QDomDocument& doc, QString const& name) const
 	el.setAttribute("whiteMargins", m_whiteMargins ? "1" : "0");
 	el.setAttribute("normalizeIllumination", m_normalizeIllumination ? "1" : "0");
 	return el;
+}
+
+bool
+ColorGrayscaleOptions::operator==(ColorGrayscaleOptions const& other) const
+{
+	if (m_whiteMargins != other.m_whiteMargins) {
+		return false;
+	}
+	
+	if (m_normalizeIllumination != other.m_normalizeIllumination) {
+		return false;
+	}
+	
+	return true;
+}
+
+bool
+ColorGrayscaleOptions::operator!=(ColorGrayscaleOptions const& other) const
+{
+	return !(*this == other);
 }
 
 } // namespace output
