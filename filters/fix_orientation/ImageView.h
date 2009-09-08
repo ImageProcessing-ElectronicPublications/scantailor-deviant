@@ -21,8 +21,7 @@
 
 #include "ImageViewBase.h"
 #include "OrthogonalRotation.h"
-
-class ImageTransformation;
+#include "ImageTransformation.h"
 
 namespace fix_orientation
 {
@@ -46,6 +45,8 @@ protected:
 	virtual void mouseReleaseEvent(QMouseEvent* event);
 	
 	virtual void mouseMoveEvent(QMouseEvent* event);
+private:
+	ImageTransformation m_xform;
 };
 
 } // namespace fix_orientation

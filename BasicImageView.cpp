@@ -22,10 +22,7 @@
 #include "Dpi.h"
 
 BasicImageView::BasicImageView(QImage const& image)
-:	ImageViewBase(
-		image, QImage(),
-		ImageTransformation(image.rect(), Dpm(image))
-	)
+:	ImageViewBase(image, QImage(), QTransform(), QRectF(image.rect()))
 {
 }
 
