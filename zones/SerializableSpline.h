@@ -19,8 +19,11 @@
 #ifndef SERIALIZABLE_SPLINE_H_
 #define SERIALIZABLE_SPLINE_H_
 
+#include <QVector>
+#include <QPointF>
 #include <QPolygonF>
 
+class EditableSpline;
 class QDomDocument;
 class QDomElement;
 class QString;
@@ -28,15 +31,15 @@ class QString;
 class SerializableSpline
 {
 public:
-	SerializableSpline(QPolygonF const& poly) : m_poly(poly) {}
+	SerializableSpline(EditableSpline const& spline);
 
-	SerializableSpline(QDomElement const& el);
+	explicit SerializableSpline(QDomElement const& el);
 
 	QDomElement toXml(QDomDocument& doc, QString const& name) const;
 
-	QPolygonF const& toPolygon() const { return m_poly; }
+	QPolygonF toPolygon() const { return QPolygonF(m_points); }
 private:
-	QPolygonF m_poly;
+	QVector<QPointF> m_points;
 };
 
 #endif
