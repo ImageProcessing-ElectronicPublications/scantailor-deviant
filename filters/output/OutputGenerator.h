@@ -33,6 +33,7 @@ class TaskStatus;
 class DebugImages;
 class ImageTransformation;
 class FilterData;
+class ZoneSet;
 class QSize;
 class QImage;
 
@@ -45,8 +46,6 @@ namespace imageproc
 namespace output
 {
 
-class PictureZoneList;
-
 class OutputGenerator
 {
 public:
@@ -57,7 +56,7 @@ public:
 		QPolygonF const& page_rect_phys);
 	
 	QImage process(
-		TaskStatus const& status, FilterData const& input, PictureZoneList const& zones,
+		TaskStatus const& status, FilterData const& input, ZoneSet const& zones,
 		imageproc::BinaryImage* auto_picture_mask = 0, DebugImages* dbg = 0) const;
 	
 	/**
@@ -76,7 +75,7 @@ private:
 		TaskStatus const& status, DebugImages* dbg = 0) const;
 	
 	QImage processImpl(
-		TaskStatus const& status, FilterData const& input, PictureZoneList const& zones,
+		TaskStatus const& status, FilterData const& input, ZoneSet const& zones,
 		imageproc::BinaryImage* auto_picture_mask = 0, DebugImages* dbg = 0) const;
 	
 	static QSize from300dpi(QSize const& size, Dpi const& target_dpi);
@@ -99,7 +98,7 @@ private:
 
 	void modifyBinarizationMask(
 		imageproc::BinaryImage& bw_mask,
-		QRect const& mask_rect, PictureZoneList const& zones) const;
+		QRect const& mask_rect, ZoneSet const& zones) const;
 	
 	imageproc::BinaryThreshold adjustThreshold(
 		imageproc::BinaryThreshold threshold) const;

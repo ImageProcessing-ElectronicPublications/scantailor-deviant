@@ -25,7 +25,6 @@
 #include "EstimateBackground.h"
 #include "Despeckle.h"
 #include "RenderParams.h"
-#include "PictureZoneList.h"
 #include "Dpi.h"
 #include "Dpm.h"
 #include "imageproc/BinaryImage.h"
@@ -113,7 +112,7 @@ OutputGenerator::toOutput() const
 
 QImage
 OutputGenerator::process(
-	TaskStatus const& status, FilterData const& input, PictureZoneList const& zones,
+	TaskStatus const& status, FilterData const& input, ZoneSet const& zones,
 	imageproc::BinaryImage* auto_picture_mask, DebugImages* const dbg) const
 {
 	QImage image(processImpl(status, input, zones, auto_picture_mask, dbg));
@@ -361,10 +360,10 @@ OutputGenerator::estimateBinarizationMask(
 void
 OutputGenerator::modifyBinarizationMask(
 	imageproc::BinaryImage& bw_mask,
-	QRect const& mask_rect, PictureZoneList const& zones) const
+	QRect const& mask_rect, ZoneSet const& zones) const
 {
 	QTransform xform(m_toUncropped * QTransform().translate(-mask_rect.x(), -mask_rect.y()));
-
+#if 0
 	// Pass 1: ERASER1
 	BOOST_FOREACH(PictureZone const& zone, zones) {
 		if (zone.type() == PictureZone::ERASER1) {
@@ -385,11 +384,12 @@ OutputGenerator::modifyBinarizationMask(
 			PolygonRasterizer::fill(bw_mask, BLACK, xform.map(zone.shape()), Qt::WindingFill);
 		}
 	}
+#endif
 }
 
 QImage
 OutputGenerator::processImpl(
-	TaskStatus const& status, FilterData const& input, PictureZoneList const& zones,
+	TaskStatus const& status, FilterData const& input, ZoneSet const& zones,
 	imageproc::BinaryImage* auto_picture_mask, DebugImages* const dbg) const
 {
 	RenderParams const render_params(m_colorParams);
