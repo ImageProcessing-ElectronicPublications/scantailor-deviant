@@ -22,8 +22,8 @@
 #include "Dpm.h"
 #include "Dpi.h"
 
-BasicImageView::BasicImageView(QImage const& image)
-:	ImageViewBase(image, QImage(), ImagePresentation(QTransform(), QRectF(image.rect()))),
+BasicImageView::BasicImageView(QImage const& image, QImage const& downscaled_image)
+:	ImageViewBase(image, downscaled_image, ImagePresentation(QTransform(), QRectF(image.rect()))),
 	m_dragHandler(*this),
 	m_zoomHandler(*this)
 {
