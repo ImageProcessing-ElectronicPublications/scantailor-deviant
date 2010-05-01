@@ -35,6 +35,10 @@ signals:
 	
 	void invalidateAllThumbnails();
 	
+	/**
+	 * After we've got rid of "Widest Page" / "Tallest Page" links,
+	 * there is no one using this signal.  It's a candidate for removal.
+	 */
 	void goToPage(PageId const& page_id);
 };
 
