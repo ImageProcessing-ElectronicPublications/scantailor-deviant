@@ -31,6 +31,8 @@ public:
 	PageInfo(PageId const& page_id, ImageMetadata const& metadata,
 		int image_sub_pages, bool left_half_removed, bool right_half_removed);
 
+	bool isNull() const { return m_pageId.isNull(); }
+
 	PageId const& id() const { return m_pageId; }
 
 	void setId(PageId const& id) { m_pageId = id; }
