@@ -66,6 +66,8 @@ private slots:
 	void initiateBuildingScreenPictureMask();
 
 	void commitZones();
+
+	void updateRequested();
 private:
 	class MaskTransformTask;
 	
