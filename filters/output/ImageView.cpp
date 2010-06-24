@@ -19,12 +19,17 @@
 #include "ImageView.h"
 #include "ImageView.h.moc"
 #include "ImagePresentation.h"
+#include "OutputMargins.h"
 
 namespace output
 {
 
 ImageView::ImageView(QImage const& image, QImage const& downscaled_image)
-:	ImageViewBase(image, downscaled_image, ImagePresentation(QTransform(), QRectF(image.rect()))),
+:	ImageViewBase(
+		image, downscaled_image,
+		ImagePresentation(QTransform(), QRectF(image.rect())),
+		OutputMargins()
+	),
 	m_dragHandler(*this),
 	m_zoomHandler(*this)
 {
