@@ -42,8 +42,6 @@ public:
 	virtual ~ApplyColorsDialog();
 signals:
 	void accepted(std::set<PageId> const& pages);
-
-	void acceptedForAllPages();
 private slots:
 	void onSubmit();
 private:
