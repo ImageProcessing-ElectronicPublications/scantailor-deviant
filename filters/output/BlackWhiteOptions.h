@@ -38,17 +38,12 @@ public:
 	int thresholdAdjustment() const { return m_thresholdAdjustment; }
 	
 	void setThresholdAdjustment(int val) { m_thresholdAdjustment = val; }
-	
-	bool dewarp() const { return m_dewarp; }
-
-	void setDewarp(bool enabled) { m_dewarp = enabled; }
-	
+		
 	bool operator==(BlackWhiteOptions const& other) const;
 	
 	bool operator!=(BlackWhiteOptions const& other) const;
 private:
 	int m_thresholdAdjustment;
-	bool m_dewarp;
 };
 
 } // namespace output

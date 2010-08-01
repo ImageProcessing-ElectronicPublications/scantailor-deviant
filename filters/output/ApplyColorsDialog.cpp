@@ -56,7 +56,7 @@ ApplyColorsDialog::onSubmit()
 	
 	// thisPageRB is intentionally not handled.
 	if (allPagesRB->isChecked()) {
-		emit acceptedForAllPages();
+		m_pages.selectAll().swap(pages);
 	} else if (thisPageAndFollowersRB->isChecked()) {
 		m_pages.selectPagePlusFollowers(m_curPage).swap(pages);
 	} else if (selectedPagesRB->isChecked()) {
