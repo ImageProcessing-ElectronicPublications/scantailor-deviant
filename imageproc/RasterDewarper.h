@@ -19,6 +19,7 @@
 #ifndef IMAGEPROC_RASTER_DEWARPER_H_
 #define IMAGEPROC_RASTER_DEWARPER_H_
 
+class CylindricalSurfaceDewarper;
 class QImage;
 class QSize;
 class QRect;
@@ -26,8 +27,6 @@ class QColor;
 
 namespace imageproc
 {
-
-class CylindricalSurfaceDewarper;
 
 class RasterDewarper
 {
