@@ -26,6 +26,7 @@
 #include <QMutex>
 #include <memory>
 #include <map>
+#include <set>
 
 namespace deskew
 {
@@ -45,6 +46,8 @@ public:
 	void clearPageParams(PageId const& page_id);
 	
 	std::auto_ptr<Params> getPageParams(PageId const& page_id) const;
+	
+	void setDegress(std::set<PageId> const& pages, Params const& params);
 private:
 	typedef std::map<PageId, Params> PerPageParams;
 	
