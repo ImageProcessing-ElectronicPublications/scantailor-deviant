@@ -31,6 +31,8 @@ public:
 	void append(PageInfo const& page_info);
 	
 	size_t numPages() const { return m_pages.size(); }
+
+    PageInfo const& pageAt(PageId page) const;
 	
 	PageInfo const& pageAt(size_t idx) const;
 
