@@ -50,7 +50,6 @@ private:
 	InteractionState::Captor m_interaction;
 	BasicSplineVisualizer m_visualizer;
 	QPointF m_dragOffset;
-    QPointF m_moveStart;
 };
 
 #endif
