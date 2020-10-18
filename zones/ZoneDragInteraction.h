@@ -20,6 +20,7 @@
 #define ZONE_DRAG_INTERACTION_H_
 
 #include "BasicSplineVisualizer.h"
+#include "EditableZoneSet.h"
 #include "EditableSpline.h"
 #include "SerializableSpline.h"
 #include "InteractionHandler.h"
@@ -33,9 +34,8 @@ class ZoneDragInteraction : public InteractionHandler
 {
     Q_DECLARE_TR_FUNCTIONS(ZoneDragInteraction)
 public:
-    ZoneDragInteraction(
-        ZoneInteractionContext& context, InteractionState& interaction,
-        EditableSpline::Ptr const& spline, SplineVertex::Ptr const& vertex);
+    ZoneDragInteraction(ZoneInteractionContext& context, InteractionState& interaction,
+        EditableZoneSet::Zone const& zone, const QPointF &vertex);
 protected:
     virtual void onPaint(QPainter& painter, InteractionState const& interaction) override;
     virtual void onMouseReleaseEvent(QMouseEvent* event, InteractionState& interaction) override;
@@ -46,9 +46,10 @@ private:
     void checkProximity(InteractionState const& interaction);
 
     ZoneInteractionContext& m_rContext;
-    EditableSpline::Ptr m_ptrSpline;
+    EditableZoneSet::Zone m_Zone;
     SerializableSpline m_savedSpline;
-    SplineVertex::Ptr m_ptrVertex;
+    SerializableEllipse m_savedEllipse;
+    QPointF m_Vertex;
     InteractionState::Captor m_interaction;
     BasicSplineVisualizer m_visualizer;
     QPointF m_dragOffset;
