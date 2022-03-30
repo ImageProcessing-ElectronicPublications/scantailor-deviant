@@ -17,8 +17,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PAGE_SPLIT_ORDER_BY_MODE_PROVIDER_H_
-#define PAGE_SPLIT_ORDER_BY_MODE_PROVIDER_H_
+#ifndef OUTPUT_ORDER_BY_MODE_PROVIDER_H_
+#define OUTPUT_ORDER_BY_MODE_PROVIDER_H_
 
 #include "Settings.h"
 #include "IntrusivePtr.h"
@@ -41,6 +41,6 @@ private:
     IntrusivePtr<Settings> m_ptrSettings;
 };
 
-} // namespace page_split
+} // namespace output
 
-#endif //PAGE_SPLIT_ORDER_BY_MODE_PROVIDER_H_
+#endif //OUTPUT_ORDER_BY_MODE_PROVIDER_H_
