@@ -342,6 +342,8 @@ MainWindow::MainWindow()
 
     scrollArea->horizontalScrollBar()->setDisabled(true);
     filterOptions->installEventFilter(this);
+
+    setDockNestingEnabled(true);
 }
 
 MainWindow::~MainWindow()

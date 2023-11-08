@@ -293,6 +293,19 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>pageDetectDisableBtn</tabstop>
+  <tabstop>pageDetectAutoBtn</tabstop>
+  <tabstop>fineTuneBtn</tabstop>
+  <tabstop>leftBorder</tabstop>
+  <tabstop>topBorder</tabstop>
+  <tabstop>rightBorder</tabstop>
+  <tabstop>bottomBorder</tabstop>
+  <tabstop>disableBtn</tabstop>
+  <tabstop>autoBtn</tabstop>
+  <tabstop>manualBtn</tabstop>
+  <tabstop>applyToBtn</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

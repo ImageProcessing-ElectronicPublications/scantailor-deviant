@@ -64,12 +64,16 @@ OptionsWidget::OptionsWidget(
     setupUi(this);
 
     thresholdMethodSelector->addItem(tr("Otsu"), OTSU);
+    thresholdMethodSelector->addItem(tr("Mean"), MEANDELTA);
+    thresholdMethodSelector->addItem(tr("Niblack"), NIBLACK);
+    thresholdMethodSelector->addItem(tr("Gatos"), GATOS);
     thresholdMethodSelector->addItem(tr("Sauvola"), SAUVOLA);
     thresholdMethodSelector->addItem(tr("Wolf"), WOLF);
     thresholdMethodSelector->addItem(tr("Bradley"), BRADLEY);
     thresholdMethodSelector->addItem(tr("EdgePlus"), EDGEPLUS);
     thresholdMethodSelector->addItem(tr("BlurDiv"), BLURDIV);
     thresholdMethodSelector->addItem(tr("EdgeDiv"), EDGEDIV);
+    thresholdMethodSelector->addItem(tr("MultiScale"), MSCALE);
 
     setDespeckleLevel(DESPECKLE_NORMAL);
 
@@ -98,6 +102,46 @@ OptionsWidget::OptionsWidget(
     updateColorsDisplay();
     updateLayersDisplay();
     updateDewarpingDisplay();
+
+    connect(
+        dpiValue, SIGNAL(clicked(bool)),
+        this, SLOT(dpiValueClicked())
+    );
+
+    connect(
+        modeValue, SIGNAL(clicked(bool)),
+        this, SLOT(modeValueClicked())
+    );
+
+    connect(
+        applyColorsButton, SIGNAL(clicked(bool)),
+        this, SLOT(applyColorsButtonClicked())
+    );
+
+    connect(
+        applyThresholdButton, SIGNAL(clicked(bool)),
+        this, SLOT(applyThresholdButtonClicked())
+    );
+
+    connect(
+        applyForegroundThresholdButton, SIGNAL(clicked(bool)),
+        this, SLOT(applyForegroundThresholdButtonClicked())
+    );
+    
+    connect(
+        applyDepthPerception, SIGNAL(clicked(bool)),
+        this, SLOT(applyDepthPerceptionClicked())
+    );
+
+    connect(
+        dewarpingStatusButton, SIGNAL(clicked(bool)),
+        this, SLOT(dewarpingStatusButtonClicked())
+    );
+
+    connect(
+        applyDespeckleButton, SIGNAL(clicked(bool)),
+        this, SLOT(applyDespeckleButtonClicked())
+    );
 
     connect(
         whiteMarginsCB, SIGNAL(clicked(bool)),
@@ -282,8 +326,8 @@ OptionsWidget::thresholdWindowSizeChanged(int value) {
     blackWhiteOptions.setThresholdWindowSize(value);
     m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
     m_ptrSettings->setColorParams(m_pageId, m_colorParams);
-    if (blackWhiteOptions.thresholdMethod() != OTSU)
-    emit reloadRequested();
+    if (blackWhiteOptions.thresholdMethod() != OTSU && blackWhiteOptions.thresholdMethod() != MEANDELTA)
+        emit reloadRequested();
 }
 
 void
@@ -292,7 +336,8 @@ OptionsWidget::thresholdCoefChanged(double value) {
     blackWhiteOptions.setThresholdCoef(value);
     m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
     m_ptrSettings->setColorParams(m_pageId, m_colorParams);
-    emit reloadRequested();
+    if (blackWhiteOptions.thresholdMethod() != OTSU && blackWhiteOptions.thresholdMethod() != MEANDELTA)
+        emit reloadRequested();
 }
 
 void
@@ -523,10 +568,10 @@ OptionsWidget::updateDpiDisplay()
         QString dpi_label = tr("%1 x %2 dpi")
                             .arg(m_outputDpi.horizontal())
                             .arg(m_outputDpi.vertical());
-        dpiValue->setText(Utils::richTextForLink(dpi_label));
+        dpiValue->setText(dpi_label);
     } else {
         QString dpi_label = tr("%1 dpi").arg(QString::number(m_outputDpi.horizontal()));
-        dpiValue->setText(Utils::richTextForLink(dpi_label));
+        dpiValue->setText(dpi_label);
     }
 
     StatusBarProvider::setSettingsDPi(m_outputDpi);
@@ -537,13 +582,13 @@ OptionsWidget::updateModeValueText()
 {
     switch (m_currentMode) {
     case ColorParams::BLACK_AND_WHITE:
-        modeValue->setText(Utils::richTextForLink(actionModeBW->toolTip()));
+        modeValue->setText(actionModeBW->toolTip());
         break;
     case ColorParams::COLOR_GRAYSCALE:
-        modeValue->setText(Utils::richTextForLink(actionModeColorOrGrayscale->toolTip()));
+        modeValue->setText(actionModeColorOrGrayscale->toolTip());
         break;
     case ColorParams::MIXED:
-        modeValue->setText(Utils::richTextForLink(actionModeMixed->toolTip()));
+        modeValue->setText(actionModeMixed->toolTip());
         break;
     }
 }
@@ -633,7 +678,7 @@ OptionsWidget::updateColorsDisplay()
         thresholdSlider->setValue(blackWhiteOptions.thresholdAdjustment());
         thresholdWindowSize->setValue(blackWhiteOptions.thresholdWindowSize());
         thresholdCoef->setValue(blackWhiteOptions.thresholdCoef());
-        if (blackWhiteOptions.thresholdMethod() == OTSU)
+        if (blackWhiteOptions.thresholdMethod() == OTSU || blackWhiteOptions.thresholdMethod() == MEANDELTA)
         {
             thresholdWindowSize->setEnabled( false );
             thresholdCoef->setEnabled( false );
@@ -678,18 +723,18 @@ OptionsWidget::updateDewarpingDisplay()
 
     switch (m_dewarpingMode) {
     case DewarpingMode::OFF:
-        dewarpingStatusLabel->setText(Utils::richTextForLink(tr("Off")));
+        dewarpingStatusButton->setText(tr("Off"));
         break;
     case DewarpingMode::AUTO:
-        dewarpingStatusLabel->setText(Utils::richTextForLink(tr("Auto")));
+        dewarpingStatusButton->setText(tr("Auto"));
         break;
     case DewarpingMode::MANUAL:
-        dewarpingStatusLabel->setText(Utils::richTextForLink(tr("Manual")));
+        dewarpingStatusButton->setText(tr("Manual"));
         break;
 //begin of modified by monday2000
 //Marginal_Dewarping
     case DewarpingMode::MARGINAL:
-        dewarpingStatusLabel->setText(Utils::richTextForLink(tr("Marginal")));
+        dewarpingStatusButton->setText(tr("Marginal"));
         break;
 //end of modified by monday2000
     }
@@ -735,7 +780,7 @@ void output::OptionsWidget::on_depthPerceptionSlider_valueChanged(int value)
     emit depthPerceptionChanged(m_depthPerception.value());
 }
 
-void output::OptionsWidget::on_applyDepthPerception_linkActivated(const QString& /*link*/)
+void output::OptionsWidget::applyDepthPerceptionClicked()
 {
     ApplyToDialog* dialog = new ApplyToDialog(this, m_pageId, m_pageSelectionAccessor);
     dialog->setWindowTitle(tr("Apply Depth Perception"));
@@ -750,7 +795,7 @@ void output::OptionsWidget::on_applyDepthPerception_linkActivated(const QString&
     dialog->show();
 }
 
-void output::OptionsWidget::on_dewarpingStatusLabel_linkActivated(const QString& /*link*/)
+void output::OptionsWidget::dewarpingStatusButtonClicked()
 {
     ApplyToDialog* dialog = new ApplyToDialog(
         this, m_pageId, m_pageSelectionAccessor);
@@ -770,7 +815,7 @@ void output::OptionsWidget::on_dewarpingStatusLabel_linkActivated(const QString&
     dialog->show();
 }
 
-void output::OptionsWidget::on_applyDespeckleButton_linkActivated(const QString& /*link*/)
+void output::OptionsWidget::applyDespeckleButtonClicked()
 {
     ApplyToDialog* dialog = new ApplyToDialog(this, m_pageId, m_pageSelectionAccessor);
     dialog->setWindowTitle(tr("Apply Despeckling Level"));
@@ -786,7 +831,7 @@ void output::OptionsWidget::on_applyDespeckleButton_linkActivated(const QString&
     dialog->show();
 }
 
-void output::OptionsWidget::on_applyColorsButton_linkActivated(const QString& /*link*/)
+void output::OptionsWidget::applyColorsButtonClicked()
 {
     ApplyToDialog* dialog = new ApplyToDialog(this, m_pageId, m_pageSelectionAccessor);
     dialog->setWindowTitle(tr("Apply Mode"));
@@ -802,28 +847,28 @@ void output::OptionsWidget::on_applyColorsButton_linkActivated(const QString& /*
     dialog->show();
 }
 
-void output::OptionsWidget::on_modeValue_linkActivated(const QString& /*link*/)
+void output::OptionsWidget::modeValueClicked()
 {
     m_menuMode.popup(modeValue->mapToGlobal(QPoint(0, modeValue->geometry().height())));
 }
 
 void output::OptionsWidget::on_actionModeBW_triggered()
 {
-    modeValue->setText(Utils::richTextForLink(actionModeBW->toolTip()));
+    modeValue->setText(actionModeBW->toolTip());
     changeColorMode(ColorParams::BLACK_AND_WHITE);
     emit invalidateThumbnail(m_pageId);
 }
 
 void output::OptionsWidget::on_actionModeColorOrGrayscale_triggered()
 {
-    modeValue->setText(Utils::richTextForLink(actionModeColorOrGrayscale->toolTip()));
+    modeValue->setText(actionModeColorOrGrayscale->toolTip());
     changeColorMode(ColorParams::COLOR_GRAYSCALE);
     emit invalidateThumbnail(m_pageId);
 }
 
 void output::OptionsWidget::on_actionModeMixed_triggered()
 {
-    modeValue->setText(Utils::richTextForLink(actionModeMixed->toolTip()));
+    modeValue->setText(actionModeMixed->toolTip());
     changeColorMode(ColorParams::MIXED);
     emit invalidateThumbnail(m_pageId);
 }
@@ -973,7 +1018,7 @@ void output::OptionsWidget::on_thresholdForegroundSlider_valueChanged()
     emit invalidateThumbnail(m_pageId);
 }
 
-void output::OptionsWidget::on_dpiValue_linkActivated(const QString& /*link*/)
+void output::OptionsWidget::dpiValueClicked()
 {
     ApplyToDialog* dialog = new ApplyToDialog(
         this, m_pageId, m_pageSelectionAccessor
@@ -1013,7 +1058,7 @@ void output::OptionsWidget::applyThresholdConfirmed(std::set<PageId> const& page
     }
 }
 
-void output::OptionsWidget::on_applyThresholdButton_linkActivated(const QString& /*link*/)
+void output::OptionsWidget::applyThresholdButtonClicked()
 {
     ApplyToDialog* dialog = new ApplyToDialog(this, m_pageId, m_pageSelectionAccessor);
     dialog->setWindowTitle(tr("Apply Threshold"));
@@ -1083,7 +1128,7 @@ void output::OptionsWidget::on_autoLayerCB_toggled(bool checked)
     }
 }
 
-void output::OptionsWidget::on_applyForegroundThresholdButton_linkActivated(const QString& /*link*/)
+void output::OptionsWidget::applyForegroundThresholdButtonClicked()
 {
     ApplyToDialog* dialog = new ApplyToDialog(this, m_pageId, m_pageSelectionAccessor);
     dialog->setWindowTitle(tr("Apply Foreground layer threshold"));

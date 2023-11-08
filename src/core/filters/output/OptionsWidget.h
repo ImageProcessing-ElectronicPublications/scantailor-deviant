@@ -99,15 +99,15 @@ private slots:
 
     void on_depthPerceptionSlider_valueChanged(int value);
 
-    void on_applyDepthPerception_linkActivated(const QString&);
+    void applyDepthPerceptionClicked();
 
-    void on_dewarpingStatusLabel_linkActivated(const QString&);
+    void dewarpingStatusButtonClicked();
 
-    void on_applyDespeckleButton_linkActivated(const QString&);
+    void applyDespeckleButtonClicked();
 
-    void on_applyColorsButton_linkActivated(const QString&);
+    void applyColorsButtonClicked();
 
-    void on_modeValue_linkActivated(const QString&);
+    void modeValueClicked();
 
     void on_actionModeBW_triggered();
 
@@ -127,11 +127,11 @@ private slots:
 
     void thresholdCoefChanged(double value);
 
-    void on_dpiValue_linkActivated(const QString&);
+    void dpiValueClicked();
 
     void on_actionReset_to_default_value_triggered();
 
-    void on_applyThresholdButton_linkActivated(const QString&);
+    void applyThresholdButtonClicked();
 
     void on_pictureZonesLayerCB_toggled(bool checked);
 
@@ -139,7 +139,7 @@ private slots:
 
     void on_autoLayerCB_toggled(bool checked);
 
-    void on_applyForegroundThresholdButton_linkActivated(const QString& link);
+    void applyForegroundThresholdButtonClicked();
 
     void on_actionReset_to_default_value_foeground_triggered();
 

@@ -439,12 +439,14 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>topBottomLink</tabstop>
+  <tabstop>unitsComboBox</tabstop>
   <tabstop>topMarginSpinBox</tabstop>
+  <tabstop>topBottomLink</tabstop>
   <tabstop>bottomMarginSpinBox</tabstop>
-  <tabstop>leftRightLink</tabstop>
   <tabstop>leftMarginSpinBox</tabstop>
+  <tabstop>leftRightLink</tabstop>
   <tabstop>rightMarginSpinBox</tabstop>
+  <tabstop>autoMargins</tabstop>
   <tabstop>applyMarginsBtn</tabstop>
   <tabstop>applyAlignmentBtn</tabstop>
  </tabstops>

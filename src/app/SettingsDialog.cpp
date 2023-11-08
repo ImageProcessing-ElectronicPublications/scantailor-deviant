@@ -261,7 +261,7 @@ SettingsDialog::populateTreeWidget(QTreeWidget* treeWidget)
                                            <<        tr("Despeckling")
                                            <<        tr("Image metadata");
     const QResource tree_metadata(":/SettingsTreeData.tsv");
-    QStringList tree_data = QString::fromUtf8((char const*)tree_metadata.data(), tree_metadata.size()).split('\n');
+    QStringList tree_data = QString::fromUtf8((char const*)tree_metadata.data(), tree_metadata.size()).split(QRegExp("\r?\n"));
 
     QTreeWidgetItem* last_top_item = nullptr;
     QTreeWidgetItem* parent_item = nullptr;

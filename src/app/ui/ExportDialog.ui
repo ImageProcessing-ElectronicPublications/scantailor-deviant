@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Export</string>
   </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
     <widget class="QTabWidget" name="tabWidget">
@@ -327,6 +330,27 @@ for content in foreground subscans (lengthy)</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>cbExportImage</tabstop>
+  <tabstop>cbExportForeground</tabstop>
+  <tabstop>cbExportBackground</tabstop>
+  <tabstop>cbExportAutomask</tabstop>
+  <tabstop>cbExportMask</tabstop>
+  <tabstop>cbExportZones</tabstop>
+  <tabstop>DefaultOutputFolder</tabstop>
+  <tabstop>outExportDirLine</tabstop>
+  <tabstop>outExportDirBrowseBtn</tabstop>
+  <tabstop>cbExportSelected</tabstop>
+  <tabstop>btnResetToDefault</tabstop>
+  <tabstop>ExportButton</tabstop>
+  <tabstop>OkButton</tabstop>
+  <tabstop>cbMultipageOutput</tabstop>
+  <tabstop>GenerateBlankBackSubscans</tabstop>
+  <tabstop>UseSepSuffixForPics</tabstop>
+  <tabstop>cbExportWithoutOutputStage</tabstop>
+  <tabstop>KeepOriginalColorIllumForeSubscans</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

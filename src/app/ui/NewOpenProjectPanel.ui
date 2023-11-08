@@ -57,12 +57,9 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="newProjectLabel">
+         <widget class="QPushButton" name="newProjectButton">
           <property name="text">
            <string>New Project...</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
@@ -83,7 +80,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="openProjectLabel">
+         <widget class="QPushButton" name="openProjectButton">
           <property name="text">
            <string>Open Project...</string>
           </property>

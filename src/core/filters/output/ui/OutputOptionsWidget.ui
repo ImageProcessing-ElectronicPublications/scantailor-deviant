@@ -49,15 +49,9 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="dpiValue">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
+      <widget class="QPushButton" name="dpiValue">
        <property name="text">
-        <string notr="true">value</string>
+        <string>value</string>
        </property>
       </widget>
      </item>
@@ -73,7 +67,7 @@
    <item>
     <widget class="QWidget" name="modePanel" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -81,30 +75,30 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>168</height>
+       <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>168</height>
+       <height>16777215</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_6">
       <property name="spacing">
-       <number>3</number>
+       <number>6</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>3</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>3</number>
+       <number>0</number>
       </property>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -135,21 +129,9 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="modeValue">
-          <property name="font">
-           <font>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="contextMenuPolicy">
-           <enum>Qt::NoContextMenu</enum>
-          </property>
+         <widget class="QPushButton" name="modeValue">
           <property name="text">
-           <string notr="true">value</string>
-          </property>
-          <property name="textFormat">
-           <enum>Qt::RichText</enum>
+           <string>value</string>
           </property>
          </widget>
         </item>
@@ -159,7 +141,7 @@
        <widget class="QWidget" name="illuminationPanel" native="true">
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <property name="spacing">
-          <number>0</number>
+          <number>3</number>
          </property>
          <property name="leftMargin">
           <number>6</number>
@@ -194,7 +176,7 @@
        <widget class="QWidget" name="layersPanel" native="true">
         <layout class="QVBoxLayout" name="verticalLayout_111">
          <property name="spacing">
-          <number>0</number>
+          <number>3</number>
          </property>
          <property name="leftMargin">
           <number>6</number>
@@ -236,19 +218,6 @@
        </widget>
       </item>
       <item>
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
          <spacer name="horizontalSpacer_4">
@@ -264,20 +233,9 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="applyColorsButton">
-          <property name="font">
-           <font>
-            <italic>true</italic>
-           </font>
-          </property>
-          <property name="contextMenuPolicy">
-           <enum>Qt::NoContextMenu</enum>
-          </property>
+         <widget class="QPushButton" name="applyColorsButton">
           <property name="text">
-           <string>&lt;a href=&quot;#&quot;&gt;Apply To...&lt;/a&gt;</string>
-          </property>
-          <property name="textFormat">
-           <enum>Qt::RichText</enum>
+           <string>Apply To...</string>
           </property>
          </widget>
         </item>
@@ -308,16 +266,22 @@
    </item>
    <item>
     <widget class="QWidget" name="widget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>164</height>
+       <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>164</height>
+       <height>16777215</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -340,13 +304,13 @@
        <widget class="QWidget" name="bwOptions" native="true">
         <layout class="QVBoxLayout" name="verticalLayout">
          <property name="spacing">
-          <number>3</number>
+          <number>6</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>3</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -355,7 +319,11 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QComboBox" name="thresholdMethodSelector"/>
+          <widget class="QComboBox" name="thresholdMethodSelector">
+           <property name="maxVisibleItems">
+            <number>11</number>
+           </property>
+          </widget>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_12">
@@ -469,13 +437,6 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="thresholdCoefLabel">
-             <property name="text">
-              <string>Coef:</string>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="1">
             <widget class="QDoubleSpinBox" name="thresholdCoef">
              <property name="toolTip">
@@ -489,6 +450,13 @@
              </property>
              <property name="singleStep">
               <double>0.01</double>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="thresholdCoefLabel">
+             <property name="text">
+              <string>Coef:</string>
              </property>
             </widget>
            </item>
@@ -513,20 +481,9 @@
             </spacer>
            </item>
            <item>
-            <widget class="QLabel" name="applyThresholdButton">
-             <property name="font">
-              <font>
-               <italic>true</italic>
-              </font>
-             </property>
-             <property name="contextMenuPolicy">
-              <enum>Qt::NoContextMenu</enum>
-             </property>
+            <widget class="QPushButton" name="applyThresholdButton">
              <property name="text">
-              <string>&lt;a href=&quot;#&quot;&gt;Apply To...&lt;/a&gt;</string>
-             </property>
-             <property name="textFormat">
-              <enum>Qt::RichText</enum>
+              <string>Apply To...</string>
              </property>
             </widget>
            </item>
@@ -562,13 +519,13 @@
     <widget class="QWidget" name="bwForegroundOptions" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <property name="spacing">
-       <number>3</number>
+       <number>6</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>3</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -685,20 +642,9 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="applyForegroundThresholdButton">
-          <property name="font">
-           <font>
-            <italic>true</italic>
-           </font>
-          </property>
-          <property name="contextMenuPolicy">
-           <enum>Qt::NoContextMenu</enum>
-          </property>
+         <widget class="QPushButton" name="applyForegroundThresholdButton">
           <property name="text">
-           <string>&lt;a href=&quot;#&quot;&gt;Apply To...&lt;/a&gt;</string>
-          </property>
-          <property name="textFormat">
-           <enum>Qt::RichText</enum>
+           <string>Apply To...</string>
           </property>
          </widget>
         </item>
@@ -731,19 +677,19 @@
     <widget class="QWidget" name="depthPerceptionPanel" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
-       <number>3</number>
+       <number>6</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>3</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>3</number>
+       <number>0</number>
       </property>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_17">
@@ -830,20 +776,9 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="applyDepthPerception">
-          <property name="font">
-           <font>
-            <italic>true</italic>
-           </font>
-          </property>
-          <property name="contextMenuPolicy">
-           <enum>Qt::NoContextMenu</enum>
-          </property>
+         <widget class="QPushButton" name="applyDepthPerception">
           <property name="text">
-           <string>&lt;a href=&quot;#&quot;&gt;Apply To...&lt;/a&gt;</string>
-          </property>
-          <property name="textFormat">
-           <enum>Qt::RichText</enum>
+           <string>Apply To...</string>
           </property>
          </widget>
         </item>
@@ -908,21 +843,9 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="dewarpingStatusLabel">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="contextMenuPolicy">
-        <enum>Qt::NoContextMenu</enum>
-       </property>
+      <widget class="QPushButton" name="dewarpingStatusButton">
        <property name="text">
-        <string notr="true">value</string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::RichText</enum>
+        <string>value</string>
        </property>
       </widget>
      </item>
@@ -939,7 +862,7 @@
     <widget class="QWidget" name="despecklingPanel" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_5">
       <property name="spacing">
-       <number>0</number>
+       <number>6</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -1148,20 +1071,9 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="applyDespeckleButton">
-          <property name="font">
-           <font>
-            <italic>true</italic>
-           </font>
-          </property>
-          <property name="contextMenuPolicy">
-           <enum>Qt::NoContextMenu</enum>
-          </property>
+         <widget class="QPushButton" name="applyDespeckleButton">
           <property name="text">
-           <string>&lt;a href=&quot;#&quot;&gt;Apply To...&lt;/a&gt;</string>
-          </property>
-          <property name="textFormat">
-           <enum>Qt::RichText</enum>
+           <string>Apply To...</string>
           </property>
          </widget>
         </item>
@@ -1274,6 +1186,32 @@
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>dpiValue</tabstop>
+  <tabstop>modeValue</tabstop>
+  <tabstop>whiteMarginsCB</tabstop>
+  <tabstop>equalizeIlluminationCB</tabstop>
+  <tabstop>autoLayerCB</tabstop>
+  <tabstop>pictureZonesLayerCB</tabstop>
+  <tabstop>foregroundLayerCB</tabstop>
+  <tabstop>applyColorsButton</tabstop>
+  <tabstop>thresholdMethodSelector</tabstop>
+  <tabstop>thresholdSlider</tabstop>
+  <tabstop>thresholdWindowSize</tabstop>
+  <tabstop>thresholdCoef</tabstop>
+  <tabstop>applyThresholdButton</tabstop>
+  <tabstop>thresholdForegroundSlider</tabstop>
+  <tabstop>applyForegroundThresholdButton</tabstop>
+  <tabstop>depthPerceptionSlider</tabstop>
+  <tabstop>applyDepthPerception</tabstop>
+  <tabstop>dewarpingStatusButton</tabstop>
+  <tabstop>despeckleOffBtn</tabstop>
+  <tabstop>despeckleCautiousBtn</tabstop>
+  <tabstop>despeckleNormalBtn</tabstop>
+  <tabstop>despeckleAggressiveBtn</tabstop>
+  <tabstop>applyDespeckleButton</tabstop>
+  <tabstop>despeckleSlider</tabstop>
+ </tabstops>
  <resources>
   <include location="../../../../app/resources/resources.qrc"/>
  </resources>

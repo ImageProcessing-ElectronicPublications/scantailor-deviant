@@ -65,6 +65,9 @@ ExportDialog::ExportDialog(QWidget* parent, const QString& defaultOutDir)
     ui.UseSepSuffixForPics->setChecked(m_settings.value(_key_export_use_sep_suffix, _key_export_use_sep_suffix_def).toBool());
     ui.KeepOriginalColorIllumForeSubscans->setChecked(m_settings.value(_key_export_keep_original_color, _key_export_keep_original_color_def).toBool());
     ui.cbMultipageOutput->setChecked(m_settings.value(_key_export_to_multipage, _key_export_to_multipage_def).toBool());
+
+    QSize size = sizeHint();
+    setFixedHeight(size.height());
 }
 
 ExportDialog::~ExportDialog()

@@ -24,9 +24,11 @@ ENDIF()
 
 IF(APPLE)
         INSTALL(TARGETS scantailor-universal-cli BUNDLE DESTINATION . RUNTIME DESTINATION bin)
-ELSE(APPLE)
+ELSEIF(WIN32)
+        INSTALL(TARGETS scantailor-universal-cli RUNTIME DESTINATION .)
+ELSE()
         INSTALL(TARGETS scantailor-universal-cli RUNTIME DESTINATION bin)
-ENDIF(APPLE)
+ENDIF()
 
 TRANSLATION_SOURCES(
         scantailor-universal

@@ -510,6 +510,21 @@
    <header>filters/page_layout/alignmentwidget.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>alignWithOthersCB</tabstop>
+  <tabstop>alignTopLeftBtn</tabstop>
+  <tabstop>alignTopBtn</tabstop>
+  <tabstop>alignTopRightBtn</tabstop>
+  <tabstop>alignLeftBtn</tabstop>
+  <tabstop>alignCenterBtn</tabstop>
+  <tabstop>alignRightBtn</tabstop>
+  <tabstop>alignBottomLeftBtn</tabstop>
+  <tabstop>alignBottomBtn</tabstop>
+  <tabstop>alignBottomRightBtn</tabstop>
+  <tabstop>cbAutoMagnet</tabstop>
+  <tabstop>cbOriginalProp</tabstop>
+  <tabstop>btnResetAdvAlignment</tabstop>
+ </tabstops>
  <resources>
   <include location="../../../../app/resources/resources.qrc"/>
  </resources>

@@ -10,7 +10,9 @@ INCLUDE_DIRECTORIES("${core_ui_sources_BINARY_DIR}")
 
 ADD_SUBDIRECTORY(interaction)
 ADD_SUBDIRECTORY(zones)
-ADD_SUBDIRECTORY(tests)
+IF(ENABLE_TESTS)
+        ADD_SUBDIRECTORY(tests)
+ENDIF()
 
 ADD_SUBDIRECTORY(filters/fix_orientation)
 ADD_SUBDIRECTORY(filters/page_split)

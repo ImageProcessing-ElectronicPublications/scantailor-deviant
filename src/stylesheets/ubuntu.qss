@@ -358,7 +358,7 @@ QSlider::sub-page:vertical {
 QScrollBar:horizontal {
 	max-height: 20px;
 	border: 1px transparent grey;
-	margin: 0px 20px 0px 20px;
+	margin: 0px 22px 0px 22px;
 }
 QScrollBar::handle:horizontal {
 	background: rgb(253,253,253);
@@ -462,7 +462,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
 QScrollBar:vertical {
 	max-width: 20px;
 	border: 1px transparent grey;
-	margin: 20px 0px 20px 0px;
+	margin: 22px 0px 22px 0px;
 }
 QScrollBar::add-line:vertical {
 	border: 1px solid;

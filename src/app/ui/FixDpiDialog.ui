@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Fix DPI</string>
   </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
+  </property>
   <layout class="QVBoxLayout">
    <item>
     <widget class="QTabWidget" name="tabWidget">
@@ -132,19 +135,6 @@
     </widget>
    </item>
    <item>
-    <spacer>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>317</width>
-       <height>16</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -156,6 +146,15 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>undefinedDpiView</tabstop>
+  <tabstop>dpiCombo</tabstop>
+  <tabstop>xDpi</tabstop>
+  <tabstop>yDpi</tabstop>
+  <tabstop>applyBtn</tabstop>
+  <tabstop>allPagesView</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

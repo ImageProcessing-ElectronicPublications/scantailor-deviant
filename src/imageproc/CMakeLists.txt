@@ -35,6 +35,7 @@ SET(
         PolynomialSurface.cpp PolynomialSurface.h
         SavGolKernel.cpp SavGolKernel.h
         SavGolFilter.cpp SavGolFilter.h
+        ColorFilter.cpp ColorFilter.h
         DrawOver.cpp DrawOver.h
         AdjustBrightness.cpp AdjustBrightness.h
         SEDM.cpp SEDM.h
@@ -54,4 +55,6 @@ SOURCE_GROUP(Sources FILES ${sources})
 
 ADD_LIBRARY(imageproc STATIC ${sources})
 QT5_USE_MODULES(imageproc Core Gui)
-ADD_SUBDIRECTORY(tests)
+IF(ENABLE_TESTS)
+        ADD_SUBDIRECTORY(tests)
+ENDIF()

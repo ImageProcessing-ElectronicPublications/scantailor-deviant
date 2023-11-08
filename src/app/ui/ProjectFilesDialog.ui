@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Project Files</string>
   </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QGroupBox" name="groupBox_2">
@@ -201,6 +204,20 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>inpDirLine</tabstop>
+  <tabstop>inpDirBrowseBtn</tabstop>
+  <tabstop>outDirLine</tabstop>
+  <tabstop>outDirBrowseBtn</tabstop>
+  <tabstop>offProjectList</tabstop>
+  <tabstop>offProjectSelectAllBtn</tabstop>
+  <tabstop>addToProjectBtn</tabstop>
+  <tabstop>removeFromProjectBtn</tabstop>
+  <tabstop>inProjectList</tabstop>
+  <tabstop>inProjectSelectAllBtn</tabstop>
+  <tabstop>rtlLayoutCB</tabstop>
+  <tabstop>forceFixDpi</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

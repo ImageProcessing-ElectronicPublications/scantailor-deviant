@@ -45,12 +45,6 @@ NewOpenProjectPanel::NewOpenProjectPanel(QWidget* parent)
     setupUi(this);
 
     recentProjectsGroup->setLayout(new QVBoxLayout);
-    newProjectLabel->setText(
-        Utils::richTextForLink(newProjectLabel->text())
-    );
-    openProjectLabel->setText(
-        Utils::richTextForLink(openProjectLabel->text())
-    );
 
     RecentProjects rp;
     rp.read();
@@ -68,11 +62,11 @@ NewOpenProjectPanel::NewOpenProjectPanel(QWidget* parent)
     }
 
     connect(
-        newProjectLabel, SIGNAL(linkActivated(QString)),
+        newProjectButton, SIGNAL(clicked(bool)),
         this, SIGNAL(newProject())
     );
     connect(
-        openProjectLabel, SIGNAL(linkActivated(QString)),
+        openProjectButton, SIGNAL(clicked(bool)),
         this, SIGNAL(openProject())
     );
 }
@@ -85,17 +79,29 @@ NewOpenProjectPanel::addRecentProject(QString const& file_path)
     if (base_name.isEmpty()) {
         base_name = QChar('_');
     }
-    QLabel* label = new QLabel(recentProjectsGroup);
-    label->setWordWrap(true);
-    label->setTextFormat(Qt::RichText);
-    label->setText(Utils::richTextForLink(base_name, file_path));
-    label->setToolTip(file_path);
-    recentProjectsGroup->layout()->addWidget(label);
+
+    const int max_length = 30;
+    if (base_name.length() > max_length) {
+        base_name.truncate(max_length);
+        base_name.append("...");
+    }
+
+    QPushButton* button = new QPushButton(recentProjectsGroup);
+    button->setText(base_name);
+    button->setToolTip(file_path);
+    recentProjectsGroup->layout()->addWidget(button);
 
     connect(
-        label, SIGNAL(linkActivated(QString)),
-        this, SIGNAL(openRecentProject(QString))
+        button, SIGNAL(clicked()),
+        this, SLOT(recentProjectButtonClicked())
     );
+}
+
+void
+NewOpenProjectPanel::recentProjectButtonClicked()
+{
+    if(QPushButton* button = qobject_cast<QPushButton*>(sender()))
+        openRecentProject(button->toolTip());
 }
 
 void

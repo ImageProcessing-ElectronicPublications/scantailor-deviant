@@ -27,6 +27,7 @@ namespace imageproc
 {
 
 class BinaryImage;
+class GrayImage;
 
 /**
  * \brief Image binarization using Otsu's global thresholding method.
@@ -35,6 +36,12 @@ class BinaryImage;
  * http://en.wikipedia.org/wiki/Otsu%27s_method
  */
 BinaryImage binarizeOtsu(QImage const& src, int delta = 0);
+
+/**
+ * \brief Image binarization using DeltaMean global thresholding method.
+ */
+BinaryImage binarizeMean(
+    QImage const& src, int const delta = 0);
 
 /**
  * \brief Image binarization using Mokji's global thresholding method.
@@ -52,6 +59,35 @@ BinaryImage binarizeOtsu(QImage const& src, int delta = 0);
 BinaryImage binarizeMokji(
     QImage const& src, unsigned max_edge_width = 3,
     unsigned min_edge_magnitude = 20);
+
+/**
+  * \brief Image binarization using Niblack's local thresholding method.
+  *
+  * Niblack, Wayne. An introduction to digital image processing.
+  * Englewood Cliffs, N. J., Prentice Hall (1986) 115-116 
+  */
+GrayImage binarizeNiblackMap(
+    GrayImage const& src, QSize window_size, double k = 0.20);
+BinaryImage binarizeNiblack(
+    QImage const& src, QSize window_size,
+    double k = 0.20, int delta = 0);
+
+/**
+ * \brief Image binarization using Gatos' local thresholding method.
+ *
+ * This implementation doesn't include the post-processing steps from
+ * the above paper.
+ *
+ * Gatos, Basilios, Ioannis Pratikakis, and Stavros J. Perantonis.
+ * "An adaptive binarization technique for low quality historical documents."
+ * Document Analysis Systems VI. Springer Berlin Heidelberg, 2004. 102-113. 
+ */
+BinaryImage binarizeGatosCleaner(
+    GrayImage& wiener, BinaryImage const& niblack,
+    QSize const window_size);
+BinaryImage binarizeGatos(
+    QImage const& src, QSize window_size,
+    double noise_sigma = 3.0, double k = 0.2, int delta = 0);
 
 /**
  * \brief Image binarization using Sauvola's local thresholding method.
@@ -100,6 +136,19 @@ BinaryImage binarizeEdgeDiv(
     double kep = 0.5, double kdb = 0.5, int delta = 0);
 
 BinaryImage peakThreshold(QImage const& image);
+
+/**
+ * \brief Image binarization using MultiScale thresholding method.
+ *
+ * MultiScale thresholding method.
+ */
+GrayImage binarizeMScaleMap(
+    GrayImage const& src, QSize window_size,
+    double coef = 0.5);
+BinaryImage binarizeMScale(
+    QImage const& src, QSize window_size,
+    double coef = 0.5, int delta = 0);
+
 } // namespace imageproc
 
 #endif

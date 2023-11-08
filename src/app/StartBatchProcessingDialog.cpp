@@ -12,6 +12,8 @@ StartBatchProcessingDialog::StartBatchProcessingDialog(QWidget* parent, bool isA
 
     ui->allPages->setChecked(isAllPages);
     ui->fromSelected->setChecked(!isAllPages);
+
+    setFixedSize(sizeHint());
 }
 
 StartBatchProcessingDialog::~StartBatchProcessingDialog()

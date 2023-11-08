@@ -34,7 +34,10 @@ IF(DEBUG_CLI)
         ADD_DEFINITIONS(-DDEBUG_CLI)
 ENDIF(DEBUG_CLI)
 
-ENABLE_TESTING()
+OPTION(ENABLE_TESTS "Enable testing. For debug purpose only. Do not enable if you are not a programmer." OFF)
+IF(ENABLE_TESTS)
+        ENABLE_TESTING()
+ENDIF()
 
 # An undocumented side-effect of CONFIGURE_FILE() is that it makes
 # the whole project depend on the file we are parsing / copying.
@@ -80,13 +83,11 @@ INCLUDE(cmake/FindPthreads.cmake)
 IF(UNIX AND NOT APPLE)
 INCLUDE(cmake/FindCanberra.cmake)
 ENDIF(UNIX AND NOT APPLE)
-INCLUDE(cmake/FindEXIV2.cmake)
 INCLUDE(cmake/SetDefaultBuildType.cmake)
 INCLUDE(cmake/SetDefaultGccFlags.cmake)
-INCLUDE(cmake/ToNativePath.cmake)
 INCLUDE(cmake/UpdateTranslations.cmake)
-INCLUDE(cmake/CopyToBuildDir.cmake)
-INCLUDE(cmake/LibToDLL.cmake)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 
 ST_SET_DEFAULT_BUILD_TYPE(Release)
 IF(CMAKE_COMPILER_IS_GNUCC)
@@ -96,9 +97,6 @@ ENDIF(CMAKE_COMPILER_IS_GNUCC)
 GET_FILENAME_COMPONENT(source_outer_dir "${PROJECT_SOURCE_DIR}/.." ABSOLUTE)
 GET_FILENAME_COMPONENT(build_outer_dir "${PROJECT_BINARY_DIR}/.." ABSOLUTE)
 
-SET(STAGING_LIBS_DIR "")
-
-
 INCLUDE(FindOpenGL)
 SET(use_opengl OFF)
 IF(OPENGL_FOUND AND QT_QTOPENGL_FOUND)
@@ -106,62 +104,6 @@ IF(OPENGL_FOUND AND QT_QTOPENGL_FOUND)
         # SET(use_opengl ON)
 ENDIF()
 OPTION(ENABLE_OPENGL "OpenGL may be used for UI acceleration" ${use_opengl})
-
-IF(WIN32)
-        FIND_PATH(
-                DEPS_BUILD_DIR build-qt.bat
-                HINTS "${build_outer_dir}/scantailor-universal-deps-build"
-                DOC "Build directory for Scan Tailor dependencies."
-        )
-        IF(NOT DEPS_BUILD_DIR)
-                MESSAGE(
-                        FATAL_ERROR "The build directory for Scan Tailor dependencies could not be found! "
-                        "You can specify it manually in DEPS_BUILD_DIR variable. Make sure you build the dependencies first!"
-                )
-        ENDIF()
-        SET(STAGING_LIBS_DIR "${DEPS_BUILD_DIR}/staging/libs")
-        INCLUDE("${DEPS_BUILD_DIR}/export-vars.cmake")
-
-        IF (NOT QT_SRC_DIR OR NOT EXISTS "${QT_SRC_DIR}")
-                FILE(GLOB qt_dirs1 "${build_outer_dir}/qt-win-*-5.[0-9]*")
-                FILE(GLOB qt_dirs2 "${build_outer_dir}/qt-everywhere-*-5.[0-9]*")
-                FILE(GLOB qt_dirs3 "${source_outer_dir}/qt-win-*-5.[0-9]*")
-                FILE(GLOB qt_dirs4 "${source_outer_dir}/qt-everywhere-*-5.[0-9]*")
-                FILE(GLOB qt_dirs5 "C:/Qt/Qt5.*/*/Src")
-                FIND_PATH(
-                        QT_SRC_DIR qtbase/qtbase.pro
-                        HINTS ${qt_dirs1} ${qt_dirs2} ${qt_dirs3}
-                        ${qt_dirs4} ${qt_dirs5} dummy_dir
-                        DOC "Path to top-level Qt5 source directory. If you installed a binary version, it will be something like C:\\Qt\\Qt5.0.2\\5.0.2\\Src"
-                )
-        ENDIF()
-
-        IF(NOT QT_SRC_DIR OR NOT EXISTS "${QT_SRC_DIR}")
-                MESSAGE(
-                        FATAL_ERROR "Qt5 could not be found. "
-                        "If it's installed in a non-standard location, specify it QT_SRC_DIR variable."
-                )
-        ENDIF()
-
-        FILE(GLOB qt_possible_prebuilt_dirs "${QT_SRC_DIR}/../*")
-        FIND_PATH(
-                QT_PREBUILT_DIR bin/qmake.exe HINTS ${qt_possible_prebuilt_dirs}
-                DOC "[optional] Installation path of a pre-built version of Qt5. If you installed a binary version, it will be something like C:\\Qt\\Qt5.0.2\\5.0.2\\msvc2012"
-        )
-
-
-        SET(Qt5Core_DIR "${QT_SRC_DIR}/qtbase/lib/cmake/Qt5Core")
-        SET(Qt5Gui_DIR "${QT_SRC_DIR}/qtbase/lib/cmake/Qt5Gui")
-        SET(Qt5Widgets_DIR "${QT_SRC_DIR}/qtbase/lib/cmake/Qt5Widgets")
-        SET(Qt5Xml_DIR "${QT_SRC_DIR}/qtbase/lib/cmake/Qt5Xml")
-        SET(Qt5Network_DIR "${QT_SRC_DIR}/qtbase/lib/cmake/Qt5Network")
-        SET(Qt5OpenGL_DIR "${QT_SRC_DIR}/qtbase/lib/cmake/Qt5OpenGL")
-        IF(QT_PREBUILT_DIR)
-                SET(Qt5LinguistTools_DIR "${QT_PREBUILT_DIR}/lib/cmake/Qt5LinguistTools")
-        ELSE()
-                SET(Qt5LinguistTools_DIR "${QT_SRC_DIR}/qtbase/lib/cmake/Qt5LinguistTools")
-        ENDIF()
-ENDIF()
 
 SET(CMAKE_AUTOMOC ON)
 SET(Qt_MIN_VERSION 5.7.0)
@@ -180,182 +122,33 @@ IF(ENABLE_OPENGL)
         FIND_PACKAGE(Qt5OpenGL ${Qt_MIN_VERSION} REQUIRED)
 ENDIF()
 
-FIND_PATH(
-        JPEG_INCLUDE_DIR jpeglib.h
-	PATHS /usr/local/include /usr/include
-	HINTS ${JPEG_DIR} # JPEG_DIR may come from export-vars.cmake
-	DOC "Path to libjpeg headers."
-)
-IF(NOT JPEG_INCLUDE_DIR)
-        MESSAGE(
-                FATAL_ERROR
-                "Could not find jpeg headers.\n"
-		"You may need to install a package named libjpeg62-dev or similarly."
-        )
-ENDIF()
+SET(EXTRA_LIBS "")
 
+FIND_PACKAGE(JPEG REQUIRED)
 INCLUDE_DIRECTORIES("${JPEG_INCLUDE_DIR}")
+LIST(APPEND EXTRA_LIBS ${JPEG_LIBRARY})
 
-FIND_LIBRARY(
-        JPEG_LIBRARY NAMES jpeg libjpeg.lib
-	PATHS /usr/local/lib /usr/lib
-	HINTS ${STAGING_LIBS_DIR}
-	DOC "Path to jpeg library."
-)
-IF(NOT JPEG_LIBRARY)
-        MESSAGE(
-                FATAL_ERROR
-                "Could not find jpeg library.\n"
-                "You may need to install a package named libjpeg62-dev or similarly."
-        )
-ENDIF()
-
-SET (use_openjpeg ON)
-OPTION(ENABLE_OPENJPEG "OpenJPEG library may be used to suppoet JPEG 2000 (.jp2) images." ${use_openjpeg})
-
+OPTION(ENABLE_OPENJPEG "OpenJPEG library may be used to support JPEG 2000 (.jp2) images." ON)
 IF (ENABLE_OPENJPEG)
-
-IF(NOT WIN32)
-FIND_PACKAGE(OpenJPEG QUIET)
-ELSE(NOT WIN32)
-
-FIND_PATH(
-        OPENJPEG_INCLUDE_DIRS openjpeg.h
-        PATHS /usr/local/include /usr/include
-        HINTS ${JPEG2000_DIR} # JPEG2000_DIR may come from export-vars.cmake
-        PATH_SUFFIXES src/lib/openjp2
-        DOC "Path to openjpeg headers."
-)
-IF(NOT OPENJPEG_INCLUDE_DIRS)
-        MESSAGE(
-                "Could not find openjpeg headers.\n"
-                "You may need to install a package openjpeg."
-        )
-ENDIF()
-
-INCLUDE_DIRECTORIES("${OPENJPEG_INCLUDE_DIRS}")
-
-FIND_LIBRARY(
-        OPENJPEG_LIBRARIES openjp2 openjp2.lib
-        PATHS /usr/local/lib /usr/lib
-        HINTS ${STAGING_LIBS_DIR}
-        PATH_SUFFIXES openjp2
-        DOC "Path to openjpeg library."
-)
-
-IF(OPENJPEG_LIBRARIES AND OPENJPEG_INCLUDE_DIRS)
-SET (OpenJPEG_FOUND YES)
-SET (OPENJPEG_MAJOR_VERSION 2)
-ENDIF(OPENJPEG_LIBRARIES AND OPENJPEG_INCLUDE_DIRS)
-
-ENDIF(NOT WIN32)
-
-IF(NOT OpenJPEG_FOUND OR OPENJPEG_MAJOR_VERSION VERSION_LESS 2)
-    message("warning: OpenJPEG library isn't found.\n"
-        "The JPEG 2000 (*.jp2) images support will be disabled.\n"
-        "You may install libopenjp2-7-dev to fix this.\n"
-        "Or disable this massege with -DENABLE_OPENJPEG=OFF")
-    SET(ENABLE_OPENJPEG OFF)
-ENDIF()
+        find_package(OPENJPEG REQUIRED)
+        INCLUDE_DIRECTORIES("${OPENJPEG_INCLUDE_DIR}")
+        LIST(APPEND EXTRA_LIBS ${OPENJPEG_LIBRARY})
 ENDIF(ENABLE_OPENJPEG)
 
-FIND_PATH(
-        ZLIB_INCLUDE_DIR zlib.h
-	PATHS /usr/local/include /usr/include
-	HINTS ${ZLIB_DIR} # ZLIB_DIR may come from export-vars.cmake
-	DOC "Path to zlib headers."
-)
-IF(NOT ZLIB_INCLUDE_DIR)
-        MESSAGE(
-                FATAL_ERROR
-                "Could not find zlib headers.\n"
-                "You may need to install a package named zlib1g-dev or similarly."
-        )
-ENDIF()
-
+FIND_PACKAGE(ZLIB REQUIRED)
 INCLUDE_DIRECTORIES("${ZLIB_INCLUDE_DIR}")
+LIST(APPEND EXTRA_LIBS ${ZLIB_LIBRARY})
 
-FIND_LIBRARY(
-        ZLIB_LIBRARY NAMES z zdll.lib
-	PATHS /usr/local/lib /usr/lib
-	HINTS ${STAGING_LIBS_DIR}
-	DOC "Path to zlib library."
-)
-IF(NOT ZLIB_LIBRARY)
-        MESSAGE(
-                FATAL_ERROR
-                "Could not find zlib library.\n"
-                "You may need to install a package named zlib1g-dev or similarly."
-        )
-ENDIF()
-
-FIND_PATH(
-        PNG_INCLUDE_DIR png.h
-	PATHS /usr/local/include /usr/include
-	HINTS ${PNG_DIR} # PNG_DIR may come from export-vars.cmake
-	DOC "Path to libpng headers."
-)
-IF(NOT PNG_INCLUDE_DIR)
-        MESSAGE(
-                FATAL_ERROR
-                "Could not find libpng headers.\n"
-                "You may need to install a package named libpng12-dev or similarly."
-        )
-ENDIF()
-
+FIND_PACKAGE(PNG REQUIRED)
 INCLUDE_DIRECTORIES("${PNG_INCLUDE_DIR}")
+LIST(APPEND EXTRA_LIBS ${PNG_LIBRARY})
 
-FIND_LIBRARY(
-        PNG_LIBRARY NAMES png libpng.lib
-	PATHS /usr/local/lib /usr/lib
-	HINTS ${STAGING_LIBS_DIR}
-	DOC "Path to png library."
-)
-IF(NOT PNG_LIBRARY)
-        MESSAGE(
-                FATAL_ERROR
-                "Could not find libpng library.\n"
-                "You may need to install a package named libpng12-dev or similarly."
-        )
-ENDIF()
-
-
-FIND_PATH(
-        TIFF_INCLUDE_DIR tiff.h
-	PATHS /usr/local/include /usr/include
-	HINTS ${TIFF_DIR} # TIFF_DIR may come from export-vars.cmake
-	PATH_SUFFIXES libtiff
-	DOC "Path to libtiff headers."
-)
-IF(NOT TIFF_INCLUDE_DIR)
-        MESSAGE(
-                FATAL_ERROR
-                "Could not find libtiff headers.\n"
-                "You may need to install a package named libtiff4-dev or similarly."
-        )
-ENDIF()
-
+FIND_PACKAGE(TIFF REQUIRED)
 INCLUDE_DIRECTORIES("${TIFF_INCLUDE_DIR}")
-
-FIND_LIBRARY(
-        TIFF_LIBRARY tiff libtiff.lib
-	PATHS /usr/local/lib /usr/lib
-	HINTS ${STAGING_LIBS_DIR}
-	PATH_SUFFIXES libtiff
-	DOC "Path to tiff library."
-)
-IF(NOT TIFF_LIBRARY)
-        MESSAGE(
-                FATAL_ERROR
-                "Could not find libtiff library.\n"
-                "You may need to install a package named libtiff4-dev or similarly."
-        )
-ENDIF()
-
+LIST(APPEND EXTRA_LIBS ${TIFF_LIBRARY})
 IF(WIN32)
         ADD_DEFINITIONS(-DUSE_LIBTIFF_DLL)
 ENDIF()
-
 
 IF(WIN32)
         SET(Boost_USE_STATIC_LIBS ON)
@@ -363,17 +156,15 @@ ELSE(WIN32)
         ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK)
 ENDIF(WIN32)
 
-SET(Boost_USE_MULTITHREADED ON)
-FIND_PACKAGE(Boost 1.35.0 COMPONENTS unit_test_framework prg_exec_monitor)
-IF(NOT Boost_FOUND)
-        MESSAGE(
-                FATAL_ERROR
-                "Could not find boost headers or libraries. "
-                "You may need to install a package named libboost1.35-dev or similarly. "
-                "Hint: create a Boost_DEBUG variable in cmake and set it to YES."
-        )
-ENDIF(NOT Boost_FOUND)
+ADD_DEFINITIONS(-DBOOST_MULTI_INDEX_DISABLE_SERIALIZATION)
+ADD_DEFINITIONS(-DBOOST_BIND_GLOBAL_PLACEHOLDERS)
 
+SET(Boost_USE_MULTITHREADED ON)
+IF(ENABLE_TESTS)
+        FIND_PACKAGE(Boost 1.35.0 COMPONENTS unit_test_framework prg_exec_monitor REQUIRED)
+ELSE()
+        FIND_PACKAGE(Boost 1.35.0 REQUIRED)
+ENDIF()
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 
@@ -384,12 +175,13 @@ if (OPENMP_FOUND)
     set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
 endif()
 
-IF (EXIV2_FOUND)
-        ADD_DEFINITIONS(-DHAVE_EXIV2)
+OPTION(ENABLE_EXIV2 "Exiv2 library may be used to manage image metadata." ON)
+IF (ENABLE_EXIV2)
+        find_package(EXIV2 REQUIRED)
         INCLUDE_DIRECTORIES("${EXIV2_INCLUDE_DIR}")
-ENDIF(EXIV2_FOUND)
-
-SET(EXTRA_LIBS "")
+        LIST(APPEND EXTRA_LIBS ${EXIV2_LIBRARY})
+        ADD_DEFINITIONS(-DHAVE_EXIV2)
+ENDIF()
 
 IF(UNIX)
         FindPthreads()
@@ -410,6 +202,7 @@ ENDIF(UNIX)
 IF(CANBERRA_FOUND)
         ADD_DEFINITIONS(-DHAVE_CANBERRA)
         INCLUDE_DIRECTORIES("${CANBERRA_INCLUDE_DIRS}")
+        LIST(APPEND EXTRA_LIBS ${CANBERRA_LIBRARIES})
 ENDIF(CANBERRA_FOUND)
 
 
@@ -421,18 +214,6 @@ ELSE(NOT HAVE_STDINT_H)
         FILE(REMOVE "${CMAKE_CURRENT_BINARY_DIR}/stdint.h")
 ENDIF(NOT HAVE_STDINT_H)
 
-ADD_DEFINITIONS(-DBOOST_MULTI_INDEX_DISABLE_SERIALIZATION)
-
-LIST(APPEND EXTRA_LIBS ${TIFF_LIBRARY} ${PNG_LIBRARY} ${ZLIB_LIBRARY} ${JPEG_LIBRARY} ${CANBERRA_LIBRARIES})
-
-IF (EXIV2_FOUND)
-        LIST(APPEND EXTRA_LIBS ${EXIV2_LIBRARY})
-ENDIF(EXIV2_FOUND)
-
-IF(ENABLE_OPENJPEG AND OpenJPEG_FOUND)
-   INCLUDE_DIRECTORIES(${OPENJPEG_INCLUDE_DIRS})
-   LIST(APPEND EXTRA_LIBS ${OPENJPEG_LIBRARIES})
-ENDIF()
 
 IF(WIN32)
    LIST(APPEND EXTRA_LIBS "ws2_32.lib")
@@ -455,7 +236,7 @@ ELSEIF(APPLE)
 ELSE()
         SET(TRANSLATIONS_DIR_REL "share/scantailor-universal/translations")
         SET(STYLESHEETS_DIR_REL "share/scantailor-universal/stylesheets")
-        SET(PIXMAPS_DIR_ABS "${CMAKE_INSTALL_PREFIX}/share/pixmaps/scantailor-universal/stylesheets")
+        SET(PIXMAPS_DIR_ABS "${CMAKE_INSTALL_PREFIX}/share/scantailor-universal/stylesheets")
 ENDIF()
 SET(TRANSLATIONS_DIR_ABS "${CMAKE_INSTALL_PREFIX}/${TRANSLATIONS_DIR_REL}")
 SET(STYLESHEETS_DIR_ABS "${CMAKE_INSTALL_PREFIX}/${STYLESHEETS_DIR_REL}")
@@ -468,39 +249,16 @@ ADD_SUBDIRECTORY(src)
 
 
 IF(NOT WIN32 AND NOT APPLE)
-        INSTALL(FILES debian/scantailor-universal.svg DESTINATION "${CMAKE_INSTALL_PREFIX}/share/pixmaps/")
-        INSTALL(FILES debian/scantailor-universal.desktop DESTINATION "${CMAKE_INSTALL_PREFIX}/share/applications/")
+        INSTALL(FILES debian/scantailor-universal.svg DESTINATION "share/pixmaps/")
+        INSTALL(FILES debian/scantailor-universal.desktop DESTINATION "share/applications/")
 ENDIF(NOT WIN32 AND NOT APPLE)
 
-# uninstall target
-configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/cmake/cmake_uninstall.cmake"
-    IMMEDIATE @ONLY)
-
-add_custom_target(uninstall
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
-
-# Source code packaging
-SET(CPACK_CMAKE_GENERATOR "")
-SET(CPACK_SOURCE_GENERATOR "TGZ")
-SET(CPACK_SOURCE_PACKAGE_FILE_NAME "scantailor-universal-${VERSION}")
-SET(
-        CPACK_SOURCE_IGNORE_FILES
-        "/\\\\.svn/"
-        "/\\\\.git/"
-        "~$"
-        "\\\\.pcs$"
-        "TODO.txt"
-        "CMakeLists.txt.user"
-        "/doxygen/"
-        "${CMAKE_BINARY_DIR}"
-)
-INCLUDE(CPack)
-
 IF(WIN32)
-        # Copy some DLLs to the staging dir.
+        # Install Runtime
+        set(CMAKE_INSTALL_SYSTEM_RUNTIME_DESTINATION .)
+	INCLUDE(InstallRequiredSystemLibraries)
 
+        # Install Qt
         SET(
                 qt5_libs
                 ${Qt5Widgets_LIBRARIES} ${Qt5Gui_LIBRARIES}
@@ -512,74 +270,196 @@ IF(WIN32)
         FOREACH(target ${qt5_libs})
                 GET_TARGET_PROPERTY(debug_loc "${target}" LOCATION_DEBUG)
                 GET_TARGET_PROPERTY(release_loc "${target}" LOCATION_RELEASE)
-                COPY_TO_BUILD_DIR("${debug_loc}" CONFIGURATIONS Debug)
-                COPY_TO_BUILD_DIR("${release_loc}" CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+                install(FILES "${debug_loc}"   DESTINATION . CONFIGURATIONS Debug)
+                install(FILES "${release_loc}" DESTINATION . CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
         ENDFOREACH()
 
-        SET(DLL_DIR "${QT_SRC_DIR}/qtbase/bin")
-        COPY_TO_BUILD_DIR(
-                "${DLL_DIR}/libpng.dll" "${DLL_DIR}/libjpeg.dll"
-                "${DLL_DIR}/libtiff.dll" "${DLL_DIR}/zdll.dll"
-        )
+        # Install Qt's plugins.
+        CMAKE_PATH(SET Qt5_DIR NORMALIZE "${Qt5Core_DIR}/../../..")
+        CMAKE_PATH(APPEND Qt5_DIR "plugins" OUTPUT_VARIABLE PLUGINS_DIR)
 
-IF(ENABLE_OPENJPEG AND OpenJPEG_FOUND)
-        COPY_TO_BUILD_DIR( "${DLL_DIR}/openjp2.dll" )
-ENDIF(ENABLE_OPENJPEG AND OpenJPEG_FOUND)
+        # Install system plugin
+        install(FILES "${PLUGINS_DIR}/platforms/qwindows.dll"  DESTINATION ./platforms CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/platforms/qwindowsd.dll" DESTINATION ./platforms CONFIGURATIONS Debug)
 
-IF(EXIV2_FOUND)
-        COPY_TO_BUILD_DIR( "${DLL_DIR}/exiv2.dll" )
-ENDIF(EXIV2_FOUND)
+        # Install style plugin
+        install(FILES "${PLUGINS_DIR}/styles/qwindowsvistastyle.dll"  DESTINATION ./styles CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/styles/qwindowsvistastyled.dll" DESTINATION ./styles CONFIGURATIONS Debug)
+        
+        # Install accessibility plugin
+        IF (Qt5Widgets_VERSION VERSION_LESS 5.4.0)
+                install(FILES "${PLUGINS_DIR}/accessible/qtaccessiblewidgets.dll"  DESTINATION ./accessible CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+                install(FILES "${PLUGINS_DIR}/accessible/qtaccessiblewidgetsd.dll" DESTINATION ./accessible CONFIGURATIONS Debug)
+        ENDIF()
 
-        # Qt's plugins.
-        SET(PLUGINS_DIR "${QT_SRC_DIR}/qtbase/plugins")
-        COPY_TO_BUILD_DIR(
-                "${PLUGINS_DIR}/platforms/qwindows.dll" SUBDIR platforms
-                CONFIGURATIONS Release MinSizeRel RelWithDebInfo
-        )
-        COPY_TO_BUILD_DIR(
-                "${PLUGINS_DIR}/platforms/qwindowsd.dll" SUBDIR platforms
-                CONFIGURATIONS Debug
-        )
-        # required to display images in stylesheets
-        COPY_TO_BUILD_DIR(
-                "${PLUGINS_DIR}/imageformats/qico.dll" SUBDIR imageformats
-                CONFIGURATIONS Release MinSizeRel RelWithDebInfo
-        )
-        COPY_TO_BUILD_DIR(
-                "${PLUGINS_DIR}/imageformats/qicod.dll" SUBDIR imageformats
-                CONFIGURATIONS Debug
-        )
-        COPY_TO_BUILD_DIR(
-                "${PLUGINS_DIR}/imageformats/qsvg.dll" SUBDIR imageformats
-                CONFIGURATIONS Release MinSizeRel RelWithDebInfo
-        )
-        COPY_TO_BUILD_DIR(
-                "${PLUGINS_DIR}/imageformats/qsvgd.dll" SUBDIR imageformats
-                CONFIGURATIONS Debug
-        )
-#        COPY_TO_BUILD_DIR(
-#                "${PLUGINS_DIR}/iconengines/qsvgicon.dll" SUBDIR iconengines
-#                CONFIGURATIONS Release MinSizeRel RelWithDebInfo
-#        )
-#        COPY_TO_BUILD_DIR(
-#                "${PLUGINS_DIR}/iconengines/qsvgicond.dll" SUBDIR iconengines
-#                CONFIGURATIONS Debug
-#        )
+        # Install image format plugins
+        install(FILES "${PLUGINS_DIR}/imageformats/qjpeg.dll"  DESTINATION ./imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/imageformats/qjpegd.dll" DESTINATION ./imageformats CONFIGURATIONS Debug)
 
-    if (Qt5Widgets_VERSION VERSION_LESS 5.4.0)
-        COPY_TO_BUILD_DIR(
-                "${PLUGINS_DIR}/accessible/qtaccessiblewidgets.dll" SUBDIR accessible
-                CONFIGURATIONS Release MinSizeRel RelWithDebInfo
-        )
-        COPY_TO_BUILD_DIR(
-                "${PLUGINS_DIR}/accessible/qtaccessiblewidgetsd.dll" SUBDIR accessible
-                CONFIGURATIONS Debug
-        )
-    endif()
+        install(FILES "${PLUGINS_DIR}/imageformats/qtiff.dll"  DESTINATION ./imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/imageformats/qtiffd.dll" DESTINATION ./imageformats CONFIGURATIONS Debug)
 
-        # Generate the target that will actually do the copying.
-        GENERATE_COPY_TO_BUILD_DIR_TARGET(copy_to_build_dir)
+        # Install image format plugins required to display images in stylesheets
+        install(FILES "${PLUGINS_DIR}/imageformats/qico.dll"   DESTINATION ./imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/imageformats/qicod.dll"  DESTINATION ./imageformats CONFIGURATIONS Debug)
 
-        # Installer for Windows.  Must go last.
-        ADD_SUBDIRECTORY(src/packaging/windows)
+        install(FILES "${PLUGINS_DIR}/imageformats/qsvg.dll"   DESTINATION ./imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/imageformats/qsvgd.dll"  DESTINATION ./imageformats CONFIGURATIONS Debug)
+
+        install(FILES "${PLUGINS_DIR}/iconengines/qsvgicon.dll"  DESTINATION ./iconengines CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/iconengines/qsvgicond.dll" DESTINATION ./iconengines CONFIGURATIONS Debug)
+
+        # Install stylesheets
+        install(DIRECTORY "${CMAKE_SOURCE_DIR}/src/stylesheets"
+                DESTINATION . 
+                PATTERN "CMakeLists.txt" EXCLUDE
+                PATTERN ".gitignore" EXCLUDE
+                PATTERN ".git" EXCLUDE)
+
+        # Install libpng
+        FIND_FILE(LIBPNG_DLL
+                NAMES libpng.dll libpng16.dll
+                PATHS ${CMAKE_PREFIX_PATH}
+                PATH_SUFFIXES bin lib
+                NO_DEFAULT_PATH)
+        IF(NOT LIBPNG_DLL)
+                MESSAGE(SEND_ERROR "Could not find LIBPNG dll. You may specify it manually.")
+        ENDIF()
+        install(FILES "${LIBPNG_DLL}"  DESTINATION .)
+
+        # Install libjpeg
+        FIND_FILE(LIBJPEG_DLL
+                NAMES libjpeg.dll jpeg.dll jpeg62.dll
+                PATHS ${CMAKE_PREFIX_PATH}
+                PATH_SUFFIXES bin lib
+                NO_DEFAULT_PATH)
+        IF(NOT LIBJPEG_DLL)
+                MESSAGE(SEND_ERROR "Could not find LIBJPEG dll. You may specify it manually.")
+        ENDIF()
+        install(FILES "${LIBJPEG_DLL}"  DESTINATION .)
+
+        # Install libtigg
+        FIND_FILE(LIBTIFF_DLL
+                NAMES libtiff.dll tiff.dll
+                PATHS ${CMAKE_PREFIX_PATH}
+                PATH_SUFFIXES bin lib
+                NO_DEFAULT_PATH)
+        IF(NOT LIBTIFF_DLL)
+                MESSAGE(SEND_ERROR "Could not find LIBTIFF dll. You may specify it manually.")
+        ENDIF()
+        install(FILES "${LIBTIFF_DLL}"  DESTINATION .)
+
+        # Install zlib
+        FIND_FILE(ZLIB_DLL
+                NAMES zdll.dll zlib.dll zlib1.dll z.dll
+                PATHS ${CMAKE_PREFIX_PATH}
+                PATH_SUFFIXES bin lib
+                NO_DEFAULT_PATH)
+        IF(NOT ZLIB_DLL)
+                MESSAGE(SEND_ERROR "Could not find ZLIB dll. You may specify it manually.")
+        ENDIF()
+        install(FILES "${ZLIB_DLL}"  DESTINATION .)
+
+        # Install openjpeg
+        IF(ENABLE_OPENJPEG)
+                FIND_FILE(OPENJPEG_DLL
+                        NAMES openjp2.dll
+                        PATHS ${CMAKE_PREFIX_PATH}
+                        PATH_SUFFIXES bin lib
+                        NO_DEFAULT_PATH)
+                IF(NOT OPENJPEG_DLL)
+                        MESSAGE(SEND_ERROR "Could not find OPENJPEG dll. You may specify it manually.")
+                ENDIF()
+                install(FILES "${OPENJPEG_DLL}"  DESTINATION .)
+        ENDIF()
+
+        # Install exiv
+        IF(ENABLE_EXIV2)
+                FIND_FILE(EXIV2_DLL
+                        NAMES exiv2.dll
+                        PATHS ${CMAKE_PREFIX_PATH}
+                        PATH_SUFFIXES bin lib
+                        NO_DEFAULT_PATH)
+                IF(NOT EXIV2_DLL)
+                        MESSAGE(SEND_ERROR "Could not find EXIV2 dll. You may specify it manually.")
+                ENDIF()
+                install(FILES "${EXIV2_DLL}"  DESTINATION .)
+        ENDIF()
+ELSEIF(APPLE)
+ELSE()
+        INSTALL(DIRECTORY "${CMAKE_SOURCE_DIR}/src/stylesheets" DESTINATION "share/scantailor-universal")
+
+        FIND_PROGRAM(GZIP gzip REQUIRED)
+        EXECUTE_PROCESS(
+                COMMAND "${GZIP}" "-9n"
+                WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+                INPUT_FILE "${CMAKE_SOURCE_DIR}/debian/changelog"
+                OUTPUT_FILE "changelog.gz"
+                RESULT_VARIABLE COMMAND_ERROR)
+        IF(COMMAND_ERROR)
+                MESSAGE(FATAL_ERROR "Could not gzip changelog")
+        ENDIF()
+
+        INSTALL(FILES "${CMAKE_BINARY_DIR}/changelog.gz"     DESTINATION "share/doc/scantailor-universal")
+        INSTALL(FILES "${CMAKE_SOURCE_DIR}/debian/copyright" DESTINATION "share/doc/scantailor-universal")
 ENDIF(WIN32)
+
+SET(CPACK_PACKAGE_NAME "scantailor-universal")
+STRING(REGEX 
+        MATCH "^([0-9]+)\\.([0-9]+)\\.([0-9]+)" 
+        CPACK_PACKAGE_VERSION ${VERSION})
+SET(CPACK_PACKAGE_VERSION_MAJOR ${CMAKE_MATCH_1})
+SET(CPACK_PACKAGE_VERSION_MINOR ${CMAKE_MATCH_2})
+SET(CPACK_PACKAGE_VERSION_PATCH ${CMAKE_MATCH_3})
+SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "trufanov-nok <trufanovan@gmail.com>")
+SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
+SET(CPACK_PACKAGE_EXECUTABLES "scantailor-universal;${CMAKE_PROJECT_NAME} ${VERSION}")
+SET(CPACK_CREATE_DESKTOP_LINKS "scantailor-universal")
+SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY 
+        "Alternative version of ScanTailor: interactive post-processing tool for scanned pages"
+)
+SET(CPACK_STRIP_FILES YES)
+
+IF(WIN32)
+        SET(CPACK_SOURCE_GENERATOR ZIP)
+        SET(CPACK_GENERATOR NSIS ZIP 7Z)
+        SET(CPACK_PACKAGE_INSTALL_DIRECTORY "${CMAKE_PROJECT_NAME}")
+        SET(CPACK_NSIS_MUI_ICON "${CMAKE_SOURCE_DIR}/src/app/resources/win32/icon.ico")
+        SET(CPACK_NSIS_COMPRESSOR "/SOLID lzma")
+        SET(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
+        SET(CPACK_NSIS_MODIFY_PATH ON)
+        SET(CPACK_NSIS_DISPLAY_NAME "${CMAKE_PROJECT_NAME} ${VERSION}")
+        SET(CPACK_NSIS_PACKAGE_NAME "${CMAKE_PROJECT_NAME}")
+        SET(CPACK_NSIS_INSTALLED_ICON_NAME "scantailor-universal.exe")
+        SET(CPACK_NSIS_EXECUTABLES_DIRECTORY .)
+ELSEIF(APPLE)
+ELSE()
+        SET(CPACK_DEBIAN_PACKAGE_DESCRIPTION 
+                "Scan Tailor is an interactive post-processing tool for scanned pages.\n"
+                " It performs operations such as page splitting, deskewing, adding/removing\n"
+                " borders, and others. You give it raw scans, and you get pages ready to be\n"
+                " printed or assembled into a PDF or DJVU file. Scanning, optical character\n"
+                " recognition, and assembling multi-page documents are out of scope of this\n"
+                " project.")
+        STRING(REPLACE ";" "" CPACK_DEBIAN_PACKAGE_DESCRIPTION ${CPACK_DEBIAN_PACKAGE_DESCRIPTION})
+        SET(CPACK_DEBIAN_PACKAGE_SECTION graphics)
+        SET(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+        SET(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/trufanov-nok/scantailor-universal/")
+ENDIF()
+
+SET(CPACK_SOURCE_IGNORE_FILES
+        "/\\\\.svn/"
+        "/\\\\.git/"
+        "~$"
+        "\\\\.pcs$"
+        "TODO.txt"
+        "CMakeLists.txt.user"
+        "/doxygen/"
+        "${CMAKE_BINARY_DIR}"
+)
+
+IF(NOT WIN32 AND NOT APPLE)
+        SET(CPACK_PACKAGING_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
+ENDIF()
+
+INCLUDE(CPack)

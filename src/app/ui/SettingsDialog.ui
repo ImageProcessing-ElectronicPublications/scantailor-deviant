@@ -45,6 +45,9 @@
        </sizepolicy>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,3">
+       <property name="rightMargin">
+        <number>6</number>
+       </property>
        <item>
         <widget class="QTreeWidget" name="treeWidget">
          <property name="sizePolicy">
@@ -176,19 +179,19 @@
       <widget class="QWidget" name="pageGeneral">
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_4">
@@ -197,19 +200,19 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_10">
            <property name="spacing">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_8">
@@ -276,8 +279,30 @@ You can add new images (for ex. missing pages) after project is created with Ins
           <property name="title">
            <string>Options</string>
           </property>
-          <layout class="QFormLayout" name="formLayout">
+          <layout class="QVBoxLayout" name="verticalLayout_97">
+           <item>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Application language:</string>
+               </property>
+              </widget>
+             </item>
            <item row="0" column="1">
+              <spacer name="horizontalSpacer_19">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="2" rowspan="2">
             <widget class="QComboBox" name="language">
              <property name="maximumSize">
               <size>
@@ -290,14 +315,63 @@ You can add new images (for ex. missing pages) after project is created with Ins
              </property>
             </widget>
            </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label">
+             <item row="1" column="1" rowspan="2">
+              <spacer name="horizontalSpacer_22">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="lblStyle">
              <property name="text">
-              <string>Application language:</string>
+                <string>Application style:</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="0" colspan="2">
+             <item row="2" column="2">
+              <widget class="QComboBox" name="cbStyle">
+               <property name="sizeAdjustPolicy">
+                <enum>QComboBox::AdjustToContents</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Application stylesheet:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <spacer name="horizontalSpacer_23">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="3" column="2">
+              <widget class="QComboBox" name="cbStyleSheet">
+               <property name="sizeAdjustPolicy">
+                <enum>QComboBox::AdjustToContents</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
             <widget class="QGroupBox" name="groupBox">
              <property name="title">
               <string>Batch processing</string>
@@ -350,41 +424,13 @@ You can add new images (for ex. missing pages) after project is created with Ins
              </layout>
             </widget>
            </item>
-           <item row="5" column="0">
+           <item>
             <widget class="QCheckBox" name="cbDontUseNativeDlg">
              <property name="text">
               <string>Filter existing files in insert new image dialog</string>
              </property>
              <property name="checked">
               <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="lblStyle">
-             <property name="text">
-              <string>Application style:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QComboBox" name="cbStyle">
-             <property name="sizeAdjustPolicy">
-              <enum>QComboBox::AdjustToContents</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QComboBox" name="cbStyleSheet">
-             <property name="sizeAdjustPolicy">
-              <enum>QComboBox::AdjustToContents</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_2">
-             <property name="text">
-              <string>Application stylesheet:</string>
              </property>
             </widget>
            </item>
@@ -396,19 +442,19 @@ You can add new images (for ex. missing pages) after project is created with Ins
       <widget class="QWidget" name="pageHotKeysManager">
        <layout class="QVBoxLayout" name="verticalLayout_28">
         <property name="spacing">
-         <number>5</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QScrollArea" name="scrollArea">
@@ -518,19 +564,19 @@ p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
       <widget class="QWidget" name="pageDocking">
        <layout class="QVBoxLayout" name="verticalLayout_34">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_6">
@@ -578,19 +624,19 @@ This option allows to increase page view panel size to almost a whole applicatio
       <widget class="QWidget" name="pageThumbnails">
        <layout class="QVBoxLayout" name="verticalLayout_52">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_19">
@@ -599,19 +645,19 @@ This option allows to increase page view panel size to almost a whole applicatio
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_29">
            <property name="spacing">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_16">
@@ -766,22 +812,7 @@ This option allows to increase page view panel size to almost a whole applicatio
            </item>
            <item>
             <widget class="QWidget" name="widget_2" native="true">
-             <layout class="QFormLayout" name="formLayout_7">
-              <property name="verticalSpacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
+             <layout class="QGridLayout" name="gridLayout_4">
               <item row="0" column="0">
                <widget class="QLabel" name="lblThumbsCacheSize">
                 <property name="text">
@@ -985,19 +1016,19 @@ This option allows to increase page view panel size to almost a whole applicatio
       <widget class="QWidget" name="pageAutoSaveProject">
        <layout class="QVBoxLayout" name="verticalLayout_35">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_12">
@@ -1077,19 +1108,19 @@ If project was never saved before this will create UnnamedAutoSave.Scantailor fi
       <widget class="QWidget" name="pageTiffCompression">
        <layout class="QVBoxLayout" name="verticalLayout_36">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_14">
@@ -1098,19 +1129,19 @@ If project was never saved before this will create UnnamedAutoSave.Scantailor fi
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">
            <property name="spacing">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_2">
@@ -1307,19 +1338,19 @@ Horizontal differencing predictor - a preprocessing step applied to image data t
       <widget class="QWidget" name="pageFixOrientation">
        <layout class="QVBoxLayout" name="verticalLayout_38">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_7">
@@ -1370,19 +1401,19 @@ Use &quot;Apply To...&quot; dialog to apply changes to a specified range of page
       <widget class="QWidget" name="pageSplitPages">
        <layout class="QVBoxLayout" name="verticalLayout_37">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_8">
@@ -1394,16 +1425,16 @@ Use &quot;Apply To...&quot; dialog to apply changes to a specified range of page
             <number>0</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_4">
@@ -1475,19 +1506,19 @@ The dividing line can also be determined/moved automatically or specified manual
       <widget class="QWidget" name="pageApplyCut">
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_2">
@@ -1599,19 +1630,19 @@ The dividing line can also be determined/moved automatically or specified manual
       <widget class="QWidget" name="pageDeskew">
        <layout class="QVBoxLayout" name="verticalLayout_39">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_9">
@@ -1623,16 +1654,16 @@ The dividing line can also be determined/moved automatically or specified manual
             <number>0</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_21">
@@ -1757,19 +1788,19 @@ Images can be rotated by dragging the round handles at the edges. You can also e
       <widget class="QWidget" name="pageDeviantDeskew">
        <layout class="QVBoxLayout" name="verticalLayout_62">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_11">
@@ -1817,19 +1848,19 @@ The Deviant page on this stage is defined as a page which absolute deskew angle 
       <widget class="QWidget" name="pageSelectContent">
        <layout class="QVBoxLayout" name="verticalLayout_40">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_10">
@@ -1838,19 +1869,19 @@ The Deviant page on this stage is defined as a page which absolute deskew angle 
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_15">
            <property name="spacing">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_5">
@@ -1990,19 +2021,19 @@ If areas are identified incorrectly, you can tweak individual pages manually by 
       <widget class="QWidget" name="pageDeviantContent">
        <layout class="QVBoxLayout" name="verticalLayout_65">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_13">
@@ -2050,19 +2081,19 @@ The Deviant page on this stage is defined as a page which content zone square di
       <widget class="QWidget" name="pagePageDetecton">
        <layout class="QVBoxLayout" name="verticalLayout_42">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_18">
@@ -2074,16 +2105,16 @@ The Deviant page on this stage is defined as a page which content zone square di
             <number>0</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_9">
@@ -2326,19 +2357,19 @@ Everything outside page area is highlighted with yellow in page view panel.</str
       <widget class="QWidget" name="pagePageLayout">
        <layout class="QVBoxLayout" name="verticalLayout_43">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_17">
@@ -2347,19 +2378,19 @@ Everything outside page area is highlighted with yellow in page view panel.</str
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_20">
            <property name="spacing">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_6">
@@ -2422,19 +2453,19 @@ Everything outside page area is highlighted with yellow in page view panel.</str
       <widget class="QWidget" name="pageDeviantMargins">
        <layout class="QVBoxLayout" name="verticalLayout_67">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_15">
@@ -2482,19 +2513,19 @@ The Deviant page on this stage is defined as a page which has no alignment.</str
       <widget class="QWidget" name="pageMargins">
        <layout class="QVBoxLayout" name="verticalLayout_44">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_22">
@@ -2503,19 +2534,19 @@ The Deviant page on this stage is defined as a page which has no alignment.</str
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_21">
            <property name="spacing">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_18">
@@ -2763,19 +2794,19 @@ The Deviant page on this stage is defined as a page which has no alignment.</str
       <widget class="QWidget" name="pageAlignment">
        <layout class="QVBoxLayout" name="verticalLayout_87">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="gmAlignmentDescr">
@@ -2790,19 +2821,19 @@ The Deviant page on this stage is defined as a page which has no alignment.</str
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_86">
            <property name="spacing">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_17">
@@ -2920,7 +2951,7 @@ The Deviant page on this stage is defined as a page which has no alignment.</str
               <item>
                <widget class="QLabel" name="lblSelectedAlignment">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -2928,7 +2959,7 @@ The Deviant page on this stage is defined as a page which has no alignment.</str
                 <property name="minimumSize">
                  <size>
                   <width>156</width>
-                  <height>0</height>
+                  <height>156</height>
                  </size>
                 </property>
                 <property name="toolTip">
@@ -2962,19 +2993,19 @@ The Deviant page on this stage is defined as a page which has no alignment.</str
       <widget class="QWidget" name="pageOutput">
        <layout class="QVBoxLayout" name="verticalLayout_47">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_26">
@@ -2983,19 +3014,19 @@ The Deviant page on this stage is defined as a page which has no alignment.</str
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_23">
            <property name="spacing">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_7">
@@ -3236,19 +3267,19 @@ Unlike the other stages, the &quot;Output&quot; stage becomes available only aft
       <widget class="QWidget" name="pageBlackWhiteMode">
        <layout class="QVBoxLayout" name="verticalLayout_46">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_27">
@@ -3257,19 +3288,19 @@ Unlike the other stages, the &quot;Output&quot; stage becomes available only aft
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_24">
            <property name="spacing">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_11">
@@ -3349,19 +3380,19 @@ Making black and white image from grayscale or color source requires binarizatio
       <widget class="QWidget" name="pageColorGrayscaleMode">
        <layout class="QVBoxLayout" name="verticalLayout_48">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_28">
@@ -3370,19 +3401,19 @@ Making black and white image from grayscale or color source requires binarizatio
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_25">
            <property name="spacing">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_12">
@@ -3455,19 +3486,19 @@ Equalize illumination option normalizes the background color, bringing it to whi
       <widget class="QWidget" name="pageMixedMode">
        <layout class="QVBoxLayout" name="verticalLayout_49">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_29">
@@ -3476,19 +3507,19 @@ Equalize illumination option normalizes the background color, bringing it to whi
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_26">
            <property name="spacing">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_13">
@@ -3553,7 +3584,20 @@ Automatic picture zones detection works well enough, but if the picture merges s
           <property name="title">
            <string>Options</string>
           </property>
-          <layout class="QFormLayout" name="formLayout_3"/>
+          <layout class="QFormLayout" name="formLayout_3">
+           <property name="leftMargin">
+            <number>9</number>
+           </property>
+           <property name="topMargin">
+            <number>9</number>
+           </property>
+           <property name="rightMargin">
+            <number>9</number>
+           </property>
+           <property name="bottomMargin">
+            <number>9</number>
+           </property>
+          </layout>
          </widget>
         </item>
        </layout>
@@ -3561,19 +3605,19 @@ Automatic picture zones detection works well enough, but if the picture merges s
       <widget class="QWidget" name="pageAutoLayer">
        <layout class="QVBoxLayout" name="verticalLayout_80">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_30">
@@ -3582,19 +3626,19 @@ Automatic picture zones detection works well enough, but if the picture merges s
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_78">
            <property name="spacing">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_14">
@@ -3659,19 +3703,19 @@ This mask can't be changed directly but only switched on/off. User could also cr
       <widget class="QWidget" name="pagePictureZonesLayer">
        <layout class="QVBoxLayout" name="verticalLayout_50">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_31">
@@ -3680,19 +3724,19 @@ This mask can't be changed directly but only switched on/off. User could also cr
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_27">
            <property name="spacing">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_15">
@@ -3806,19 +3850,19 @@ In case sensitivity parameter is 100% the picture detection algorithm looks for 
       <widget class="QWidget" name="pageForegroundLayer">
        <layout class="QVBoxLayout" name="verticalLayout_45">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_16">
@@ -3827,19 +3871,19 @@ In case sensitivity parameter is 100% the picture detection algorithm looks for 
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_22">
            <property name="spacing">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_10">
@@ -3922,19 +3966,19 @@ As Foreground layer is using binarization to separate content from background it
       <widget class="QWidget" name="pageFillZones">
        <layout class="QVBoxLayout" name="verticalLayout_53">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_40">
@@ -3989,19 +4033,19 @@ As Foreground layer is using binarization to separate content from background it
       <widget class="QWidget" name="pageDewarping">
        <layout class="QVBoxLayout" name="verticalLayout_54">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_42">
@@ -4010,19 +4054,19 @@ As Foreground layer is using binarization to separate content from background it
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_31">
            <property name="spacing">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_19">
@@ -4105,19 +4149,19 @@ As Foreground layer is using binarization to separate content from background it
       <widget class="QWidget" name="pageDespeckling">
        <layout class="QVBoxLayout" name="verticalLayout_33">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_44">
@@ -4199,6 +4243,9 @@ As Foreground layer is using binarization to separate content from background it
       </widget>
       <widget class="QWidget" name="pageOutputMetadata">
        <layout class="QVBoxLayout" name="verticalLayout_94">
+        <property name="leftMargin">
+         <number>6</number>
+        </property>
         <item>
          <widget class="QGroupBox" name="groupBox_45">
           <property name="title">
@@ -4260,19 +4307,19 @@ As Foreground layer is using binarization to separate content from background it
       <widget class="QWidget" name="pageDebugMode">
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QGroupBox" name="groupBox_5">
@@ -4281,19 +4328,19 @@ As Foreground layer is using binarization to separate content from background it
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_9">
            <property name="spacing">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <item>
             <widget class="QScrollArea" name="scrollArea_3">
@@ -4404,7 +4451,90 @@ Debug images are saved as png in temporary folder with unique filenames. These f
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>treeWidget</tabstop>
   <tabstop>lineEdit</tabstop>
+  <tabstop>scrollArea_8</tabstop>
+  <tabstop>language</tabstop>
+  <tabstop>cbStyle</tabstop>
+  <tabstop>cbStyleSheet</tabstop>
+  <tabstop>startBatchProcessingDlgAllPages</tabstop>
+  <tabstop>startBatchProcessingDlgFromSelected</tabstop>
+  <tabstop>showStartBatchProcessingDlg</tabstop>
+  <tabstop>cbDontUseNativeDlg</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>btnResetHotKeys</tabstop>
+  <tabstop>scrollArea_16</tabstop>
+  <tabstop>cbThumbsListOrder</tabstop>
+  <tabstop>gbFixedMaxLogicalThumbSize</tabstop>
+  <tabstop>sbFixedMaxLogicalThumbSizeHeight</tabstop>
+  <tabstop>sbFixedMaxLogicalThumbSizeWidth</tabstop>
+  <tabstop>sbThumbsCacheImgSize</tabstop>
+  <tabstop>sbThumbsMinSpacing</tabstop>
+  <tabstop>sbThumbsBoundaryAdjTop</tabstop>
+  <tabstop>sbThumbsBoundaryAdjLeft</tabstop>
+  <tabstop>sbThumbsBoundaryAdjBottom</tabstop>
+  <tabstop>sbThumbsBoundaryAdjRight</tabstop>
+  <tabstop>btnThumbDefaults</tabstop>
+  <tabstop>cbOrderHints</tabstop>
+  <tabstop>sbSavePeriod</tabstop>
+  <tabstop>scrollArea_2</tabstop>
+  <tabstop>cbTiffCompressionBW</tabstop>
+  <tabstop>cbTiffCompressionColor</tabstop>
+  <tabstop>cbTiffFilter</tabstop>
+  <tabstop>useHorizontalPredictor</tabstop>
+  <tabstop>scrollArea_4</tabstop>
+  <tabstop>cbApplyCutDefault</tabstop>
+  <tabstop>scrollArea_21</tabstop>
+  <tabstop>btnColorDeskew</tabstop>
+  <tabstop>btnColorDeskewReset</tabstop>
+  <tabstop>scrollArea_5</tabstop>
+  <tabstop>btnColorSelectedContent</tabstop>
+  <tabstop>btnColorSelectedContentReset</tabstop>
+  <tabstop>scrollArea_9</tabstop>
+  <tabstop>gbPageDetectionFineTuneCorners</tabstop>
+  <tabstop>cbPageDetectionFineTuneCorners</tabstop>
+  <tabstop>gbPageDetectionTargetSize</tabstop>
+  <tabstop>pageDetectionTargetWidth</tabstop>
+  <tabstop>pageDetectionTargetHeight</tabstop>
+  <tabstop>gbPageDetectionBorders</tabstop>
+  <tabstop>pageDetectionTopBorder</tabstop>
+  <tabstop>pageDetectionLeftBorder</tabstop>
+  <tabstop>pageDetectionRightBorder</tabstop>
+  <tabstop>pageDetectionBottomBorder</tabstop>
+  <tabstop>scrollArea_6</tabstop>
+  <tabstop>scrollArea_18</tabstop>
+  <tabstop>cbMarginUnits</tabstop>
+  <tabstop>marginDefaultTopVal</tabstop>
+  <tabstop>marginDefaultLeftVal</tabstop>
+  <tabstop>marginDefaultRightVal</tabstop>
+  <tabstop>marginDefaultBottomVal</tabstop>
+  <tabstop>gbMarginsAuto</tabstop>
+  <tabstop>cbMarginsAuto</tabstop>
+  <tabstop>scrollArea_17</tabstop>
+  <tabstop>cbAlignmentAuto</tabstop>
+  <tabstop>cbAlignmentOriginal</tabstop>
+  <tabstop>scrollArea_7</tabstop>
+  <tabstop>dpiDefaultXValue</tabstop>
+  <tabstop>dpiDefaultYValue</tabstop>
+  <tabstop>ThresholdMinValue</tabstop>
+  <tabstop>ThresholdMaxValue</tabstop>
+  <tabstop>ThresholdDefaultsValue</tabstop>
+  <tabstop>originalPageDisplayOnKeyHold</tabstop>
+  <tabstop>scrollArea_11</tabstop>
+  <tabstop>disableSmoothingBW</tabstop>
+  <tabstop>scrollArea_12</tabstop>
+  <tabstop>scrollArea_13</tabstop>
+  <tabstop>scrollArea_14</tabstop>
+  <tabstop>scrollArea_15</tabstop>
+  <tabstop>rectangularAreasSensitivityValue</tabstop>
+  <tabstop>scrollArea_10</tabstop>
+  <tabstop>cbForegroundLayerSeparateControl</tabstop>
+  <tabstop>scrollArea_19</tabstop>
+  <tabstop>cbTryVertHalfCorrection</tabstop>
+  <tabstop>cbTryDeskewAfterDewarp</tabstop>
+  <tabstop>despecklingDefaultsValue</tabstop>
+  <tabstop>cbCopyICCProfile</tabstop>
+  <tabstop>scrollArea_3</tabstop>
  </tabstops>
  <resources>
   <include location="../resources/resources.qrc"/>

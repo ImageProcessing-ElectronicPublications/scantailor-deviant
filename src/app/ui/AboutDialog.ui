@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>About Scan Tailor &quot;Universal&quot;</string>
   </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTabWidget" name="tabWidget">
@@ -125,7 +128,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-238</y>
+            <y>0</y>
             <width>430</width>
             <height>593</height>
            </rect>

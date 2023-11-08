@@ -48,6 +48,8 @@ PictureZonePropDialog::PictureZonePropDialog(
     connect(ui.eraser1, SIGNAL(toggled(bool)), SLOT(itemToggled(bool)));
     connect(ui.painter2, SIGNAL(toggled(bool)), SLOT(itemToggled(bool)));
     connect(ui.eraser3, SIGNAL(toggled(bool)), SLOT(itemToggled(bool)));
+
+    setFixedSize(sizeHint());
 }
 
 void

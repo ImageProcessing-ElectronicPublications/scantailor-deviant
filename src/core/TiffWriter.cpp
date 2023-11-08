@@ -270,7 +270,7 @@ TiffWriter::setDpm(TiffHandle const& tif, Dpm const& dpm)
 
     float xres = 0.01 * dpm.horizontal(); // cm
     float yres = 0.01 * dpm.vertical(); // cm
-    uint16 unit = RESUNIT_CENTIMETER;
+    uint16_t unit = RESUNIT_CENTIMETER;
 
     // If we have a round (or almost round) DPI, then
     // write it as DPI rather than dots per cm.
@@ -294,10 +294,10 @@ bool
 TiffWriter::writeBitonalOrIndexed8Image(
     TiffHandle const& tif, QImage const& image, bool multipage, int compression)
 {
-    TIFFSetField(tif.handle(), TIFFTAG_SAMPLESPERPIXEL, uint16(1));
+    TIFFSetField(tif.handle(), TIFFTAG_SAMPLESPERPIXEL, uint16_t(1));
 
-    uint16 bits_per_sample = 8;
-    uint16 photometric = PHOTOMETRIC_PALETTE;
+    uint16_t bits_per_sample = 8;
+    uint16_t photometric = PHOTOMETRIC_PALETTE;
     if (image.isGrayscale()) {
         photometric = PHOTOMETRIC_MINISBLACK;
     }
@@ -324,7 +324,7 @@ TiffWriter::writeBitonalOrIndexed8Image(
     default:;
     }
 
-    TIFFSetField(tif.handle(), TIFFTAG_COMPRESSION, uint16(compression));
+    TIFFSetField(tif.handle(), TIFFTAG_COMPRESSION, uint16_t(compression));
     TIFFSetField(tif.handle(), TIFFTAG_BITSPERSAMPLE, bits_per_sample);
     TIFFSetField(tif.handle(), TIFFTAG_PHOTOMETRIC, photometric);
     TIFFSetField(tif.handle(), TIFFTAG_FILLORDER, FILLORDER_MSB2LSB);
@@ -339,9 +339,9 @@ TiffWriter::writeBitonalOrIndexed8Image(
         if (color_table.size() > num_colors) {
             color_table.resize(num_colors);
         }
-        std::vector<uint16> pr(num_colors, 0);
-        std::vector<uint16> pg(num_colors, 0);
-        std::vector<uint16> pb(num_colors, 0);
+        std::vector<uint16_t> pr(num_colors, 0);
+        std::vector<uint16_t> pg(num_colors, 0);
+        std::vector<uint16_t> pb(num_colors, 0);
         for (int i = 0; i < color_table.size(); ++i) {
             QRgb const rgb = color_table[i];
             pr[i] = (0xFFFF * qRed(rgb) + 128) / 255;
@@ -379,9 +379,9 @@ TiffWriter::writeRGB32Image(
 {
     assert(image.format() == QImage::Format_RGB32);
 
-    TIFFSetField(tif.handle(), TIFFTAG_SAMPLESPERPIXEL, uint16(3));
-    TIFFSetField(tif.handle(), TIFFTAG_COMPRESSION, uint16(compression));
-    TIFFSetField(tif.handle(), TIFFTAG_BITSPERSAMPLE, uint16(8));
+    TIFFSetField(tif.handle(), TIFFTAG_SAMPLESPERPIXEL, uint16_t(3));
+    TIFFSetField(tif.handle(), TIFFTAG_COMPRESSION, uint16_t(compression));
+    TIFFSetField(tif.handle(), TIFFTAG_BITSPERSAMPLE, uint16_t(8));
     TIFFSetField(tif.handle(), TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
     if (GlobalStaticSettings::m_use_horizontal_predictor) {
         TIFFSetField(tif.handle(), TIFFTAG_PREDICTOR, PREDICTOR_HORIZONTAL);
@@ -423,9 +423,9 @@ TiffWriter::writeARGB32Image(
 {
     assert(image.format() == QImage::Format_ARGB32);
 
-    TIFFSetField(tif.handle(), TIFFTAG_SAMPLESPERPIXEL, uint16(4));
-    TIFFSetField(tif.handle(), TIFFTAG_COMPRESSION, uint16(compression));
-    TIFFSetField(tif.handle(), TIFFTAG_BITSPERSAMPLE, uint16(8));
+    TIFFSetField(tif.handle(), TIFFTAG_SAMPLESPERPIXEL, uint16_t(4));
+    TIFFSetField(tif.handle(), TIFFTAG_COMPRESSION, uint16_t(compression));
+    TIFFSetField(tif.handle(), TIFFTAG_BITSPERSAMPLE, uint16_t(8));
     TIFFSetField(tif.handle(), TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
     if (GlobalStaticSettings::m_use_horizontal_predictor) {
         TIFFSetField(tif.handle(), TIFFTAG_PREDICTOR, PREDICTOR_HORIZONTAL);

@@ -102,6 +102,12 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>offRB</tabstop>
+  <tabstop>autoRB</tabstop>
+  <tabstop>marginalRB</tabstop>
+  <tabstop>manualRB</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

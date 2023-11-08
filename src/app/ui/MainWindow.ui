@@ -941,6 +941,16 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>filterList</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>inverseOrderButton</tabstop>
+  <tabstop>focusButton</tabstop>
+  <tabstop>multiselectButton</tabstop>
+  <tabstop>thumbView</tabstop>
+  <tabstop>resetSortingBtn</tabstop>
+  <tabstop>sortOptions</tabstop>
+ </tabstops>
  <resources>
   <include location="../resources/resources.qrc"/>
  </resources>
