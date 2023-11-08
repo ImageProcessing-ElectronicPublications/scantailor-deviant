@@ -1,0 +1,948 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>783</width>
+    <height>464</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="cursor">
+    <cursorShape>ArrowCursor</cursorShape>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QFrame" name="imageViewFrame">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>1</horstretch>
+        <verstretch>1</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>783</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuDebug">
+    <property name="title">
+     <string>&amp;Tools</string>
+    </property>
+    <addaction name="actionFixDpi"/>
+    <addaction name="actionRelinking"/>
+    <addaction name="actionExport"/>
+    <addaction name="separator"/>
+    <addaction name="actionSettings"/>
+   </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionNewProject"/>
+    <addaction name="actionOpenProject"/>
+    <addaction name="separator"/>
+    <addaction name="actionSaveProject"/>
+    <addaction name="actionSaveProjectAs"/>
+    <addaction name="separator"/>
+    <addaction name="actionCloseProject"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionAbout_Qt"/>
+    <addaction name="actionAbout"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionGoToPage"/>
+    <addaction name="actionSelectPages"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuDebug"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="appStatusBar"/>
+  <widget class="QDockWidget" name="dockWidgetThumbnails">
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Thumbnails</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QToolButton" name="inverseOrderButton">
+           <property name="statusTip">
+            <string>Inverse page order</string>
+           </property>
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="toolButtonStyle">
+            <enum>Qt::ToolButtonIconOnly</enum>
+           </property>
+           <property name="arrowType">
+            <enum>Qt::DownArrow</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="focusButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="statusTip">
+            <string>Keep current page in view.</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../resources/resources.qrc">
+             <normaloff>:/icons/keep-in-view.png</normaloff>:/icons/keep-in-view.png</iconset>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="multiselectButton">
+           <property name="toolTip">
+            <string>Keep selection key pressed</string>
+           </property>
+           <property name="statusTip">
+            <string>Simulate press of the modifier key for fast page selection (Ctrl+CapsLock)</string>
+           </property>
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="icon">
+            <iconset resource="../resources/resources.qrc">
+             <normaloff>:/icons/multi_choice.png</normaloff>:/icons/multi_choice.png</iconset>
+           </property>
+           <property name="shortcut">
+            <string>Ctrl+CapsLock</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QGraphicsView" name="thumbView">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>1</horstretch>
+           <verstretch>1</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignHCenter|Qt::AlignTop</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="sortOptionsWgt" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QToolButton" name="resetSortingBtn">
+            <property name="statusTip">
+             <string>Reset sorting to default</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../resources/resources.qrc">
+              <normaloff>:/icons/gimp-reset.png</normaloff>:/icons/gimp-reset.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="sortOptions">
+            <property name="sizeAdjustPolicy">
+             <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget_4">
+   <property name="minimumSize">
+    <size>
+     <width>250</width>
+     <height>199</height>
+    </size>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Filters</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_5">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="StageListView" name="filterList">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="autoScroll">
+        <bool>false</bool>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="tabKeyNavigation">
+        <bool>false</bool>
+       </property>
+       <property name="showDropIndicator" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+       <property name="textElideMode">
+        <enum>Qt::ElideNone</enum>
+       </property>
+       <property name="showGrid">
+        <bool>false</bool>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+       <property name="cornerButtonEnabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QScrollArea" name="scrollArea">
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustIgnored</enum>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="scrollAreaWidgetContents_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>256</width>
+          <height>185</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="sizeConstraint">
+          <enum>QLayout::SetMaximumSize</enum>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="NonOwningWidget" name="filterOptions" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <widget class="QWidget" name="statusBarPanel" native="true">
+            <property name="geometry">
+             <rect>
+              <x>9</x>
+              <y>92</y>
+              <width>231</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item alignment="Qt::AlignRight">
+              <widget class="QLabel" name="statusLabelMousePos">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Mouse position</string>
+               </property>
+               <property name="statusTip">
+                <string>Mouse position relative to page</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="line_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="statusLabelPhysSize">
+               <property name="minimumSize">
+                <size>
+                 <width>31</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Physical size</string>
+               </property>
+               <property name="statusTip">
+                <string>Physical size of image. (Click to change units of measurement)</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="textInteractionFlags">
+                <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="line">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="statusLabelPageNo">
+               <property name="minimumSize">
+                <size>
+                 <width>31</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Page number</string>
+               </property>
+               <property name="statusTip">
+                <string>Position of the selected page in current order</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="textInteractionFlags">
+                <set>Qt::LinksAccessibleByMouse</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>10</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="actionSaveProject">
+   <property name="text">
+    <string>&amp;Save Project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSaveProjectAs">
+   <property name="text">
+    <string>Save Project &amp;As...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionNextPage">
+   <property name="text">
+    <string notr="true">Next Page</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Next Page</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Next Page</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">PgDown</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionPrevPage">
+   <property name="text">
+    <string notr="true">Previous Page</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Previous Page</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Previous Page</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">PgUp</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionNewProject">
+   <property name="text">
+    <string>&amp;New Project...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionOpenProject">
+   <property name="text">
+    <string>&amp;Open Project...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionPrevPageQ">
+   <property name="text">
+    <string notr="true">Previous Page</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Previous Page</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Previous Page</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Q</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionNextPageW">
+   <property name="text">
+    <string notr="true">Next Page</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Next Page</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Next Page</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">W</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionCloseProject">
+   <property name="text">
+    <string>&amp;Close Project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>&amp;Settings...</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"/>
+   </property>
+  </action>
+  <action name="actionFirstPage">
+   <property name="text">
+    <string notr="true">First Page</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">First Page</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">First Page</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Home</string>
+   </property>
+  </action>
+  <action name="actionLastPage">
+   <property name="text">
+    <string notr="true">Last Page</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Last Page</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Last Page</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">End</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="actionFixDpi">
+   <property name="text">
+    <string>Fix &amp;DPI...</string>
+   </property>
+  </action>
+  <action name="actionRelinking">
+   <property name="text">
+    <string>&amp;Relinking...</string>
+   </property>
+  </action>
+  <action name="actionSwitchFilter1">
+   <property name="text">
+    <string notr="true">Switch filter to orientation</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Switch filter to orientation</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Switch filter to orientation</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+1</string>
+   </property>
+  </action>
+  <action name="actionSwitchFilter2">
+   <property name="text">
+    <string notr="true">Switch filter to orientation</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Switch filter to orientation</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Switch filter to split pages</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+2</string>
+   </property>
+  </action>
+  <action name="actionSwitchFilter3">
+   <property name="text">
+    <string notr="true">Switch filter to orientation</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Switch filter to orientation</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Switch filter to deskew</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+3</string>
+   </property>
+  </action>
+  <action name="actionSwitchFilter4">
+   <property name="text">
+    <string notr="true">Switch filter to orientation</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Switch filter to orientation</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Switch filter to select content</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+4</string>
+   </property>
+  </action>
+  <action name="actionSwitchFilter5">
+   <property name="text">
+    <string notr="true">Switch filter to orientation</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Switch filter to orientation</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Switch filter to margins</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+5</string>
+   </property>
+  </action>
+  <action name="actionSwitchFilter6">
+   <property name="text">
+    <string notr="true">Switch filter to orientation</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Switch filter to orientation</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Switch filter to output</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+6</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="text">
+    <string>&amp;Export...</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt">
+   <property name="text">
+    <string>About &amp;Qt</string>
+   </property>
+  </action>
+  <action name="actionJumpPageF">
+   <property name="text">
+    <string notr="true">Jump Forward</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Jump Forward</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Jump Forward</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+PgDown</string>
+   </property>
+  </action>
+  <action name="actionJumpPageB">
+   <property name="text">
+    <string notr="true">Jump Backward</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Jump Backward</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Jump Backward</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+PgUp</string>
+   </property>
+  </action>
+  <action name="actionFirstSelectedPage">
+   <property name="text">
+    <string notr="true">First Selected Page</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">First Selected Page</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">First Selected Page</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Alt+Home</string>
+   </property>
+  </action>
+  <action name="actionLastSelectedPage">
+   <property name="text">
+    <string notr="true">Last Selected Page</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Last Selected Page</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Last Selected Page</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Alt+End</string>
+   </property>
+  </action>
+  <action name="actionNextSelectedPage">
+   <property name="text">
+    <string notr="true">Next Selected Page</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Next Selected Page</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Next Selected Page</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Alt+PgDown</string>
+   </property>
+  </action>
+  <action name="actionPrevSelectedPage">
+   <property name="text">
+    <string notr="true">Previous Selected Page</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">Previous Selected Page</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">Previous Selected Page</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Alt+PgUp</string>
+   </property>
+  </action>
+  <action name="actionInsertEmptyPgBefore">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/icons/insert-before-16.png</normaloff>:/icons/insert-before-16.png</iconset>
+   </property>
+   <property name="text">
+    <string notr="true">Insert before	Ctrl+Shift+B</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert before</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+B</string>
+   </property>
+  </action>
+  <action name="actionInsertEmptyPgAfter">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/icons/insert-after-16.png</normaloff>:/icons/insert-after-16.png</iconset>
+   </property>
+   <property name="text">
+    <string notr="true">Insert after	Ctrl+Shift+A</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert after</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+A</string>
+   </property>
+  </action>
+  <action name="actionCopySourceFileName">
+   <property name="icon">
+    <iconset theme="copy">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Copy source file name(s)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionCopyOutputFileName">
+   <property name="text">
+    <string>Copy output file name(s)</string>
+   </property>
+  </action>
+  <action name="actionCopyPageNumber">
+   <property name="text">
+    <string>Copy page number(s)</string>
+   </property>
+  </action>
+  <action name="actionGoToPage">
+   <property name="text">
+    <string>Go to page...</string>
+   </property>
+  </action>
+  <action name="actionSelectPages">
+   <property name="text">
+    <string>Select pages...</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>StageListView</class>
+   <extends>QTableView</extends>
+   <header>StageListView.h</header>
+  </customwidget>
+  <customwidget>
+   <class>NonOwningWidget</class>
+   <extends>QWidget</extends>
+   <header>NonOwningWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../resources/resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

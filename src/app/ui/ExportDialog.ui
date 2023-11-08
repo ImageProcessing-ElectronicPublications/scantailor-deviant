@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ExportDialog</class>
+ <widget class="QDialog" name="ExportDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>478</width>
+    <height>509</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Export</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Main</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QGroupBox" name="gbDataToExport">
+         <property name="title">
+          <string>Data to export:</string>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QCheckBox" name="cbExportImage">
+            <property name="toolTip">
+             <string>Image as it is in ./out subfolder</string>
+            </property>
+            <property name="text">
+             <string>Whole image</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbExportForeground">
+            <property name="toolTip">
+             <string>Only black (#000000) and white (#ffffff) pixels of the image</string>
+            </property>
+            <property name="text">
+             <string>Foreground (b/w text and graphics)</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbExportBackground">
+            <property name="toolTip">
+             <string>Only non black (&gt; #000000) pixels of the image</string>
+            </property>
+            <property name="text">
+             <string>Background (color and grayscale images)</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbExportAutomask">
+            <property name="toolTip">
+             <string>Automask could be found in ./out/cache/automask and contains autodetected mask before any zones are applied</string>
+            </property>
+            <property name="text">
+             <string>Automask (b/w mask for auto layer)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbExportMask">
+            <property name="toolTip">
+             <string>Binarized and inverted background</string>
+            </property>
+            <property name="text">
+             <string>Mask (b/w mask for background)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbExportZones">
+            <property name="toolTip">
+             <string>Some pages might have user defined zones to fill with color or indicate some content. Their coordinates may be exported to tsv text file.</string>
+            </property>
+            <property name="text">
+             <string>Coordinates of zones</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="DefaultOutputFolder">
+         <property name="text">
+          <string>Default export folder</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBoxExport">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="title">
+          <string>Output Directory</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLineEdit" name="outExportDirLine">
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="outExportDirBrowseBtn">
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="cbExportSelected">
+           <property name="text">
+            <string>Export selected pages only</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Rare options</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QCheckBox" name="cbMultipageOutput">
+         <property name="text">
+          <string>Save images as multipage tiff file</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="GenerateBlankBackSubscans">
+         <property name="text">
+          <string>Generate blank background subscans</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="UseSepSuffixForPics">
+         <property name="toolTip">
+          <string>For better compatibility with DjVu Imager</string>
+         </property>
+         <property name="text">
+          <string>Use .sep.tif extension instead of .tif for background subscans</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="cbExportWithoutOutputStage">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This will have effect if only Export Whole image is checked.&lt;/p&gt;&lt;p&gt;The exported image will be drawn with colors of original image.&lt;/p&gt;&lt;p&gt;Only fill zones will be applied. In other words the exported&lt;/p&gt;&lt;p&gt;image will be a part of original image after split, rotation,&lt;/p&gt;&lt;p&gt;deskew, applying margins and fill zones. This require image&lt;/p&gt;&lt;p&gt;reprocessing so it may be time consuming.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Skip processing at Output stage (except for Fill Zones) 
+for exported image (lengthy)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="KeepOriginalColorIllumForeSubscans">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This will have effect if only Export Foreground is checked.&lt;/p&gt;&lt;p&gt;Foreground is a b/w image with a black content of resulting&lt;/p&gt;&lt;p&gt;image drown on white. With this mode on every black pixel will&lt;/p&gt;&lt;p&gt;be replaced with pixel on the same position taken from original&lt;/p&gt;&lt;p&gt;image. This may let you get colored or grayscale text instead of&lt;/p&gt;&lt;p&gt;binarized black one. Require image reprocessing so may be&lt;/p&gt;&lt;p&gt;time consuming.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Skip processing at Output stage (except for Fill Zones) 
+for content in foreground subscans (lengthy)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QProgressBar" name="progressBar">
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="textVisible">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="btnResetToDefault">
+        <property name="toolTip">
+         <string>Reset export settings to default values</string>
+        </property>
+        <property name="text">
+         <string>Restore Defaults</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelFilesProcessed">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>1</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string notr="true">TextLabel</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ExportButton">
+        <property name="text">
+         <string>Export</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="OkButton">
+        <property name="text">
+         <string>Close</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>OkButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ExportDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>438</x>
+     <y>162</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>242</x>
+     <y>89</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

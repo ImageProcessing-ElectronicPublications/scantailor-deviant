@@ -1,0 +1,55 @@
+scantailor-universal (0.2.14-0ubuntu1) bionic; urgency=medium
+
+  * New thresholds at output stage
+  * Order by dewarping mode at output stage
+  * 1200 dpi in the list of default values
+  * Adapt content selection moving approach from STA
+
+ -- Alexander Trufanov <trufanovan@gmail.com>  Sat, 18 Aug 2023 16:00:00 +0300
+
+
+  * Settings: keep ICC profile of original image
+    (off by default, req Ubuntu 19.04+, libexiv2-dev >= 0.26)
+  * Update russian translation
+  * Some bugfixes
+
+ -- Alexander Trufanov <trufanovan@gmail.com>  Sun, 17 Oct 2021 17:00:00 +0300
+
+scantailor-universal (0.2.12-0ubuntu1) bionic; urgency=medium
+
+  * Basic support for app styling
+  * Use multithreading while exporting images
+  * A bugfix
+
+ -- Alexander Trufanov <trufanovan@gmail.com>  Tue, 20 Apr 2021 19:00:00 +0300
+
+scantailor-universal (0.2.11-0ubuntu1) bionic; urgency=medium
+
+  * Fix a bug
+  * Experimental support of importing JPEG 2000 (*.jp2) images via libopenjp2
+  * Mention STU version in software tiff tag in output file
+
+ -- Alexander Trufanov <trufanovan@gmail.com>  Sat, 27 Feb 2021 13:15:00 +0300
+
+scantailor-universal (0.2.10-0ubuntu1) bionic; urgency=medium
+
+  * Multiple bugfixes
+  * Separate settings for b/w and color tiff compression methods
+  * Use libcanberra to play beep sound on bulk processing completion [Linux]
+
+ -- Alexander Trufanov <trufanovan@gmail.com>  Sat, 6 Feb 2021 10:00:00 +0300
+
+scantailor-universal (0.2.9-0ubuntu1) bionic; urgency=medium
+
+  * Ellipse zones in Output processing stage
+  * Allow to optionally remove input files too in pages remove dialog
+  * Improve Zone dragging behaviour
+  * Bugfixes
+
+ -- Alexander Trufanov <trufanovan@gmail.com>  Fri, 14 Nov 2020 22:50:00 +0300
+
+scantailor-universal (0.2.8-0ubuntu1) bionic; urgency=medium
+
+  * First release on launchpad
+
+ -- Alexander Trufanov <trufanovan@gmail.com>  Fri, 13 Nov 2020 00:03:41 +0300
