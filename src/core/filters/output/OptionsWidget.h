@@ -25,8 +25,6 @@
 #include "PageId.h"
 #include "PageSelectionAccessor.h"
 #include "ColorParams.h"
-#include "DewarpingMode.h"
-#include "DepthPerception.h"
 #include "DespeckleLevel.h"
 #include "Dpi.h"
 #include "ImageViewTab.h"
@@ -64,18 +62,11 @@ public:
         return m_lastTab;
     }
 
-    DepthPerception const& depthPerception() const
-    {
-        return m_depthPerception;
-    }
 signals:
     void despeckleLevelChanged(DespeckleLevel level, bool* handled);
 
-    void depthPerceptionChanged(double val);
 public slots:
     void tabChanged(ImageViewTab tab);
-
-    void distortionModelChanged(dewarping::DistortionModel const& model);
 
     void settingsChanged();
 
@@ -96,12 +87,6 @@ private slots:
     void despeckleNormalSelected();
 
     void despeckleAggressiveSelected();
-
-    void on_depthPerceptionSlider_valueChanged(int value);
-
-    void applyDepthPerceptionClicked();
-
-    void dewarpingStatusButtonClicked();
 
     void applyDespeckleButtonClicked();
 
@@ -161,10 +146,6 @@ private:
 
     void applyDespeckleConfirmed(std::set<PageId> const& pages);
 
-    void dewarpingChanged(std::set<PageId> const& pages, DewarpingMode const& mode);
-
-    void applyDepthPerceptionConfirmed(std::set<PageId> const& pages);
-
     void changeColorMode(ColorParams::ColorMode const mode);
 
     bool eventFilter(QObject* obj, QEvent* event);
@@ -178,8 +159,6 @@ private:
     void updateColorsDisplay();
 
     void updateLayersDisplay();
-
-    void updateDewarpingDisplay();
 
     void updateModeValueText();
 
@@ -207,8 +186,6 @@ private:
     PageId m_pageId;
     Dpi m_outputDpi;
     ColorParams m_colorParams;
-    DepthPerception m_depthPerception;
-    DewarpingMode m_dewarpingMode;
     DespeckleLevel m_despeckleLevel;
     ImageViewTab m_lastTab;
     int m_ignoreThresholdChanges;

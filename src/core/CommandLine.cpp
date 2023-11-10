@@ -282,7 +282,6 @@ CommandLine::setup()
     m_startFilterIdx = fetchStartFilterIdx();
     m_endFilterIdx = fetchEndFilterIdx();
     m_matchLayoutTolerance = fetchMatchLayoutTolerance();
-    m_dewarpingMode = fetchDewarpingMode();
     m_compressionBW = fetchCompressionBW();
     m_compressionColor = fetchCompressionColor();
     m_language = fetchLanguage();
@@ -774,16 +773,6 @@ CommandLine::fetchEndFilterIdx()
     return m_options.value("end-filter").toInt() - 1;
 }
 
-output::DewarpingMode
-CommandLine::fetchDewarpingMode()
-{
-    if (!hasDewarping()) {
-        return output::DewarpingMode::OFF;
-    }
-
-    return output::DewarpingMode(m_options.value("dewarping").toLower());
-}
-
 output::DespeckleLevel
 CommandLine::fetchDespeckleLevel()
 {
@@ -792,16 +781,6 @@ CommandLine::fetchDespeckleLevel()
     }
 
     return output::despeckleLevelFromString(m_options.value("despeckle"));
-}
-
-output::DepthPerception
-CommandLine::fetchDepthPerception()
-{
-    if (!hasDepthPerception()) {
-        return output::DepthPerception();
-    }
-
-    return output::DepthPerception(m_options.value("depth-perception"));
 }
 
 float

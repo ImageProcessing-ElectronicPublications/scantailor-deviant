@@ -46,13 +46,8 @@ SET(
         DespeckleView.cpp DespeckleView.h
         DespeckleVisualization.cpp DespeckleVisualization.h
         DespeckleLevel.cpp DespeckleLevel.h
-        DewarpingView.cpp DewarpingView.h
-        DewarpingMode.cpp DewarpingMode.h
-        ChangeDewarpingWidget.cpp ChangeDewarpingWidget.h
-        DepthPerception.cpp DepthPerception.h
         OrderByModeProvider.cpp OrderByModeProvider.h
         OrderBySourceColor.cpp OrderBySourceColor.h
-        OrderByDewarpingModeProvider.cpp OrderByDewarpingModeProvider.h
         ${exiv2_sources}
 )
 SOURCE_GROUP("Sources" FILES ${sources})

@@ -31,8 +31,6 @@
 #include "filters/output/ColorParams.h"
 #include "filters/output/Params.h"
 #include "filters/output/DespeckleLevel.h"
-#include "filters/output/DewarpingMode.h"
-#include "filters/output/DepthPerception.h"
 #include "filters/page_layout/Settings.h"
 #include "filters/page_layout/Alignment.h"
 #include "ImageFileInfo.h"
@@ -374,17 +372,9 @@ public:
     {
         return m_endFilterIdx;
     }
-    output::DewarpingMode getDewarpingMode() const
-    {
-        return m_dewarpingMode;
-    }
     output::DespeckleLevel getDespeckleLevel() const
     {
         return m_despeckleLevel;
-    }
-    output::DepthPerception getDepthPerception() const
-    {
-        return m_depthPerception;
     }
     float getMatchLayoutTolerance() const
     {
@@ -485,9 +475,7 @@ private:
     double m_skewDeviation;
     int m_startFilterIdx;
     int m_endFilterIdx;
-    output::DewarpingMode m_dewarpingMode;
     output::DespeckleLevel m_despeckleLevel;
-    output::DepthPerception m_depthPerception;
     float m_matchLayoutTolerance;
 
     bool parseCli(QStringList const& argv);
@@ -526,9 +514,7 @@ private:
     double fetchSkewDeviation();
     int fetchStartFilterIdx();
     int fetchEndFilterIdx();
-    output::DewarpingMode fetchDewarpingMode();
     output::DespeckleLevel fetchDespeckleLevel();
-    output::DepthPerception fetchDepthPerception();
     float fetchMatchLayoutTolerance();
     QString fetchCompressionBW() const;
     QString fetchCompressionColor() const;

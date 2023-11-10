@@ -487,13 +487,6 @@ ConsoleBatch::setupOutput(std::set<PageId> allPages)
             params.setDespeckleLevel(cli.getDespeckleLevel());
         }
 
-        if (cli.hasDewarping()) {
-            params.setDewarpingMode(cli.getDewarpingMode());
-        }
-        if (cli.hasDepthPerception()) {
-            params.setDepthPerception(cli.getDepthPerception());
-        }
-
         if (cli.hasTiffCompressionBW()) {
             GlobalStaticSettings::setTiffCompressionBW(cli.getTiffCompressionBW());
         }

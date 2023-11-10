@@ -41,9 +41,6 @@ Params::Params()
 Params::Params(QDomElement const& el)
     :   RegenParams(),
         m_dpi(XmlUnmarshaller::dpi(el.namedItem("dpi").toElement())),
-        m_distortionModel(el.namedItem("distortion-model").toElement()),
-        m_depthPerception(el.attribute("depthPerception")),
-        m_dewarpingMode(el.attribute("dewarpingMode")),
         m_despeckleLevel(despeckleLevelFromString(el.attribute("despeckleLevel")))
 //        m_TiffCompression(el.attribute("tiff-compression"))
 
@@ -66,9 +63,6 @@ Params::toXml(QDomDocument& doc, QString const& name) const
     XmlMarshaller marshaller(doc);
 
     QDomElement el(doc.createElement(name));
-    el.appendChild(m_distortionModel.toXml(doc, "distortion-model"));
-    el.setAttribute("depthPerception", m_depthPerception.toString());
-    el.setAttribute("dewarpingMode", m_dewarpingMode.toString());
     el.setAttribute("despeckleLevel", despeckleLevelToString(m_despeckleLevel));
 //    el.setAttribute("tiff-compression", m_TiffCompression);
     el.appendChild(marshaller.dpi(m_dpi, "dpi"));
