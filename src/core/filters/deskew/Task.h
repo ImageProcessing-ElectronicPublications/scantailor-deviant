@@ -23,59 +23,37 @@
 #include "RefCountable.h"
 #include "FilterResult.h"
 #include "PageId.h"
-#include <memory>
 
 class TaskStatus;
 class FilterData;
-class QImage;
-class QSize;
-class Dpi;
-class DebugImages;
-
-namespace imageproc
-{
-class BinaryImage;
-};
 
 namespace select_content
 {
-class Task;
+    class Task;
 }
 
 namespace deskew
 {
 
 class Filter;
-class Settings;
 
 class Task : public RefCountable
 {
     DECLARE_NON_COPYABLE(Task)
 public:
-    Task(IntrusivePtr<Filter> const& filter,
-         IntrusivePtr<Settings> const& settings,
-         IntrusivePtr<select_content::Task> const& next_task,
-         PageId const& page_id, bool batch_processing, bool debug);
+    Task(IntrusivePtr<Filter> const& filter, 
+        IntrusivePtr<select_content::Task> const& next_task,
+        PageId const& page_id, bool batch_processing);
 
     virtual ~Task();
 
     FilterResultPtr process(
         TaskStatus const& status, FilterData const& data);
 private:
-    class UiUpdater;
-
-    static void cleanup(
-        TaskStatus const& status,
-        imageproc::BinaryImage& img, Dpi const& dpi);
-
-    static int from150dpi(int size, int target_dpi);
-
-    static QSize from150dpi(QSize const& size, Dpi const& target_dpi);
+    class NoDistortionUiUpdater;
 
     IntrusivePtr<Filter> m_ptrFilter;
-    IntrusivePtr<Settings> m_ptrSettings;
     IntrusivePtr<select_content::Task> m_ptrNextTask;
-    std::unique_ptr<DebugImages> m_ptrDbg;
     PageId m_pageId;
     bool m_batchProcessing;
 };

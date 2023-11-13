@@ -23,28 +23,23 @@
 #include "RefCountable.h"
 #include "IntrusivePtr.h"
 
-class QSizeF;
 class PageInfo;
 class AbstractFilterDataCollector;
 class ImageTransformation;
 
 namespace select_content
 {
-class CacheDrivenTask;
+    class CacheDrivenTask;
 }
 
 namespace deskew
 {
 
-class Settings;
-
 class CacheDrivenTask : public RefCountable
 {
     DECLARE_NON_COPYABLE(CacheDrivenTask)
 public:
-    CacheDrivenTask(
-        IntrusivePtr<Settings> const& settings,
-        IntrusivePtr<select_content::CacheDrivenTask> const& next_task);
+    CacheDrivenTask(IntrusivePtr<select_content::CacheDrivenTask> const& next_task);
 
     virtual ~CacheDrivenTask();
 
@@ -53,7 +48,6 @@ public:
         ImageTransformation const& xform);
 private:
     IntrusivePtr<select_content::CacheDrivenTask> m_ptrNextTask;
-    IntrusivePtr<Settings> m_ptrSettings;
 };
 
 } // namespace deskew

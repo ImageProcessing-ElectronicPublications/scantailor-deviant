@@ -25,25 +25,21 @@
 #include "IntrusivePtr.h"
 #include "FilterResult.h"
 #include "SafeDeletingQObjectPtr.h"
-#include "Settings.h"
 
-class PageId;
-class QString;
 class PageSelectionAccessor;
 
 namespace select_content
 {
-class Task;
-class CacheDrivenTask;
+    class Task;
+    class CacheDrivenTask;
 }
 
 namespace deskew
 {
 
-class OptionsWidget;
+class OptionsWidget; 
 class Task;
 class CacheDrivenTask;
-class Settings;
 
 class Filter : public AbstractFilter
 {
@@ -61,17 +57,6 @@ public:
 
     virtual void preUpdateUI(FilterUiInterface* ui, PageId const& page_id);
 
-    virtual void updateStatistics()
-    {
-        m_ptrSettings->updateDeviation();
-    }
-
-    virtual int selectedPageOrder() const;
-
-    virtual void selectPageOrder(int option);
-
-    virtual std::vector<PageOrderOption> pageOrderOptions() const;
-
     virtual QDomElement saveSettings(
         ProjectWriter const& writer, QDomDocument& doc) const;
 
@@ -85,25 +70,13 @@ public:
 
     IntrusivePtr<CacheDrivenTask> createCacheDrivenTask(
         IntrusivePtr<select_content::CacheDrivenTask> const& next_task);
-
+    
     OptionsWidget* optionsWidget()
     {
         return m_ptrOptionsWidget.get();
     }
-    Settings* getSettings()
-    {
-        return m_ptrSettings.get();
-    }
-    void invalidateSetting(PageId const& page_id);
 private:
-    void writePageSettings(
-        QDomDocument& doc, QDomElement& filter_el,
-        PageId const& page_id, int numeric_id) const;
-
-    IntrusivePtr<Settings> m_ptrSettings;
     SafeDeletingQObjectPtr<OptionsWidget> m_ptrOptionsWidget;
-    std::vector<PageOrderOption> m_pageOrderOptions;
-    int m_selectedPageOrder;
 };
 
 } // namespace deskew

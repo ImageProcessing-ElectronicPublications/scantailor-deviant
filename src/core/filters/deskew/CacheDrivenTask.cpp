@@ -17,12 +17,9 @@
 */
 
 #include "CacheDrivenTask.h"
-#include "Thumbnail.h"
-#include "IncompleteThumbnail.h"
-#include "Settings.h"
 #include "PageInfo.h"
 #include "ImageTransformation.h"
-#include "AbstractFilterDataCollector.h"
+#include "ThumbnailBase.h"
 #include "ThumbnailCollector.h"
 #include "filters/select_content/CacheDrivenTask.h"
 
@@ -30,10 +27,8 @@ namespace deskew
 {
 
 CacheDrivenTask::CacheDrivenTask(
-    IntrusivePtr<Settings> const& settings,
     IntrusivePtr<select_content::CacheDrivenTask> const& next_task)
-    :   m_ptrNextTask(next_task),
-        m_ptrSettings(settings)
+    : m_ptrNextTask(next_task)
 {
 }
 
@@ -46,40 +41,7 @@ CacheDrivenTask::process(
     PageInfo const& page_info, AbstractFilterDataCollector* collector,
     ImageTransformation const& xform)
 {
-    Dependencies const deps(xform.preCropArea(), xform.preRotation());
-    std::unique_ptr<Params> params(m_ptrSettings->getPageParams(page_info.id()));
-
-    bool need_reprocess(!params.get());
-    if (!need_reprocess) {
-        Params p(*params.get());
-        Params::Regenerate val = p.getForceReprocess();
-        need_reprocess = val & Params::RegenerateThumbnail;
-        if (need_reprocess && !m_ptrNextTask) {
-            val = (Params::Regenerate)(val & ~Params::RegenerateThumbnail);
-            p.setForceReprocess(val);
-            m_ptrSettings->setPageParams(page_info.id(), p);
-        }
-    }
-
-    if (need_reprocess || !deps.matches(params->dependencies())) {
-
-        if (ThumbnailCollector* thumb_col = dynamic_cast<ThumbnailCollector*>(collector)) {
-            thumb_col->processThumbnail(
-                std::unique_ptr<QGraphicsItem>(
-                    new IncompleteThumbnail(
-                        thumb_col->thumbnailCache(),
-                        thumb_col->maxLogicalThumbSize(),
-                        page_info.imageId(), xform
-                    )
-                )
-            );
-        }
-
-        return;
-    }
-
     ImageTransformation new_xform(xform);
-    new_xform.setPostRotation(params->deskewAngle());
 
     if (m_ptrNextTask) {
         m_ptrNextTask->process(page_info, collector, new_xform);
@@ -89,10 +51,10 @@ CacheDrivenTask::process(
     if (ThumbnailCollector* thumb_col = dynamic_cast<ThumbnailCollector*>(collector)) {
         thumb_col->processThumbnail(
             std::unique_ptr<QGraphicsItem>(
-                new Thumbnail(
+                new ThumbnailBase(
                     thumb_col->thumbnailCache(),
                     thumb_col->maxLogicalThumbSize(),
-                    page_info.imageId(), new_xform, params->isDeviant(m_ptrSettings->std(), m_ptrSettings->maxDeviation())
+                    page_info.imageId(), xform
                 )
             )
         );
