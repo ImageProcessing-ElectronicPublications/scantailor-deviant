@@ -20,6 +20,7 @@
 #include "OptionsWidget.h"
 #include "Task.h"
 #include "CacheDrivenTask.h"
+#include "Settings.h"
 #include "AbstractRelinker.h"
 #include <QCoreApplication>
 #include <QDomDocument>
@@ -30,9 +31,11 @@ namespace deskew
 {
 
 Filter::Filter(PageSelectionAccessor const& page_selection_accessor)
+    : m_ptrSettings(new Settings)
 {
-    if (CommandLine::get().isGui()) {
-        m_ptrOptionsWidget.reset(new OptionsWidget());
+    if (CommandLine::get().isGui())
+    {
+        m_ptrOptionsWidget.reset(new OptionsWidget(m_ptrSettings, page_selection_accessor));
     }
 }
 

@@ -26,20 +26,23 @@
 #include "FilterResult.h"
 #include "SafeDeletingQObjectPtr.h"
 
+class PageId;
+class QString;
 class PageSelectionAccessor;
 
 namespace select_content
 {
-    class Task;
-    class CacheDrivenTask;
+class Task;
+class CacheDrivenTask;
 }
 
 namespace deskew
 {
 
-class OptionsWidget; 
+class OptionsWidget;
 class Task;
 class CacheDrivenTask;
+class Settings;
 
 class Filter : public AbstractFilter
 {
@@ -70,12 +73,21 @@ public:
 
     IntrusivePtr<CacheDrivenTask> createCacheDrivenTask(
         IntrusivePtr<select_content::CacheDrivenTask> const& next_task);
-    
+
     OptionsWidget* optionsWidget()
     {
         return m_ptrOptionsWidget.get();
     }
+    Settings* getSettings()
+    {
+        return m_ptrSettings.get();
+    };
 private:
+    void writePageSettings(
+        QDomDocument& doc, QDomElement& filter_el,
+        PageId const& page_id, int numeric_id) const;
+
+    IntrusivePtr<Settings> m_ptrSettings;
     SafeDeletingQObjectPtr<OptionsWidget> m_ptrOptionsWidget;
 };
 
