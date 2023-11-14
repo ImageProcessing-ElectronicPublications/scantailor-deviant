@@ -5,11 +5,18 @@ INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_BINARY_DIR}")
 SET(
         sources
         CacheDrivenTask.cpp CacheDrivenTask.h
+        Dependencies.cpp Dependencies.h
+        DewarpingMode.cpp DewarpingMode.h
+        DewarpingParams.cpp DewarpingParams.h
+        DistortionType.cpp DistortionType.h
         Filter.cpp Filter.h
-        Settings.cpp Settings.h
-        Task.cpp Task.h
         ImageView.cpp ImageView.h
         OptionsWidget.cpp OptionsWidget.h
+        Params.cpp Params.h
+        PerspectiveParams.cpp PerspectiveParams.h
+        RotationParams.cpp RotationParams.h
+        Settings.cpp Settings.h
+        Task.cpp Task.h
 )
 SOURCE_GROUP("Sources" FILES ${sources})
 FILE(GLOB ui_files "ui/*.ui")

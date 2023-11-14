@@ -19,11 +19,27 @@
 #ifndef DESKEW_SETTINGS_H_
 #define DESKEW_SETTINGS_H_
 
-#include "NonCopyable.h"
 #include "RefCountable.h"
+#include "NonCopyable.h"
+#include "PageId.h"
+#include "Params.h"
+#include "DistortionType.h"
+#include <QMutex>
+#include <memory>
+#include <map>
+#include <set>
+
+class AbstractRelinker;
+
+namespace dewarping
+{
+    class DepthPerception;
+}
 
 namespace deskew
 {
+
+class DistortionType;
 
 class Settings : public RefCountable
 {
@@ -32,6 +48,27 @@ public:
     Settings();
 
     virtual ~Settings();
+
+    void clear();
+
+    void performRelinking(AbstractRelinker const& relinker);
+
+    void setPageParams(PageId const& page_id, Params const& params);
+
+    std::unique_ptr<Params> getPageParams(PageId const& page_id) const;
+
+    DistortionType getDistortionType(PageId const& page_id) const;
+
+    void setDistortionType(
+        std::set<PageId> const& pages, DistortionType const& distortion_type);
+
+    void setDepthPerception(
+        std::set<PageId> const& pages, dewarping::DepthPerception const& depth_perception);
+private:
+    typedef std::map<PageId, Params> PerPageParams;
+
+    mutable QMutex m_mutex;
+    PerPageParams m_perPageParams;
 };
 
 } // namespace deskew
