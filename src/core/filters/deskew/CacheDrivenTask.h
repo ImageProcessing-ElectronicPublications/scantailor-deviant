@@ -35,11 +35,15 @@ namespace select_content
 namespace deskew
 {
 
+class Settings;
+
 class CacheDrivenTask : public RefCountable
 {
     DECLARE_NON_COPYABLE(CacheDrivenTask)
 public:
-    CacheDrivenTask(IntrusivePtr<select_content::CacheDrivenTask> const& next_task);
+    CacheDrivenTask(
+        IntrusivePtr<Settings> const& settings,
+        IntrusivePtr<select_content::CacheDrivenTask> const& next_task);
 
     virtual ~CacheDrivenTask();
 
@@ -47,6 +51,7 @@ public:
         PageInfo const& page_info, AbstractFilterDataCollector* collector,
         ImageTransformation const& xform);
 private:
+    IntrusivePtr<Settings> m_ptrSettings;
     IntrusivePtr<select_content::CacheDrivenTask> m_ptrNextTask;
 };
 

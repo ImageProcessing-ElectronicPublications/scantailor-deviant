@@ -19,6 +19,7 @@
 #include "Task.h"
 #include "Filter.h"
 #include "OptionsWidget.h"
+#include "Settings.h"
 #include "FilterData.h"
 #include "filters/select_content/Task.h"
 #include "FilterUiInterface.h"
@@ -61,9 +62,11 @@ private:
 
 Task::Task(
     IntrusivePtr<Filter> const& filter,
+    IntrusivePtr<Settings> const& settings,
     IntrusivePtr<select_content::Task> const& next_task,
     PageId const& page_id, bool batch_processing)
     : m_ptrFilter(filter)
+    , m_ptrSettings(settings)
     , m_ptrNextTask(next_task)
     , m_pageId(page_id)
     , m_batchProcessing(batch_processing)

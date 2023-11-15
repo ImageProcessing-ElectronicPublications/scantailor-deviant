@@ -36,12 +36,14 @@ namespace deskew
 {
 
 class Filter;
+class Settings;
 
 class Task : public RefCountable
 {
     DECLARE_NON_COPYABLE(Task)
 public:
-    Task(IntrusivePtr<Filter> const& filter, 
+    Task(IntrusivePtr<Filter> const& filter,
+        IntrusivePtr<Settings> const& settings,
         IntrusivePtr<select_content::Task> const& next_task,
         PageId const& page_id, bool batch_processing);
 
@@ -53,6 +55,7 @@ private:
     class NoDistortionUiUpdater;
 
     IntrusivePtr<Filter> m_ptrFilter;
+    IntrusivePtr<Settings> m_ptrSettings;
     IntrusivePtr<select_content::Task> m_ptrNextTask;
     PageId m_pageId;
     bool m_batchProcessing;

@@ -17,6 +17,7 @@
 */
 
 #include "CacheDrivenTask.h"
+#include "Settings.h"
 #include "PageInfo.h"
 #include "ImageTransformation.h"
 #include "ThumbnailBase.h"
@@ -27,8 +28,10 @@ namespace deskew
 {
 
 CacheDrivenTask::CacheDrivenTask(
+    IntrusivePtr<Settings> const& settings,
     IntrusivePtr<select_content::CacheDrivenTask> const& next_task)
-    : m_ptrNextTask(next_task)
+    : m_ptrSettings(settings)
+    , m_ptrNextTask(next_task)
 {
 }
 

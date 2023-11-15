@@ -86,7 +86,7 @@ Filter::createTask(
 {
     return IntrusivePtr<Task>(
         new Task(
-            IntrusivePtr<Filter>(this),
+            IntrusivePtr<Filter>(this), m_ptrSettings,
             next_task, page_id, batch_processing
         )
     );
@@ -97,7 +97,7 @@ Filter::createCacheDrivenTask(
     IntrusivePtr<select_content::CacheDrivenTask> const& next_task)
 {
     return IntrusivePtr<CacheDrivenTask>(
-        new CacheDrivenTask(next_task)
+        new CacheDrivenTask(m_ptrSettings, next_task)
     );
 }
 
