@@ -8,6 +8,7 @@ SET(
         Dependencies.cpp Dependencies.h
         DewarpingMode.cpp DewarpingMode.h
         DewarpingParams.cpp DewarpingParams.h
+        DewarpingThumbnail.cpp DewarpingThumbnail.h
         DistortionType.cpp DistortionType.h
         Filter.cpp Filter.h
         ImageView.cpp ImageView.h
@@ -15,6 +16,7 @@ SET(
         Params.cpp Params.h
         PerspectiveParams.cpp PerspectiveParams.h
         RotationParams.cpp RotationParams.h
+        RotationThumbnail.cpp RotationThumbnail.h
         Settings.cpp Settings.h
         Task.cpp Task.h
 )
