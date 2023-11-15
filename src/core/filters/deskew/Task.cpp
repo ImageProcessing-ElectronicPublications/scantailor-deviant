@@ -20,7 +20,11 @@
 #include "Filter.h"
 #include "OptionsWidget.h"
 #include "Settings.h"
+#include "Params.h"
+#include "Dependencies.h"
 #include "FilterData.h"
+#include "TaskStatus.h"
+#include "DebugImages.h"
 #include "filters/select_content/Task.h"
 #include "FilterUiInterface.h"
 #include "ImageView.h"
@@ -39,9 +43,10 @@ class Task::NoDistortionUiUpdater : public FilterResult
 public:
 	NoDistortionUiUpdater(
         IntrusivePtr<Filter> const& filter,
-		QImage const& image, PageId const& page_id,
-		ImageTransformation const& xform,
-		bool batch_processing);
+	    QImage const& image, PageId const& page_id,
+	    ImageTransformation const& xform,
+        Params const& page_params,
+	    bool batch_processing);
 
     virtual void updateUI(FilterUiInterface* ui);
 
@@ -55,6 +60,7 @@ private:
     QImage m_downscaledImage;
     PageId m_pageId;
     ImageTransformation m_xform;
+    Params m_pageParams;
     bool m_batchProcessing;
 };
 
@@ -64,14 +70,16 @@ Task::Task(
     IntrusivePtr<Filter> const& filter,
     IntrusivePtr<Settings> const& settings,
     IntrusivePtr<select_content::Task> const& next_task,
-    PageId const& page_id, bool batch_processing)
+    PageId const& page_id, bool batch_processing, bool debug)
     : m_ptrFilter(filter)
     , m_ptrSettings(settings)
     , m_ptrNextTask(next_task)
     , m_pageId(page_id)
     , m_batchProcessing(batch_processing)
 {
-
+    if (debug) {
+        m_ptrDbg.reset(new DebugImages);
+    }
 }
 
 Task::~Task()
@@ -81,6 +89,30 @@ Task::~Task()
 FilterResultPtr
 Task::process(TaskStatus const& status, FilterData const& data)
 {
+    status.throwIfCancelled();
+
+    Dependencies const deps(data.xform().preCropArea(), data.xform().preRotation());
+
+    std::unique_ptr<Params> params(m_ptrSettings->getPageParams(m_pageId));
+    std::unique_ptr<Params> old_params;
+
+    if (params.get())
+    {
+        if (!deps.matches(params->dependencies()))
+        {
+            params.swap(old_params);
+        }
+    }
+
+    if (!params.get())
+    {
+        params.reset(new Params(deps));
+        if (old_params)
+        {
+            params->takeManualSettingsFrom(*old_params);
+        }
+    }
+
     ImageTransformation new_xform(data.xform());
 
     if (m_ptrNextTask) {
@@ -89,7 +121,7 @@ Task::process(TaskStatus const& status, FilterData const& data)
     else {
         return FilterResultPtr(
             new NoDistortionUiUpdater(m_ptrFilter, data.origImage(), 
-                m_pageId, new_xform, m_batchProcessing)
+                m_pageId, new_xform, *params, m_batchProcessing)
         );
     }
 }
@@ -100,12 +132,14 @@ Task::NoDistortionUiUpdater::NoDistortionUiUpdater(
     IntrusivePtr<Filter> const& filter,
     QImage const& image, PageId const& page_id,
     ImageTransformation const& xform,
+    Params const& page_params,
     bool batch_processing)
     : m_ptrFilter(filter)
     , m_image(image)
     , m_downscaledImage(ImageView::createDownscaledImage(image))
     , m_pageId(page_id)
     , m_xform(xform)
+    , m_pageParams(page_params)
     , m_batchProcessing(batch_processing)
 {
 }
@@ -113,12 +147,16 @@ Task::NoDistortionUiUpdater::NoDistortionUiUpdater(
 void
 Task::NoDistortionUiUpdater::updateUI(FilterUiInterface* ui)
 {
+    // This function is executed from the GUI thread.
+
     OptionsWidget* const opt_widget = m_ptrFilter->optionsWidget();
+    opt_widget->postUpdateUI(m_pageParams);
     ui->setOptionsWidget(opt_widget, ui->KEEP_OWNERSHIP);
 
     ui->invalidateThumbnail(m_pageId);
 
-    if (m_batchProcessing) {
+    if (m_batchProcessing)
+    {
         return;
     }
 

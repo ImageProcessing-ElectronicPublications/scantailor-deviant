@@ -23,9 +23,11 @@
 #include "RefCountable.h"
 #include "FilterResult.h"
 #include "PageId.h"
+#include <memory>
 
 class TaskStatus;
 class FilterData;
+class DebugImages;
 
 namespace select_content
 {
@@ -45,7 +47,7 @@ public:
     Task(IntrusivePtr<Filter> const& filter,
         IntrusivePtr<Settings> const& settings,
         IntrusivePtr<select_content::Task> const& next_task,
-        PageId const& page_id, bool batch_processing);
+        PageId const& page_id, bool batch_processing, bool debug);
 
     virtual ~Task();
 
@@ -57,6 +59,7 @@ private:
     IntrusivePtr<Filter> m_ptrFilter;
     IntrusivePtr<Settings> m_ptrSettings;
     IntrusivePtr<select_content::Task> m_ptrNextTask;
+    std::unique_ptr<DebugImages> m_ptrDbg;
     PageId m_pageId;
     bool m_batchProcessing;
 };

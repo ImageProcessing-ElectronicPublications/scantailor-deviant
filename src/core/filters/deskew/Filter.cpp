@@ -17,10 +17,13 @@
 */
 
 #include "Filter.h"
+#include "FilterUiInterface.h"
 #include "OptionsWidget.h"
 #include "Task.h"
 #include "CacheDrivenTask.h"
 #include "Settings.h"
+#include "ProjectReader.h"
+#include "ProjectWriter.h"
 #include "AbstractRelinker.h"
 #include <QCoreApplication>
 #include <QDomDocument>
@@ -46,7 +49,7 @@ Filter::~Filter()
 QString
 Filter::getName() const
 {
-    return QCoreApplication::translate("deskew::Filter", "Deskew");
+    return QCoreApplication::translate("deskew::Filter", "Geometric Distortions");
 }
 
 PageView
@@ -58,24 +61,90 @@ Filter::getView() const
 void
 Filter::performRelinking(AbstractRelinker const& relinker)
 {
+    m_ptrSettings->performRelinking(relinker);
 }
 
 void
 Filter::preUpdateUI(FilterUiInterface* const ui, PageId const& page_id)
 {
+    m_ptrOptionsWidget->preUpdateUI(page_id, m_ptrSettings->getDistortionType(page_id));
+    ui->setOptionsWidget(m_ptrOptionsWidget.get(), ui->KEEP_OWNERSHIP);
 }
-
 
 QDomElement
 Filter::saveSettings(ProjectWriter const& writer, QDomDocument& doc) const
 {
     QDomElement filter_el(doc.createElement("deskew"));
+
+    writer.enumPages([this, &doc, &filter_el](PageId const& page_id, int numeric_id)
+    {
+        writePageSettings(doc, filter_el, page_id, numeric_id);
+    });
+
     return filter_el;
 }
 
 void
 Filter::loadSettings(ProjectReader const& reader, QDomElement const& filters_el)
 {
+    m_ptrSettings->clear();
+
+    QDomElement const filter_el(filters_el.namedItem("deskew").toElement());
+
+    QString const page_tag_name("page");
+    QDomNode node(filter_el.firstChild());
+    for (; !node.isNull(); node = node.nextSibling())
+    {
+        if (!node.isElement())
+        {
+            continue;
+        }
+        if (node.nodeName() != page_tag_name)
+        {
+            continue;
+        }
+        QDomElement const el(node.toElement());
+
+        bool ok = true;
+        int const id = el.attribute("id").toInt(&ok);
+        if (!ok)
+        {
+            continue;
+        }
+
+        PageId const page_id(reader.pageId(id));
+        if (page_id.isNull())
+        {
+            continue;
+        }
+
+        QDomElement const params_el(el.namedItem("params").toElement());
+        if (params_el.isNull())
+        {
+            continue;
+        }
+
+        Params const params(params_el);
+        m_ptrSettings->setPageParams(page_id, params);
+    }
+}
+
+void
+Filter::writePageSettings(
+    QDomDocument& doc, QDomElement& filter_el,
+    PageId const& page_id, int const numeric_id) const
+{
+    std::unique_ptr<Params> const params(m_ptrSettings->getPageParams(page_id));
+    if (!params.get())
+    {
+        return;
+    }
+
+    QDomElement page_el(doc.createElement("page"));
+    page_el.setAttribute("id", numeric_id);
+    page_el.appendChild(params->toXml(doc, "params"));
+
+    filter_el.appendChild(page_el);
 }
 
 IntrusivePtr<Task>
@@ -87,7 +156,7 @@ Filter::createTask(
     return IntrusivePtr<Task>(
         new Task(
             IntrusivePtr<Filter>(this), m_ptrSettings,
-            next_task, page_id, batch_processing
+            next_task, page_id, batch_processing, debug
         )
     );
 }
