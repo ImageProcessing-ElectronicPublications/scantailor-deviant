@@ -31,7 +31,7 @@ class DebugImages;
 
 namespace select_content
 {
-    class Task;
+class Task;
 }
 
 namespace deskew
@@ -39,6 +39,7 @@ namespace deskew
 
 class Filter;
 class Settings;
+class Params;
 
 class Task : public RefCountable
 {
@@ -52,9 +53,33 @@ public:
     virtual ~Task();
 
     FilterResultPtr process(
-        TaskStatus const& status, FilterData const& data);
+        TaskStatus const& status,
+        FilterData const& data);
 private:
     class NoDistortionUiUpdater;
+    class RotationUiUpdater;
+    class PerspectiveUiUpdater;
+    class DewarpingUiUpdater;
+
+    FilterResultPtr processNoDistortion(
+        TaskStatus const& status,
+        FilterData const& data,
+        Params& params);
+
+    FilterResultPtr processRotationDistortion(
+        TaskStatus const& status,
+        FilterData const& data,
+        Params& params);
+
+    FilterResultPtr processPerspectiveDistortion(
+        TaskStatus const& status,
+        FilterData const& data,
+        Params& params);
+
+    FilterResultPtr processWarpDistortion(
+        TaskStatus const& status,
+        FilterData const& data,
+        Params& params);
 
     IntrusivePtr<Filter> m_ptrFilter;
     IntrusivePtr<Settings> m_ptrSettings;

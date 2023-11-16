@@ -28,6 +28,7 @@
 #include "filters/select_content/Task.h"
 #include "FilterUiInterface.h"
 #include "ImageView.h"
+#include "DewarpingView.h"
 #include "ImageTransformation.h"
 #include <memory>
 
@@ -43,8 +44,9 @@ class Task::NoDistortionUiUpdater : public FilterResult
 public:
 	NoDistortionUiUpdater(
         IntrusivePtr<Filter> const& filter,
-	    QImage const& image, PageId const& page_id,
+	    QImage const& image,
 	    ImageTransformation const& xform,
+        PageId const& page_id,
         Params const& page_params,
 	    bool batch_processing);
 
@@ -58,8 +60,95 @@ private:
     IntrusivePtr<Filter> m_ptrFilter;
     QImage m_image;
     QImage m_downscaledImage;
-    PageId m_pageId;
     ImageTransformation m_xform;
+    PageId m_pageId;
+    Params m_pageParams;
+    bool m_batchProcessing;
+};
+
+/*========================== Task::RotationUiUpdater =======================*/
+
+class Task::RotationUiUpdater : public FilterResult
+{
+public:
+    RotationUiUpdater(
+        IntrusivePtr<Filter> const& filter,
+        QImage const& image,
+        ImageTransformation const& xform,
+        PageId const& page_id,
+        Params const& page_params,
+        bool batch_processing);
+
+    virtual void updateUI(FilterUiInterface* ui);
+
+    virtual IntrusivePtr<AbstractFilter> filter()
+    {
+        return m_ptrFilter;
+    }
+private:
+    IntrusivePtr<Filter> m_ptrFilter;
+    QImage m_image;
+    QImage m_downscaledImage;
+    ImageTransformation m_xform;
+    PageId m_pageId;
+    Params m_pageParams;
+    bool m_batchProcessing;
+};
+
+/*======================== Task::PerspectiveUiUpdater ======================*/
+
+class Task::PerspectiveUiUpdater : public FilterResult
+{
+public:
+    PerspectiveUiUpdater(
+        IntrusivePtr<Filter> const& filter,
+        QImage const& image,
+        ImageTransformation const& xform,
+        PageId const& page_id,
+        Params const& page_params,
+        bool batch_processing);
+
+    virtual void updateUI(FilterUiInterface* ui);
+
+    virtual IntrusivePtr<AbstractFilter> filter()
+    {
+        return m_ptrFilter;
+    }
+private:
+    IntrusivePtr<Filter> m_ptrFilter;
+    QImage m_image;
+    QImage m_downscaledImage;
+    ImageTransformation m_xform;
+    PageId m_pageId;
+    Params m_pageParams;
+    bool m_batchProcessing;
+};
+
+/*========================= Task::DewarpingUiUpdater =======================*/
+
+class Task::DewarpingUiUpdater : public FilterResult
+{
+public:
+    DewarpingUiUpdater(
+        IntrusivePtr<Filter> const& filter,
+        QImage const& image,
+        ImageTransformation const& xform,
+        PageId const& page_id,
+        Params const& page_params,
+        bool batch_processing);
+
+    virtual void updateUI(FilterUiInterface* ui);
+
+    virtual IntrusivePtr<AbstractFilter> filter()
+    {
+        return m_ptrFilter;
+    }
+private:
+    IntrusivePtr<Filter> m_ptrFilter;
+    QImage m_image;
+    QImage m_downscaledImage;
+    ImageTransformation m_xform;
+    PageId m_pageId;
     Params m_pageParams;
     bool m_batchProcessing;
 };
@@ -77,7 +166,8 @@ Task::Task(
     , m_pageId(page_id)
     , m_batchProcessing(batch_processing)
 {
-    if (debug) {
+    if (debug)
+    {
         m_ptrDbg.reset(new DebugImages);
     }
 }
@@ -87,7 +177,9 @@ Task::~Task()
 }
 
 FilterResultPtr
-Task::process(TaskStatus const& status, FilterData const& data)
+Task::process(
+    TaskStatus const& status,
+    FilterData const& data)
 {
     status.throwIfCancelled();
 
@@ -113,16 +205,130 @@ Task::process(TaskStatus const& status, FilterData const& data)
         }
     }
 
-    ImageTransformation new_xform(data.xform());
+    switch (params->distortionType().get())
+    {
+    case DistortionType::NONE:
+        return processNoDistortion(
+                    status, data, *params
+               );
+    case DistortionType::ROTATION:
+        return processRotationDistortion(
+                    status, data, *params
+               );
+    case DistortionType::PERSPECTIVE:
+        return processPerspectiveDistortion(
+                    status, data, *params
+               );
+    case DistortionType::WARP:
+        return processWarpDistortion(
+                    status, data, *params
+               );
+    } // switch
 
-    if (m_ptrNextTask) {
-        return m_ptrNextTask->process(status, FilterData(data, new_xform));
+    throw std::logic_error("Unexpected distortion type");
+}
+
+FilterResultPtr
+Task::processNoDistortion(
+    TaskStatus const& status,
+    FilterData const& data,
+    Params& params)
+{
+    // Necessary to update dependencies.
+    m_ptrSettings->setPageParams(m_pageId, params);
+
+    if (m_ptrNextTask)
+    {
+        return m_ptrNextTask->process(
+                    status, FilterData(data, data.xform())
+               );
     }
-    else {
+    else
+    {
         return FilterResultPtr(
-            new NoDistortionUiUpdater(m_ptrFilter, data.origImage(), 
-                m_pageId, new_xform, *params, m_batchProcessing)
-        );
+                   new NoDistortionUiUpdater(
+                       m_ptrFilter, data.origImage(), data.xform(),
+                       m_pageId, params, m_batchProcessing
+                   )
+               );
+    }
+}
+
+FilterResultPtr
+Task::processRotationDistortion(
+    TaskStatus const& status,
+    FilterData const& data,
+    Params& params)
+{
+    // Necessary to update dependencies.
+    m_ptrSettings->setPageParams(m_pageId, params);
+
+    if (m_ptrNextTask)
+    {
+        return m_ptrNextTask->process(
+                    status, FilterData(data, data.xform())
+               );
+    }
+    else
+    {
+        return FilterResultPtr(
+                   new RotationUiUpdater(
+                       m_ptrFilter, data.origImage(), data.xform(),
+                       m_pageId, params, m_batchProcessing
+                   )
+               );
+    }
+}
+
+FilterResultPtr
+Task::processPerspectiveDistortion(
+    TaskStatus const& status,
+    FilterData const& data,
+    Params& params)
+{
+    // Necessary to update dependencies.
+    m_ptrSettings->setPageParams(m_pageId, params);
+
+    if (m_ptrNextTask)
+    {
+        return m_ptrNextTask->process(
+                    status, FilterData(data, data.xform())
+               );
+    }
+    else
+    {
+        return FilterResultPtr(
+                   new PerspectiveUiUpdater(
+                       m_ptrFilter, data.origImage(), data.xform(),
+                       m_pageId, params, m_batchProcessing
+                   )
+               );
+    }
+}
+
+FilterResultPtr
+Task::processWarpDistortion(
+    TaskStatus const& status,
+    FilterData const& data,
+    Params& params)
+{
+    // Necessary to update dependencies.
+    m_ptrSettings->setPageParams(m_pageId, params);
+
+    if (m_ptrNextTask)
+    {
+        return m_ptrNextTask->process(
+                    status, FilterData(data, data.xform())
+               );
+    }
+    else
+    {
+        return FilterResultPtr(
+                   new DewarpingUiUpdater(
+                       m_ptrFilter, data.origImage(), data.xform(),
+                       m_pageId, params, m_batchProcessing
+                   )
+               );
     }
 }
 
@@ -130,15 +336,16 @@ Task::process(TaskStatus const& status, FilterData const& data)
 
 Task::NoDistortionUiUpdater::NoDistortionUiUpdater(
     IntrusivePtr<Filter> const& filter,
-    QImage const& image, PageId const& page_id,
+    QImage const& image,
     ImageTransformation const& xform,
+    PageId const& page_id,
     Params const& page_params,
     bool batch_processing)
     : m_ptrFilter(filter)
     , m_image(image)
     , m_downscaledImage(ImageView::createDownscaledImage(image))
-    , m_pageId(page_id)
     , m_xform(xform)
+    , m_pageId(page_id)
     , m_pageParams(page_params)
     , m_batchProcessing(batch_processing)
 {
@@ -161,6 +368,126 @@ Task::NoDistortionUiUpdater::updateUI(FilterUiInterface* ui)
     }
 
     ImageView* view = new ImageView(m_image, m_downscaledImage, m_xform);
+    ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP);
+}
+
+/*========================== Task::RotationUiUpdater =======================*/
+
+Task::RotationUiUpdater::RotationUiUpdater(
+    IntrusivePtr<Filter> const& filter,
+    QImage const& image,
+    ImageTransformation const& xform,
+    PageId const& page_id,
+    Params const& page_params,
+    bool batch_processing)
+    : m_ptrFilter(filter)
+    , m_image(image)
+    , m_downscaledImage(ImageView::createDownscaledImage(image))
+    , m_xform(xform)
+    , m_pageId(page_id)
+    , m_pageParams(page_params)
+    , m_batchProcessing(batch_processing)
+{
+
+}
+
+void
+Task::RotationUiUpdater::updateUI(FilterUiInterface* ui)
+{
+    // This function is executed from the GUI thread.
+
+    OptionsWidget* const opt_widget = m_ptrFilter->optionsWidget();
+    opt_widget->postUpdateUI(m_pageParams);
+    ui->setOptionsWidget(opt_widget, ui->KEEP_OWNERSHIP);
+
+    ui->invalidateThumbnail(m_pageId);
+
+    if (m_batchProcessing)
+    {
+        return;
+    }
+
+    ImageView* view = new ImageView(m_image, m_downscaledImage, m_xform);
+    ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP);
+}
+
+/*======================== Task::PerspectiveUiUpdater ======================*/
+
+Task::PerspectiveUiUpdater::PerspectiveUiUpdater(
+    IntrusivePtr<Filter> const& filter,
+    QImage const& image,
+    ImageTransformation const& xform,
+    PageId const& page_id,
+    Params const& page_params,
+    bool batch_processing)
+    : m_ptrFilter(filter)
+    , m_image(image)
+    , m_downscaledImage(ImageView::createDownscaledImage(image))
+    , m_xform(xform)
+    , m_pageId(page_id)
+    , m_pageParams(page_params)
+    , m_batchProcessing(batch_processing)
+{
+
+}
+
+void
+Task::PerspectiveUiUpdater::updateUI(FilterUiInterface* ui)
+{
+    // This function is executed from the GUI thread.
+
+    OptionsWidget* const opt_widget = m_ptrFilter->optionsWidget();
+    opt_widget->postUpdateUI(m_pageParams);
+    ui->setOptionsWidget(opt_widget, ui->KEEP_OWNERSHIP);
+
+    ui->invalidateThumbnail(m_pageId);
+
+    if (m_batchProcessing)
+    {
+        return;
+    }
+
+    DewarpingView* view = new DewarpingView(m_image, m_downscaledImage, m_xform);
+    ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP);
+}
+
+/*========================= Task::DewarpingUiUpdater =======================*/
+
+Task::DewarpingUiUpdater::DewarpingUiUpdater(
+    IntrusivePtr<Filter> const& filter,
+    QImage const& image,
+    ImageTransformation const& xform,
+    PageId const& page_id,
+    Params const& page_params,
+    bool batch_processing)
+    : m_ptrFilter(filter)
+    , m_image(image)
+    , m_downscaledImage(ImageView::createDownscaledImage(image))
+    , m_xform(xform)
+    , m_pageId(page_id)
+    , m_pageParams(page_params)
+    , m_batchProcessing(batch_processing)
+{
+
+}
+
+void
+Task::DewarpingUiUpdater::updateUI(FilterUiInterface* ui)
+{
+    // This function is executed from the GUI thread.
+
+    OptionsWidget* const opt_widget = m_ptrFilter->optionsWidget();
+    opt_widget->postUpdateUI(m_pageParams);
+    ui->setOptionsWidget(opt_widget, ui->KEEP_OWNERSHIP);
+
+    ui->invalidateThumbnail(m_pageId);
+
+    if (m_batchProcessing)
+    {
+        return;
+    }
+
+    DewarpingView* view = new DewarpingView(m_image, m_downscaledImage, m_xform);
     ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP);
 }
 
