@@ -9,6 +9,7 @@ SET(
         DewarpingMode.cpp DewarpingMode.h
         DewarpingParams.cpp DewarpingParams.h
         DewarpingThumbnail.cpp DewarpingThumbnail.h
+        DewarpingView.cpp DewarpingView.h
         DistortionType.cpp DistortionType.h
         Filter.cpp Filter.h
         ImageView.cpp ImageView.h

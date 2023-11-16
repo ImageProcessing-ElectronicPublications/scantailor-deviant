@@ -1,6 +1,6 @@
 /*
     Scan Tailor - Interactive post-processing tool for scanned pages.
-    Copyright (C) 2007-2009  Joseph Artsimovich <joseph_a@mail.ru>
+    Copyright (C) 2015  Joseph Artsimovich <joseph.artsimovich@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef DESKEW_IMAGEVIEW_H_
-#define DESKEW_IMAGEVIEW_H_
+#ifndef DESKEW_DEWARPING_VIEW_H_
+#define DESKEW_DEWARPING_VIEW_H_
 
 #include "ImageViewBase.h"
 #include "ImageTransformation.h"
@@ -27,19 +27,18 @@
 namespace deskew
 {
 
-class ImageView : public ImageViewBase
+class DewarpingView : public ImageViewBase
 {
     Q_OBJECT
 public:
-    ImageView(
+    DewarpingView(
         QImage const& image, QImage const& downscaled_image,
         ImageTransformation const& xform);
 
-    virtual ~ImageView();
+    virtual ~DewarpingView();
 private:
     DragHandler m_dragHandler;
     ZoomHandler m_zoomHandler;
-    ImageTransformation m_xform;
 };
 
 } // namespace deskew
