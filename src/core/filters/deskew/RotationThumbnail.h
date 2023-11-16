@@ -33,6 +33,13 @@ public:
         QSizeF const& max_size, ImageId const& image_id,
         ImageTransformation const& xform,
         double compensation_angle_deg, bool draw_grid);
+
+    virtual void paintOverImage(
+        QPainter& painter,
+        QTransform const& image_to_display,
+        QTransform const& thumb_to_display);
+private:
+    bool m_drawGrid;
 };
 
 } // namespace deskew
