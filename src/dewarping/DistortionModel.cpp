@@ -20,6 +20,7 @@
 #include "VecNT.h"
 #include <QDomDocument>
 #include <QDomElement>
+#include <cmath>
 
 namespace dewarping
 {
