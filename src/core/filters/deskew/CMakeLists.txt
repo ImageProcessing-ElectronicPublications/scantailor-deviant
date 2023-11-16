@@ -20,6 +20,7 @@ SET(
         RotationThumbnail.cpp RotationThumbnail.h
         Settings.cpp Settings.h
         Task.cpp Task.h
+        Utils.cpp Utils.h
 )
 SOURCE_GROUP("Sources" FILES ${sources})
 FILE(GLOB ui_files "ui/*.ui")
