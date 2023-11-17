@@ -27,6 +27,7 @@
 #include "DebugImages.h"
 #include "filters/select_content/Task.h"
 #include "FilterUiInterface.h"
+#include "NoDistortionView.h"
 #include "ImageView.h"
 #include "DewarpingView.h"
 #include "ImageTransformation.h"
@@ -367,7 +368,7 @@ Task::NoDistortionUiUpdater::updateUI(FilterUiInterface* ui)
         return;
     }
 
-    ImageView* view = new ImageView(m_image, m_downscaledImage, m_xform);
+    NoDistortionView* view = new NoDistortionView(m_image, m_downscaledImage, m_xform);
     ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP);
 }
 

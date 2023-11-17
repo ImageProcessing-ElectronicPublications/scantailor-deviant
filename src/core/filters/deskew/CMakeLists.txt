@@ -13,6 +13,7 @@ SET(
         DistortionType.cpp DistortionType.h
         Filter.cpp Filter.h
         ImageView.cpp ImageView.h
+        NoDistortionView.cpp NoDistortionView.h
         OptionsWidget.cpp OptionsWidget.h
         Params.cpp Params.h
         PerspectiveParams.cpp PerspectiveParams.h
