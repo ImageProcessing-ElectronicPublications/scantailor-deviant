@@ -23,23 +23,58 @@
 #include "ImageTransformation.h"
 #include "DragHandler.h"
 #include "ZoomHandler.h"
+#include "ObjectDragHandler.h"
+#include "DraggablePoint.h"
 
 namespace deskew
 {
 
-class ImageView : public ImageViewBase
+class ImageView :
+    public ImageViewBase,
+    private InteractionHandler
 {
-    Q_OBJECT
+Q_OBJECT
 public:
     ImageView(
         QImage const& image, QImage const& downscaled_image,
-        ImageTransformation const& xform);
+        ImageTransformation const& xform,
+        double rotation_angle_deg);
 
     virtual ~ImageView();
+signals:
+    void manualDeskewAngleSet(double degrees);
+public slots:
+    void manualDeskewAngleSetExternally(double degrees);
+protected:
+    virtual void onPaint(QPainter& painter, InteractionState const& interaction);
+
+    virtual void onWheelEvent(QWheelEvent* event, InteractionState& interaction);
 private:
+    void setRotationAngle(double degrees, bool preserve_scale);
+
+    QPointF handlePosition(int idx) const;
+
+    void handleMoveRequest(int idx, QPointF const& pos);
+
+    virtual void dragFinished();
+
+    QPointF getImageRotationOrigin() const;
+
+    QRectF getRotationArcSquare() const;
+
+    std::pair<QPointF, QPointF> getRotationHandles(QRectF const& arc_square) const;
+
+    static int const m_cellSize;
+    static double const m_maxRotationDeg;
+    static double const m_maxRotationSin;
+
+    QPixmap m_handlePixmap;
+    DraggablePoint m_handles[2];
+    ObjectDragHandler m_handleInteractors[2];
     DragHandler m_dragHandler;
     ZoomHandler m_zoomHandler;
     ImageTransformation m_xform;
+    double m_rotationAngleDeg;
 };
 
 } // namespace deskew

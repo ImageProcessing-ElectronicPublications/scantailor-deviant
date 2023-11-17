@@ -408,8 +408,18 @@ Task::RotationUiUpdater::updateUI(FilterUiInterface* ui)
         return;
     }
 
-    ImageView* view = new ImageView(m_image, m_downscaledImage, m_xform);
+    double const angle = m_pageParams.rotationParams().compensationAngleDeg();
+    ImageView* view = new ImageView(m_image, m_downscaledImage, m_xform, angle);
     ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP);
+
+    QObject::connect(
+        view, SIGNAL(manualDeskewAngleSet(double)),
+        opt_widget, SLOT(manualDeskewAngleSetExternally(double))
+    );
+    QObject::connect(
+        opt_widget, SIGNAL(manualDeskewAngleSet(double)),
+        view, SLOT(manualDeskewAngleSetExternally(double))
+    );
 }
 
 /*======================== Task::PerspectiveUiUpdater ======================*/
