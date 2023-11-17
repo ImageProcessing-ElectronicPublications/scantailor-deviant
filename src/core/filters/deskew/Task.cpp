@@ -31,12 +31,20 @@
 #include "ImageView.h"
 #include "DewarpingView.h"
 #include "ImageTransformation.h"
+#include "imageproc/BinaryImage.h"
+#include "imageproc/BinaryThreshold.h"
+#include "imageproc/SkewFinder.h"
+#include "imageproc/RasterOp.h"
+#include "imageproc/ReduceThreshold.h"
+#include "imageproc/UpscaleIntegerTimes.h"
+#include "imageproc/SeedFill.h"
+#include "imageproc/Morphology.h"
 #include <memory>
 
 namespace deskew
 {
 
-class Filter;
+using namespace imageproc;
 
 /*======================== Task::NoDistortionUiUpdater =====================*/
 
@@ -261,23 +269,72 @@ Task::processRotationDistortion(
     FilterData const& data,
     Params& params)
 {
-    // Necessary to update dependencies.
-    m_ptrSettings->setPageParams(m_pageId, params);
+    if (!params.rotationParams().isValid())
+    {
+        QRect const transformed_crop_rect(
+            data.xform().resultingPostCropArea().boundingRect().toRect()
+        );
+
+        status.throwIfCancelled();
+
+        if (transformed_crop_rect.isValid())
+        {
+            BinaryImage bw_image(
+                data.grayImage(),
+                transformed_crop_rect,
+                data.bwThreshold()
+            );
+
+            if (m_ptrDbg.get())
+            {
+                m_ptrDbg->add(bw_image, "bw_image");
+            }
+
+            cleanup(status, bw_image);
+            if (m_ptrDbg.get())
+            {
+                m_ptrDbg->add(bw_image, "after_cleanup");
+            }
+
+            status.throwIfCancelled();
+
+            SkewFinder skew_finder;
+            Skew const skew(skew_finder.findSkew(bw_image));
+
+            if (skew.confidence() >= skew.GOOD_CONFIDENCE)
+            {
+                params.rotationParams().setCompensationAngleDeg(-skew.angle());
+            }
+            else
+            {
+                params.rotationParams().setCompensationAngleDeg(0);
+            }
+            params.rotationParams().setMode(MODE_AUTO);
+
+            m_ptrSettings->setPageParams(m_pageId, params);
+
+            status.throwIfCancelled();
+        }
+    }
 
     if (m_ptrNextTask)
     {
+        double const angle = params.rotationParams().compensationAngleDeg();
+        ImageTransformation rotated_xform(data.xform());
+        rotated_xform.setPostRotation(angle);
+
         return m_ptrNextTask->process(
-                    status, FilterData(data, data.xform())
-               );
+            status, FilterData(data, rotated_xform)
+        );
     }
     else
     {
         return FilterResultPtr(
-                   new RotationUiUpdater(
-                       m_ptrFilter, data.origImage(), data.xform(),
-                       m_pageId, params, m_batchProcessing
-                   )
-               );
+            new RotationUiUpdater(
+                m_ptrFilter, data.origImage(), data.xform(),
+                m_pageId, params, m_batchProcessing
+            )
+        );
     }
 }
 
@@ -331,6 +388,44 @@ Task::processWarpDistortion(
                    )
                );
     }
+}
+
+void
+Task::cleanup(TaskStatus const& status, BinaryImage& image)
+{
+    // We don't have to clean up every piece of garbage.
+    // The only concern are the horizontal shadows, which we remove here.
+
+    BinaryImage reduced_image;
+
+    {
+        ReduceThreshold reductor(image);
+        while (reductor.image().width() >= 2000 && reductor.image().height() >= 2000)
+        {
+            reductor.reduce(2);
+        }
+        reduced_image = reductor.image();
+    }
+
+    status.throwIfCancelled();
+
+    QSize const brick(200, 14);
+    BinaryImage opened(openBrick(reduced_image, brick, BLACK));
+    reduced_image.release();
+
+    status.throwIfCancelled();
+
+    BinaryImage seed(upscaleIntegerTimes(opened, image.size(), WHITE));
+    opened.release();
+
+    status.throwIfCancelled();
+
+    BinaryImage garbage(seedFill(seed, image, CONN8));
+    seed.release();
+
+    status.throwIfCancelled();
+
+    rasterOp<RopSubtract<RopDst, RopSrc> >(image, garbage);
 }
 
 /*======================== Task::NoDistortionUiUpdater =====================*/

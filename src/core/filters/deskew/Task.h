@@ -29,6 +29,11 @@ class TaskStatus;
 class FilterData;
 class DebugImages;
 
+namespace imageproc
+{
+class BinaryImage;
+};
+
 namespace select_content
 {
 class Task;
@@ -80,6 +85,8 @@ private:
         TaskStatus const& status,
         FilterData const& data,
         Params& params);
+
+    static void cleanup(TaskStatus const& status, imageproc::BinaryImage& img);
 
     IntrusivePtr<Filter> m_ptrFilter;
     IntrusivePtr<Settings> m_ptrSettings;
