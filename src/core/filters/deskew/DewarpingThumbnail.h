@@ -37,6 +37,16 @@ public:
         std::vector<QPointF> const& top_curve,
         std::vector<QPointF> const& bottom_curve,
         dewarping::DepthPerception const& depth_perception);
+
+    virtual void paintOverImage(
+        QPainter& painter,
+        QTransform const& image_to_display,
+        QTransform const& thumb_to_display);
+private:
+    std::vector<QPointF> m_topCurve;
+    std::vector<QPointF> m_bottomCurve;
+    dewarping::DepthPerception m_depthPerception;
+    bool m_isValidModel;
 };
 
 } // namespace deskew
