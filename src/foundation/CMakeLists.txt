@@ -20,6 +20,7 @@ SET(
         GridLineTraverser.cpp GridLineTraverser.h
         StaticPool.h
         DynamicPool.h
+        MultipleTargetsSupport.h
         NumericTraits.h
         VecNT.h
         VecT.h

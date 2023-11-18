@@ -19,6 +19,7 @@
 #include "ImageView.h"
 #include "ImageTransformation.h"
 #include "ImagePresentation.h"
+#include "MultipleTargetsSupport.h"
 #include "imageproc/Constants.h"
 #include <QPainter>
 #include <QWheelEvent>
@@ -221,7 +222,7 @@ ImageView::onWheelEvent(QWheelEvent* event, InteractionState& interaction)
     }
 
     event->accept();
-    double const delta = degree_fraction * event->delta() / 120;
+    double const delta = degree_fraction * QWheelEventDelta(event) / 120;
     double angle_deg = m_rotationAngleDeg - delta;
     angle_deg = qBound(-m_maxRotationDeg, angle_deg, m_maxRotationDeg);
     if (angle_deg == m_rotationAngleDeg)
