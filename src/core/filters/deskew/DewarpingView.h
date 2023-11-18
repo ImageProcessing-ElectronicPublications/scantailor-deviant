@@ -20,23 +20,64 @@
 #define DESKEW_DEWARPING_VIEW_H_
 
 #include "ImageViewBase.h"
+#include "InteractionHandler.h"
+#include "InteractiveXSpline.h"
 #include "ImageTransformation.h"
 #include "DragHandler.h"
 #include "ZoomHandler.h"
+#include "dewarping/DistortionModel.h"
+#include "dewarping/DepthPerception.h"
+
+namespace spfit
+{
+class PolylineModelShape;
+}
 
 namespace deskew
 {
 
-class DewarpingView : public ImageViewBase
+class DewarpingView : public ImageViewBase, protected InteractionHandler
 {
     Q_OBJECT
 public:
     DewarpingView(
         QImage const& image, QImage const& downscaled_image,
-        ImageTransformation const& xform);
+        ImageTransformation const& xform,
+        dewarping::DistortionModel const& distortion_model,
+        dewarping::DepthPerception const& depth_perception,
+        bool fixed_number_of_control_points);
 
     virtual ~DewarpingView();
+signals:
+    void distortionModelChanged(dewarping::DistortionModel const& model);
+public slots:
+    void depthPerceptionChanged(double val);
+protected:
+    virtual void onPaint(QPainter& painter, InteractionState const& interaction);
 private:
+    static void initNewSpline(XSpline& spline, QPointF const& p1, QPointF const& p2);
+
+    static void fitSpline(XSpline& spline, std::vector<QPointF> const& polyline);
+
+    static void curvatureAwareControlPointPositioning(
+        XSpline& spline, spfit::PolylineModelShape const& model_shape);
+
+    void paintXSpline(
+        QPainter& painter, InteractionState const& interaction,
+        InteractiveXSpline const& ispline);
+
+    void curveModified(int curve_idx);
+
+    void dragFinished();
+
+    QPointF sourceToWidget(QPointF const& pt) const;
+
+    QPointF widgetToSource(QPointF const& pt) const;
+
+    dewarping::DistortionModel m_distortionModel;
+    dewarping::DepthPerception m_depthPerception;
+    InteractiveXSpline m_topSpline;
+    InteractiveXSpline m_bottomSpline;
     DragHandler m_dragHandler;
     ZoomHandler m_zoomHandler;
 };

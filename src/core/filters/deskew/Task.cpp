@@ -30,6 +30,7 @@
 #include "NoDistortionView.h"
 #include "ImageView.h"
 #include "DewarpingView.h"
+#include "dewarping/DistortionModel.h"
 #include "ImageTransformation.h"
 #include "imageproc/BinaryImage.h"
 #include "imageproc/BinaryThreshold.h"
@@ -39,12 +40,14 @@
 #include "imageproc/UpscaleIntegerTimes.h"
 #include "imageproc/SeedFill.h"
 #include "imageproc/Morphology.h"
+#include "math/XSpline.h"
 #include <memory>
 
 namespace deskew
 {
 
 using namespace imageproc;
+using namespace dewarping;
 
 /*======================== Task::NoDistortionUiUpdater =====================*/
 
@@ -344,23 +347,56 @@ Task::processPerspectiveDistortion(
     FilterData const& data,
     Params& params)
 {
-    // Necessary to update dependencies.
-    m_ptrSettings->setPageParams(m_pageId, params);
+    if (!params.perspectiveParams().isValid())
+    {
+        // Set up a trivial transformation.
+
+        QTransform const to_orig(data.xform().transformBack());
+        QRectF const transformed_box(data.xform().resultingPostCropArea().boundingRect());
+
+        params.perspectiveParams().setCorner(
+            PerspectiveParams::TOP_LEFT, to_orig.map(transformed_box.topLeft())
+        );
+        params.perspectiveParams().setCorner(
+            PerspectiveParams::TOP_RIGHT, to_orig.map(transformed_box.topRight())
+        );
+        params.perspectiveParams().setCorner(
+            PerspectiveParams::BOTTOM_LEFT, to_orig.map(transformed_box.bottomLeft())
+        );
+        params.perspectiveParams().setCorner(
+            PerspectiveParams::BOTTOM_RIGHT, to_orig.map(transformed_box.bottomRight())
+        );
+
+        params.perspectiveParams().setMode(MODE_AUTO);
+
+        m_ptrSettings->setPageParams(m_pageId, params);
+    } // if (!params.isValid())
 
     if (m_ptrNextTask)
     {
+        // DewarpingImageTransform can handle perspective distortion
+        // as well, so we just use that.
+        std::vector<QPointF> top_curve;
+        std::vector<QPointF> bottom_curve;
+        top_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::TOP_LEFT));
+        top_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::TOP_RIGHT));
+        bottom_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::BOTTOM_LEFT));
+        bottom_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT));
+
+        ImageTransformation perspective_transform(data.xform());
+
         return m_ptrNextTask->process(
-                    status, FilterData(data, data.xform())
-               );
+            status, FilterData(data, perspective_transform)
+        );
     }
     else
     {
         return FilterResultPtr(
-                   new PerspectiveUiUpdater(
-                       m_ptrFilter, data.origImage(), data.xform(),
-                       m_pageId, params, m_batchProcessing
-                   )
-               );
+            new PerspectiveUiUpdater(
+                m_ptrFilter, data.origImage(), data.xform(),
+                m_pageId, params, m_batchProcessing
+            )
+        );
     }
 }
 
@@ -370,23 +406,61 @@ Task::processWarpDistortion(
     FilterData const& data,
     Params& params)
 {
-    // Necessary to update dependencies.
-    m_ptrSettings->setPageParams(m_pageId, params);
+    if (!params.dewarpingParams().isValid())
+    {
+        DistortionModel distortion_model;
+
+        if (!distortion_model.isValid())
+        {
+            // Set up a trivial transformation.
+            QTransform const to_orig(data.xform().transformBack());
+            QRectF const transformed_box(data.xform().resultingPostCropArea().boundingRect());
+
+            distortion_model.setTopCurve(
+                std::vector<QPointF>
+            {
+                to_orig.map(transformed_box.topLeft()),
+                    to_orig.map(transformed_box.topRight())
+            }
+            );
+
+            distortion_model.setBottomCurve(
+                std::vector<QPointF>
+            {
+                to_orig.map(transformed_box.bottomLeft()),
+                    to_orig.map(transformed_box.bottomRight())
+            }
+            );
+
+            assert(distortion_model.isValid());
+        }
+
+        params.dewarpingParams().setDistortionModel(distortion_model);
+
+        // Note that we don't reset depth perception, as it's a manual parameter
+        // that's usually the same for all pictures in a project.
+
+        params.dewarpingParams().setMode(MODE_AUTO);
+
+        m_ptrSettings->setPageParams(m_pageId, params);
+    } // if (!params.isValid())
 
     if (m_ptrNextTask)
     {
+        ImageTransformation dewarping_transform(data.xform());
+
         return m_ptrNextTask->process(
-                    status, FilterData(data, data.xform())
-               );
+            status, FilterData(data, dewarping_transform)
+        );
     }
     else
     {
         return FilterResultPtr(
-                   new DewarpingUiUpdater(
-                       m_ptrFilter, data.origImage(), data.xform(),
-                       m_pageId, params, m_batchProcessing
-                   )
-               );
+            new DewarpingUiUpdater(
+                m_ptrFilter, data.origImage(), data.xform(),
+                m_pageId, params, m_batchProcessing
+            )
+        );
     }
 }
 
@@ -553,8 +627,39 @@ Task::PerspectiveUiUpdater::updateUI(FilterUiInterface* ui)
         return;
     }
 
-    DewarpingView* view = new DewarpingView(m_image, m_downscaledImage, m_xform);
+    XSpline top_curve;
+    XSpline bottom_curve;
+    top_curve.appendControlPoint(
+        m_pageParams.perspectiveParams().corner(PerspectiveParams::TOP_LEFT), 0
+    );
+    top_curve.appendControlPoint(
+        m_pageParams.perspectiveParams().corner(PerspectiveParams::TOP_RIGHT), 0
+    );
+    bottom_curve.appendControlPoint(
+        m_pageParams.perspectiveParams().corner(PerspectiveParams::BOTTOM_LEFT), 0
+    );
+    bottom_curve.appendControlPoint(
+        m_pageParams.perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT), 0
+    );
+    DistortionModel distortion_model;
+    distortion_model.setTopCurve(Curve(top_curve));
+    distortion_model.setBottomCurve(Curve(bottom_curve));
+
+    DewarpingView* view = new DewarpingView(
+        m_image, m_downscaledImage, m_xform, distortion_model,
+
+        // Doesn't matter when curves are flat.
+        DepthPerception(),
+
+        // Prevent the user from introducing curvature.
+        /*fixed_number_of_control_points*/true
+    );
     ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP);
+
+    QObject::connect(
+        view, SIGNAL(distortionModelChanged(dewarping::DistortionModel const&)),
+        opt_widget, SLOT(manualDistortionModelSetExternally(dewarping::DistortionModel const&))
+    );
 }
 
 /*========================= Task::DewarpingUiUpdater =======================*/
@@ -593,8 +698,39 @@ Task::DewarpingUiUpdater::updateUI(FilterUiInterface* ui)
         return;
     }
 
-    DewarpingView* view = new DewarpingView(m_image, m_downscaledImage, m_xform);
+    XSpline top_curve;
+    XSpline bottom_curve;
+    top_curve.appendControlPoint(
+        m_pageParams.perspectiveParams().corner(PerspectiveParams::TOP_LEFT), 0
+    );
+    top_curve.appendControlPoint(
+        m_pageParams.perspectiveParams().corner(PerspectiveParams::TOP_RIGHT), 0
+    );
+    bottom_curve.appendControlPoint(
+        m_pageParams.perspectiveParams().corner(PerspectiveParams::BOTTOM_LEFT), 0
+    );
+    bottom_curve.appendControlPoint(
+        m_pageParams.perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT), 0
+    );
+    DistortionModel distortion_model;
+    distortion_model.setTopCurve(Curve(top_curve));
+    distortion_model.setBottomCurve(Curve(bottom_curve));
+
+    DewarpingView* view = new DewarpingView(
+        m_image, m_downscaledImage, m_xform, distortion_model,
+
+        // Doesn't matter when curves are flat.
+        DepthPerception(),
+
+        // Prevent the user from introducing curvature.
+        /*fixed_number_of_control_points*/true
+    );
     ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP);
+
+    QObject::connect(
+        view, SIGNAL(distortionModelChanged(dewarping::DistortionModel const&)),
+        opt_widget, SLOT(manualDistortionModelSetExternally(dewarping::DistortionModel const&))
+    );
 }
 
 } // namespace deskew
