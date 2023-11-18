@@ -722,8 +722,7 @@ Task::DewarpingUiUpdater::updateUI(FilterUiInterface* ui)
         // Doesn't matter when curves are flat.
         DepthPerception(),
 
-        // Prevent the user from introducing curvature.
-        /*fixed_number_of_control_points*/true
+        /*fixed_number_of_control_points*/false
     );
     ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP);
 

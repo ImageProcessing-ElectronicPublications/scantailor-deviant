@@ -46,14 +46,15 @@ InteractiveXSpline::InteractiveXSpline()
         m_fromStorage(IdentTransform()),
         m_toStorage(IdentTransform()),
         m_curveProximityT(),
-        m_lastProximity(false)
+        m_lastProximity(false),
+        m_fixedNumberOfControlPoints(false)
 {
     m_curveProximity.setProximityCursor(Qt::PointingHandCursor);
     m_curveProximity.setProximityStatusTip(tr("Click to create a new control point."));
 }
 
 void
-InteractiveXSpline::setSpline(XSpline const& spline)
+InteractiveXSpline::setSpline(XSpline const& spline, bool fixed_number_of_control_points)
 {
     int const num_control_points = spline.numControlPoints();
 
@@ -73,8 +74,9 @@ InteractiveXSpline::setSpline(XSpline const& spline)
             boost::bind(&InteractiveXSpline::dragFinished, this)
         );
 
-        if (i == 0 || i == num_control_points - 1) {
-            // Endpoints can't be deleted.
+        if (i == 0 || i == num_control_points - 1 || fixed_number_of_control_points) {
+            // Endpoints can never be deleted. Other points can, unless
+            // fixed_number_of_control_points is set.
             new_control_points[i].handler.setProximityStatusTip(tr("This point can be dragged. Hold %1 or %2 to drag along axes.")
                     .arg(GlobalStaticSettings::getShortcutText(DewarpingMoveHorizontally),
                     GlobalStaticSettings::getShortcutText(DewarpingMoveVertically)));
@@ -91,6 +93,7 @@ InteractiveXSpline::setSpline(XSpline const& spline)
 
     m_spline.swap(new_spline);
     m_controlPoints.swap(new_control_points);
+    m_fixedNumberOfControlPoints = fixed_number_of_control_points;
 
     m_modifiedCallback();
 }
@@ -119,6 +122,11 @@ bool
 InteractiveXSpline::curveIsProximityLeader(
     InteractionState const& state, QPointF* pt, double* t) const
 {
+    if (m_fixedNumberOfControlPoints)
+    {
+        return false;
+    }
+
     if (state.proximityLeader(m_curveProximity)) {
         if (pt) {
             *pt = m_curveProximityPointScreen;
@@ -136,6 +144,11 @@ void
 InteractiveXSpline::onProximityUpdate(
     QPointF const& screen_mouse_pos, InteractionState& interaction)
 {
+    if (m_fixedNumberOfControlPoints)
+    {
+        return;
+    }
+
     m_curveProximityPointStorage = m_spline.pointClosestTo(
                                        m_toStorage(screen_mouse_pos), &m_curveProximityT
                                    );
@@ -149,7 +162,7 @@ void
 InteractiveXSpline::onMouseMoveEvent(
     QMouseEvent*, InteractionState& interaction)
 {
-    if (interaction.proximityLeader(m_curveProximity)) {
+    if (interaction.proximityLeader(m_curveProximity) && !m_fixedNumberOfControlPoints) {
         // We need to redraw the highlighted point.
         interaction.setRedrawRequested(true);
         m_lastProximity = true;
@@ -168,12 +181,12 @@ InteractiveXSpline::onMousePressEvent(
         return;
     }
 
-    if (interaction.proximityLeader(m_curveProximity)) {
+    if (interaction.proximityLeader(m_curveProximity) && !m_fixedNumberOfControlPoints) {
         int const segment = int(m_curveProximityT * m_spline.numSegments());
         int const pnt_idx = segment + 1;
 
         m_spline.insertControlPoint(pnt_idx, m_curveProximityPointStorage, 1);
-        setSpline(m_spline);
+        setSpline(m_spline, m_fixedNumberOfControlPoints);
 
         m_controlPoints[pnt_idx].handler.forceEnterDragState(interaction, event->pos());
         event->accept();
@@ -191,16 +204,19 @@ InteractiveXSpline::onKeyPressEvent(
     }
 
     if (GlobalStaticSettings::checkKeysMatch(DewarpingDeletePoint, event->modifiers(), (Qt::Key) event->key())) {
-        int const num_control_points = m_spline.numControlPoints();
-        // Check if one of our control points is a proximity leader.
-        // Note that we don't consider the endpoints.
-        for (int i = 1; i < num_control_points - 1; ++i) {
-            if (m_controlPoints[i].handler.proximityLeader(interaction)) {
-                m_spline.eraseControlPoint(i);
-                setSpline(m_spline);
-                interaction.setRedrawRequested(true);
-                event->accept();
-                break;
+        if (!m_fixedNumberOfControlPoints)
+        {
+            int const num_control_points = m_spline.numControlPoints();
+            // Check if one of our control points is a proximity leader.
+            // Note that we don't consider the endpoints.
+            for (int i = 1; i < num_control_points - 1; ++i) {
+                if (m_controlPoints[i].handler.proximityLeader(interaction)) {
+                    m_spline.eraseControlPoint(i);
+                    setSpline(m_spline, m_fixedNumberOfControlPoints);
+                    interaction.setRedrawRequested(true);
+                    event->accept();
+                    break;
+                }
             }
         }
     }

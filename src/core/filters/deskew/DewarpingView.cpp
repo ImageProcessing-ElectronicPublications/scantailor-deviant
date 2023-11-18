@@ -94,8 +94,8 @@ DewarpingView::DewarpingView(
         bottom_spline.swap(new_bottom_spline);
     }
 
-    m_topSpline.setSpline(top_spline);
-    m_bottomSpline.setSpline(bottom_spline);
+    m_topSpline.setSpline(top_spline, fixed_number_of_control_points);
+    m_bottomSpline.setSpline(bottom_spline, fixed_number_of_control_points);
 
     InteractiveXSpline* splines[2] = { &m_topSpline, &m_bottomSpline };
     int curve_idx = -1;
