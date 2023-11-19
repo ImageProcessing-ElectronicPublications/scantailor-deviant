@@ -96,7 +96,7 @@ ProjectWriter::write(QString const& file_path, std::vector<FilterPtr> const& fil
     );
 
     QDomElement st_el(doc.createElement("scantailor"));
-    st_el.setAttribute("app", "Universal");
+    st_el.setAttribute("app", "Deviant");
     st_el.setAttribute("ver", VERSION);
     root_el.appendChild(st_el);
 

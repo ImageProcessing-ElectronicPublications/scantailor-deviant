@@ -1,5 +1,5 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Source: https://github.com/trufanov-nok/scantailor-universal
+Source: https://github.com/ImageProcessing-ElectronicPublications/scantailor-deviant
 
 Files: *
 Copyright: 2007-2013 Joseph Artsimovich <joseph.artsimovich@gmail.com>

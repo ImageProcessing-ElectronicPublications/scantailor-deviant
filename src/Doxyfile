@@ -3,7 +3,7 @@
 #---------------------------------------------------------------------------
 # Project related configuration options
 #---------------------------------------------------------------------------
-PROJECT_NAME           = Scan Tailor Universal
+PROJECT_NAME           = Scan Tailor Deviant
 OUTPUT_DIRECTORY       = doxygen
 CREATE_SUBDIRS         = YES
 OUTPUT_LANGUAGE        = English

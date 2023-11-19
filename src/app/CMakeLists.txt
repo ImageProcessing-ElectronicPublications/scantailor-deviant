@@ -78,55 +78,55 @@ ENDIF(WIN32)
 
 IF (WIN32)
         ADD_EXECUTABLE(
-                scantailor-universal WIN32 ${gui_only_sources} ${resource_sources} ${win32_resource_file}
+                scantailor-deviant WIN32 ${gui_only_sources} ${resource_sources} ${win32_resource_file}
         )
 ELSEIF(APPLE)
 
-        set( ICON_NAME "ScanTailorUniversal.icns" )
+        set( ICON_NAME "ScanTailorDeviant.icns" )
         set( ICON_PATH "${PROJECT_SOURCE_DIR}/src/packaging/osx/${ICON_NAME}" )
         set_source_files_properties( ${ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
 
         ADD_EXECUTABLE(
-                scantailor-universal MACOSX_BUNDLE ${gui_only_sources} ${resource_sources} ${ICON_PATH}
+                scantailor-deviant MACOSX_BUNDLE ${gui_only_sources} ${resource_sources} ${ICON_PATH}
         )
-        set_target_properties(scantailor-universal PROPERTIES MACOSX_BUNDLE_INFO_PLIST
+        set_target_properties(scantailor-deviant PROPERTIES MACOSX_BUNDLE_INFO_PLIST
                                   ${PROJECT_SOURCE_DIR}/src/packaging/osx/Info.plist.in)
 
 
 ELSE()
         ADD_EXECUTABLE(
-                scantailor-universal ${gui_only_sources} ${resource_sources} ${win32_resource_file}
+                scantailor-deviant ${gui_only_sources} ${resource_sources} ${win32_resource_file}
         )
 ENDIF()
 
 TARGET_LINK_LIBRARIES(
-        scantailor-universal
+        scantailor-deviant
         fix_orientation page_split deskew select_content page_layout output stcore
         dewarping zones interaction imageproc math foundation exporting
 )
 
-ADD_DEPENDENCIES(scantailor-universal fix_orientation page_split deskew select_content page_layout output stcore
+ADD_DEPENDENCIES(scantailor-deviant fix_orientation page_split deskew select_content page_layout output stcore
         dewarping zones interaction imageproc math foundation)
 
 
-QT5_USE_MODULES(scantailor-universal Widgets Xml Svg ${MAYBE_QT_OPENGL_MODULE})
+QT5_USE_MODULES(scantailor-deviant Widgets Xml Svg ${MAYBE_QT_OPENGL_MODULE})
 
 IF(EXTRA_LIBS)
-        TARGET_LINK_LIBRARIES(scantailor-universal ${EXTRA_LIBS})
+        TARGET_LINK_LIBRARIES(scantailor-deviant ${EXTRA_LIBS})
 ENDIF()
 
 IF(APPLE)
-        INSTALL(TARGETS scantailor-universal BUNDLE DESTINATION . RUNTIME DESTINATION bin)
+        INSTALL(TARGETS scantailor-deviant BUNDLE DESTINATION . RUNTIME DESTINATION bin)
 ELSEIF(WIN32)
-        INSTALL(TARGETS scantailor-universal RUNTIME DESTINATION .)
+        INSTALL(TARGETS scantailor-deviant RUNTIME DESTINATION .)
 ELSE(APPLE)
-        INSTALL(TARGETS scantailor-universal RUNTIME DESTINATION bin)
+        INSTALL(TARGETS scantailor-deviant RUNTIME DESTINATION bin)
 ENDIF(APPLE)
 
 # Translations
 TRANSLATION_SOURCES(
-        scantailor-universal
+        scantailor-deviant
         ${gui_only_sources}
 )
-FINALIZE_TRANSLATION_SET(scantailor-universal ${TRANSLATION_FILES})
-UPDATE_TRANSLATIONS_TARGET(update_translations scantailor-universal)
+FINALIZE_TRANSLATION_SET(scantailor-deviant ${TRANSLATION_FILES})
+UPDATE_TRANSLATIONS_TARGET(update_translations scantailor-deviant)

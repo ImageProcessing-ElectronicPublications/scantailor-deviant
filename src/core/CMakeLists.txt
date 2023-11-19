@@ -139,6 +139,6 @@ QT5_USE_MODULES(stcore Widgets Xml ${MAYBE_QT_OPENGL_MODULE})
 ADD_DEPENDENCIES(stcore core_ui_sources) 
 
 TRANSLATION_SOURCES(
-        scantailor-universal
+        scantailor-deviant
         ${common_sources} ${core_ui_sources}
 )

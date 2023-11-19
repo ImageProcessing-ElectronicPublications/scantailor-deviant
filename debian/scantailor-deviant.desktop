@@ -1,9 +1,9 @@
 [Desktop Entry]
-Name=Scan Tailor Universal
+Name=Scan Tailor Deviant
 Version=1.0
-Exec=scantailor-universal %f
+Exec=scantailor-deviant %f
 Comment=Interactive post-processing tool for scanned pages
-Icon=scantailor-universal
+Icon=scantailor-deviant
 Type=Application
 Terminal=false
 StartupNotify=true

@@ -1,5 +1,5 @@
 /*
-    Scan Tailor Universal - Interactive post-processing tool for scanned
+    Scan Tailor Deviant - Interactive post-processing tool for scanned
     pages. A fork of Scan Tailor by Joseph Artsimovich.
     Copyright (C) 2020 Alexander Trufanov <trufanovan@gmail.com>
 

@@ -75,7 +75,7 @@ void SettingsDialog::initLanguageList(QString cur_lang)
     ui.language->clear();
     ui.language->addItem("English", "en");
 
-    const QStringList language_file_filter("scantailor-universal_*.qm");
+    const QStringList language_file_filter("scantailor-deviant_*.qm");
     QStringList fileNames = QDir().entryList(language_file_filter);
 
     if (fileNames.isEmpty()) {

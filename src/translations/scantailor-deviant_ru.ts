@@ -10,8 +10,8 @@
     </message>
     <message>
         <location filename="../app/ui/AboutDialog.ui" line="14"/>
-        <source>About Scan Tailor &quot;Universal&quot;</source>
-        <translation>О программе Scan Tailor &quot;Universal&quot;</translation>
+        <source>About Scan Tailor &quot;Deviant&quot;</source>
+        <translation>О программе Scan Tailor &quot;Deviant&quot;</translation>
     </message>
     <message>
         <location filename="../app/ui/AboutDialog.ui" line="33"/>
@@ -40,8 +40,8 @@
     </message>
     <message>
         <location filename="../app/ui/AboutDialog.ui" line="160"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lead Developer of &lt;a href=&quot;https://github.com/trufanov-nok/scantailor-universal&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Universal&lt;/span&gt;&lt;/a&gt; version&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ведущий разработчик версии &lt;a href=&quot;https://github.com/trufanov-nok/scantailor-universal&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Universal&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lead Developer of &lt;a href=&quot;https://github.com/ImageProcessing-ElectronicPublications/scantailor-deviant&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Deviant&lt;/span&gt;&lt;/a&gt; version&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ведущий разработчик версии &lt;a href=&quot;https://github.com/ImageProcessing-ElectronicPublications/scantailor-deviant&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Deviant&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../app/ui/AboutDialog.ui" line="167"/>
@@ -662,8 +662,8 @@ for content in foreground subscans (lengthy)</source>
     </message>
     <message>
         <location filename="../app/MainWindow.cpp" line="2380"/>
-        <source>%2 - Scan Tailor &quot;Universal&quot; %3 [%1bit]</source>
-        <translation>%2 - Scan Tailor &quot;Universal&quot; %3 [%1бит]</translation>
+        <source>%2 - Scan Tailor &quot;Deviant&quot; %3 [%1bit]</source>
+        <translation>%2 - Scan Tailor &quot;Deviant&quot; %3 [%1бит]</translation>
     </message>
     <message>
         <location filename="../app/MainWindow.cpp" line="2454"/>
@@ -2214,7 +2214,7 @@ and press [Enter] to edit the shortcut:</source>
     </message>
     <message>
         <location filename="../core/settings/hotkeysmanager.cpp" line="293"/>
-        <source>Scan Tailor Universal</source>
+        <source>Scan Tailor Deviant</source>
         <translation></translation>
     </message>
     <message>

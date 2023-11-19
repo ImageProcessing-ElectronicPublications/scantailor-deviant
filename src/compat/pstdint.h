@@ -53,7 +53,7 @@
  *  do not include this file, or anything comparable to it.
  *
  *  So that's what this file is all about.  Its an attempt to build a
- *  single universal include file that works on as many platforms as
+ *  single deviant include file that works on as many platforms as
  *  possible to deliver what stdint.h is supposed to.  A few things
  *  that should be noted about this file:
  *

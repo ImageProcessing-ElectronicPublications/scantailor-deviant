@@ -2379,7 +2379,7 @@ MainWindow::updateWindowTitle()
         project_name = QFileInfo(m_projectFile).baseName();
     }
     QString const version(QString::fromUtf8(VERSION));
-    QString title = tr("%2 - Scan Tailor \"Universal\" %3 [%1bit]").arg(sizeof(void*) * 8).arg(project_name, version);
+    QString title = tr("%2 - Scan Tailor \"Deviant\" %3 [%1bit]").arg(sizeof(void*) * 8).arg(project_name, version);
     if (m_ptrBatchQueue.get()) {
         const double progress = m_ptrBatchQueue->getProgress();
         if (progress < 100.) {
@@ -3047,7 +3047,7 @@ MainWindow::setDockingPanels(bool enabled)
 bool
 MainWindow::loadLanguage(const QString& dir, const QString& lang)
 {
-    const QString translation("scantailor-universal_" + lang);
+    const QString translation("scantailor-deviant_" + lang);
     bool loaded = m_translator.load(dir + translation);
 
 #if defined(unix) || defined(__unix__) || defined(__unix)

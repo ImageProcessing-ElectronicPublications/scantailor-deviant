@@ -1,7 +1,7 @@
 BreezeStyleSheets for STU
 =================
 
-Breeze and BreezeDark-like stylesheets adapted for [Scan Tailor Universal](https://github.com/trufanov-nok/scantailor-universal)
+Breeze and BreezeDark-like stylesheets adapted for [Scan Tailor Deviant](https://github.com/ImageProcessing-ElectronicPublications/scantailor-deviant)
 
 License
 =======

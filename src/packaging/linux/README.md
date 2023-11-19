@@ -132,8 +132,8 @@ cmake-gui
 ### Build
 
 ~~~ text
-cmake --build ./build --config Release --target scantailor-universal --parallel 4
-cmake --build ./build --config Release --target scantailor-universal-cli --parallel 4
+cmake --build ./build --config Release --target scantailor-deviant --parallel 4
+cmake --build ./build --config Release --target scantailor-deviant-cli --parallel 4
 ~~~
 
 ### Build installation package

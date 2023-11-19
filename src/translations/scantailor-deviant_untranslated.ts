@@ -5,7 +5,7 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../app/ui/AboutDialog.ui" line="14"/>
-        <source>About Scan Tailor &quot;Universal&quot;</source>
+        <source>About Scan Tailor &quot;Deviant&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -35,7 +35,7 @@
     </message>
     <message>
         <location filename="../app/ui/AboutDialog.ui" line="160"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lead Developer of &lt;a href=&quot;https://github.com/trufanov-nok/scantailor-universal&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Universal&lt;/span&gt;&lt;/a&gt; version&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lead Developer of &lt;a href=&quot;https://github.com/ImageProcessing-ElectronicPublications/scantailor-deviant&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Deviant&lt;/span&gt;&lt;/a&gt; version&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -794,7 +794,7 @@ To determine it, run batch processing at &quot;Select Content&quot; or &quot;Pag
     </message>
     <message>
         <location filename="../app/MainWindow.cpp" line="2378"/>
-        <source>%2 - Scan Tailor &quot;Universal&quot; %3 [%1bit]</source>
+        <source>%2 - Scan Tailor &quot;Deviant&quot; %3 [%1bit]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2531,7 +2531,7 @@ and press [Enter] to edit the shortcut:</source>
     </message>
     <message>
         <location filename="../core/settings/hotkeysmanager.cpp" line="293"/>
-        <source>Scan Tailor Universal</source>
+        <source>Scan Tailor Deviant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

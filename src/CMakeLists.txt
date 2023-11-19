@@ -2,7 +2,7 @@
 # up an identically named header from a system include path.
 INCLUDE_DIRECTORIES(. foundation math core/interaction core/zones)
 
-FILE(GLOB TRANSLATION_FILES translations/scantailor-universal_*.ts)
+FILE(GLOB TRANSLATION_FILES translations/scantailor-deviant_*.ts)
 
 ADD_SUBDIRECTORY(dewarping)
 ADD_SUBDIRECTORY(foundation)
