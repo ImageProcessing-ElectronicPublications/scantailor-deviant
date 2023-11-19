@@ -13,6 +13,7 @@ SET(
         STEX_MultipleTargetsSupport.h
         STEX_ToPoint.h
         STEX_ToVec.h
+        TextLineRefiner.cpp TextLineRefiner.h
 )
 SOURCE_GROUP("Sources" FILES ${sources})
 
