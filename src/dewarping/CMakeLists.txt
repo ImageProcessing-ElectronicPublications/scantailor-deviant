@@ -7,6 +7,7 @@ SET(
         Curve.cpp Curve.h
         CylindricalSurfaceDewarper.cpp CylindricalSurfaceDewarper.h
         DepthPerception.cpp DepthPerception.h
+        DetectVerticalBounds.cpp DetectVerticalBounds.h
         DistortionModel.cpp DistortionModel.h
         STEX_HomographicTransform.h
         STEX_MultipleTargetsSupport.h
