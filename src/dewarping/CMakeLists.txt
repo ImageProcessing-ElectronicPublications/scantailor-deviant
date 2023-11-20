@@ -38,6 +38,7 @@ SET(
         STEX_WatershedSegmentation.cpp STEX_WatershedSegmentation.h
         TextLineRefiner.cpp TextLineRefiner.h
         TextLineSegmenter.cpp TextLineSegmenter.h
+        TextLineTracer.cpp TextLineTracer.h
         TopBottomEdgeTracer.cpp TopBottomEdgeTracer.h
 )
 SOURCE_GROUP("Sources" FILES ${sources})
