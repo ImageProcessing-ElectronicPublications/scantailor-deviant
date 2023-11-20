@@ -10,6 +10,7 @@ SET(
         DetectVerticalBounds.cpp DetectVerticalBounds.h
         DistortionModel.cpp DistortionModel.h
         DistortionModelBuilder.cpp DistortionModelBuilder.h
+        RasterDewarper.cpp RasterDewarper.h
         STEX_AbstractImageTransform.h
         STEX_AffineImageTransform.cpp STEX_AffineImageTransform.h
         STEX_AffineTransform.cpp STEX_AffineTransform.h
