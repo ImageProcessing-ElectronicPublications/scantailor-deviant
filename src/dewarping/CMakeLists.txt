@@ -9,11 +9,34 @@ SET(
         DepthPerception.cpp DepthPerception.h
         DetectVerticalBounds.cpp DetectVerticalBounds.h
         DistortionModel.cpp DistortionModel.h
+        STEX_AbstractImageTransform.h
+        STEX_AffineImageTransform.cpp STEX_AffineImageTransform.h
+        STEX_AffineTransform.cpp STEX_AffineTransform.h
+        STEX_AffineTransformedImage.cpp STEX_AffineTransformedImage.h
+        STEX_BadAllocIfNull.h
+        STEX_BWPixelProxy.h
+        STEX_Connectivity.h
+        STEX_ConnectivityMap.cpp STEX_ConnectivityMap.h
+        STEX_CopyableByMemcpy.h
+        STEX_GaussBlur.cpp STEX_GaussBlur.h
+        STEX_Grid.h
+        STEX_GridAccessor.h
         STEX_HomographicTransform.h
+        STEX_IndexSequence.h
+        STEX_MinMaxAccumulator.h
         STEX_MultipleTargetsSupport.h
+        STEX_PlugHoles.h
+        STEX_PolygonRasterizer.cpp STEX_PolygonRasterizer.h
+        STEX_RasterOp.h
+        STEX_RasterOpGeneric.h
+        STEX_RoundingHasher.cpp STEX_RoundingHasher.h
         STEX_ToPoint.h
         STEX_ToVec.h
+        STEX_TraverseBorders.h
+        STEX_VecNT.h
+        STEX_WatershedSegmentation.cpp STEX_WatershedSegmentation.h
         TextLineRefiner.cpp TextLineRefiner.h
+        TextLineSegmenter.cpp TextLineSegmenter.h
 )
 SOURCE_GROUP("Sources" FILES ${sources})
 

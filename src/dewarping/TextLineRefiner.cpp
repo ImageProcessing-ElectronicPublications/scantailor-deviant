@@ -17,7 +17,7 @@
 */
 
 #include "TextLineRefiner.h"
-#include "VecNT.h"
+#include "STEX_VecNT.h"
 #include "NumericTraits.h"
 #include "DebugImages.h"
 #include "imageproc/GrayImage.h"

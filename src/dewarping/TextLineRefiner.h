@@ -19,7 +19,7 @@
 #ifndef DEWARPING_TEXT_LINE_REFINER_H_
 #define DEWARPING_TEXT_LINE_REFINER_H_
 
-#include "VecNT.h"
+#include "STEX_VecNT.h"
 #include <QPointF>
 #include <QLineF>
 #include <functional>

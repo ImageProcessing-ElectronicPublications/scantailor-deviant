@@ -17,7 +17,7 @@
 */
 
 #include "DistortionModel.h"
-#include "VecNT.h"
+#include "STEX_VecNT.h"
 #include <QDomDocument>
 #include <QDomElement>
 #include <cmath>
