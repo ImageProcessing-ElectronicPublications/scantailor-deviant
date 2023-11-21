@@ -8,6 +8,7 @@ SET(
         CylindricalSurfaceDewarper.cpp CylindricalSurfaceDewarper.h
         DepthPerception.cpp DepthPerception.h
         DetectVerticalBounds.cpp DetectVerticalBounds.h
+        DewarpingImageTransform.cpp DewarpingImageTransform.h
         DistortionModel.cpp DistortionModel.h
         DistortionModelBuilder.cpp DistortionModelBuilder.h
         RasterDewarper.cpp RasterDewarper.h
@@ -25,6 +26,7 @@ SET(
         STEX_GridAccessor.h
         STEX_HomographicTransform.h
         STEX_IndexSequence.h
+        STEX_LineBoundedByPolygon.cpp STEX_LineBoundedByPolygon.h
         STEX_MinMaxAccumulator.h
         STEX_MultipleTargetsSupport.h
         STEX_PlugHoles.h
