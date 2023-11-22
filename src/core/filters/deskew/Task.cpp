@@ -30,7 +30,11 @@
 #include "NoDistortionView.h"
 #include "ImageView.h"
 #include "DewarpingView.h"
-#include "dewarping/DistortionModel.h"
+#include "dewarping/DewarpingImageTransform.h"
+#include "dewarping/DistortionModelBuilder.h"
+#include "dewarping/TextLineTracer.h"
+#include "dewarping/TopBottomEdgeTracer.h"
+#include "dewarping/STEX_AffineTransformedImage.h"
 #include "ImageTransformation.h"
 #include "imageproc/BinaryImage.h"
 #include "imageproc/BinaryThreshold.h"
@@ -349,23 +353,67 @@ Task::processPerspectiveDistortion(
 {
     if (!params.perspectiveParams().isValid())
     {
-        // Set up a trivial transformation.
+        DistortionModelBuilder model_builder(
+            data.xform().transformBack().map(QPointF(0, 1))
+        );
 
-        QTransform const to_orig(data.xform().transformBack());
-        QRectF const transformed_box(data.xform().resultingPostCropArea().boundingRect());
+        const QRectF& orig_image_rect = data.xform().origRect();
+        const QSize orig_image_size(orig_image_rect.width(), orig_image_rect.height());
+        const AffineImageTransform orig_image_transform(orig_image_size);
 
-        params.perspectiveParams().setCorner(
-            PerspectiveParams::TOP_LEFT, to_orig.map(transformed_box.topLeft())
+        TextLineTracer::trace(
+            AffineTransformedImage(data.grayImage(), orig_image_transform),
+            model_builder, status, m_ptrDbg.get()
         );
-        params.perspectiveParams().setCorner(
-            PerspectiveParams::TOP_RIGHT, to_orig.map(transformed_box.topRight())
+
+        TopBottomEdgeTracer::trace(
+            data.grayImage(), model_builder.verticalBounds(),
+            model_builder, status, m_ptrDbg.get()
         );
-        params.perspectiveParams().setCorner(
-            PerspectiveParams::BOTTOM_LEFT, to_orig.map(transformed_box.bottomLeft())
+
+        DistortionModel distortion_model(
+            model_builder.tryBuildModel(m_ptrDbg.get(), &data.origImage())
         );
-        params.perspectiveParams().setCorner(
-            PerspectiveParams::BOTTOM_RIGHT, to_orig.map(transformed_box.bottomRight())
-        );
+
+        if (distortion_model.isValid())
+        {
+            params.perspectiveParams().setCorner(
+                PerspectiveParams::TOP_LEFT,
+                distortion_model.topCurve().polyline().front()
+            );
+            params.perspectiveParams().setCorner(
+                PerspectiveParams::TOP_RIGHT,
+                distortion_model.topCurve().polyline().back()
+            );
+            params.perspectiveParams().setCorner(
+                PerspectiveParams::BOTTOM_LEFT,
+                distortion_model.bottomCurve().polyline().front()
+            );
+            params.perspectiveParams().setCorner(
+                PerspectiveParams::BOTTOM_RIGHT,
+                distortion_model.bottomCurve().polyline().back()
+            );
+        }
+        else
+        {
+            // Set up a trivial transformation.
+
+            QTransform const to_orig(data.xform().transformBack());
+            QRectF const transformed_box(data.xform().resultingPostCropArea().boundingRect());
+
+            params.perspectiveParams().setCorner(
+                PerspectiveParams::TOP_LEFT, to_orig.map(transformed_box.topLeft())
+            );
+            params.perspectiveParams().setCorner(
+                PerspectiveParams::TOP_RIGHT, to_orig.map(transformed_box.topRight())
+            );
+            params.perspectiveParams().setCorner(
+                PerspectiveParams::BOTTOM_LEFT, to_orig.map(transformed_box.bottomLeft())
+            );
+            params.perspectiveParams().setCorner(
+                PerspectiveParams::BOTTOM_RIGHT, to_orig.map(transformed_box.bottomRight())
+            );
+        }
 
         params.perspectiveParams().setMode(MODE_AUTO);
 
