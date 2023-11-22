@@ -60,7 +60,8 @@ class Task::NoDistortionUiUpdater : public FilterResult
 public:
 	NoDistortionUiUpdater(
         IntrusivePtr<Filter> const& filter,
-	    QImage const& image,
+        std::unique_ptr<DebugImages> const& dbg_img,
+        QImage const& image,
 	    ImageTransformation const& xform,
         PageId const& page_id,
         Params const& page_params,
@@ -74,6 +75,7 @@ public:
     }
 private:
     IntrusivePtr<Filter> m_ptrFilter;
+    std::unique_ptr<DebugImages> const& m_ptrDbg;
     QImage m_image;
     QImage m_downscaledImage;
     ImageTransformation m_xform;
@@ -89,6 +91,7 @@ class Task::RotationUiUpdater : public FilterResult
 public:
     RotationUiUpdater(
         IntrusivePtr<Filter> const& filter,
+        std::unique_ptr<DebugImages> const& dbg_img,
         QImage const& image,
         ImageTransformation const& xform,
         PageId const& page_id,
@@ -103,6 +106,7 @@ public:
     }
 private:
     IntrusivePtr<Filter> m_ptrFilter;
+    std::unique_ptr<DebugImages> const& m_ptrDbg;
     QImage m_image;
     QImage m_downscaledImage;
     ImageTransformation m_xform;
@@ -118,6 +122,7 @@ class Task::PerspectiveUiUpdater : public FilterResult
 public:
     PerspectiveUiUpdater(
         IntrusivePtr<Filter> const& filter,
+        std::unique_ptr<DebugImages> const& dbg_img,
         QImage const& image,
         ImageTransformation const& xform,
         PageId const& page_id,
@@ -132,6 +137,7 @@ public:
     }
 private:
     IntrusivePtr<Filter> m_ptrFilter;
+    std::unique_ptr<DebugImages> const& m_ptrDbg;
     QImage m_image;
     QImage m_downscaledImage;
     ImageTransformation m_xform;
@@ -147,6 +153,7 @@ class Task::DewarpingUiUpdater : public FilterResult
 public:
     DewarpingUiUpdater(
         IntrusivePtr<Filter> const& filter,
+        std::unique_ptr<DebugImages> const& dbg_img,
         QImage const& image,
         ImageTransformation const& xform,
         PageId const& page_id,
@@ -161,6 +168,7 @@ public:
     }
 private:
     IntrusivePtr<Filter> m_ptrFilter;
+    std::unique_ptr<DebugImages> const& m_ptrDbg;
     QImage m_image;
     QImage m_downscaledImage;
     ImageTransformation m_xform;
@@ -263,7 +271,7 @@ Task::processNoDistortion(
     {
         return FilterResultPtr(
                    new NoDistortionUiUpdater(
-                       m_ptrFilter, data.origImage(), data.xform(),
+                       m_ptrFilter, m_ptrDbg, data.origImage(), data.xform(),
                        m_pageId, params, m_batchProcessing
                    )
                );
@@ -338,7 +346,7 @@ Task::processRotationDistortion(
     {
         return FilterResultPtr(
             new RotationUiUpdater(
-                m_ptrFilter, data.origImage(), data.xform(),
+                m_ptrFilter, m_ptrDbg, data.origImage(), data.xform(),
                 m_pageId, params, m_batchProcessing
             )
         );
@@ -441,7 +449,7 @@ Task::processPerspectiveDistortion(
     {
         return FilterResultPtr(
             new PerspectiveUiUpdater(
-                m_ptrFilter, data.origImage(), data.xform(),
+                m_ptrFilter, m_ptrDbg, data.origImage(), data.xform(),
                 m_pageId, params, m_batchProcessing
             )
         );
@@ -526,7 +534,7 @@ Task::processWarpDistortion(
     {
         return FilterResultPtr(
             new DewarpingUiUpdater(
-                m_ptrFilter, data.origImage(), data.xform(),
+                m_ptrFilter, m_ptrDbg, data.origImage(), data.xform(),
                 m_pageId, params, m_batchProcessing
             )
         );
@@ -575,12 +583,14 @@ Task::cleanup(TaskStatus const& status, BinaryImage& image)
 
 Task::NoDistortionUiUpdater::NoDistortionUiUpdater(
     IntrusivePtr<Filter> const& filter,
+    std::unique_ptr<DebugImages> const& dbg_img,
     QImage const& image,
     ImageTransformation const& xform,
     PageId const& page_id,
     Params const& page_params,
     bool batch_processing)
     : m_ptrFilter(filter)
+    , m_ptrDbg(dbg_img)
     , m_image(image)
     , m_downscaledImage(ImageView::createDownscaledImage(image))
     , m_xform(xform)
@@ -607,19 +617,21 @@ Task::NoDistortionUiUpdater::updateUI(FilterUiInterface* ui)
     }
 
     NoDistortionView* view = new NoDistortionView(m_image, m_downscaledImage, m_xform);
-    ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP);
+    ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP, m_ptrDbg.get());
 }
 
 /*========================== Task::RotationUiUpdater =======================*/
 
 Task::RotationUiUpdater::RotationUiUpdater(
     IntrusivePtr<Filter> const& filter,
+    std::unique_ptr<DebugImages> const& dbg_img,
     QImage const& image,
     ImageTransformation const& xform,
     PageId const& page_id,
     Params const& page_params,
     bool batch_processing)
     : m_ptrFilter(filter)
+    , m_ptrDbg(dbg_img)
     , m_image(image)
     , m_downscaledImage(ImageView::createDownscaledImage(image))
     , m_xform(xform)
@@ -648,7 +660,7 @@ Task::RotationUiUpdater::updateUI(FilterUiInterface* ui)
 
     double const angle = m_pageParams.rotationParams().compensationAngleDeg();
     ImageView* view = new ImageView(m_image, m_downscaledImage, m_xform, angle);
-    ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP);
+    ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP, m_ptrDbg.get());
 
     QObject::connect(
         view, SIGNAL(manualDeskewAngleSet(double)),
@@ -664,12 +676,14 @@ Task::RotationUiUpdater::updateUI(FilterUiInterface* ui)
 
 Task::PerspectiveUiUpdater::PerspectiveUiUpdater(
     IntrusivePtr<Filter> const& filter,
+    std::unique_ptr<DebugImages> const& dbg_img,
     QImage const& image,
     ImageTransformation const& xform,
     PageId const& page_id,
     Params const& page_params,
     bool batch_processing)
     : m_ptrFilter(filter)
+    , m_ptrDbg(dbg_img)
     , m_image(image)
     , m_downscaledImage(ImageView::createDownscaledImage(image))
     , m_xform(xform)
@@ -723,7 +737,7 @@ Task::PerspectiveUiUpdater::updateUI(FilterUiInterface* ui)
         // Prevent the user from introducing curvature.
         /*fixed_number_of_control_points*/true
     );
-    ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP);
+    ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP, m_ptrDbg.get());
 
     QObject::connect(
         view, SIGNAL(distortionModelChanged(dewarping::DistortionModel const&)),
@@ -735,12 +749,14 @@ Task::PerspectiveUiUpdater::updateUI(FilterUiInterface* ui)
 
 Task::DewarpingUiUpdater::DewarpingUiUpdater(
     IntrusivePtr<Filter> const& filter,
+    std::unique_ptr<DebugImages> const& dbg_img,
     QImage const& image,
     ImageTransformation const& xform,
     PageId const& page_id,
     Params const& page_params,
     bool batch_processing)
     : m_ptrFilter(filter)
+    , m_ptrDbg(dbg_img)
     , m_image(image)
     , m_downscaledImage(ImageView::createDownscaledImage(image))
     , m_xform(xform)
@@ -773,7 +789,7 @@ Task::DewarpingUiUpdater::updateUI(FilterUiInterface* ui)
         m_pageParams.dewarpingParams().depthPerception(),
         /*fixed_number_of_control_points*/false
     );
-    ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP);
+    ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP, m_ptrDbg.get());
 
     QObject::connect(
         view, SIGNAL(distortionModelChanged(dewarping::DistortionModel const&)),
