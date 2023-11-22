@@ -456,28 +456,49 @@ Task::processWarpDistortion(
 {
     if (!params.dewarpingParams().isValid())
     {
-        DistortionModel distortion_model;
+        DistortionModelBuilder model_builder(
+            data.xform().transformBack().map(QPointF(0, 1))
+        );
+
+        const QRectF& orig_image_rect = data.xform().origRect();
+        const QSize orig_image_size(orig_image_rect.width(), orig_image_rect.height());
+        const AffineImageTransform orig_image_transform(orig_image_size);
+
+        TextLineTracer::trace(
+            AffineTransformedImage(data.grayImage(), orig_image_transform),
+            model_builder, status, m_ptrDbg.get()
+        );
+
+        TopBottomEdgeTracer::trace(
+            data.grayImage(), model_builder.verticalBounds(),
+            model_builder, status, m_ptrDbg.get()
+        );
+
+        DistortionModel distortion_model(
+            model_builder.tryBuildModel(m_ptrDbg.get(), &data.origImage())
+        );
 
         if (!distortion_model.isValid())
         {
             // Set up a trivial transformation.
+
             QTransform const to_orig(data.xform().transformBack());
             QRectF const transformed_box(data.xform().resultingPostCropArea().boundingRect());
 
             distortion_model.setTopCurve(
                 std::vector<QPointF>
-            {
-                to_orig.map(transformed_box.topLeft()),
-                    to_orig.map(transformed_box.topRight())
-            }
+                {
+                    to_orig.map(transformed_box.topLeft()),
+                        to_orig.map(transformed_box.topRight())
+                }
             );
 
             distortion_model.setBottomCurve(
                 std::vector<QPointF>
-            {
-                to_orig.map(transformed_box.bottomLeft()),
-                    to_orig.map(transformed_box.bottomRight())
-            }
+                {
+                    to_orig.map(transformed_box.bottomLeft()),
+                        to_orig.map(transformed_box.bottomRight())
+                }
             );
 
             assert(distortion_model.isValid());
@@ -746,30 +767,10 @@ Task::DewarpingUiUpdater::updateUI(FilterUiInterface* ui)
         return;
     }
 
-    XSpline top_curve;
-    XSpline bottom_curve;
-    top_curve.appendControlPoint(
-        m_pageParams.perspectiveParams().corner(PerspectiveParams::TOP_LEFT), 0
-    );
-    top_curve.appendControlPoint(
-        m_pageParams.perspectiveParams().corner(PerspectiveParams::TOP_RIGHT), 0
-    );
-    bottom_curve.appendControlPoint(
-        m_pageParams.perspectiveParams().corner(PerspectiveParams::BOTTOM_LEFT), 0
-    );
-    bottom_curve.appendControlPoint(
-        m_pageParams.perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT), 0
-    );
-    DistortionModel distortion_model;
-    distortion_model.setTopCurve(Curve(top_curve));
-    distortion_model.setBottomCurve(Curve(bottom_curve));
-
     DewarpingView* view = new DewarpingView(
-        m_image, m_downscaledImage, m_xform, distortion_model,
-
-        // Doesn't matter when curves are flat.
-        DepthPerception(),
-
+        m_image, m_downscaledImage, m_xform,
+        m_pageParams.dewarpingParams().distortionModel(),
+        m_pageParams.dewarpingParams().depthPerception(),
         /*fixed_number_of_control_points*/false
     );
     ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP);
@@ -777,6 +778,10 @@ Task::DewarpingUiUpdater::updateUI(FilterUiInterface* ui)
     QObject::connect(
         view, SIGNAL(distortionModelChanged(dewarping::DistortionModel const&)),
         opt_widget, SLOT(manualDistortionModelSetExternally(dewarping::DistortionModel const&))
+    );
+    QObject::connect(
+        opt_widget, SIGNAL(depthPerceptionSetByUser(double)),
+        view, SLOT(depthPerceptionChanged(double))
     );
 }
 
