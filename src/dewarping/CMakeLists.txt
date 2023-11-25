@@ -17,7 +17,6 @@ SET(
         STEX_AffineTransform.cpp STEX_AffineTransform.h
         STEX_AffineTransformedImage.cpp STEX_AffineTransformedImage.h
         STEX_BadAllocIfNull.cpp STEX_BadAllocIfNull.h
-        STEX_BWPixelProxy.h
         STEX_Connectivity.h
         STEX_ConnectivityMap.cpp STEX_ConnectivityMap.h
         STEX_CopyableByMemcpy.h

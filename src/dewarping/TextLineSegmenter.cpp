@@ -36,7 +36,7 @@
 #include "imageproc/RasterOp.h"
 #include "imageproc/RasterOpGeneric.h"
 #include "imageproc/Constants.h"
-#include "STEX_BWPixelProxy.h"
+#include "imageproc/BWPixelProxy.h"
 #include "imageproc/BinaryImage.h"
 #include "imageproc/Binarize.h"
 #include "imageproc/FindPeaksGeneric.h"
