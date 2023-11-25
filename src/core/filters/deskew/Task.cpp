@@ -370,10 +370,10 @@ Task::processPerspectiveDistortion(
             orig_image_transform.transform().inverted().map(QPointF(0, 1))
         );
 
-        //TextLineTracer::trace(
-        //    AffineTransformedImage(data.grayImage(), orig_image_transform),
-        //    model_builder, status, m_ptrDbg.get()
-        //);
+        TextLineTracer::trace(
+            AffineTransformedImage(data.grayImage(), orig_image_transform),
+            model_builder, status, m_ptrDbg.get()
+        );
 
         TopBottomEdgeTracer::trace(
             data.grayImage(), model_builder.verticalBounds(),
@@ -515,10 +515,10 @@ Task::processWarpDistortion(
             orig_image_transform.transform().inverted().map(QPointF(0, 1))
         );
 
-        //TextLineTracer::trace(
-        //    AffineTransformedImage(data.grayImage(), orig_image_transform),
-        //    model_builder, status, m_ptrDbg.get()
-        //);
+        TextLineTracer::trace(
+            AffineTransformedImage(data.grayImage(), orig_image_transform),
+            model_builder, status, m_ptrDbg.get()
+        );
 
         TopBottomEdgeTracer::trace(
             data.grayImage(), model_builder.verticalBounds(),
