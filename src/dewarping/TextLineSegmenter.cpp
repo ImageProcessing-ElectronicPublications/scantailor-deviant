@@ -49,7 +49,7 @@
 #include "imageproc/PolygonRasterizer.h"
 #include "imageproc/SkewFinder.h"
 #include "STEX_WatershedSegmentation.h"
-#include "STEX_PlugHoles.h"
+#include "imageproc/PlugHoles.h"
 #include "imageproc/IntegralImage.h"
 
 using namespace imageproc;

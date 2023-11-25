@@ -56,6 +56,7 @@ SET(
         ColorMixer.h
         ColorForId.h
         TraverseBorders.h
+        PlugHoles.h
 )
 
 SOURCE_GROUP(Sources FILES ${sources})
