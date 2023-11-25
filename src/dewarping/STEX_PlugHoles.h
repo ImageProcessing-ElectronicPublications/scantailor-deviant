@@ -20,7 +20,7 @@
 #define IMAGEPROC_PLUG_HOLES_H_
 
 #include "foundation/GridAccessor.h"
-#include "STEX_Connectivity.h"
+#include "imageproc/Connectivity.h"
 #include "STEX_TraverseBorders.h"
 #include "STEX_RasterOpGeneric.h"
 #include <QPoint>

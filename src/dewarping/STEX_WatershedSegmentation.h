@@ -20,7 +20,7 @@
 #define IMAGEPROC_WATERSHED_SEGMENTATION_H_
 
 #include "foundation/Grid.h"
-#include "STEX_Connectivity.h"
+#include "imageproc/Connectivity.h"
 #include <QSize>
 #include <stdint.h>
 
