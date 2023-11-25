@@ -40,7 +40,7 @@
 #include "foundation/Grid.h"
 #include "ValueConv.h"
 #include "foundation/GridAccessor.h"
-#include "STEX_RasterOpGeneric.h"
+#include "imageproc/RasterOpGeneric.h"
 #include <QSize>
 #include <boost/scoped_array.hpp>
 #include <algorithm>

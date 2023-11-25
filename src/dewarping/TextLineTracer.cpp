@@ -34,7 +34,7 @@
 #include "imageproc/Binarize.h"
 #include "imageproc/BinaryImage.h"
 #include "imageproc/GrayImage.h"
-#include "STEX_RasterOpGeneric.h"
+#include "imageproc/RasterOpGeneric.h"
 #include "imageproc/Sobel.h"
 #include "imageproc/Constants.h"
 #include <QPainter>

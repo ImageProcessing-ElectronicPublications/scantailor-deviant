@@ -14,7 +14,6 @@ SET(
         RasterDewarper.cpp RasterDewarper.h
         STEX_GaussBlur.cpp STEX_GaussBlur.h
         STEX_HomographicTransform.h
-        STEX_RasterOpGeneric.h
         STEX_ToPoint.h
         STEX_ToVec.h
         STEX_VecNT.h
