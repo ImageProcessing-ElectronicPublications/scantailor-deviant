@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "STEX_LineBoundedByPolygon.h"
+#include "LineBoundedByPolygon.h"
 #include "LineIntersectionScalar.h"
 #include <limits>
 
