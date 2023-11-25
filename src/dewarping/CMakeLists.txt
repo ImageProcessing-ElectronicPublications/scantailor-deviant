@@ -17,7 +17,6 @@ SET(
         STEX_AffineTransform.cpp STEX_AffineTransform.h
         STEX_AffineTransformedImage.cpp STEX_AffineTransformedImage.h
         STEX_ConnectivityMap.cpp STEX_ConnectivityMap.h
-        STEX_CopyableByMemcpy.h
         STEX_GaussBlur.cpp STEX_GaussBlur.h
         STEX_HomographicTransform.h
         STEX_LineBoundedByPolygon.cpp STEX_LineBoundedByPolygon.h

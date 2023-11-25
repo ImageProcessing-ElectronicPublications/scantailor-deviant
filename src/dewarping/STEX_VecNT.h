@@ -19,7 +19,7 @@
 #ifndef VEC_NT_H_
 #define VEC_NT_H_
 
-#include "STEX_CopyableByMemcpy.h"
+#include "foundation/CopyableByMemcpy.h"
 #include <Eigen/Core>
 #include <QPointF>
 #include <boost/type_traits/is_arithmetic.hpp>

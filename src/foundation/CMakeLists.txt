@@ -24,6 +24,7 @@ SET(
         DynamicPool.h
         MultipleTargetsSupport.h
         NumericTraits.h
+        CopyableByMemcpy.h
         MinMaxAccumulator.h
         VecNT.h
         VecT.h
