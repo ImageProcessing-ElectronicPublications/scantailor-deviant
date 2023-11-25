@@ -19,7 +19,7 @@
 #include "STEX_AffineTransform.h"
 #include "imageproc/GrayImage.h"
 #include "imageproc/ColorMixer.h"
-#include "STEX_BadAllocIfNull.h"
+#include "imageproc/BadAllocIfNull.h"
 #include <QImage>
 #include <QRect>
 #include <QSizeF>

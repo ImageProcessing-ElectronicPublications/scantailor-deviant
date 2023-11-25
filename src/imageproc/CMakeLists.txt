@@ -8,6 +8,7 @@ SET(
         SlicedHistogram.cpp SlicedHistogram.h
         ByteOrder.h BWColor.h
         BWPixelProxy.h
+        BadAllocIfNull.cpp BadAllocIfNull.h
         ConnComp.h Connectivity.h
         BitOps.cpp BitOps.h
         SeedFill.cpp SeedFill.h

@@ -22,7 +22,7 @@
 #include "STEX_VecNT.h"
 #include "imageproc/ColorMixer.h"
 #include "imageproc/GrayImage.h"
-#include "STEX_BadAllocIfNull.h"
+#include "imageproc/BadAllocIfNull.h"
 #include <QtGlobal>
 #include <QColor>
 #include <QImage>
