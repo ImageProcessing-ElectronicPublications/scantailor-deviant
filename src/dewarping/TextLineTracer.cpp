@@ -30,7 +30,7 @@
 #include "math/LineBoundedByRect.h"
 #include "imageproc/AffineTransformedImage.h"
 #include "imageproc/AffineTransform.h"
-#include "STEX_GaussBlur.h"
+#include "imageproc/GaussBlur.h"
 #include "imageproc/Binarize.h"
 #include "imageproc/BinaryImage.h"
 #include "imageproc/GrayImage.h"

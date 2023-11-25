@@ -27,7 +27,7 @@
 #include "GridLineTraverser.h"
 #include "imageproc/GrayImage.h"
 #include "imageproc/Scale.h"
-#include "STEX_GaussBlur.h"
+#include "imageproc/GaussBlur.h"
 #include <QTransform>
 #include <QPainter>
 #include <boost/foreach.hpp>

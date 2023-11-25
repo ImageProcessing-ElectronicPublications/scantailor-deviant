@@ -32,7 +32,7 @@
 #include "imageproc/AffineTransform.h"
 #include "imageproc/Grayscale.h"
 #include "imageproc/GrayImage.h"
-#include "STEX_GaussBlur.h"
+#include "imageproc/GaussBlur.h"
 #include "imageproc/RasterOp.h"
 #include "imageproc/RasterOpGeneric.h"
 #include "imageproc/Constants.h"
