@@ -21,7 +21,7 @@
 #include "NumericTraits.h"
 #include "STEX_ToVec.h"
 #include "STEX_ToPoint.h"
-#include "STEX_MultipleTargetsSupport.h"
+#include "foundation/MultipleTargetsSupport.h"
 #include <Eigen/Core>
 #include <Eigen/QR>
 #include <QLineF>

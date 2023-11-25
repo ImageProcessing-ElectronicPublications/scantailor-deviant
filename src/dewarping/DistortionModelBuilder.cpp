@@ -26,7 +26,7 @@
 #include "DebugImages.h"
 #include "STEX_VecNT.h"
 #include "STEX_ToVec.h"
-#include "STEX_MultipleTargetsSupport.h"
+#include "foundation/MultipleTargetsSupport.h"
 #include <QTransform>
 #include <QImage>
 #include <QPainter>

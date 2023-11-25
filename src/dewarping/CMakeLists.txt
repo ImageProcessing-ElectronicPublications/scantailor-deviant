@@ -20,7 +20,6 @@ SET(
         STEX_GaussBlur.cpp STEX_GaussBlur.h
         STEX_HomographicTransform.h
         STEX_LineBoundedByPolygon.cpp STEX_LineBoundedByPolygon.h
-        STEX_MultipleTargetsSupport.h
         STEX_PlugHoles.h
         STEX_PolygonRasterizer.cpp STEX_PolygonRasterizer.h
         STEX_RasterOpGeneric.h
