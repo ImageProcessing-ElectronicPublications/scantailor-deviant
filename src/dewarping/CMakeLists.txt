@@ -23,7 +23,6 @@ SET(
         STEX_CopyableByMemcpy.h
         STEX_GaussBlur.cpp STEX_GaussBlur.h
         STEX_HomographicTransform.h
-        STEX_IndexSequence.h
         STEX_LineBoundedByPolygon.cpp STEX_LineBoundedByPolygon.h
         STEX_MinMaxAccumulator.h
         STEX_MultipleTargetsSupport.h

@@ -29,6 +29,7 @@ SET(
         PriorityQueue.h
         Grid.h
         GridAccessor.h
+        IndexSequence.h
         ValueConv.h
 )
 SOURCE_GROUP("Sources" FILES ${sources})
