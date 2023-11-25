@@ -1,6 +1,7 @@
 PROJECT("Foundation library")
 
 INCLUDE_DIRECTORIES("${CMAKE_CURRENT_BINARY_DIR}")
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/core)
 
 SET(
         sources
@@ -18,6 +19,7 @@ SET(
         PerformanceTimer.cpp PerformanceTimer.h
         QtSignalForwarder.cpp QtSignalForwarder.h
         GridLineTraverser.cpp GridLineTraverser.h
+        RoundingHasher.cpp RoundingHasher.h
         StaticPool.h
         DynamicPool.h
         MultipleTargetsSupport.h
@@ -35,4 +37,4 @@ SET(
 SOURCE_GROUP("Sources" FILES ${sources})
 
 ADD_LIBRARY(foundation STATIC ${sources})
-QT5_USE_MODULES(foundation Core Xml)
+QT5_USE_MODULES(foundation Widgets Xml)

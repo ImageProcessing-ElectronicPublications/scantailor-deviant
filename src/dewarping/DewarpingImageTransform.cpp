@@ -18,7 +18,7 @@
 
 #include "DewarpingImageTransform.h"
 #include "RasterDewarper.h"
-#include "STEX_RoundingHasher.h"
+#include "foundation/RoundingHasher.h"
 #include "STEX_ToVec.h"
 #include "ToLineProjector.h"
 #include "STEX_LineBoundedByPolygon.h"

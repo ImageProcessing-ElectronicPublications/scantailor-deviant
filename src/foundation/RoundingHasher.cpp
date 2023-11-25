@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "STEX_RoundingHasher.h"
+#include "RoundingHasher.h"
 #include "Utils.h"
 #include <QByteArray>
 #include <QPoint>

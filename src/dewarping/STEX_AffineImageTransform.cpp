@@ -19,7 +19,7 @@
 #include "STEX_AffineImageTransform.h"
 #include "STEX_AffineTransformedImage.h"
 #include "STEX_AffineTransform.h"
-#include "STEX_RoundingHasher.h"
+#include "foundation/RoundingHasher.h"
 #include <QSizeF>
 #include <QRectF>
 #include <QLineF>
