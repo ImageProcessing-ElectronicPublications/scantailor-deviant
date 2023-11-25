@@ -19,7 +19,7 @@
 #ifndef IMAGEPROC_PLUG_HOLES_H_
 #define IMAGEPROC_PLUG_HOLES_H_
 
-#include "STEX_GridAccessor.h"
+#include "foundation/GridAccessor.h"
 #include "STEX_Connectivity.h"
 #include "STEX_TraverseBorders.h"
 #include "STEX_RasterOpGeneric.h"

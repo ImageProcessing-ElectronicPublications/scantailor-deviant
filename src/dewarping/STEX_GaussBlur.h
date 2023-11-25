@@ -39,7 +39,7 @@
 
 #include "STEX_Grid.h"
 #include "ValueConv.h"
-#include "STEX_GridAccessor.h"
+#include "foundation/GridAccessor.h"
 #include "STEX_RasterOpGeneric.h"
 #include <QSize>
 #include <boost/scoped_array.hpp>

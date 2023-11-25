@@ -19,7 +19,7 @@
 #ifndef GRID_H_
 #define GRID_H_
 
-#include "STEX_GridAccessor.h"
+#include "foundation/GridAccessor.h"
 #include <boost/scoped_array.hpp>
 #include <utility>
 #include <cstddef>

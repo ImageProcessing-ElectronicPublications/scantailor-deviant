@@ -21,7 +21,7 @@
 
 #include "STEX_Connectivity.h"
 #include "FastQueue.h"
-#include "STEX_GridAccessor.h"
+#include "foundation/GridAccessor.h"
 #include <QSize>
 #include <QColor>
 #include <Qt>

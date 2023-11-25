@@ -19,7 +19,7 @@
 #ifndef IMAGEPROC_TRAVERSE_BORDERS_H_
 #define IMAGEPROC_TRAVERSE_BORDERS_H_
 
-#include "STEX_GridAccessor.h"
+#include "foundation/GridAccessor.h"
 
 namespace imageproc
 {

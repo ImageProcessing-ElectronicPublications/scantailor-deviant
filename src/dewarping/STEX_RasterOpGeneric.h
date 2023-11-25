@@ -20,7 +20,7 @@
 #define IMAGEPROC_RASTER_OP_GENERIC_H_
 
 #include "STEX_IndexSequence.h"
-#include "STEX_GridAccessor.h"
+#include "foundation/GridAccessor.h"
 #include <cstddef>
 #include <tuple>
 #include <type_traits>
