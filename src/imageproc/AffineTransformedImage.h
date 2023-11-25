@@ -19,7 +19,7 @@
 #ifndef IMAGEPROC_AFFINE_TRANSFORMED_IMAGE_H_
 #define IMAGEPROC_AFFINE_TRANSFORMED_IMAGE_H_
 
-#include "STEX_AffineImageTransform.h"
+#include "AffineImageTransform.h"
 #include <QImage>
 #include <QSizeF>
 #include <Qt>

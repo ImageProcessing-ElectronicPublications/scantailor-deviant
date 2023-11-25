@@ -19,7 +19,7 @@
 #ifndef IMAGEPROC_AFFINE_IMAGE_TRANSFORM_H_
 #define IMAGEPROC_AFFINE_IMAGE_TRANSFORM_H_
 
-#include "STEX_AbstractImageTransform.h"
+#include "AbstractImageTransform.h"
 #include <QImage>
 #include <QTransform>
 #include <QPolygonF>

@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "STEX_AffineTransformedImage.h"
+#include "AffineTransformedImage.h"
 #include <QSize>
 #include <cmath>
 #include <assert.h>

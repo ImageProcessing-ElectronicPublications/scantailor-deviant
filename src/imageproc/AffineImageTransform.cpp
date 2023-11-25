@@ -16,9 +16,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "STEX_AffineImageTransform.h"
-#include "STEX_AffineTransformedImage.h"
-#include "STEX_AffineTransform.h"
+#include "AffineImageTransform.h"
+#include "AffineTransformedImage.h"
+#include "AffineTransform.h"
 #include "foundation/RoundingHasher.h"
 #include <QSizeF>
 #include <QRectF>

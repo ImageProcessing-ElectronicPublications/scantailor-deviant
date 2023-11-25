@@ -21,7 +21,7 @@
 
 #include "CylindricalSurfaceDewarper.h"
 #include "DepthPerception.h"
-#include "STEX_AbstractImageTransform.h"
+#include "imageproc/AbstractImageTransform.h"
 #include <QSize>
 #include <QPolygonF>
 #include <vector>

@@ -34,7 +34,7 @@
 #include "dewarping/DistortionModelBuilder.h"
 #include "dewarping/TextLineTracer.h"
 #include "dewarping/TopBottomEdgeTracer.h"
-#include "dewarping/STEX_AffineTransformedImage.h"
+#include "imageproc/AffineTransformedImage.h"
 #include "ImageTransformation.h"
 #include "imageproc/BinaryImage.h"
 #include "imageproc/BinaryThreshold.h"

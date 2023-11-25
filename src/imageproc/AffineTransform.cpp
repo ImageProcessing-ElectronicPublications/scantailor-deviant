@@ -16,10 +16,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "STEX_AffineTransform.h"
-#include "imageproc/GrayImage.h"
-#include "imageproc/ColorMixer.h"
-#include "imageproc/BadAllocIfNull.h"
+#include "AffineTransform.h"
+#include "GrayImage.h"
+#include "ColorMixer.h"
+#include "BadAllocIfNull.h"
 #include <QImage>
 #include <QRect>
 #include <QSizeF>

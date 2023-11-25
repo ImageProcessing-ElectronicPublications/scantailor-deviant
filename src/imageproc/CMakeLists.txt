@@ -2,6 +2,10 @@ PROJECT(imageproc)
 
 SET(
         sources
+        AbstractImageTransform.h
+        AffineImageTransform.cpp AffineImageTransform.h
+        AffineTransform.cpp AffineTransform.h
+        AffineTransformedImage.cpp AffineTransformedImage.h
         Constants.h Constants.cpp
         BinaryImage.cpp BinaryImage.h
         BinaryThreshold.cpp BinaryThreshold.h
