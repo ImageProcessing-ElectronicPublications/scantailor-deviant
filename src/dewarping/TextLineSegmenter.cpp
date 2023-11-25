@@ -77,29 +77,13 @@ QImage visualizeGrid(Grid<float> const& grid)
     }
     else
     {
-        { // rasterOpGeneric
-            const float* grid_line = grid.data();
-            uint8_t* canvas_line = canvas.data();
-
-            int const w = grid.width();
-            int const h = grid.height();
-
-            int const grid_stride = grid.stride();
-            int const canvas_stride = canvas.stride();
-
-            for (int y = 0; y < h; ++y)
+        rasterOpGeneric(
+            [scale, bias](float val, uint8_t& pixel)
             {
-                for (int x = 0; x < w; ++x)
-                {
-                    float val = grid_line[x];
-                    uint8_t& pixel = canvas_line[x];
-
-                    pixel = static_cast<uint8_t>(val * scale + bias);
-                }
-                grid_line += grid_stride;
-                canvas_line += canvas_stride;
-            }
-        } // rasterOpGeneric
+                pixel = static_cast<uint8_t>(val * scale + bias);
+            },
+            grid, canvas
+        );
     }
 
     return canvas;
@@ -245,30 +229,13 @@ TextLineSegmenter::processDownscaled(
     int const height = image.height();
 
     Grid<float> src(width, height, /*padding=*/0);
-
-    { // rasterOpGeneric
-        float* src_line = src.data();
-        const uint8_t* image_line = image.data();
-
-        int const w = src.width();
-        int const h = src.height();
-
-        int const src_stride = src.stride();
-        int const image_stride = image.stride();
-
-        for (int y = 0; y < h; ++y)
+    rasterOpGeneric(
+        [](float& grid_pixel, uint8_t image_pixel)
         {
-            for (int x = 0; x < w; ++x)
-            {
-                float& grid_pixel = src_line[x];
-                uint8_t image_pixel = image_line[x];
-
-                grid_pixel = static_cast<float>(image_pixel) / 255.f;
-            }
-            src_line += src_stride;
-            image_line += image_stride;
-        }
-    } // rasterOpGeneric
+            grid_pixel = static_cast<float>(image_pixel) / 255.f;
+        },
+        src, image
+    );
 
     status.throwIfCancelled();
 
@@ -1081,37 +1048,21 @@ std::list<std::vector<QPointF>>
         dbg->add(canvas, "page_mask");
     }
 
-    { // rasterOpGeneric
-        const uint8_t* image_line = image.data();
-        uint8_t* seed_line = seed.data();
-
-        int const w = image.width();
-        int const h = image.height();
-
-        int const image_stride = image.stride();
-        int const seed_stride = seed.stride();
-
-        for (int y = 0; y < h; ++y)
+    rasterOpGeneric(
+        [](uint8_t orig, uint8_t& dst)
         {
-            for (int x = 0; x < w; ++x)
+            if (dst - orig < 1)
             {
-                uint8_t orig = image_line[x];
-                uint8_t& dst = seed_line[x];
-
-                if (dst - orig < 1)
-                {
-                    dst = 0xff;
-                }
-                else
-                {
-                    unsigned const bg = dst;
-                    dst = static_cast<uint8_t>(orig * 255u / bg);
-                }
+                dst = 0xff;
             }
-            image_line += image_stride;
-            seed_line += seed_stride;
-        }
-    } // rasterOpGeneric
+            else
+            {
+                unsigned const bg = dst;
+                dst = static_cast<uint8_t>(orig * 255u / bg);
+            }
+        },
+        image, seed
+    );
 
     status.throwIfCancelled();
 
@@ -1129,29 +1080,13 @@ std::list<std::vector<QPointF>>
         dbg->add(vert_comps, "vert_comps");
     }
 
-    { // rasterOpGeneric
-        uint8_t* seed_line = seed.data();
-        const uint8_t* vert_comps_line = vert_comps.data();
-
-        int const w = seed.width();
-        int const h = seed.height();
-
-        int const seed_stride = seed.stride();
-        int const vert_comps_stride = vert_comps.stride();
-
-        for (int y = 0; y < h; ++y)
+    rasterOpGeneric(
+        [](uint8_t& content, uint8_t vcomps)
         {
-            for (int x = 0; x < w; ++x)
-            {
-                uint8_t& content = seed_line[x];
-                uint8_t vcomps = vert_comps_line[x];
-
-                content += uint8_t(255) - vcomps;
-            }
-            seed_line += seed_stride;
-            vert_comps_line += vert_comps_stride;
-        }
-    } // rasterOpGeneric
+            content += uint8_t(255) - vcomps;
+        },
+        seed, vert_comps
+    );
 
     vert_comps = GrayImage();
     status.throwIfCancelled();
@@ -1323,35 +1258,16 @@ std::list<std::vector<QPointF>>
     if (dbg)
     {
         BinaryImage dilated_mask(width, height, WHITE);
-
-        { // rasterOpGeneric
-            uint32_t* dilated_mask_line = dilated_mask.data();
-            const uint32_t* cmap_line = cmap.data();
-
-            int const w = dilated_mask.width();
-            int const h = dilated_mask.height();
-
-            int const dilated_mask_stride = dilated_mask.wordsPerLine();
-            int const cmap_stride = cmap.stride();
-
-            for (int y = 0; y < h; ++y)
+        rasterOpGeneric(
+            [](BWPixelProxy bw_pixel, uint32_t cmap_label)
             {
-                for (int x = 0; x < w; ++x)
+                if (cmap_label)
                 {
-                    uint32_t& bw_pixel_ref = dilated_mask_line[x];
-                    BWPixelProxy bw_pixel(bw_pixel_ref, 0);
-                    uint32_t cmap_label = cmap_line[x];
-
-                    if (cmap_label)
-                    {
-                        bw_pixel = 1;
-                    }
+                    bw_pixel = 1;
                 }
-                dilated_mask_line += dilated_mask_stride;
-                cmap_line += cmap_stride;
-            }
-        } // rasterOpGeneric
-
+            },
+            dilated_mask, cmap
+        );
         dilated_mask = dilateBrick(dilated_mask, QSize(3, 3));
         InfluenceMap imap(cmap, dilated_mask);
         QImage canvas(binarized.toQImage().convertToFormat(QImage::Format_ARGB32_Premultiplied));
@@ -1402,28 +1318,14 @@ TextLineSegmenter::calcPageMask(GrayImage const& no_content,
     status.throwIfCancelled();
 
     // Set pixels <= threshold to zero. This will prevent oversegmentation.
-    { // rasterOpGeneric
-        uint8_t* grad_line = grad.data();
-
-        int const w = grad.width();
-        int const h = grad.height();
-
-        int const grad_stride = grad.stride();
-
-        for (int y = 0; y < h; ++y)
+    rasterOpGeneric([zero_threshold](uint8_t& px)
+    {
+        if (px <= zero_threshold)
         {
-            for (int x = 0; x < w; ++x)
-            {
-                uint8_t& px = grad_line[x];
-
-                if (px <= zero_threshold)
-                {
-                    px = 0;
-                }
-            }
-            grad_line += grad_stride;
+            px = 0;
         }
-    } // rasterOpGeneric
+        //px -= std::min<uint8_t>(px, zero_threshold);
+    }, grad);
 
     status.throwIfCancelled();
 
@@ -1495,38 +1397,22 @@ TextLineSegmenter::calcPageMask(GrayImage const& no_content,
         }
     }
 
-    BinaryImage mask(no_content.size(), WHITE);
+    BinaryImage mask(no_content.size(), BLACK);
+    //BinaryImage mask(no_content.size(), WHITE);
 
-    if (best_label != 0)
-    {
-        { // rasterOpGeneric
-            uint32_t* mask_line = mask.data();
-            uint32_t* watershed_line = watershed.data();
-
-            int const w = mask.width();
-            int const h = mask.height();
-
-            int const mask_stride = mask.wordsPerLine();
-            int const watershed_stride = watershed.stride();
-
-            for (int y = 0; y < h; ++y)
-            {
-                for (int x = 0; x < w; ++x)
-                {
-                    uint32_t& bit_ref = mask_line[x];
-                    BWPixelProxy bit(bit_ref, 0);
-                    uint32_t label = watershed_line[x];
-
-                    if (label == best_label)
-                    {
-                        bit = BLACK;
-                    }
-                }
-                mask_line += mask_stride;
-                watershed_line += watershed_stride;
-            }
-        } // rasterOpGeneric
-    }
+    //if (best_label != 0)
+    //{
+    //    rasterOpGeneric(
+    //        [best_label](BWPixelProxy bit, uint32_t label)
+    //        {
+    //            if (label == best_label)
+    //            {
+    //                bit = BLACK;
+    //            }
+    //        },
+    //        mask, watershed
+    //     );
+    //}
 
     status.throwIfCancelled();
 
