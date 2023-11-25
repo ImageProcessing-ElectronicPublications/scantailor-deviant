@@ -46,7 +46,7 @@
 #include "imageproc/Morphology.h"
 #include "imageproc/MorphGradientDetect.h"
 #include "imageproc/SeedFill.h"
-#include "STEX_PolygonRasterizer.h"
+#include "imageproc/PolygonRasterizer.h"
 #include "imageproc/SkewFinder.h"
 #include "STEX_WatershedSegmentation.h"
 #include "STEX_PlugHoles.h"
@@ -1037,7 +1037,7 @@ std::list<std::vector<QPointF>>
     status.throwIfCancelled();
 
     GrayImage seed(openGray(image, QSize(1, 20), 0x00));
-    stexPolygonRasterizer::fillExcept(seed, BLACK, crop_area, Qt::WindingFill);
+    PolygonRasterizer::fillExcept(seed, BLACK, crop_area, Qt::WindingFill);
     memset(seed.data(), 0, seed.stride());
     memset(seed.data() + (seed.height() - 1) * seed.stride(), 0, seed.stride());
 
@@ -1173,7 +1173,7 @@ std::list<std::vector<QPointF>>
 
     status.throwIfCancelled();
 
-    stexPolygonRasterizer::fillExcept(binarized, WHITE, crop_area, Qt::WindingFill);
+    PolygonRasterizer::fillExcept(binarized, WHITE, crop_area, Qt::WindingFill);
     if (dbg)
     {
         dbg->add(binarized, "cropped");

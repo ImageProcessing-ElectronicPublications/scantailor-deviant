@@ -19,6 +19,7 @@
 #include "PolygonRasterizer.h"
 #include "PolygonUtils.h"
 #include "BinaryImage.h"
+#include "GrayImage.h"
 #include <QRect>
 #include <QRectF>
 #include <QPolygonF>
@@ -159,6 +160,8 @@ public:
     void fillBinary(BinaryImage& image, BWColor color) const;
 
     void fillGrayscale(QImage& image, uint8_t color) const;
+
+    void fillGrayImage(GrayImage& image, uint8_t color) const;
 private:
     void prepareEdges();
 
@@ -248,6 +251,34 @@ PolygonRasterizer::grayFillExcept(
 
     Rasterizer rasterizer(image.rect(), poly, fill_rule, true);
     rasterizer.fillGrayscale(image, color);
+}
+
+void
+PolygonRasterizer::fill(
+    GrayImage& image, unsigned char const color,
+    QPolygonF const& poly, Qt::FillRule const fill_rule)
+{
+    if (image.isNull())
+    {
+        throw std::invalid_argument("PolygonRasterizer: target image is null");
+    }
+
+    Rasterizer rasterizer(image.rect(), poly, fill_rule, false);
+    rasterizer.fillGrayImage(image, color);
+}
+
+void
+PolygonRasterizer::fillExcept(
+    GrayImage& image, unsigned char const color,
+    QPolygonF const& poly, Qt::FillRule const fill_rule)
+{
+    if (image.isNull())
+    {
+        throw std::invalid_argument("PolygonRasterizer: target image is null");
+    }
+
+    Rasterizer rasterizer(image.rect(), poly, fill_rule, true);
+    rasterizer.fillGrayImage(image, color);
 }
 
 /*======================= PolygonRasterizer::Edge ==========================*/
@@ -491,6 +522,66 @@ PolygonRasterizer::Rasterizer::fillGrayscale(
                 line, color
             );
         } else {
+            windingLineGrayscale(
+                &edges_for_line.front(), edges_for_line.size(),
+                line, color, m_invert
+            );
+        }
+    }
+}
+
+void
+PolygonRasterizer::Rasterizer::fillGrayImage(
+    GrayImage& image, uint8_t const color) const
+{
+    std::vector<EdgeComponent> edges_for_line;
+    typedef std::vector<EdgeComponent>::const_iterator EdgeIter;
+
+    uint8_t* line = image.data();
+    int const bpl = image.stride();
+
+    int i = qRound(m_boundingBox.top());
+    line += i * bpl;
+    int const limit = qRound(m_boundingBox.bottom());
+    for (; i < limit; ++i, line += bpl, edges_for_line.clear()) {
+        double const y = i + 0.5;
+
+        // Get edges intersecting this horizontal line.
+        std::pair<EdgeIter, EdgeIter> const range(
+            std::equal_range(
+                m_edgeComponents.begin(), m_edgeComponents.end(),
+                y, EdgeOrderY()
+            )
+        );
+
+        if (range.first == range.second) {
+            continue;
+        }
+
+        std::copy(
+            range.first, range.second,
+            std::back_inserter(edges_for_line)
+        );
+
+        // Calculate the intersection point of each edge with
+        // the current horizontal line.
+        for (EdgeComponent& ecomp : edges_for_line) {
+            ecomp.setX(ecomp.edge().xForY(y));
+        }
+
+        // Sort edge components by the x value of the intersection point.
+        std::sort(
+            edges_for_line.begin(), edges_for_line.end(),
+            EdgeOrderX()
+        );
+
+        if (m_fillRule == Qt::OddEvenFill) {
+            oddEvenLineGrayscale(
+                &edges_for_line.front(), edges_for_line.size(),
+                line, color
+            );
+        }
+        else {
             windingLineGrayscale(
                 &edges_for_line.front(), edges_for_line.size(),
                 line, color, m_invert
