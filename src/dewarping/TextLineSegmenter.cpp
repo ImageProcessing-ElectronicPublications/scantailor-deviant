@@ -26,7 +26,7 @@
 #include "TaskStatus.h"
 #include "DebugImages.h"
 #include "foundation/Grid.h"
-#include "STEX_MinMaxAccumulator.h"
+#include "foundation/MinMaxAccumulator.h"
 #include "LineBoundedByRect.h"
 #include "STEX_AffineTransformedImage.h"
 #include "STEX_AffineTransform.h"
