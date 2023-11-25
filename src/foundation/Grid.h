@@ -21,6 +21,7 @@
 
 #include "GridAccessor.h"
 #include <boost/scoped_array.hpp>
+#include <utility>
 
 template<typename Node>
 class Grid
