@@ -50,6 +50,7 @@ SET(
         FindPeaksGeneric.h
         ColorMixer.h
         ColorForId.h
+        TraverseBorders.h
 )
 
 SOURCE_GROUP(Sources FILES ${sources})

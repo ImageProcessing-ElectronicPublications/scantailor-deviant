@@ -21,7 +21,7 @@
 
 #include "foundation/GridAccessor.h"
 #include "imageproc/Connectivity.h"
-#include "STEX_TraverseBorders.h"
+#include "imageproc/TraverseBorders.h"
 #include "STEX_RasterOpGeneric.h"
 #include <QPoint>
 #include <QRect>

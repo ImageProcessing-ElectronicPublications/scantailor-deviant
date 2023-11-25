@@ -30,7 +30,6 @@ SET(
         STEX_RoundingHasher.cpp STEX_RoundingHasher.h
         STEX_ToPoint.h
         STEX_ToVec.h
-        STEX_TraverseBorders.h
         STEX_VecNT.h
         STEX_WatershedSegmentation.cpp STEX_WatershedSegmentation.h
         TextLineRefiner.cpp TextLineRefiner.h
