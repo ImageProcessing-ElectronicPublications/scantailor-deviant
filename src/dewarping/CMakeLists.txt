@@ -31,7 +31,6 @@ SET(
         STEX_MultipleTargetsSupport.h
         STEX_PlugHoles.h
         STEX_PolygonRasterizer.cpp STEX_PolygonRasterizer.h
-        STEX_RasterOp.h
         STEX_RasterOpGeneric.h
         STEX_RoundingHasher.cpp STEX_RoundingHasher.h
         STEX_ToPoint.h
