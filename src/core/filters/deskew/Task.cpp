@@ -359,20 +359,21 @@ Task::processPerspectiveDistortion(
     FilterData const& data,
     Params& params)
 {
+    AffineImageTransform orig_image_transform(data.origImage().size());
+    orig_image_transform.rotate(data.xform().preRotation().toDegrees());
+    orig_image_transform.setOrigCropArea(data.xform().transformBack().map(data.xform().resultingPreCropArea()));
+
     if (!params.perspectiveParams().isValid())
     {
+
         DistortionModelBuilder model_builder(
-            data.xform().transformBack().map(QPointF(0, 1))
+            orig_image_transform.transform().inverted().map(QPointF(0, 1))
         );
 
-        const QRectF& orig_image_rect = data.xform().origRect();
-        const QSize orig_image_size(orig_image_rect.width(), orig_image_rect.height());
-        const AffineImageTransform orig_image_transform(orig_image_size);
-
-        TextLineTracer::trace(
-            AffineTransformedImage(data.grayImage(), orig_image_transform),
-            model_builder, status, m_ptrDbg.get()
-        );
+        //TextLineTracer::trace(
+        //    AffineTransformedImage(data.grayImage(), orig_image_transform),
+        //    model_builder, status, m_ptrDbg.get()
+        //);
 
         TopBottomEdgeTracer::trace(
             data.grayImage(), model_builder.verticalBounds(),
@@ -439,10 +440,51 @@ Task::processPerspectiveDistortion(
         bottom_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::BOTTOM_LEFT));
         bottom_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT));
 
-        ImageTransformation perspective_transform(data.xform());
+        DewarpingImageTransform perspective_transform(
+            orig_image_transform.origSize(),
+            orig_image_transform.origCropArea(),
+            top_curve, bottom_curve,
+            dewarping::DepthPerception() // Doesn't matter when curves are flat.
+        );
+
+        QRectF const transformed_rectF = perspective_transform.transformedCropArea().boundingRect();
+        QRect const transformed_rect(
+            transformed_rectF.left(),
+            transformed_rectF.top(),
+            transformed_rectF.width(),
+            transformed_rectF.height()
+        );
+
+        QImage transformed_image = perspective_transform.materialize(
+            data.origImage(),
+            transformed_rect,
+            QColor(255,255,255)
+        );
+
+        if (data.xform().preRotation().toDegrees() == 0)
+        {
+            transformed_image.setDotsPerMeterX(data.origImage().dotsPerMeterX());
+            transformed_image.setDotsPerMeterY(data.origImage().dotsPerMeterY());
+        }
+        else
+        {
+            transformed_image.setDotsPerMeterX(data.origImage().dotsPerMeterY());
+            transformed_image.setDotsPerMeterY(data.origImage().dotsPerMeterX());
+        }
+
+        QTransform const crop_area_transform(
+            1.0, 0.0,
+            0.0, 1.0,
+            -transformed_rectF.left(),
+            -transformed_rectF.top()
+        );
+
+        QPolygonF const crop_area = crop_area_transform.map(
+            perspective_transform.transformedCropArea()
+        );
 
         return m_ptrNextTask->process(
-            status, FilterData(data, perspective_transform)
+            status, FilterData(data.origImageFilename(), transformed_image, crop_area)
         );
     }
     else
@@ -462,20 +504,21 @@ Task::processWarpDistortion(
     FilterData const& data,
     Params& params)
 {
+    AffineImageTransform orig_image_transform(data.origImage().size());
+    orig_image_transform.rotate(data.xform().preRotation().toDegrees());
+    orig_image_transform.setOrigCropArea(data.xform().transformBack().map(data.xform().resultingPreCropArea()));
+
     if (!params.dewarpingParams().isValid())
     {
+
         DistortionModelBuilder model_builder(
-            data.xform().transformBack().map(QPointF(0, 1))
+            orig_image_transform.transform().inverted().map(QPointF(0, 1))
         );
 
-        const QRectF& orig_image_rect = data.xform().origRect();
-        const QSize orig_image_size(orig_image_rect.width(), orig_image_rect.height());
-        const AffineImageTransform orig_image_transform(orig_image_size);
-
-        TextLineTracer::trace(
-            AffineTransformedImage(data.grayImage(), orig_image_transform),
-            model_builder, status, m_ptrDbg.get()
-        );
+        //TextLineTracer::trace(
+        //    AffineTransformedImage(data.grayImage(), orig_image_transform),
+        //    model_builder, status, m_ptrDbg.get()
+        //);
 
         TopBottomEdgeTracer::trace(
             data.grayImage(), model_builder.verticalBounds(),
@@ -524,10 +567,52 @@ Task::processWarpDistortion(
 
     if (m_ptrNextTask)
     {
-        ImageTransformation dewarping_transform(data.xform());
+        DewarpingImageTransform perspective_transform(
+            orig_image_transform.origSize(),
+            orig_image_transform.origCropArea(),
+            params.dewarpingParams().distortionModel().topCurve().polyline(),
+            params.dewarpingParams().distortionModel().bottomCurve().polyline(),
+            params.dewarpingParams().depthPerception()
+        );
+
+        QRectF const transformed_rectF = perspective_transform.transformedCropArea().boundingRect();
+        QRect const transformed_rect(
+            transformed_rectF.left(),
+            transformed_rectF.top(),
+            transformed_rectF.width(),
+            transformed_rectF.height()
+        );
+
+        QImage transformed_image = perspective_transform.materialize(
+            data.origImage(),
+            transformed_rect,
+            QColor(255, 255, 255)
+        );
+
+        if (data.xform().preRotation().toDegrees() == 0)
+        {
+            transformed_image.setDotsPerMeterX(data.origImage().dotsPerMeterX());
+            transformed_image.setDotsPerMeterY(data.origImage().dotsPerMeterY());
+        }
+        else
+        {
+            transformed_image.setDotsPerMeterX(data.origImage().dotsPerMeterY());
+            transformed_image.setDotsPerMeterY(data.origImage().dotsPerMeterX());
+        }
+
+        QTransform const crop_area_transform(
+            1.0, 0.0,
+            0.0, 1.0,
+            -transformed_rectF.left(),
+            -transformed_rectF.top()
+        );
+
+        QPolygonF const crop_area = crop_area_transform.map(
+            perspective_transform.transformedCropArea()
+        );
 
         return m_ptrNextTask->process(
-            status, FilterData(data, dewarping_transform)
+            status, FilterData(data.origImageFilename(), transformed_image, crop_area)
         );
     }
     else

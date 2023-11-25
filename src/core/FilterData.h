@@ -23,12 +23,15 @@
 #include "imageproc/GrayImage.h"
 #include "ImageTransformation.h"
 #include <QImage>
+#include <QPolygonF>
 
 class FilterData
 {
     // Member-wise copying is OK.
 public:
     FilterData(QString const & filename, QImage const& image);
+
+    FilterData(QString const& filename, QImage const& image, QPolygonF const& preCropArea);
 
     FilterData(FilterData const& other, ImageTransformation const& xform);
 
