@@ -41,7 +41,7 @@
 #include "imageproc/Binarize.h"
 #include "imageproc/FindPeaksGeneric.h"
 #include "imageproc/Connectivity.h"
-#include "STEX_ConnectivityMap.h"
+#include "imageproc/ConnectivityMap.h"
 #include "imageproc/InfluenceMap.h"
 #include "imageproc/Morphology.h"
 #include "imageproc/MorphGradientDetect.h"
