@@ -19,7 +19,7 @@
 #ifndef IMAGEPROC_WATERSHED_SEGMENTATION_H_
 #define IMAGEPROC_WATERSHED_SEGMENTATION_H_
 
-#include "STEX_Grid.h"
+#include "foundation/Grid.h"
 #include "STEX_Connectivity.h"
 #include <QSize>
 #include <stdint.h>

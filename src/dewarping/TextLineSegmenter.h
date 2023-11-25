@@ -21,7 +21,7 @@
 
 #include "NonCopyable.h"
 #include "STEX_VecNT.h"
-#include "STEX_Grid.h"
+#include "foundation/Grid.h"
 #include <QPointF>
 #include <list>
 #include <vector>

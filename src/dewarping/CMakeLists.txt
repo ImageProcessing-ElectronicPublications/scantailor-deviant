@@ -22,7 +22,6 @@ SET(
         STEX_ConnectivityMap.cpp STEX_ConnectivityMap.h
         STEX_CopyableByMemcpy.h
         STEX_GaussBlur.cpp STEX_GaussBlur.h
-        STEX_Grid.h
         STEX_HomographicTransform.h
         STEX_IndexSequence.h
         STEX_LineBoundedByPolygon.cpp STEX_LineBoundedByPolygon.h

@@ -37,7 +37,7 @@
 #ifndef IMAGEPROC_GAUSSBLUR_H_
 #define IMAGEPROC_GAUSSBLUR_H_
 
-#include "STEX_Grid.h"
+#include "foundation/Grid.h"
 #include "ValueConv.h"
 #include "foundation/GridAccessor.h"
 #include "STEX_RasterOpGeneric.h"

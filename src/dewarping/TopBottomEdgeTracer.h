@@ -19,7 +19,7 @@
 #ifndef DEWARPING_TOP_BOTTOM_EDGE_TRACER_H_
 #define DEWARPING_TOP_BOTTOM_EDGE_TRACER_H_
 
-#include "STEX_Grid.h"
+#include "foundation/Grid.h"
 #include "STEX_VecNT.h"
 #include <QPointF>
 #include <QLineF>

@@ -25,7 +25,7 @@
 #include "TextLineSegmenter.h"
 #include "TaskStatus.h"
 #include "DebugImages.h"
-#include "STEX_Grid.h"
+#include "foundation/Grid.h"
 #include "STEX_MinMaxAccumulator.h"
 #include "LineBoundedByRect.h"
 #include "STEX_AffineTransformedImage.h"
