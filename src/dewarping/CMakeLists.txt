@@ -18,7 +18,6 @@ SET(
         STEX_ToPoint.h
         STEX_ToVec.h
         STEX_VecNT.h
-        STEX_WatershedSegmentation.cpp STEX_WatershedSegmentation.h
         TextLineRefiner.cpp TextLineRefiner.h
         TextLineSegmenter.cpp TextLineSegmenter.h
         TextLineTracer.cpp TextLineTracer.h

@@ -57,6 +57,7 @@ SET(
         ColorForId.h
         TraverseBorders.h
         PlugHoles.h
+        WatershedSegmentation.cpp WatershedSegmentation.h
 )
 
 SOURCE_GROUP(Sources FILES ${sources})

@@ -16,9 +16,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "STEX_WatershedSegmentation.h"
-#include "imageproc/GrayImage.h"
-#include "imageproc/ColorForId.h"
+#include "WatershedSegmentation.h"
+#include "GrayImage.h"
+#include "ColorForId.h"
 #include "FastQueue.h"
 #include <QImage>
 #include <QPoint>

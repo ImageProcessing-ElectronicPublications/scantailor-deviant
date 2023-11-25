@@ -48,7 +48,7 @@
 #include "imageproc/SeedFill.h"
 #include "imageproc/PolygonRasterizer.h"
 #include "imageproc/SkewFinder.h"
-#include "STEX_WatershedSegmentation.h"
+#include "imageproc/WatershedSegmentation.h"
 #include "imageproc/PlugHoles.h"
 #include "imageproc/IntegralImage.h"
 
