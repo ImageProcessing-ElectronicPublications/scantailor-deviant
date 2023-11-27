@@ -480,11 +480,23 @@ GrayscaleHistogram::fromGrayscaleImage(QImage const& img)
     int const h = img.height();
     int const bpl = img.bytesPerLine();
 
-    #pragma omp parallel for
-    for (int y = 0; y < h; ++y) {
-        uint8_t const* line = img.bits() + y * bpl;
-        for (int x = 0; x < w; ++x) {
-            ++m_pixels[line[x]];
+    #pragma omp parallel
+    {
+        int pixels[256] = { 0 };
+
+        #pragma omp parallel for 
+        for (int y = 0; y < h; ++y) {
+            uint8_t const* line = img.bits() + y * bpl;
+            for (int x = 0; x < w; ++x) {
+                ++pixels[line[x]];
+            }
+        }
+
+        #pragma omp critical 
+        {
+            for (int i = 0; i < 256; ++i) {
+                m_pixels[i] = pixels[i];
+            }
         }
     }
 }

@@ -1397,22 +1397,21 @@ TextLineSegmenter::calcPageMask(GrayImage const& no_content,
         }
     }
 
-    BinaryImage mask(no_content.size(), BLACK);
-    //BinaryImage mask(no_content.size(), WHITE);
+    BinaryImage mask(no_content.size(), WHITE);
 
-    //if (best_label != 0)
-    //{
-    //    rasterOpGeneric(
-    //        [best_label](BWPixelProxy bit, uint32_t label)
-    //        {
-    //            if (label == best_label)
-    //            {
-    //                bit = BLACK;
-    //            }
-    //        },
-    //        mask, watershed
-    //     );
-    //}
+    if (best_label != 0)
+    {
+        rasterOpGeneric(
+            [best_label](BWPixelProxy bit, uint32_t label)
+            {
+                if (label == best_label)
+                {
+                    bit = BLACK;
+                }
+            },
+            mask, watershed
+         );
+    }
 
     status.throwIfCancelled();
 
