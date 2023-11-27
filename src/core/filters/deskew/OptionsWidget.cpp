@@ -17,6 +17,7 @@
 */
 
 #include "OptionsWidget.h"
+#include "ApplyToDialog.h"
 #include "Settings.h"
 #include "DistortionType.h"
 #include "ScopedIncDec.h"
@@ -101,6 +102,24 @@ OptionsWidget::~OptionsWidget()
 void
 OptionsWidget::showApplyDistortionTypeDialog()
 {
+    ApplyToDialog* dialog = new ApplyToDialog(
+        this, m_pageId, m_pageSelectionAccessor, PageView::IMAGE_VIEW
+    );
+
+    dialog->setWindowTitle(tr("Apply Distortion Type"));
+
+    connect(dialog, &ApplyToDialog::accepted, this, [=]() {
+        std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
+        std::set<PageId> pages(vec.begin(), vec.end());
+        if (!dialog->getPageRangeSelectorWidget().allPagesSelected()) {
+            distortionTypeAppliedTo(pages);
+        }
+        else {
+            distortionTypeAppliedToAllPages(pages);
+        }
+        });
+
+    dialog->show();
 }
 
 void
@@ -135,6 +154,24 @@ OptionsWidget::distortionTypeAppliedToAllPages(std::set<PageId> const& pages)
 void
 OptionsWidget::showApplyDepthPerceptionDialog()
 {
+    ApplyToDialog* dialog = new ApplyToDialog(
+        this, m_pageId, m_pageSelectionAccessor, PageView::IMAGE_VIEW
+    );
+
+    dialog->setWindowTitle(tr("Apply Depth Perception"));
+
+    connect(dialog, &ApplyToDialog::accepted, this, [=]() {
+        std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
+        std::set<PageId> pages(vec.begin(), vec.end());
+        if (!dialog->getPageRangeSelectorWidget().allPagesSelected()) {
+            depthPerceptionAppliedTo(pages);
+        }
+        else {
+            depthPerceptionAppliedToAllPages(pages);
+        }
+        });
+
+    dialog->show();
 }
 
 void
