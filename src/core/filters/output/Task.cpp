@@ -41,10 +41,6 @@
 #include "DespeckleView.h"
 #include "DespeckleVisualization.h"
 #include "DespeckleLevel.h"
-#include "DewarpingMode.h"
-#include "dewarping/DistortionModel.h"
-#include "dewarping/DewarpingPointMapper.h"
-#include "DewarpingView.h"
 #include "ImageId.h"
 #include "PageId.h"
 #include "Dpi.h"
@@ -252,8 +248,7 @@ Task::process(
     OutputImageParams new_output_image_params(
         generator.outputImageSize(), generator.outputContentRect(),
         new_xform, params.outputDpi(), params.colorParams(),
-        params.dewarpingMode(), params.distortionModel(),
-        params.depthPerception(), params.despeckleLevel(),
+        params.despeckleLevel(),
         params.colorParams().colorMode() == ColorParams::BLACK_AND_WHITE ?
                     GlobalStaticSettings::m_tiff_compr_method_bw :
                     GlobalStaticSettings::m_tiff_compr_method_color);
@@ -287,17 +282,11 @@ Task::process(
         automask_img = BinaryImage();
         speckles_img = BinaryImage();
 
-        DistortionModel distortion_model;
-        if (params.dewarpingMode() == DewarpingMode::MANUAL) {
-            distortion_model = params.distortionModel();
-        }
         // OutputGenerator will write a new distortion model
         // there, if dewarping mode is AUTO.
 
         out_img = generator.process(
                       status, data, new_picture_zones, new_fill_zones,
-                      params.dewarpingMode(), distortion_model,
-                      params.depthPerception(),
                       m_keep_orig_fore_subscan,
                       write_automask ? &automask_img : 0,
                       write_speckles_file ? &speckles_img : 0,
@@ -429,35 +418,16 @@ Task::process(
         automask_img = BinaryImage();
         speckles_img = BinaryImage();
 
-        DistortionModel distortion_model;
-        if (params.dewarpingMode() == DewarpingMode::MANUAL) {
-            distortion_model = params.distortionModel();
-        }
         // OutputGenerator will write a new distortion model
         // there, if dewarping mode is AUTO.
 
         out_img = generator.process(
                       status, data, new_picture_zones, new_fill_zones,
-                      params.dewarpingMode(), distortion_model,
-                      params.depthPerception(),
                       false,
                       write_automask ? &automask_img : nullptr,
                       write_speckles_file ? &speckles_img : nullptr,
                       m_ptrDbg.get(), &m_pageId, &m_ptrSettings
                   );
-
-        if ((params.dewarpingMode() == DewarpingMode::AUTO && distortion_model.isValid())
-//begin of modified by monday2000
-//Marginal_Dewarping
-                || (params.dewarpingMode() == DewarpingMode::MARGINAL && distortion_model.isValid())
-//end of modified by monday2000
-           ) {
-            // A new distortion model was generated.
-            // We need to save it to be able to modify it manually.
-            params.setDistortionModel(distortion_model);
-            m_ptrSettings->setParams(m_pageId, params);
-            new_output_image_params.setDistortionModel(distortion_model);
-        }
 
         if (write_speckles_file && speckles_img.isNull()) {
             // Even if despeckling didn't actually take place, we still need
@@ -662,27 +632,7 @@ Task::UiUpdater::updateUI(FilterUiInterface* ui)
 
     QPixmap const downscaled_output_pixmap(image_view->downscaledPixmap());
 
-    std::unique_ptr<ImageViewBase> dewarping_view(
-        new DewarpingView(
-            m_origImage, m_downscaledOrigImage, m_xform.transform(),
-            PolygonUtils::convexHull(
-                (m_xform.resultingPreCropArea() + m_xform.resultingPostCropArea()).toStdVector()
-            ),
-            m_virtContentRect, m_pageId, m_params.dewarpingMode(),
-            m_params.distortionModel(), opt_widget->depthPerception()
-        )
-    );
-
-    QPixmap const downscaled_orig_pixmap(dewarping_view->downscaledPixmap());
-
-    QObject::connect(
-        opt_widget, SIGNAL(depthPerceptionChanged(double)),
-        dewarping_view.get(), SLOT(depthPerceptionChanged(double))
-    );
-    QObject::connect(
-        dewarping_view.get(), SIGNAL(distortionModelChanged(dewarping::DistortionModel)),
-        opt_widget, SLOT(distortionModelChanged(dewarping::DistortionModel))
-    );
+    QPixmap const downscaled_orig_pixmap(QPixmap::fromImage(m_downscaledOrigImage));
 
     std::unique_ptr<QWidget> picture_zone_editor;
     if (m_pictureMask.isNull()) {
@@ -720,20 +670,9 @@ Task::UiUpdater::updateUI(FilterUiInterface* ui)
     // anyway when another tab is selected.
     boost::function<QPointF(QPointF const&)> orig_to_output;
     boost::function<QPointF(QPointF const&)> output_to_orig;
-    if (m_params.dewarpingMode() != DewarpingMode::OFF && m_params.distortionModel().isValid()) {
-        boost::shared_ptr<DewarpingPointMapper> mapper(
-            new DewarpingPointMapper(
-                m_params.distortionModel(), m_params.depthPerception().value(),
-                m_xform.transform(), m_virtContentRect
-            )
-        );
-        orig_to_output = boost::bind(&DewarpingPointMapper::mapToDewarpedSpace, mapper, _1);
-        output_to_orig = boost::bind(&DewarpingPointMapper::mapToWarpedSpace, mapper, _1);
-    } else {
-        typedef QPointF(QTransform::*MapPointFunc)(QPointF const&) const;
-        orig_to_output = boost::bind((MapPointFunc)&QTransform::map, m_xform.transform(), _1);
-        output_to_orig = boost::bind((MapPointFunc)&QTransform::map, m_xform.transformBack(), _1);
-    }
+    typedef QPointF(QTransform::*MapPointFunc)(QPointF const&) const;
+    orig_to_output = boost::bind((MapPointFunc)&QTransform::map, m_xform.transform(), _1);
+    output_to_orig = boost::bind((MapPointFunc)&QTransform::map, m_xform.transformBack(), _1);
 
     std::unique_ptr<QWidget> fill_zone_editor(
         new FillZoneEditor(
@@ -787,7 +726,6 @@ Task::UiUpdater::updateUI(FilterUiInterface* ui)
     tab_widget->addTab(image_view.release(), tr("Output"), TAB_OUTPUT);
     tab_widget->addTab(picture_zone_editor.release(), tr("Layers"), TAB_PICTURE_ZONES);
     tab_widget->addTab(fill_zone_editor.release(), tr("Fill Zones"), TAB_FILL_ZONES);
-    tab_widget->addTab(dewarping_view.release(), tr("Dewarping"), TAB_DEWARPING);
     tab_widget->addTab(despeckle_view.release(), tr("Despeckling"), TAB_DESPECKLING);
     tab_widget->setCurrentTab(opt_widget->lastTab());
 

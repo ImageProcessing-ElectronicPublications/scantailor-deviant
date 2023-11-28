@@ -162,50 +162,6 @@ Settings::setDpi(PageId const& page_id, Dpi const& dpi)
     }
 }
 
-void
-Settings::setDewarpingMode(PageId const& page_id, DewarpingMode const& mode)
-{
-    QMutexLocker const locker(&m_mutex);
-
-    PerPageParams::iterator const it(m_perPageParams.lower_bound(page_id));
-    if (it == m_perPageParams.end() || m_perPageParams.key_comp()(page_id, it->first)) {
-        Params params;
-        params.setDewarpingMode(mode);
-        m_perPageParams.insert(it, PerPageParams::value_type(page_id, params));
-    } else {
-        it->second.setDewarpingMode(mode);
-    }
-}
-
-void
-Settings::setDistortionModel(PageId const& page_id, dewarping::DistortionModel const& model)
-{
-    QMutexLocker const locker(&m_mutex);
-
-    PerPageParams::iterator const it(m_perPageParams.lower_bound(page_id));
-    if (it == m_perPageParams.end() || m_perPageParams.key_comp()(page_id, it->first)) {
-        Params params;
-        params.setDistortionModel(model);
-        m_perPageParams.insert(it, PerPageParams::value_type(page_id, params));
-    } else {
-        it->second.setDistortionModel(model);
-    }
-}
-
-void
-Settings::setDepthPerception(PageId const& page_id, DepthPerception const& depth_perception)
-{
-    QMutexLocker const locker(&m_mutex);
-
-    PerPageParams::iterator const it(m_perPageParams.lower_bound(page_id));
-    if (it == m_perPageParams.end() || m_perPageParams.key_comp()(page_id, it->first)) {
-        Params params;
-        params.setDepthPerception(depth_perception);
-        m_perPageParams.insert(it, PerPageParams::value_type(page_id, params));
-    } else {
-        it->second.setDepthPerception(depth_perception);
-    }
-}
 
 void
 Settings::setDespeckleLevel(PageId const& page_id, DespeckleLevel level)

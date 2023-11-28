@@ -23,9 +23,7 @@
 #include "Dpi.h"
 #include "ColorParams.h"
 #include "Params.h"
-#include "DepthPerception.h"
 #include "DespeckleLevel.h"
-#include "DewarpingMode.h"
 #include "ImageTransformation.h"
 #ifndef Q_MOC_RUN
 #include <boost/function.hpp>
@@ -123,11 +121,7 @@ public:
     QImage process(
         TaskStatus const& status, FilterData const& input,
 //Quadro_Zoner
-        //ZoneSet const& picture_zones, ZoneSet const& fill_zones,
         ZoneSet& picture_zones, ZoneSet const& fill_zones,
-        DewarpingMode dewarping_mode,
-        dewarping::DistortionModel& distortion_model,
-        DepthPerception const& depth_perception,
 //Original_Foreground_Mixed
         bool keep_orig_fore_subscan = false,
         imageproc::BinaryImage* auto_picture_mask = 0,
@@ -149,9 +143,6 @@ private:
 //Quadro_Zoner
         //ZoneSet const& picture_zones, ZoneSet const& fill_zones,
         ZoneSet& picture_zones, ZoneSet const& fill_zones,
-        DewarpingMode dewarping_mode,
-        dewarping::DistortionModel& distortion_model,
-        DepthPerception const& depth_perception,
 //Original_Foreground_Mixed
         bool keep_orig_fore_subscan = false,
         imageproc::BinaryImage* auto_layer_mask = 0,
@@ -163,7 +154,6 @@ private:
     QImage processAsIs(
         FilterData const& input, TaskStatus const& status,
         ZoneSet const& fill_zones,
-        DepthPerception const& depth_perception,
         DebugImages* dbg = 0) const;
 
     QImage processWithoutDewarping(TaskStatus const& status, FilterData const& input,
@@ -176,44 +166,6 @@ private:
                                    DebugImages* dbg = 0,
                                    PageId* p_pageId = nullptr, IntrusivePtr<Settings>* p_settings = nullptr
                                   ) const;
-
-    QImage processWithDewarping(
-        TaskStatus const& status, FilterData const& input,
-//Quadro_Zoner
-        //ZoneSet const& picture_zones, ZoneSet const& fill_zones,
-        ZoneSet& picture_zones, ZoneSet const& fill_zones,
-        DewarpingMode dewarping_mode,
-        dewarping::DistortionModel& distortion_model,
-        DepthPerception const& depth_perception,
-        bool keep_orig_fore_subscan = false,
-        imageproc::BinaryImage* auto_layer_mask = 0,
-        imageproc::BinaryImage* speckles_image = 0,
-        DebugImages* dbg = 0,
-        PageId* p_pageId = nullptr, IntrusivePtr<Settings>* p_settings = nullptr
-    ) const;
-
-//Marginal_Dewarping
-    void movePointToTopMargin(BinaryImage& bw_image, XSpline& spline, int idx) const;
-    void movePointToBottomMargin(BinaryImage& bw_image, XSpline& spline, int idx) const;
-    void drawPoint(QImage& image, QPointF const& pt) const;
-    double maybe_deskew(QImage* p_dewarped, DewarpingMode dewarping_mode) const;
-    void do_deskew(QImage* p_image, double angle_deg) const;
-
-//Auto_Dewarping_Vert_Half_Correction
-    void movePointToTopMargin(BinaryImage& bw_image, std::vector<QPointF>& polyline, int idx) const;
-    void movePointToBottomMargin(BinaryImage& bw_image, std::vector<QPointF>& polyline, int idx) const;
-    float vert_border_skew_angle(QPointF const& top, QPointF const& bottom) const;
-
-    void setupTrivialDistortionModel(dewarping::DistortionModel& distortion_model) const;
-
-    static dewarping::CylindricalSurfaceDewarper createDewarper(
-        dewarping::DistortionModel const& distortion_model,
-        QTransform const& distortion_model_to_target, double depth_perception);
-
-    QImage dewarp(
-        QTransform const& orig_to_src, QImage const& src,
-        QTransform const& src_to_output, dewarping::DistortionModel const& distortion_model,
-        DepthPerception const& depth_perception, QColor const& bg_color) const;
 
     static QSize from300dpi(QSize const& size, Dpi const& target_dpi);
 

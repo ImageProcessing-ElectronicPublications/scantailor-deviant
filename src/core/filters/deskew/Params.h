@@ -19,15 +19,13 @@
 #ifndef DESKEW_PARAMS_H_
 #define DESKEW_PARAMS_H_
 
+#include "DistortionType.h"
+#include "RotationParams.h"
+#include "PerspectiveParams.h"
+#include "DewarpingParams.h"
 #include "Dependencies.h"
-#include "AutoManualMode.h"
-#include "RegenParams.h"
 #include <QString>
-#include <cmath>
-#include <algorithm>
-
-#include "CommandLine.h"
-class CommandLine;
+#include <QPolygonF>
 
 class QDomDocument;
 class QDomElement;
@@ -35,35 +33,56 @@ class QDomElement;
 namespace deskew
 {
 
-class Params: public RegenParams
+class Params
 {
-public:
     // Member-wise copying is OK.
-
-    Params(double deskew_angle_deg,
-           Dependencies const& deps, AutoManualMode mode);
+public:
+    Params(Dependencies const& deps);
 
     Params(QDomElement const& deskew_el);
 
     ~Params();
 
-    double deskewAngle() const
+    static DistortionType defaultDistortionType();
+
+    DistortionType distortionType() const
     {
-        return m_deskewAngleDeg;
+        return m_distortionType;
     }
 
-    double deviation() const
+    void setDistortionType(DistortionType type)
     {
-        return m_deviation;
+        m_distortionType = type;
     }
-    void computeDeviation(double avg)
+
+    RotationParams& rotationParams()
     {
-        m_deviation = avg - m_deskewAngleDeg;
+        return m_rotationParams;
     }
-    // check if skew is too large
-    bool isDeviant(double std, double max_dev = CommandLine::get().getSkewDeviation()) const
+
+    RotationParams const& rotationParams() const
     {
-        return std::max(1.5 * std, max_dev) < fabs(m_deviation);
+        return m_rotationParams;
+    }
+
+    PerspectiveParams& perspectiveParams()
+    {
+        return m_perspectiveParams;
+    }
+
+    PerspectiveParams const& perspectiveParams() const
+    {
+        return m_perspectiveParams;
+    }
+
+    DewarpingParams& dewarpingParams()
+    {
+        return m_dewarpingParams;
+    }
+
+    DewarpingParams const& dewarpingParams() const
+    {
+        return m_dewarpingParams;
     }
 
     Dependencies const& dependencies() const
@@ -71,17 +90,27 @@ public:
         return m_deps;
     }
 
-    AutoManualMode mode() const
-    {
-        return m_mode;
-    }
+    /**
+     * Looks up the mode associated with the current distortion type.
+     * DistortionType::NONE always produces MODE_MANUAL.
+     */
+    AutoManualMode mode() const;
+
+    /**
+     * We may have enough / valid data for some distortion types but
+     * not for others.
+     */
+    bool validForDistortionType(DistortionType const& distortion_type) const;
 
     QDomElement toXml(QDomDocument& doc, QString const& name) const;
+
+    void takeManualSettingsFrom(Params const& other);
 private:
-    double m_deskewAngleDeg;
+    DistortionType m_distortionType;
+    RotationParams m_rotationParams;
+    PerspectiveParams m_perspectiveParams;
+    DewarpingParams m_dewarpingParams;
     Dependencies m_deps;
-    AutoManualMode m_mode;
-    double m_deviation;
 };
 
 } // namespace deskew

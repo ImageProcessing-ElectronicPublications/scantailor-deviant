@@ -9,9 +9,9 @@
 #define STYLESHEETS_DIR_ABS "@STYLESHEETS_DIR_ABS@"
 
 #define PIXMAPS_DIR_ABS "@PIXMAPS_DIR_ABS@"
-#define APPLICATION_NAME "Scan Tailor Universal"
+#define APPLICATION_NAME "Scan Tailor Deviant"
 #define ORGANIZATION_NAME APPLICATION_NAME
-#define ORGANIZATION_DOMAIN "github.com/trufanov-nok/scantailor-universal"
+#define ORGANIZATION_DOMAIN "github.com/ImageProcessing-ElectronicPublications/scantailor-deviant"
 
 #cmakedefine ENABLE_OPENGL
 #cmakedefine ENABLE_OPENJPEG

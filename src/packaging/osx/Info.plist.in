@@ -7,21 +7,21 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleExecutable</key>
-	<string>ScanTailorUniversal</string>
+	<string>ScanTailorDeviant</string>
 	<key>CFBundleName</key>
-	<string>ScanTailorUniversal</string>
+	<string>ScanTailorDeviant</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.github.ScantailorUniversal</string>
+	<string>com.github.ScantailorDeviant</string>
 	<key>CFBundleSignature</key>
 	<string>sctlu</string>
 	<key>CSResourcesFileMapped</key>
 	<true/>
 	<key>CFBundleIconFile</key>
-        <string>ScanTailorUniversal.icns</string>
+        <string>ScanTailorDeviant.icns</string>
 	<key>CFBundleShortVersionString</key>
-	<string>ScanTailorUniversal-@VERSION@</string>
+	<string>ScanTailorDeviant-@VERSION@</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.4.0</string>
 </dict>

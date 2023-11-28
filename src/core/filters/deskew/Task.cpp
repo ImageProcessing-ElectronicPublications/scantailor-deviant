@@ -1,6 +1,6 @@
 /*
     Scan Tailor - Interactive post-processing tool for scanned pages.
-    Copyright (C)  Joseph Artsimovich <joseph.artsimovich@gmail.com>
+    Copyright (C) 2015  Joseph Artsimovich <joseph.artsimovich@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,53 +22,50 @@
 #include "Settings.h"
 #include "Params.h"
 #include "Dependencies.h"
+#include "FilterData.h"
 #include "TaskStatus.h"
 #include "DebugImages.h"
 #include "filters/select_content/Task.h"
 #include "FilterUiInterface.h"
+#include "NoDistortionView.h"
 #include "ImageView.h"
-#include "FilterData.h"
-#include "Dpi.h"
-#include "Dpm.h"
+#include "DewarpingView.h"
+#include "dewarping/DewarpingImageTransform.h"
+#include "dewarping/DistortionModelBuilder.h"
+#include "dewarping/TextLineTracer.h"
+#include "dewarping/TopBottomEdgeTracer.h"
+#include "imageproc/AffineTransformedImage.h"
 #include "ImageTransformation.h"
 #include "imageproc/BinaryImage.h"
-#include "imageproc/BWColor.h"
-#include "imageproc/OrthogonalRotation.h"
+#include "imageproc/BinaryThreshold.h"
 #include "imageproc/SkewFinder.h"
 #include "imageproc/RasterOp.h"
 #include "imageproc/ReduceThreshold.h"
 #include "imageproc/UpscaleIntegerTimes.h"
 #include "imageproc/SeedFill.h"
-#include "imageproc/Connectivity.h"
 #include "imageproc/Morphology.h"
-#include <QImage>
-#include <QSize>
-#include <QPoint>
-#include <QRect>
-#include <QPolygonF>
-#include <QTransform>
-#include <vector>
+#include "math/XSpline.h"
 #include <memory>
-#include <algorithm>
-#include <assert.h>
-#include <stddef.h>
-
-#include "CommandLine.h"
 
 namespace deskew
 {
 
 using namespace imageproc;
+using namespace dewarping;
 
-class Task::UiUpdater : public FilterResult
+/*======================== Task::NoDistortionUiUpdater =====================*/
+
+class Task::NoDistortionUiUpdater : public FilterResult
 {
 public:
-    UiUpdater(IntrusivePtr<Filter> const& filter,
-              std::unique_ptr<DebugImages> const& dbg_img,
-              QImage const& image, PageId const& page_id,
-              ImageTransformation const& xform,
-              OptionsWidget::UiData const& ui_data,
-              bool batch_processing);
+	NoDistortionUiUpdater(
+        IntrusivePtr<Filter> const& filter,
+        std::unique_ptr<DebugImages> const& dbg_img,
+        QImage const& image,
+	    ImageTransformation const& xform,
+        PageId const& page_id,
+        Params const& page_params,
+	    bool batch_processing);
 
     virtual void updateUI(FilterUiInterface* ui);
 
@@ -81,23 +78,120 @@ private:
     std::unique_ptr<DebugImages> const& m_ptrDbg;
     QImage m_image;
     QImage m_downscaledImage;
-    PageId m_pageId;
     ImageTransformation m_xform;
-    OptionsWidget::UiData m_uiData;
+    PageId m_pageId;
+    Params m_pageParams;
     bool m_batchProcessing;
 };
 
-Task::Task(IntrusivePtr<Filter> const& filter,
-           IntrusivePtr<Settings> const& settings,
-           IntrusivePtr<select_content::Task> const& next_task,
-           PageId const& page_id, bool const batch_processing, bool const debug)
-    :   m_ptrFilter(filter),
-        m_ptrSettings(settings),
-        m_ptrNextTask(next_task),
-        m_pageId(page_id),
-        m_batchProcessing(batch_processing)
+/*========================== Task::RotationUiUpdater =======================*/
+
+class Task::RotationUiUpdater : public FilterResult
 {
-    if (debug) {
+public:
+    RotationUiUpdater(
+        IntrusivePtr<Filter> const& filter,
+        std::unique_ptr<DebugImages> const& dbg_img,
+        QImage const& image,
+        ImageTransformation const& xform,
+        PageId const& page_id,
+        Params const& page_params,
+        bool batch_processing);
+
+    virtual void updateUI(FilterUiInterface* ui);
+
+    virtual IntrusivePtr<AbstractFilter> filter()
+    {
+        return m_ptrFilter;
+    }
+private:
+    IntrusivePtr<Filter> m_ptrFilter;
+    std::unique_ptr<DebugImages> const& m_ptrDbg;
+    QImage m_image;
+    QImage m_downscaledImage;
+    ImageTransformation m_xform;
+    PageId m_pageId;
+    Params m_pageParams;
+    bool m_batchProcessing;
+};
+
+/*======================== Task::PerspectiveUiUpdater ======================*/
+
+class Task::PerspectiveUiUpdater : public FilterResult
+{
+public:
+    PerspectiveUiUpdater(
+        IntrusivePtr<Filter> const& filter,
+        std::unique_ptr<DebugImages> const& dbg_img,
+        QImage const& image,
+        ImageTransformation const& xform,
+        PageId const& page_id,
+        Params const& page_params,
+        bool batch_processing);
+
+    virtual void updateUI(FilterUiInterface* ui);
+
+    virtual IntrusivePtr<AbstractFilter> filter()
+    {
+        return m_ptrFilter;
+    }
+private:
+    IntrusivePtr<Filter> m_ptrFilter;
+    std::unique_ptr<DebugImages> const& m_ptrDbg;
+    QImage m_image;
+    QImage m_downscaledImage;
+    ImageTransformation m_xform;
+    PageId m_pageId;
+    Params m_pageParams;
+    bool m_batchProcessing;
+};
+
+/*========================= Task::DewarpingUiUpdater =======================*/
+
+class Task::DewarpingUiUpdater : public FilterResult
+{
+public:
+    DewarpingUiUpdater(
+        IntrusivePtr<Filter> const& filter,
+        std::unique_ptr<DebugImages> const& dbg_img,
+        QImage const& image,
+        ImageTransformation const& xform,
+        PageId const& page_id,
+        Params const& page_params,
+        bool batch_processing);
+
+    virtual void updateUI(FilterUiInterface* ui);
+
+    virtual IntrusivePtr<AbstractFilter> filter()
+    {
+        return m_ptrFilter;
+    }
+private:
+    IntrusivePtr<Filter> m_ptrFilter;
+    std::unique_ptr<DebugImages> const& m_ptrDbg;
+    QImage m_image;
+    QImage m_downscaledImage;
+    ImageTransformation m_xform;
+    PageId m_pageId;
+    Params m_pageParams;
+    bool m_batchProcessing;
+};
+
+/*=================================== Task =================================*/
+
+Task::Task(
+    IntrusivePtr<Filter> const& filter,
+    IntrusivePtr<Settings> const& settings,
+    IntrusivePtr<select_content::Task> const& next_task,
+    PageId const& page_id, bool batch_processing, bool debug)
+    : m_ptrFilter(filter)
+    , m_ptrSettings(settings)
+    , m_ptrNextTask(next_task)
+    , m_pageId(page_id)
+    , m_batchProcessing(batch_processing)
+{
+    if (debug)
+    {
         m_ptrDbg.reset(new DebugImages);
     }
 }
@@ -107,153 +201,451 @@ Task::~Task()
 }
 
 FilterResultPtr
-Task::process(TaskStatus const& status, FilterData const& data)
+Task::process(
+    TaskStatus const& status,
+    FilterData const& data)
 {
     status.throwIfCancelled();
 
     Dependencies const deps(data.xform().preCropArea(), data.xform().preRotation());
 
-    OptionsWidget::UiData ui_data;
-    ui_data.setDependencies(deps);
-
-    CommandLine const& cli = CommandLine::get();
-
     std::unique_ptr<Params> params(m_ptrSettings->getPageParams(m_pageId));
-    if (params.get()) {
-        bool not_match = !deps.matches(params->dependencies());
-        if (not_match) {
-            // most probably param was copied to new page via apply to...
-            if (params->mode() == AutoManualMode::MODE_AUTO) {
-                params.reset(); // find new angle for new deps
-            } else {
-                // Keep angle and mode with new deps
-                params.reset(new Params(params->deskewAngle(), deps, params->mode()));
-                m_ptrSettings->setPageParams(m_pageId, *params.get());
-                not_match = false;
-            }
-        }
-        if (!not_match) {
-            ui_data.setEffectiveDeskewAngle(params->deskewAngle());
-            ui_data.setMode(params->mode());
+    std::unique_ptr<Params> old_params;
 
-            Params new_params(
-                ui_data.effectiveDeskewAngle(), deps, ui_data.mode()
-            );
-            new_params.computeDeviation(m_ptrSettings->avg());
-            m_ptrSettings->setPageParams(m_pageId, new_params);
+    if (params.get())
+    {
+        if (!deps.matches(params->dependencies()))
+        {
+            params.swap(old_params);
         }
     }
 
-    bool need_reprocess(!params.get());
-    if (!need_reprocess) {
-        Params p(*params.get());
-        Params::Regenerate val = p.getForceReprocess();
-        need_reprocess = val & Params::RegeneratePage;
-        if (need_reprocess && !m_ptrNextTask) {
-            val = (Params::Regenerate)(val & ~Params::RegeneratePage);
-            p.setForceReprocess(val);
-            m_ptrSettings->setPageParams(m_pageId, p);
+    if (!params.get())
+    {
+        params.reset(new Params(deps));
+        if (old_params)
+        {
+            params->takeManualSettingsFrom(*old_params);
         }
     }
 
-    if (need_reprocess) {
-        QRectF const image_area(
-            data.xform().transformBack().mapRect(data.xform().resultingRect())
-        );
-        QRect const bounded_image_area(
-            image_area.toRect().intersected(data.origImage().rect())
-        );
+    switch (params->distortionType().get())
+    {
+    case DistortionType::NONE:
+        return processNoDistortion(
+                    status, data, *params
+               );
+    case DistortionType::ROTATION:
+        return processRotationDistortion(
+                    status, data, *params
+               );
+    case DistortionType::PERSPECTIVE:
+        return processPerspectiveDistortion(
+                    status, data, *params
+               );
+    case DistortionType::WARP:
+        return processWarpDistortion(
+                    status, data, *params
+               );
+    } // switch
 
-        status.throwIfCancelled();
+    throw std::logic_error("Unexpected distortion type");
+}
 
-        if (bounded_image_area.isValid()) {
-            BinaryImage rotated_image(
-                orthogonalRotation(
-                    BinaryImage(
-                        data.grayImage(), bounded_image_area,
-                        data.bwThreshold()
-                    ),
-                    data.xform().preRotation().toDegrees()
-                )
-            );
-            if (m_ptrDbg.get()) {
-                m_ptrDbg->add(rotated_image, "bw_rotated");
-            }
+FilterResultPtr
+Task::processNoDistortion(
+    TaskStatus const& status,
+    FilterData const& data,
+    Params& params)
+{
+    // Necessary to update dependencies.
+    m_ptrSettings->setPageParams(m_pageId, params);
 
-            QSize const unrotated_dpm(Dpm(data.origImage()).toSize());
-            Dpm const rotated_dpm(
-                data.xform().preRotation().rotate(unrotated_dpm)
-            );
-            cleanup(status, rotated_image, Dpi(rotated_dpm));
-            if (m_ptrDbg.get()) {
-                m_ptrDbg->add(rotated_image, "after_cleanup");
-            }
-
-            status.throwIfCancelled();
-
-            SkewFinder skew_finder;
-            skew_finder.setResolutionRatio(
-                (double)rotated_dpm.horizontal() / rotated_dpm.vertical()
-            );
-            Skew const skew(skew_finder.findSkew(rotated_image));
-            //std::cout << "deskew: SkewFinder" << std::endl;
-
-            if (skew.confidence() >= skew.GOOD_CONFIDENCE) {
-                ui_data.setEffectiveDeskewAngle(-skew.angle());
-            } else {
-                ui_data.setEffectiveDeskewAngle(0);
-            }
-            ui_data.setMode(MODE_AUTO);
-
-            Params new_params(
-                ui_data.effectiveDeskewAngle(), deps, ui_data.mode()
-            );
-            new_params.computeDeviation(m_ptrSettings->avg());
-            m_ptrSettings->setPageParams(m_pageId, new_params);
-
-            status.throwIfCancelled();
-        }
+    if (m_ptrNextTask)
+    {
+        return m_ptrNextTask->process(
+                    status, FilterData(data, data.xform())
+               );
     }
-
-    ImageTransformation new_xform(data.xform());
-    new_xform.setPostRotation(ui_data.effectiveDeskewAngle());
-
-    if (m_ptrNextTask) {
-        return m_ptrNextTask->process(status, FilterData(data, new_xform));
-    } else {
+    else
+    {
         return FilterResultPtr(
-                   new UiUpdater(
-                       m_ptrFilter, m_ptrDbg, data.origImage(),
-                       m_pageId, new_xform, ui_data, m_batchProcessing
+                   new NoDistortionUiUpdater(
+                       m_ptrFilter, m_ptrDbg, data.origImage(), data.xform(),
+                       m_pageId, params, m_batchProcessing
                    )
                );
     }
 }
 
+FilterResultPtr
+Task::processRotationDistortion(
+    TaskStatus const& status,
+    FilterData const& data,
+    Params& params)
+{
+    if (!params.rotationParams().isValid())
+    {
+        QRect const transformed_crop_rect(
+            data.xform().resultingPostCropArea().boundingRect().toRect()
+        );
+
+        status.throwIfCancelled();
+
+        if (transformed_crop_rect.isValid())
+        {
+            BinaryImage bw_image(
+                data.grayImage(),
+                transformed_crop_rect,
+                data.bwThreshold()
+            );
+
+            if (m_ptrDbg.get())
+            {
+                m_ptrDbg->add(bw_image, "bw_image");
+            }
+
+            cleanup(status, bw_image);
+            if (m_ptrDbg.get())
+            {
+                m_ptrDbg->add(bw_image, "after_cleanup");
+            }
+
+            status.throwIfCancelled();
+
+            SkewFinder skew_finder;
+            Skew const skew(skew_finder.findSkew(bw_image));
+
+            if (skew.confidence() >= skew.GOOD_CONFIDENCE)
+            {
+                params.rotationParams().setCompensationAngleDeg(-skew.angle());
+            }
+            else
+            {
+                params.rotationParams().setCompensationAngleDeg(0);
+            }
+            params.rotationParams().setMode(MODE_AUTO);
+
+            m_ptrSettings->setPageParams(m_pageId, params);
+
+            status.throwIfCancelled();
+        }
+    }
+
+    if (m_ptrNextTask)
+    {
+        double const angle = params.rotationParams().compensationAngleDeg();
+        ImageTransformation rotated_xform(data.xform());
+        rotated_xform.setPostRotation(angle);
+
+        return m_ptrNextTask->process(
+            status, FilterData(data, rotated_xform)
+        );
+    }
+    else
+    {
+        return FilterResultPtr(
+            new RotationUiUpdater(
+                m_ptrFilter, m_ptrDbg, data.origImage(), data.xform(),
+                m_pageId, params, m_batchProcessing
+            )
+        );
+    }
+}
+
+FilterResultPtr
+Task::processPerspectiveDistortion(
+    TaskStatus const& status,
+    FilterData const& data,
+    Params& params)
+{
+    AffineImageTransform orig_image_transform(data.origImage().size());
+    orig_image_transform.rotate(data.xform().preRotation().toDegrees());
+    orig_image_transform.setOrigCropArea(data.xform().transformBack().map(data.xform().resultingPreCropArea()));
+
+    if (!params.perspectiveParams().isValid())
+    {
+
+        DistortionModelBuilder model_builder(
+            orig_image_transform.transform().inverted().map(QPointF(0, 1))
+        );
+
+        TextLineTracer::trace(
+            AffineTransformedImage(data.grayImage(), orig_image_transform),
+            model_builder, status, m_ptrDbg.get()
+        );
+
+        TopBottomEdgeTracer::trace(
+            data.grayImage(), model_builder.verticalBounds(),
+            model_builder, status, m_ptrDbg.get()
+        );
+
+        DistortionModel distortion_model(
+            model_builder.tryBuildModel(m_ptrDbg.get(), &data.origImage())
+        );
+
+        if (distortion_model.isValid())
+        {
+            params.perspectiveParams().setCorner(
+                PerspectiveParams::TOP_LEFT,
+                distortion_model.topCurve().polyline().front()
+            );
+            params.perspectiveParams().setCorner(
+                PerspectiveParams::TOP_RIGHT,
+                distortion_model.topCurve().polyline().back()
+            );
+            params.perspectiveParams().setCorner(
+                PerspectiveParams::BOTTOM_LEFT,
+                distortion_model.bottomCurve().polyline().front()
+            );
+            params.perspectiveParams().setCorner(
+                PerspectiveParams::BOTTOM_RIGHT,
+                distortion_model.bottomCurve().polyline().back()
+            );
+        }
+        else
+        {
+            // Set up a trivial transformation.
+
+            QTransform const to_orig(data.xform().transformBack());
+            QRectF const transformed_box(data.xform().resultingPostCropArea().boundingRect());
+
+            params.perspectiveParams().setCorner(
+                PerspectiveParams::TOP_LEFT, to_orig.map(transformed_box.topLeft())
+            );
+            params.perspectiveParams().setCorner(
+                PerspectiveParams::TOP_RIGHT, to_orig.map(transformed_box.topRight())
+            );
+            params.perspectiveParams().setCorner(
+                PerspectiveParams::BOTTOM_LEFT, to_orig.map(transformed_box.bottomLeft())
+            );
+            params.perspectiveParams().setCorner(
+                PerspectiveParams::BOTTOM_RIGHT, to_orig.map(transformed_box.bottomRight())
+            );
+        }
+
+        params.perspectiveParams().setMode(MODE_AUTO);
+
+        m_ptrSettings->setPageParams(m_pageId, params);
+    } // if (!params.isValid())
+
+    if (m_ptrNextTask)
+    {
+        // DewarpingImageTransform can handle perspective distortion
+        // as well, so we just use that.
+        std::vector<QPointF> top_curve;
+        std::vector<QPointF> bottom_curve;
+        top_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::TOP_LEFT));
+        top_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::TOP_RIGHT));
+        bottom_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::BOTTOM_LEFT));
+        bottom_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT));
+
+        DewarpingImageTransform perspective_transform(
+            orig_image_transform.origSize(),
+            orig_image_transform.origCropArea(),
+            top_curve, bottom_curve,
+            dewarping::DepthPerception() // Doesn't matter when curves are flat.
+        );
+
+        QRectF const transformed_rectF = perspective_transform.transformedCropArea().boundingRect();
+        QRect const transformed_rect(
+            transformed_rectF.left(),
+            transformed_rectF.top(),
+            transformed_rectF.width(),
+            transformed_rectF.height()
+        );
+
+        QImage transformed_image = perspective_transform.materialize(
+            data.origImage(),
+            transformed_rect,
+            QColor(255,255,255)
+        );
+
+        if (data.xform().preRotation().toDegrees() == 0)
+        {
+            transformed_image.setDotsPerMeterX(data.origImage().dotsPerMeterX());
+            transformed_image.setDotsPerMeterY(data.origImage().dotsPerMeterY());
+        }
+        else
+        {
+            transformed_image.setDotsPerMeterX(data.origImage().dotsPerMeterY());
+            transformed_image.setDotsPerMeterY(data.origImage().dotsPerMeterX());
+        }
+
+        QTransform const crop_area_transform(
+            1.0, 0.0,
+            0.0, 1.0,
+            -transformed_rectF.left(),
+            -transformed_rectF.top()
+        );
+
+        QPolygonF const crop_area = crop_area_transform.map(
+            perspective_transform.transformedCropArea()
+        );
+
+        return m_ptrNextTask->process(
+            status, FilterData(data.origImageFilename(), transformed_image, crop_area)
+        );
+    }
+    else
+    {
+        return FilterResultPtr(
+            new PerspectiveUiUpdater(
+                m_ptrFilter, m_ptrDbg, data.origImage(), data.xform(),
+                m_pageId, params, m_batchProcessing
+            )
+        );
+    }
+}
+
+FilterResultPtr
+Task::processWarpDistortion(
+    TaskStatus const& status,
+    FilterData const& data,
+    Params& params)
+{
+    AffineImageTransform orig_image_transform(data.origImage().size());
+    orig_image_transform.rotate(data.xform().preRotation().toDegrees());
+    orig_image_transform.setOrigCropArea(data.xform().transformBack().map(data.xform().resultingPreCropArea()));
+
+    if (!params.dewarpingParams().isValid())
+    {
+
+        DistortionModelBuilder model_builder(
+            orig_image_transform.transform().inverted().map(QPointF(0, 1))
+        );
+
+        TextLineTracer::trace(
+            AffineTransformedImage(data.grayImage(), orig_image_transform),
+            model_builder, status, m_ptrDbg.get()
+        );
+
+        TopBottomEdgeTracer::trace(
+            data.grayImage(), model_builder.verticalBounds(),
+            model_builder, status, m_ptrDbg.get()
+        );
+
+        DistortionModel distortion_model(
+            model_builder.tryBuildModel(m_ptrDbg.get(), &data.origImage())
+        );
+
+        if (!distortion_model.isValid())
+        {
+            // Set up a trivial transformation.
+
+            QTransform const to_orig(data.xform().transformBack());
+            QRectF const transformed_box(data.xform().resultingPostCropArea().boundingRect());
+
+            distortion_model.setTopCurve(
+                std::vector<QPointF>
+                {
+                    to_orig.map(transformed_box.topLeft()),
+                        to_orig.map(transformed_box.topRight())
+                }
+            );
+
+            distortion_model.setBottomCurve(
+                std::vector<QPointF>
+                {
+                    to_orig.map(transformed_box.bottomLeft()),
+                        to_orig.map(transformed_box.bottomRight())
+                }
+            );
+
+            assert(distortion_model.isValid());
+        }
+
+        params.dewarpingParams().setDistortionModel(distortion_model);
+
+        // Note that we don't reset depth perception, as it's a manual parameter
+        // that's usually the same for all pictures in a project.
+
+        params.dewarpingParams().setMode(MODE_AUTO);
+
+        m_ptrSettings->setPageParams(m_pageId, params);
+    } // if (!params.isValid())
+
+    if (m_ptrNextTask)
+    {
+        DewarpingImageTransform perspective_transform(
+            orig_image_transform.origSize(),
+            orig_image_transform.origCropArea(),
+            params.dewarpingParams().distortionModel().topCurve().polyline(),
+            params.dewarpingParams().distortionModel().bottomCurve().polyline(),
+            params.dewarpingParams().depthPerception()
+        );
+
+        QRectF const transformed_rectF = perspective_transform.transformedCropArea().boundingRect();
+        QRect const transformed_rect(
+            transformed_rectF.left(),
+            transformed_rectF.top(),
+            transformed_rectF.width(),
+            transformed_rectF.height()
+        );
+
+        QImage transformed_image = perspective_transform.materialize(
+            data.origImage(),
+            transformed_rect,
+            QColor(255, 255, 255)
+        );
+
+        if (data.xform().preRotation().toDegrees() == 0)
+        {
+            transformed_image.setDotsPerMeterX(data.origImage().dotsPerMeterX());
+            transformed_image.setDotsPerMeterY(data.origImage().dotsPerMeterY());
+        }
+        else
+        {
+            transformed_image.setDotsPerMeterX(data.origImage().dotsPerMeterY());
+            transformed_image.setDotsPerMeterY(data.origImage().dotsPerMeterX());
+        }
+
+        QTransform const crop_area_transform(
+            1.0, 0.0,
+            0.0, 1.0,
+            -transformed_rectF.left(),
+            -transformed_rectF.top()
+        );
+
+        QPolygonF const crop_area = crop_area_transform.map(
+            perspective_transform.transformedCropArea()
+        );
+
+        return m_ptrNextTask->process(
+            status, FilterData(data.origImageFilename(), transformed_image, crop_area)
+        );
+    }
+    else
+    {
+        return FilterResultPtr(
+            new DewarpingUiUpdater(
+                m_ptrFilter, m_ptrDbg, data.origImage(), data.xform(),
+                m_pageId, params, m_batchProcessing
+            )
+        );
+    }
+}
+
 void
-Task::cleanup(TaskStatus const& status, BinaryImage& image, Dpi const& dpi)
+Task::cleanup(TaskStatus const& status, BinaryImage& image)
 {
     // We don't have to clean up every piece of garbage.
     // The only concern are the horizontal shadows, which we remove here.
 
-    Dpi reduced_dpi(dpi);
     BinaryImage reduced_image;
 
     {
         ReduceThreshold reductor(image);
-        while (reduced_dpi.horizontal() >= 200 && reduced_dpi.vertical() >= 200) {
+        while (reductor.image().width() >= 2000 && reductor.image().height() >= 2000)
+        {
             reductor.reduce(2);
-            reduced_dpi = Dpi(
-                              reduced_dpi.horizontal() / 2,
-                              reduced_dpi.vertical() / 2
-                          );
         }
         reduced_image = reductor.image();
     }
 
     status.throwIfCancelled();
 
-    QSize const brick(from150dpi(QSize(200, 14), reduced_dpi));
+    QSize const brick(200, 14);
     BinaryImage opened(openBrick(reduced_image, brick, BLACK));
     reduced_image.release();
 
@@ -272,62 +664,87 @@ Task::cleanup(TaskStatus const& status, BinaryImage& image, Dpi const& dpi)
     rasterOp<RopSubtract<RopDst, RopSrc> >(image, garbage);
 }
 
-int
-Task::from150dpi(int size, int target_dpi)
-{
-    int const new_size = (size * target_dpi + 75) / 150;
-    if (new_size < 1) {
-        return 1;
-    }
-    return new_size;
-}
+/*======================== Task::NoDistortionUiUpdater =====================*/
 
-QSize
-Task::from150dpi(QSize const& size, Dpi const& target_dpi)
-{
-    int const width = from150dpi(size.width(), target_dpi.horizontal());
-    int const height = from150dpi(size.height(), target_dpi.vertical());
-    return QSize(width, height);
-}
-
-/*============================ Task::UiUpdater ==========================*/
-
-Task::UiUpdater::UiUpdater(
+Task::NoDistortionUiUpdater::NoDistortionUiUpdater(
     IntrusivePtr<Filter> const& filter,
     std::unique_ptr<DebugImages> const& dbg_img,
-    QImage const& image, PageId const& page_id,
+    QImage const& image,
     ImageTransformation const& xform,
-    OptionsWidget::UiData const& ui_data,
-    bool const batch_processing)
-    :   m_ptrFilter(filter),
-        m_ptrDbg(dbg_img),
-        m_image(image),
-        m_downscaledImage(ImageView::createDownscaledImage(image)),
-        m_pageId(page_id),
-        m_xform(xform),
-        m_uiData(ui_data),
-        m_batchProcessing(batch_processing)
+    PageId const& page_id,
+    Params const& page_params,
+    bool batch_processing)
+    : m_ptrFilter(filter)
+    , m_ptrDbg(dbg_img)
+    , m_image(image)
+    , m_downscaledImage(ImageView::createDownscaledImage(image))
+    , m_xform(xform)
+    , m_pageId(page_id)
+    , m_pageParams(page_params)
+    , m_batchProcessing(batch_processing)
 {
 }
 
 void
-Task::UiUpdater::updateUI(FilterUiInterface* ui)
+Task::NoDistortionUiUpdater::updateUI(FilterUiInterface* ui)
 {
     // This function is executed from the GUI thread.
 
     OptionsWidget* const opt_widget = m_ptrFilter->optionsWidget();
-    if (!m_batchProcessing) {
-        opt_widget->postUpdateUI(m_uiData);
-    }
+    opt_widget->postUpdateUI(m_pageParams);
     ui->setOptionsWidget(opt_widget, ui->KEEP_OWNERSHIP);
 
     ui->invalidateThumbnail(m_pageId);
 
-    if (m_batchProcessing) {
+    if (m_batchProcessing)
+    {
         return;
     }
 
-    ImageView* view = new ImageView(m_image, m_downscaledImage, m_xform);
+    NoDistortionView* view = new NoDistortionView(m_image, m_downscaledImage, m_xform);
+    ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP, m_ptrDbg.get());
+}
+
+/*========================== Task::RotationUiUpdater =======================*/
+
+Task::RotationUiUpdater::RotationUiUpdater(
+    IntrusivePtr<Filter> const& filter,
+    std::unique_ptr<DebugImages> const& dbg_img,
+    QImage const& image,
+    ImageTransformation const& xform,
+    PageId const& page_id,
+    Params const& page_params,
+    bool batch_processing)
+    : m_ptrFilter(filter)
+    , m_ptrDbg(dbg_img)
+    , m_image(image)
+    , m_downscaledImage(ImageView::createDownscaledImage(image))
+    , m_xform(xform)
+    , m_pageId(page_id)
+    , m_pageParams(page_params)
+    , m_batchProcessing(batch_processing)
+{
+
+}
+
+void
+Task::RotationUiUpdater::updateUI(FilterUiInterface* ui)
+{
+    // This function is executed from the GUI thread.
+
+    OptionsWidget* const opt_widget = m_ptrFilter->optionsWidget();
+    opt_widget->postUpdateUI(m_pageParams);
+    ui->setOptionsWidget(opt_widget, ui->KEEP_OWNERSHIP);
+
+    ui->invalidateThumbnail(m_pageId);
+
+    if (m_batchProcessing)
+    {
+        return;
+    }
+
+    double const angle = m_pageParams.rotationParams().compensationAngleDeg();
+    ImageView* view = new ImageView(m_image, m_downscaledImage, m_xform, angle);
     ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP, m_ptrDbg.get());
 
     QObject::connect(
@@ -340,5 +757,133 @@ Task::UiUpdater::updateUI(FilterUiInterface* ui)
     );
 }
 
-} // namespace deskew
+/*======================== Task::PerspectiveUiUpdater ======================*/
 
+Task::PerspectiveUiUpdater::PerspectiveUiUpdater(
+    IntrusivePtr<Filter> const& filter,
+    std::unique_ptr<DebugImages> const& dbg_img,
+    QImage const& image,
+    ImageTransformation const& xform,
+    PageId const& page_id,
+    Params const& page_params,
+    bool batch_processing)
+    : m_ptrFilter(filter)
+    , m_ptrDbg(dbg_img)
+    , m_image(image)
+    , m_downscaledImage(ImageView::createDownscaledImage(image))
+    , m_xform(xform)
+    , m_pageId(page_id)
+    , m_pageParams(page_params)
+    , m_batchProcessing(batch_processing)
+{
+
+}
+
+void
+Task::PerspectiveUiUpdater::updateUI(FilterUiInterface* ui)
+{
+    // This function is executed from the GUI thread.
+
+    OptionsWidget* const opt_widget = m_ptrFilter->optionsWidget();
+    opt_widget->postUpdateUI(m_pageParams);
+    ui->setOptionsWidget(opt_widget, ui->KEEP_OWNERSHIP);
+
+    ui->invalidateThumbnail(m_pageId);
+
+    if (m_batchProcessing)
+    {
+        return;
+    }
+
+    XSpline top_curve;
+    XSpline bottom_curve;
+    top_curve.appendControlPoint(
+        m_pageParams.perspectiveParams().corner(PerspectiveParams::TOP_LEFT), 0
+    );
+    top_curve.appendControlPoint(
+        m_pageParams.perspectiveParams().corner(PerspectiveParams::TOP_RIGHT), 0
+    );
+    bottom_curve.appendControlPoint(
+        m_pageParams.perspectiveParams().corner(PerspectiveParams::BOTTOM_LEFT), 0
+    );
+    bottom_curve.appendControlPoint(
+        m_pageParams.perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT), 0
+    );
+    DistortionModel distortion_model;
+    distortion_model.setTopCurve(Curve(top_curve));
+    distortion_model.setBottomCurve(Curve(bottom_curve));
+
+    DewarpingView* view = new DewarpingView(
+        m_image, m_downscaledImage, m_xform, distortion_model,
+
+        // Doesn't matter when curves are flat.
+        DepthPerception(),
+
+        // Prevent the user from introducing curvature.
+        /*fixed_number_of_control_points*/true
+    );
+    ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP, m_ptrDbg.get());
+
+    QObject::connect(
+        view, SIGNAL(distortionModelChanged(dewarping::DistortionModel const&)),
+        opt_widget, SLOT(manualDistortionModelSetExternally(dewarping::DistortionModel const&))
+    );
+}
+
+/*========================= Task::DewarpingUiUpdater =======================*/
+
+Task::DewarpingUiUpdater::DewarpingUiUpdater(
+    IntrusivePtr<Filter> const& filter,
+    std::unique_ptr<DebugImages> const& dbg_img,
+    QImage const& image,
+    ImageTransformation const& xform,
+    PageId const& page_id,
+    Params const& page_params,
+    bool batch_processing)
+    : m_ptrFilter(filter)
+    , m_ptrDbg(dbg_img)
+    , m_image(image)
+    , m_downscaledImage(ImageView::createDownscaledImage(image))
+    , m_xform(xform)
+    , m_pageId(page_id)
+    , m_pageParams(page_params)
+    , m_batchProcessing(batch_processing)
+{
+
+}
+
+void
+Task::DewarpingUiUpdater::updateUI(FilterUiInterface* ui)
+{
+    // This function is executed from the GUI thread.
+
+    OptionsWidget* const opt_widget = m_ptrFilter->optionsWidget();
+    opt_widget->postUpdateUI(m_pageParams);
+    ui->setOptionsWidget(opt_widget, ui->KEEP_OWNERSHIP);
+
+    ui->invalidateThumbnail(m_pageId);
+
+    if (m_batchProcessing)
+    {
+        return;
+    }
+
+    DewarpingView* view = new DewarpingView(
+        m_image, m_downscaledImage, m_xform,
+        m_pageParams.dewarpingParams().distortionModel(),
+        m_pageParams.dewarpingParams().depthPerception(),
+        /*fixed_number_of_control_points*/false
+    );
+    ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP, m_ptrDbg.get());
+
+    QObject::connect(
+        view, SIGNAL(distortionModelChanged(dewarping::DistortionModel const&)),
+        opt_widget, SLOT(manualDistortionModelSetExternally(dewarping::DistortionModel const&))
+    );
+    QObject::connect(
+        opt_widget, SIGNAL(depthPerceptionSetByUser(double)),
+        view, SLOT(depthPerceptionChanged(double))
+    );
+}
+
+} // namespace deskew

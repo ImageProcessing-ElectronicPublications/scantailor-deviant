@@ -27,9 +27,6 @@
 
 class TaskStatus;
 class FilterData;
-class QImage;
-class QSize;
-class Dpi;
 class DebugImages;
 
 namespace imageproc
@@ -47,30 +44,49 @@ namespace deskew
 
 class Filter;
 class Settings;
+class Params;
 
 class Task : public RefCountable
 {
     DECLARE_NON_COPYABLE(Task)
 public:
     Task(IntrusivePtr<Filter> const& filter,
-         IntrusivePtr<Settings> const& settings,
-         IntrusivePtr<select_content::Task> const& next_task,
-         PageId const& page_id, bool batch_processing, bool debug);
+        IntrusivePtr<Settings> const& settings,
+        IntrusivePtr<select_content::Task> const& next_task,
+        PageId const& page_id, bool batch_processing, bool debug);
 
     virtual ~Task();
 
     FilterResultPtr process(
-        TaskStatus const& status, FilterData const& data);
-private:
-    class UiUpdater;
-
-    static void cleanup(
         TaskStatus const& status,
-        imageproc::BinaryImage& img, Dpi const& dpi);
+        FilterData const& data);
+private:
+    class NoDistortionUiUpdater;
+    class RotationUiUpdater;
+    class PerspectiveUiUpdater;
+    class DewarpingUiUpdater;
 
-    static int from150dpi(int size, int target_dpi);
+    FilterResultPtr processNoDistortion(
+        TaskStatus const& status,
+        FilterData const& data,
+        Params& params);
 
-    static QSize from150dpi(QSize const& size, Dpi const& target_dpi);
+    FilterResultPtr processRotationDistortion(
+        TaskStatus const& status,
+        FilterData const& data,
+        Params& params);
+
+    FilterResultPtr processPerspectiveDistortion(
+        TaskStatus const& status,
+        FilterData const& data,
+        Params& params);
+
+    FilterResultPtr processWarpDistortion(
+        TaskStatus const& status,
+        FilterData const& data,
+        Params& params);
+
+    static void cleanup(TaskStatus const& status, imageproc::BinaryImage& img);
 
     IntrusivePtr<Filter> m_ptrFilter;
     IntrusivePtr<Settings> m_ptrSettings;

@@ -35,9 +35,9 @@
  * ---------------------------------------------------------------------
  */
 
-/* This is an adaptation for ScanTailor Universal
+/* This is an adaptation for ScanTailor Deviant
  * @path_to_pics@ will be replaced at load time with folder where qss is stored for Win
- * or with $CMAKE_INSTALLPREFIX/share/pixmaps/scantailor-universal/stylesheets/ for Linux
+ * or with $CMAKE_INSTALLPREFIX/share/pixmaps/scantailor-deviant/stylesheets/ for Linux
  */ 
 
 QGraphicsView {

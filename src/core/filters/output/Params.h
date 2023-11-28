@@ -21,9 +21,6 @@
 
 #include "Dpi.h"
 #include "ColorParams.h"
-#include "DewarpingMode.h"
-#include "dewarping/DistortionModel.h"
-#include "DepthPerception.h"
 #include "DespeckleLevel.h"
 #include "RegenParams.h"
 
@@ -64,36 +61,6 @@ public:
 
     void setColorParams(ColorParams const& params, ColorParamsApplyFilter const& filter = CopyAll);
 
-    DewarpingMode const& dewarpingMode() const
-    {
-        return m_dewarpingMode;
-    }
-
-    void setDewarpingMode(DewarpingMode const& mode)
-    {
-        m_dewarpingMode = mode;
-    }
-
-    dewarping::DistortionModel const& distortionModel() const
-    {
-        return m_distortionModel;
-    }
-
-    void setDistortionModel(dewarping::DistortionModel const& model)
-    {
-        m_distortionModel = model;
-    }
-
-    DepthPerception const& depthPerception() const
-    {
-        return m_depthPerception;
-    }
-
-    void setDepthPerception(DepthPerception depth_perception)
-    {
-        m_depthPerception = depth_perception;
-    }
-
     DespeckleLevel despeckleLevel() const
     {
         return m_despeckleLevel;
@@ -123,9 +90,6 @@ private:
     ColorParams m_colorParams;
 
     Dpi m_dpi;
-    dewarping::DistortionModel m_distortionModel;
-    DepthPerception m_depthPerception;
-    DewarpingMode m_dewarpingMode;
     DespeckleLevel m_despeckleLevel;
 //    QString m_TiffCompression;
 };

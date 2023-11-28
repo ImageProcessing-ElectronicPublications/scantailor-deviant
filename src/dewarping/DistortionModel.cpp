@@ -17,16 +17,10 @@
 */
 
 #include "DistortionModel.h"
-#include "CylindricalSurfaceDewarper.h"
-#include "NumericTraits.h"
-#include "VecNT.h"
-#include <QRectF>
-#include <QPointF>
-#include <QTransform>
-#include <QString>
+#include "STEX_VecNT.h"
 #include <QDomDocument>
 #include <QDomElement>
-#include <algorithm>
+#include <cmath>
 
 namespace dewarping
 {
@@ -36,15 +30,16 @@ DistortionModel::DistortionModel()
 }
 
 DistortionModel::DistortionModel(QDomElement const& el)
-    :   m_topCurve(el.namedItem("top-curve").toElement()),
-        m_bottomCurve(el.namedItem("bottom-curve").toElement())
+    :	m_topCurve(el.namedItem("top-curve").toElement()),
+      m_bottomCurve(el.namedItem("bottom-curve").toElement())
 {
 }
 
 QDomElement
 DistortionModel::toXml(QDomDocument& doc, QString const& name) const
 {
-    if (!isValid()) {
+    if (!isValid())
+    {
         return QDomElement();
     }
 
@@ -57,11 +52,13 @@ DistortionModel::toXml(QDomDocument& doc, QString const& name) const
 bool
 DistortionModel::isValid() const
 {
-    if (!m_topCurve.isValid() || !m_bottomCurve.isValid()) {
+    if (!m_topCurve.isValid() || !m_bottomCurve.isValid())
+    {
         return false;
     }
 
-    Vec2d const poly[4] = {
+    Vec2d const poly[4] =
+    {
         m_topCurve.polyline().front(),
         m_topCurve.polyline().back(),
         m_bottomCurve.polyline().back(),
@@ -71,7 +68,8 @@ DistortionModel::isValid() const
     double min_dot = NumericTraits<double>::max();
     double max_dot = NumericTraits<double>::min();
 
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i)
+    {
         Vec2d const cur(poly[i]);
         Vec2d const prev(poly[(i + 3) & 3]);
         Vec2d const next(poly[(i + 1) & 3]);
@@ -81,20 +79,24 @@ DistortionModel::isValid() const
         prev_normal[0] = -prev_normal[0];
 
         double const dot = prev_normal.dot(next - cur);
-        if (dot < min_dot) {
+        if (dot < min_dot)
+        {
             min_dot = dot;
         }
-        if (dot > max_dot) {
+        if (dot > max_dot)
+        {
             max_dot = dot;
         }
     }
 
-    if (min_dot * max_dot <= 0) {
+    if (min_dot * max_dot <= 0)
+    {
         // Not convex.
         return false;
     }
 
-    if (fabs(min_dot) < 0.01 || fabs(max_dot) < 0.01) {
+    if (fabs(min_dot) < 0.01 || fabs(max_dot) < 0.01)
+    {
         // Too close - possible problems with calculating homography.
         return false;
     }
@@ -107,73 +109,25 @@ DistortionModel::matches(DistortionModel const& other) const
 {
     bool const this_valid = isValid();
     bool const other_valid = other.isValid();
-    if (!this_valid && !other_valid) {
+    if (!this_valid && !other_valid)
+    {
         return true;
-    } else if (this_valid != other_valid) {
+    }
+    else if (this_valid != other_valid)
+    {
         return false;
     }
 
-    if (!m_topCurve.matches(other.m_topCurve)) {
+    if (!m_topCurve.matches(other.m_topCurve))
+    {
         return false;
-    } else if (!m_bottomCurve.matches(other.m_bottomCurve)) {
+    }
+    else if (!m_bottomCurve.matches(other.m_bottomCurve))
+    {
         return false;
     }
 
     return true;
-}
-
-QRectF
-DistortionModel::modelDomain(
-    CylindricalSurfaceDewarper const& dewarper,
-    QTransform const& to_output, QRectF const& output_content_rect) const
-{
-    QRectF model_domain(boundingBox(to_output));
-
-    // We not only uncurl the lines, but also stretch them in curved areas.
-    // Because we don't want to reach out of the content box, we shrink
-    // the model domain vertically, rather than stretching it horizontally.
-    double const vert_scale = 1.0 / dewarper.directrixArcLength();
-
-    // When scaling model_domain, we want the following point to remain where it is.
-    QPointF const scale_origin(output_content_rect.center());
-
-    double const new_upper_part = (scale_origin.y() - model_domain.top()) * vert_scale;
-    double const new_height = model_domain.height() * vert_scale;
-    model_domain.setTop(scale_origin.y() - new_upper_part);
-    model_domain.setHeight(new_height);
-
-    return model_domain;
-}
-
-QRectF
-DistortionModel::boundingBox(QTransform const& transform) const
-{
-    double top = NumericTraits<double>::max();
-    double left = top;
-    double bottom = NumericTraits<double>::min();
-    double right = bottom;
-
-    for (QPointF pt : m_topCurve.polyline()) {
-        pt = transform.map(pt);
-        left = std::min<double>(left, pt.x());
-        right = std::max<double>(right, pt.x());
-        top = std::min<double>(top, pt.y());
-        bottom = std::max<double>(bottom, pt.y());
-    }
-
-    for (QPointF pt : m_bottomCurve.polyline()) {
-        pt = transform.map(pt);
-        left = std::min<double>(left, pt.x());
-        right = std::max<double>(right, pt.x());
-        top = std::min<double>(top, pt.y());
-        bottom = std::max<double>(bottom, pt.y());
-    }
-
-    if (top > bottom || left > right) {
-        return QRectF();
-    } else {
-        return QRectF(left, top, right - left, bottom - top);
-    }
 }
 
 } // namespace dewarping

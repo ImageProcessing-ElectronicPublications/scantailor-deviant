@@ -41,4 +41,16 @@ GrayImage::GrayImage(QImage const& image)
 {
 }
 
+GridAccessor<uint8_t const>
+GrayImage::accessor() const
+{
+    return GridAccessor<uint8_t const> {data(), stride(), width(), height()};
+}
+
+GridAccessor<uint8_t>
+GrayImage::accessor()
+{
+    return GridAccessor<uint8_t> {data(), stride(), width(), height()};
+}
+
 } // namespace imageproc

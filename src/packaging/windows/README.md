@@ -588,8 +588,8 @@ cmake -S .\src -B .\build -DCMAKE_INSTALL_PREFIX:PATH=%CD%\install -DENABLE_EXIV
 ### Build
 
 ~~~ text
-cmake --build .\build --config Release --target scantailor-universal --parallel 4
-cmake --build .\build --config Release --target scantailor-universal-cli --parallel 4
+cmake --build .\build --config Release --target scantailor-deviant --parallel 4
+cmake --build .\build --config Release --target scantailor-deviant-cli --parallel 4
 ~~~
 
 ### Install

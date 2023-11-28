@@ -1,6 +1,6 @@
 /*
     Scan Tailor - Interactive post-processing tool for scanned pages.
-    Copyright (C)  Joseph Artsimovich <joseph.artsimovich@gmail.com>
+    Copyright (C) 2007-2008  Joseph Artsimovich <joseph_a@mail.ru>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,13 +17,10 @@
 */
 
 #include "OptionsWidget.h"
-
-#include "Settings.h"
-#include "ScopedIncDec.h"
-#include <QString>
-#include <Qt>
-#include <math.h>
 #include "ApplyToDialog.h"
+#include "Settings.h"
+#include "DistortionType.h"
+#include "ScopedIncDec.h"
 
 namespace deskew
 {
@@ -32,26 +29,70 @@ double const OptionsWidget::MAX_ANGLE = 45.0;
 
 OptionsWidget::OptionsWidget(IntrusivePtr<Settings> const& settings,
                              PageSelectionAccessor const& page_selection_accessor)
-    :   m_ptrSettings(settings),
-        m_ignoreAutoManualToggle(0),
-        m_ignoreSpinBoxChanges(0),
-        m_pageSelectionAccessor(page_selection_accessor)
+    :	m_ptrSettings(settings)
+    ,	m_pageParams(Dependencies())
+    ,	m_ignoreSignalsFromUiControls(0)
+    ,	m_pageSelectionAccessor(page_selection_accessor)
 {
-    setupUi(this);
-    angleSpinBox->setSuffix(QChar(0x00B0)); // the degree symbol
-    angleSpinBox->setRange(-MAX_ANGLE, MAX_ANGLE);
-    angleSpinBox->adjustSize();
-    setSpinBoxUnknownState();
+    using namespace dewarping;
 
+    ui.setupUi(this);
+    setupDistortionTypeButtons();
+
+    // Rotation angle UI.
+    ui.angleSpinBox->setSuffix(QChar(0x00B0)); // the degree symbol
+    ui.angleSpinBox->setRange(-MAX_ANGLE, MAX_ANGLE);
+    ui.angleSpinBox->adjustSize();
+    setSpinBoxUnknownState();
     connect(
-        angleSpinBox, SIGNAL(valueChanged(double)),
+        ui.angleSpinBox, SIGNAL(valueChanged(double)),
         this, SLOT(spinBoxValueChanged(double))
     );
-    connect(autoBtn, SIGNAL(toggled(bool)), this, SLOT(modeChanged(bool)));
-    connect(
-        applyDeskewBtn, SIGNAL(clicked()),
-        this, SLOT(showDeskewDialog())
+
+    // Depth perception UI.
+    ui.depthPerceptionSlider->setMinimum(
+        depthPerceptionToSlider(DepthPerception::minValue())
     );
+    ui.depthPerceptionSlider->setMaximum(
+        depthPerceptionToSlider(DepthPerception::maxValue())
+    );
+    connect(
+        ui.depthPerceptionSlider, SIGNAL(valueChanged(int)),
+        SLOT(depthPerceptionSliderMoved(int))
+    );
+    connect(
+        ui.depthPerceptionSlider, SIGNAL(sliderReleased()),
+        SLOT(depthPerceptionSliderReleased())
+    );
+    connect(
+        ui.applyDepthPerceptionBtn, SIGNAL(clicked()),
+        SLOT(showApplyDepthPerceptionDialog())
+    );
+
+    // Distortion type UI.
+    connect(
+        ui.noDistortionButton, SIGNAL(toggled(bool)),
+        SLOT(noDistortionToggled(bool))
+    );
+    connect(
+        ui.rotationDistortionButton, SIGNAL(toggled(bool)),
+        SLOT(rotationDistortionToggled(bool))
+    );
+    connect(
+        ui.perspectiveDistortionButton, SIGNAL(toggled(bool)),
+        SLOT(perspectiveDistortionToggled(bool))
+    );
+    connect(
+        ui.warpDistortionButton, SIGNAL(toggled(bool)),
+        SLOT(warpDistortionToggled(bool))
+    );
+    connect(
+        ui.applyDistortionTypeBtn, SIGNAL(clicked()),
+        this, SLOT(showApplyDistortionTypeDialog())
+    );
+
+    // Auto / Manual mode.
+    connect(ui.autoBtn, SIGNAL(toggled(bool)), this, SLOT(modeChanged(bool)));
 }
 
 OptionsWidget::~OptionsWidget()
@@ -59,104 +100,264 @@ OptionsWidget::~OptionsWidget()
 }
 
 void
-OptionsWidget::showDeskewDialog()
+OptionsWidget::showApplyDistortionTypeDialog()
 {
     ApplyToDialog* dialog = new ApplyToDialog(
-        this, m_pageId, m_pageSelectionAccessor
+        this, m_pageId, m_pageSelectionAccessor, PageView::IMAGE_VIEW
     );
 
-    dialog->setWindowTitle(tr("Apply Deskew"));
+    dialog->setWindowTitle(tr("Apply Distortion Type"));
 
-    connect(dialog, &ApplyToDialog::accepted, this, [ = ]() {
+    connect(dialog, &ApplyToDialog::accepted, this, [=]() {
         std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
         std::set<PageId> pages(vec.begin(), vec.end());
         if (!dialog->getPageRangeSelectorWidget().allPagesSelected()) {
-            appliedTo(pages);
-        } else {
-            appliedToAllPages(pages);
+            distortionTypeAppliedTo(pages);
         }
-    });
+        else {
+            distortionTypeAppliedToAllPages(pages);
+        }
+        });
 
     dialog->show();
 }
 
 void
-OptionsWidget::appliedTo(std::set<PageId> const& pages)
+OptionsWidget::distortionTypeAppliedTo(std::set<PageId> const& pages)
 {
-    if (pages.empty()) {
+    if (pages.empty())
+    {
         return;
     }
 
-    Params const params(
-        m_uiData.effectiveDeskewAngle(),
-        m_uiData.dependencies(), m_uiData.mode()
-    );
-    m_ptrSettings->setDegress(pages, params);
-    for (PageId const& page_id : pages) {
+    m_ptrSettings->setDistortionType(pages, m_pageParams.distortionType());
+
+    for (PageId const& page_id: pages)
+    {
         emit invalidateThumbnail(page_id);
     }
 }
 
 void
-OptionsWidget::appliedToAllPages(std::set<PageId> const& pages)
+OptionsWidget::distortionTypeAppliedToAllPages(std::set<PageId> const& pages)
 {
-    if (pages.empty()) {
+    if (pages.empty())
+    {
         return;
     }
 
-    Params const params(
-        m_uiData.effectiveDeskewAngle(),
-        m_uiData.dependencies(), m_uiData.mode()
-    );
-    m_ptrSettings->setDegress(pages, params);
+    m_ptrSettings->setDistortionType(pages, m_pageParams.distortionType());
+
     emit invalidateAllThumbnails();
+}
+
+void
+OptionsWidget::showApplyDepthPerceptionDialog()
+{
+    ApplyToDialog* dialog = new ApplyToDialog(
+        this, m_pageId, m_pageSelectionAccessor, PageView::IMAGE_VIEW
+    );
+
+    dialog->setWindowTitle(tr("Apply Depth Perception"));
+
+    connect(dialog, &ApplyToDialog::accepted, this, [=]() {
+        std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
+        std::set<PageId> pages(vec.begin(), vec.end());
+        if (!dialog->getPageRangeSelectorWidget().allPagesSelected()) {
+            depthPerceptionAppliedTo(pages);
+        }
+        else {
+            depthPerceptionAppliedToAllPages(pages);
+        }
+        });
+
+    dialog->show();
+}
+
+void
+OptionsWidget::depthPerceptionAppliedTo(std::set<PageId> const& pages)
+{
+    if (pages.empty())
+    {
+        return;
+    }
+
+    m_ptrSettings->setDepthPerception(pages, m_pageParams.dewarpingParams().depthPerception());
+
+    for (PageId const& page_id : pages)
+    {
+        emit invalidateThumbnail(page_id);
+    }
+}
+
+void
+OptionsWidget::depthPerceptionAppliedToAllPages(std::set<PageId> const& pages)
+{
+    if (pages.empty())
+    {
+        return;
+    }
+
+    m_ptrSettings->setDepthPerception(pages, m_pageParams.dewarpingParams().depthPerception());
+    emit invalidateAllThumbnails();
+}
+
+void
+OptionsWidget::manualDistortionModelSetExternally(
+    dewarping::DistortionModel const& model)
+{
+    // As we reuse DewarpingView for DistortionType::PERSPECTIVE,
+    // we get called both in dewarping and perspective modes.
+    if (m_pageParams.distortionType() == DistortionType::WARP)
+    {
+        m_pageParams.dewarpingParams().setDistortionModel(model);
+        m_pageParams.dewarpingParams().setMode(MODE_MANUAL);
+    }
+    else if (m_pageParams.distortionType() == DistortionType::PERSPECTIVE)
+    {
+        m_pageParams.perspectiveParams().setCorner(
+            PerspectiveParams::TOP_LEFT, model.topCurve().polyline().front()
+        );
+        m_pageParams.perspectiveParams().setCorner(
+            PerspectiveParams::TOP_RIGHT, model.topCurve().polyline().back()
+        );
+        m_pageParams.perspectiveParams().setCorner(
+            PerspectiveParams::BOTTOM_LEFT, model.bottomCurve().polyline().front()
+        );
+        m_pageParams.perspectiveParams().setCorner(
+            PerspectiveParams::BOTTOM_RIGHT, model.bottomCurve().polyline().back()
+        );
+        m_pageParams.perspectiveParams().setMode(MODE_MANUAL);
+    }
+    else
+    {
+        assert(!"unreachable");
+    }
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+    updateModeIndication(MODE_MANUAL);
+    emit invalidateThumbnail(m_pageId);
 }
 
 void
 OptionsWidget::manualDeskewAngleSetExternally(double const degrees)
 {
-    m_uiData.setEffectiveDeskewAngle(degrees);
-    m_uiData.setMode(MODE_MANUAL);
+    m_pageParams.rotationParams().setCompensationAngleDeg(degrees);
+    m_pageParams.rotationParams().setMode(MODE_MANUAL);
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
     updateModeIndication(MODE_MANUAL);
     setSpinBoxKnownState(degreesToSpinBox(degrees));
-    commitCurrentParams();
 
     emit invalidateThumbnail(m_pageId);
 }
 
 void
-OptionsWidget::preUpdateUI(PageId const& page_id)
+OptionsWidget::preUpdateUI(PageId const& page_id, DistortionType const& distortion_type)
 {
-    ScopedIncDec<int> guard(m_ignoreAutoManualToggle);
+    ScopedIncDec<int> guard(m_ignoreSignalsFromUiControls);
 
     m_pageId = page_id;
-    setSpinBoxUnknownState();
-    autoBtn->setEnabled(false);
-    manualBtn->setEnabled(false);
+    m_pageParams.setDistortionType(distortion_type);
+
+    setupUiForDistortionType(distortion_type);
+    hideDistortionDependentUiElements();
 }
 
 void
-OptionsWidget::postUpdateUI(UiData const& ui_data)
+OptionsWidget::postUpdateUI(Params const& page_params)
 {
-    m_uiData = ui_data;
-    autoBtn->setEnabled(true);
-    manualBtn->setEnabled(true);
-    updateModeIndication(ui_data.mode());
-    setSpinBoxKnownState(degreesToSpinBox(ui_data.effectiveDeskewAngle()));
+    ScopedIncDec<int> guard(m_ignoreSignalsFromUiControls);
+
+    m_pageParams = page_params;
+    ui.autoBtn->setEnabled(true);
+    ui.manualBtn->setEnabled(true);
+    updateModeIndication(page_params.mode());
+
+    setupUiForDistortionType(page_params.distortionType());
+
+    if (page_params.distortionType() == DistortionType::ROTATION)
+    {
+        double const angle = page_params.rotationParams().compensationAngleDeg();
+        setSpinBoxKnownState(degreesToSpinBox(angle));
+    }
+    else if (page_params.distortionType() == DistortionType::WARP)
+    {
+        double const depth_perception = page_params.dewarpingParams().depthPerception().value();
+        ui.depthPerceptionSlider->setValue(depthPerceptionToSlider(depth_perception));
+    }
+}
+
+void
+OptionsWidget::noDistortionToggled(bool checked)
+{
+    if (!checked || m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    m_pageParams.setDistortionType(DistortionType::NONE);
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+    setupUiForDistortionType(DistortionType::NONE);
+    emit reloadRequested();
+}
+
+void
+OptionsWidget::rotationDistortionToggled(bool checked)
+{
+    if (!checked || m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    m_pageParams.setDistortionType(DistortionType::ROTATION);
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+    setupUiForDistortionType(DistortionType::ROTATION);
+    emit reloadRequested();
+}
+
+void
+OptionsWidget::perspectiveDistortionToggled(bool checked)
+{
+    if (!checked || m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    m_pageParams.setDistortionType(DistortionType::PERSPECTIVE);
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+    setupUiForDistortionType(DistortionType::PERSPECTIVE);
+    emit reloadRequested();
+}
+
+void
+OptionsWidget::warpDistortionToggled(bool checked)
+{
+    if (!checked || m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    m_pageParams.setDistortionType(DistortionType::WARP);
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+    setupUiForDistortionType(DistortionType::WARP);
+    emit reloadRequested();
 }
 
 void
 OptionsWidget::spinBoxValueChanged(double const value)
 {
-    if (m_ignoreSpinBoxChanges) {
+    if (m_ignoreSignalsFromUiControls)
+    {
         return;
     }
 
     double const degrees = spinBoxToDegrees(value);
-    m_uiData.setEffectiveDeskewAngle(degrees);
-    m_uiData.setMode(MODE_MANUAL);
+    m_pageParams.rotationParams().setCompensationAngleDeg(degrees);
+    m_pageParams.rotationParams().setMode(MODE_MANUAL);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
     updateModeIndication(MODE_MANUAL);
-    commitCurrentParams();
 
     emit manualDeskewAngleSet(degrees);
     emit invalidateThumbnail(m_pageId);
@@ -165,65 +366,145 @@ OptionsWidget::spinBoxValueChanged(double const value)
 void
 OptionsWidget::modeChanged(bool const auto_mode)
 {
-    if (m_ignoreAutoManualToggle) {
+    if (m_ignoreSignalsFromUiControls)
+    {
         return;
     }
 
-    if (auto_mode) {
-        m_uiData.setMode(MODE_AUTO);
-        m_ptrSettings->clearPageParams(m_pageId);
-        emit reloadRequested();
-    } else {
-        m_uiData.setMode(MODE_MANUAL);
-        commitCurrentParams();
+    switch (m_pageParams.distortionType().get())
+    {
+    case DistortionType::NONE:
+        break;
+    case DistortionType::ROTATION:
+        if (auto_mode)
+        {
+            m_pageParams.rotationParams().invalidate();
+        }
+        else
+        {
+            m_pageParams.rotationParams().setMode(MODE_MANUAL);
+        }
+        break;
+    case DistortionType::PERSPECTIVE:
+        if (auto_mode)
+        {
+            m_pageParams.perspectiveParams().invalidate();
+        }
+        else
+        {
+            m_pageParams.perspectiveParams().setMode(MODE_MANUAL);
+        }
+        break;
+    case DistortionType::WARP:
+        if (auto_mode)
+        {
+            m_pageParams.dewarpingParams().invalidate();
+        }
+        else
+        {
+            m_pageParams.dewarpingParams().setMode(MODE_MANUAL);
+        }
+        break;
     }
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+    if (auto_mode)
+    {
+        emit reloadRequested();
+    }
+}
+
+void
+OptionsWidget::depthPerceptionSliderMoved(int value)
+{
+    double const depth_perception = sliderToDepthPerception(value);
+    m_pageParams.dewarpingParams().setDepthPerception(depth_perception);
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    emit depthPerceptionSetByUser(depth_perception);
+
+    if (!ui.depthPerceptionSlider->isSliderDown())
+    {
+        emit invalidateThumbnail(m_pageId);
+    }
+}
+
+void
+OptionsWidget::depthPerceptionSliderReleased()
+{
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::setupDistortionTypeButtons()
+{
+    static_assert(
+        DistortionType::LAST + 1 - DistortionType::FIRST == 4,
+        "Unexpected number of distortion types"
+    );
+    m_distortionTypeButtons[DistortionType::NONE] = ui.noDistortionButton;
+    m_distortionTypeButtons[DistortionType::ROTATION] = ui.rotationDistortionButton;
+    m_distortionTypeButtons[DistortionType::PERSPECTIVE] = ui.perspectiveDistortionButton;
+    m_distortionTypeButtons[DistortionType::WARP] = ui.warpDistortionButton;
+}
+
+void
+OptionsWidget::hideDistortionDependentUiElements()
+{
+    ui.autoManualPanel->setVisible(false);
+    ui.rotationPanel->setVisible(false);
+    ui.depthPerceptionPanel->setVisible(false);
+}
+
+void
+OptionsWidget::setupUiForDistortionType(DistortionType::Type type)
+{
+    ScopedIncDec<int> guard(m_ignoreSignalsFromUiControls);
+
+    m_distortionTypeButtons[type]->setChecked(true);
+
+    ui.autoManualPanel->setVisible(type != DistortionType::NONE);
+    ui.rotationPanel->setVisible(type == DistortionType::ROTATION);
+    ui.depthPerceptionPanel->setVisible(type == DistortionType::WARP);
 }
 
 void
 OptionsWidget::updateModeIndication(AutoManualMode const mode)
 {
-    ScopedIncDec<int> guard(m_ignoreAutoManualToggle);
+    ScopedIncDec<int> guard(m_ignoreSignalsFromUiControls);
 
-    if (mode == MODE_AUTO) {
-        autoBtn->setChecked(true);
-    } else {
-        manualBtn->setChecked(true);
+    if (mode == MODE_AUTO)
+    {
+        ui.autoBtn->setChecked(true);
+    }
+    else
+    {
+        ui.manualBtn->setChecked(true);
     }
 }
 
 void
 OptionsWidget::setSpinBoxUnknownState()
 {
-    ScopedIncDec<int> guard(m_ignoreSpinBoxChanges);
+    ScopedIncDec<int> guard(m_ignoreSignalsFromUiControls);
 
-    angleSpinBox->setSpecialValueText("?");
-    angleSpinBox->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    angleSpinBox->setValue(angleSpinBox->minimum());
-    angleSpinBox->setEnabled(false);
+    ui.angleSpinBox->setSpecialValueText("?");
+    ui.angleSpinBox->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+    ui.angleSpinBox->setValue(ui.angleSpinBox->minimum());
+    ui.angleSpinBox->setEnabled(false);
 }
 
 void
 OptionsWidget::setSpinBoxKnownState(double const angle)
 {
-    ScopedIncDec<int> guard(m_ignoreSpinBoxChanges);
+    ScopedIncDec<int> guard(m_ignoreSignalsFromUiControls);
 
-    angleSpinBox->setSpecialValueText("");
-    angleSpinBox->setValue(angle);
+    ui.angleSpinBox->setSpecialValueText("");
+    ui.angleSpinBox->setValue(angle);
 
     // Right alignment doesn't work correctly, so we use the left one.
-    angleSpinBox->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-    angleSpinBox->setEnabled(true);
-}
-
-void
-OptionsWidget::commitCurrentParams()
-{
-    Params params(
-        m_uiData.effectiveDeskewAngle(),
-        m_uiData.dependencies(), m_uiData.mode()
-    );
-    params.computeDeviation(m_ptrSettings->avg());
-    m_ptrSettings->setPageParams(m_pageId, params);
+    ui.angleSpinBox->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
+    ui.angleSpinBox->setEnabled(true);
 }
 
 double
@@ -243,52 +524,16 @@ OptionsWidget::degreesToSpinBox(double const degrees)
     return -degrees;
 }
 
-/*========================== OptionsWidget::UiData =========================*/
-
-OptionsWidget::UiData::UiData()
-    :   m_effDeskewAngle(0.0),
-        m_mode(MODE_AUTO)
+int
+OptionsWidget::depthPerceptionToSlider(double depth_perception)
 {
-}
-
-OptionsWidget::UiData::~UiData()
-{
-}
-
-void
-OptionsWidget::UiData::setEffectiveDeskewAngle(double const degrees)
-{
-    m_effDeskewAngle = degrees;
+    return qRound(depth_perception * 10);
 }
 
 double
-OptionsWidget::UiData::effectiveDeskewAngle() const
+OptionsWidget::sliderToDepthPerception(int slider_value)
 {
-    return m_effDeskewAngle;
-}
-
-void
-OptionsWidget::UiData::setDependencies(Dependencies const& deps)
-{
-    m_deps = deps;
-}
-
-Dependencies const&
-OptionsWidget::UiData::dependencies() const
-{
-    return m_deps;
-}
-
-void
-OptionsWidget::UiData::setMode(AutoManualMode const mode)
-{
-    m_mode = mode;
-}
-
-AutoManualMode
-OptionsWidget::UiData::mode() const
-{
-    return m_mode;
+    return slider_value / 10.0;
 }
 
 } // namespace deskew

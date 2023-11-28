@@ -13,9 +13,9 @@ CanberraSoundPlayer::CanberraSoundPlayer():
 
     if (ca_context_change_props(m_canberraContext,
                                 CA_PROP_APPLICATION_NAME, qApp->applicationDisplayName().toStdString().c_str(),
-                                CA_PROP_APPLICATION_ID, "org.scantailor.universal",
+                                CA_PROP_APPLICATION_ID, "org.scantailor.deviant",
                                 CA_PROP_APPLICATION_VERSION, VERSION,
-                                CA_PROP_APPLICATION_ICON_NAME, "scantailor-universal", nullptr) != CA_SUCCESS) {
+                                CA_PROP_APPLICATION_ICON_NAME, "scantailor-deviant", nullptr) != CA_SUCCESS) {
         return;
     }
 

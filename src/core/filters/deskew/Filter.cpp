@@ -24,36 +24,22 @@
 #include "Settings.h"
 #include "ProjectReader.h"
 #include "ProjectWriter.h"
-#include "PageId.h"
-#include "RelinkablePath.h"
 #include "AbstractRelinker.h"
-#include <QString>
-#include <QObject>
 #include <QCoreApplication>
 #include <QDomDocument>
 #include <QDomElement>
 #include "CommandLine.h"
-#include "OrderByAngleProvider.h"
 
 namespace deskew
 {
 
-Filter::Filter(PageSelectionAccessor const& page_selection_accessor):
-    m_ptrSettings(new Settings),
-    m_selectedPageOrder(0)
+Filter::Filter(PageSelectionAccessor const& page_selection_accessor)
+    : m_ptrSettings(new Settings)
 {
-    if (CommandLine::get().isGui()) {
+    if (CommandLine::get().isGui())
+    {
         m_ptrOptionsWidget.reset(new OptionsWidget(m_ptrSettings, page_selection_accessor));
     }
-
-    typedef PageOrderOption::ProviderPtr ProviderPtr;
-
-    ProviderPtr const order_by_angle(new OrderByAngleProvider(m_ptrSettings));
-    ProviderPtr const order_by_abs_angle(new OrderByAbsAngleProvider(m_ptrSettings));
-    m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Natural order"), ProviderPtr()));
-    m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Processed then unprocessed"), ProviderPtr(new OrderByReadiness())));
-    m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Order by angle"), order_by_angle));
-    m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Order by absolute angle"), order_by_abs_angle));
 }
 
 Filter::~Filter()
@@ -63,7 +49,7 @@ Filter::~Filter()
 QString
 Filter::getName() const
 {
-    return QCoreApplication::translate("deskew::Filter", "Deskew");
+    return QCoreApplication::translate("deskew::Filter", "Geometric Distortions");
 }
 
 PageView
@@ -78,29 +64,10 @@ Filter::performRelinking(AbstractRelinker const& relinker)
     m_ptrSettings->performRelinking(relinker);
 }
 
-int
-Filter::selectedPageOrder() const
-{
-    return m_selectedPageOrder;
-}
-
-void
-Filter::selectPageOrder(int option)
-{
-    assert((unsigned)option < m_pageOrderOptions.size());
-    m_selectedPageOrder = option;
-}
-
-std::vector<PageOrderOption>
-Filter::pageOrderOptions() const
-{
-    return m_pageOrderOptions;
-}
-
 void
 Filter::preUpdateUI(FilterUiInterface* const ui, PageId const& page_id)
 {
-    m_ptrOptionsWidget->preUpdateUI(page_id);
+    m_ptrOptionsWidget->preUpdateUI(page_id, m_ptrSettings->getDistortionType(page_id));
     ui->setOptionsWidget(m_ptrOptionsWidget.get(), ui->KEEP_OWNERSHIP);
 }
 
@@ -109,11 +76,8 @@ Filter::saveSettings(ProjectWriter const& writer, QDomDocument& doc) const
 {
     QDomElement filter_el(doc.createElement("deskew"));
 
-    filter_el.setAttribute("average", m_ptrSettings->avg());
-    filter_el.setAttribute("sigma", m_ptrSettings->std());
-    filter_el.setAttribute("maxDeviation", m_ptrSettings->maxDeviation());
-
-    writer.enumPages([this, &doc, &filter_el](PageId const& page_id, int numeric_id) {
+    writer.enumPages([this, &doc, &filter_el](PageId const& page_id, int numeric_id)
+    {
         writePageSettings(doc, filter_el, page_id, numeric_id);
     });
 
@@ -125,43 +89,38 @@ Filter::loadSettings(ProjectReader const& reader, QDomElement const& filters_el)
 {
     m_ptrSettings->clear();
 
-    CommandLine cli = CommandLine::get();
-
     QDomElement const filter_el(filters_el.namedItem("deskew").toElement());
-
-    m_ptrSettings->setAvg(filter_el.attribute("average").toDouble());
-    m_ptrSettings->setStd(filter_el.attribute("sigma").toDouble());
-
-    if (cli.hasSkewDeviation()) {
-        m_ptrSettings->setMaxDeviation(cli.getSkewDeviation());
-    } else {
-        m_ptrSettings->setMaxDeviation(filter_el.attribute("maxDeviation", QString::number(cli.getSkewDeviation())).toDouble());
-    }
 
     QString const page_tag_name("page");
     QDomNode node(filter_el.firstChild());
-    for (; !node.isNull(); node = node.nextSibling()) {
-        if (!node.isElement()) {
+    for (; !node.isNull(); node = node.nextSibling())
+    {
+        if (!node.isElement())
+        {
             continue;
         }
-        if (node.nodeName() != page_tag_name) {
+        if (node.nodeName() != page_tag_name)
+        {
             continue;
         }
         QDomElement const el(node.toElement());
 
         bool ok = true;
         int const id = el.attribute("id").toInt(&ok);
-        if (!ok) {
+        if (!ok)
+        {
             continue;
         }
 
         PageId const page_id(reader.pageId(id));
-        if (page_id.isNull()) {
+        if (page_id.isNull())
+        {
             continue;
         }
 
         QDomElement const params_el(el.namedItem("params").toElement());
-        if (params_el.isNull()) {
+        if (params_el.isNull())
+        {
             continue;
         }
 
@@ -176,7 +135,8 @@ Filter::writePageSettings(
     PageId const& page_id, int const numeric_id) const
 {
     std::unique_ptr<Params> const params(m_ptrSettings->getPageParams(page_id));
-    if (!params.get()) {
+    if (!params.get())
+    {
         return;
     }
 
@@ -194,11 +154,11 @@ Filter::createTask(
     bool const batch_processing, bool const debug)
 {
     return IntrusivePtr<Task>(
-               new Task(
-                   IntrusivePtr<Filter>(this), m_ptrSettings,
-                   next_task, page_id, batch_processing, debug
-               )
-           );
+        new Task(
+            IntrusivePtr<Filter>(this), m_ptrSettings,
+            next_task, page_id, batch_processing, debug
+        )
+    );
 }
 
 IntrusivePtr<CacheDrivenTask>
@@ -206,19 +166,8 @@ Filter::createCacheDrivenTask(
     IntrusivePtr<select_content::CacheDrivenTask> const& next_task)
 {
     return IntrusivePtr<CacheDrivenTask>(
-               new CacheDrivenTask(m_ptrSettings, next_task)
-           );
-}
-
-void
-Filter::invalidateSetting(PageId const& page_id)
-{
-    std::unique_ptr<Params> const params(m_ptrSettings->getPageParams(page_id));
-    if (params.get()) {
-        Params p(*params.get());
-        p.setForceReprocess(Params::RegenerateAll);
-        m_ptrSettings->setPageParams(page_id, p);
-    }
+        new CacheDrivenTask(m_ptrSettings, next_task)
+    );
 }
 
 } // namespace deskew

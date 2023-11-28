@@ -23,7 +23,7 @@ SET(
         "${CMAKE_SOURCE_DIR}/cmake/default_cxxflags.cmake"
 )
 
-PROJECT("Scan Tailor Universal")
+PROJECT("Scan Tailor Deviant")
 
 IF(MSVC)
         # Disable checked iterators for extra performance.
@@ -150,6 +150,11 @@ IF(WIN32)
         ADD_DEFINITIONS(-DUSE_LIBTIFF_DLL)
 ENDIF()
 
+FIND_PACKAGE(Eigen3 REQUIRED)
+INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
+ADD_COMPILE_OPTIONS(-DEIGEN_MPL2_ONLY)
+ADD_DEFINITIONS(-DEIGEN_DONT_ALIGN_STATICALLY)
+
 IF(WIN32)
         SET(Boost_USE_STATIC_LIBS ON)
 ELSE(WIN32)
@@ -234,9 +239,9 @@ ELSEIF(APPLE)
         SET(TRANSLATIONS_DIR_REL "../Resources/translations")
         SET(STYLESHEETS_DIR_REL "../Resources/stylesheets")
 ELSE()
-        SET(TRANSLATIONS_DIR_REL "share/scantailor-universal/translations")
-        SET(STYLESHEETS_DIR_REL "share/scantailor-universal/stylesheets")
-        SET(PIXMAPS_DIR_ABS "${CMAKE_INSTALL_PREFIX}/share/scantailor-universal/stylesheets")
+        SET(TRANSLATIONS_DIR_REL "share/scantailor-deviant/translations")
+        SET(STYLESHEETS_DIR_REL "share/scantailor-deviant/stylesheets")
+        SET(PIXMAPS_DIR_ABS "${CMAKE_INSTALL_PREFIX}/share/scantailor-deviant/stylesheets")
 ENDIF()
 SET(TRANSLATIONS_DIR_ABS "${CMAKE_INSTALL_PREFIX}/${TRANSLATIONS_DIR_REL}")
 SET(STYLESHEETS_DIR_ABS "${CMAKE_INSTALL_PREFIX}/${STYLESHEETS_DIR_REL}")
@@ -249,8 +254,8 @@ ADD_SUBDIRECTORY(src)
 
 
 IF(NOT WIN32 AND NOT APPLE)
-        INSTALL(FILES debian/scantailor-universal.svg DESTINATION "share/pixmaps/")
-        INSTALL(FILES debian/scantailor-universal.desktop DESTINATION "share/applications/")
+        INSTALL(FILES debian/scantailor-deviant.svg DESTINATION "share/pixmaps/")
+        INSTALL(FILES debian/scantailor-deviant.desktop DESTINATION "share/applications/")
 ENDIF(NOT WIN32 AND NOT APPLE)
 
 IF(WIN32)
@@ -387,7 +392,7 @@ IF(WIN32)
         ENDIF()
 ELSEIF(APPLE)
 ELSE()
-        INSTALL(DIRECTORY "${CMAKE_SOURCE_DIR}/src/stylesheets" DESTINATION "share/scantailor-universal")
+        INSTALL(DIRECTORY "${CMAKE_SOURCE_DIR}/src/stylesheets" DESTINATION "share/scantailor-deviant")
 
         FIND_PROGRAM(GZIP gzip REQUIRED)
         EXECUTE_PROCESS(
@@ -400,11 +405,11 @@ ELSE()
                 MESSAGE(FATAL_ERROR "Could not gzip changelog")
         ENDIF()
 
-        INSTALL(FILES "${CMAKE_BINARY_DIR}/changelog.gz"     DESTINATION "share/doc/scantailor-universal")
-        INSTALL(FILES "${CMAKE_SOURCE_DIR}/debian/copyright" DESTINATION "share/doc/scantailor-universal")
+        INSTALL(FILES "${CMAKE_BINARY_DIR}/changelog.gz"     DESTINATION "share/doc/scantailor-deviant")
+        INSTALL(FILES "${CMAKE_SOURCE_DIR}/debian/copyright" DESTINATION "share/doc/scantailor-deviant")
 ENDIF(WIN32)
 
-SET(CPACK_PACKAGE_NAME "scantailor-universal")
+SET(CPACK_PACKAGE_NAME "scantailor-deviant")
 STRING(REGEX 
         MATCH "^([0-9]+)\\.([0-9]+)\\.([0-9]+)" 
         CPACK_PACKAGE_VERSION ${VERSION})
@@ -413,8 +418,8 @@ SET(CPACK_PACKAGE_VERSION_MINOR ${CMAKE_MATCH_2})
 SET(CPACK_PACKAGE_VERSION_PATCH ${CMAKE_MATCH_3})
 SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "trufanov-nok <trufanovan@gmail.com>")
 SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
-SET(CPACK_PACKAGE_EXECUTABLES "scantailor-universal;${CMAKE_PROJECT_NAME} ${VERSION}")
-SET(CPACK_CREATE_DESKTOP_LINKS "scantailor-universal")
+SET(CPACK_PACKAGE_EXECUTABLES "scantailor-deviant;${CMAKE_PROJECT_NAME} ${VERSION}")
+SET(CPACK_CREATE_DESKTOP_LINKS "scantailor-deviant")
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY 
         "Alternative version of ScanTailor: interactive post-processing tool for scanned pages"
 )
@@ -430,7 +435,7 @@ IF(WIN32)
         SET(CPACK_NSIS_MODIFY_PATH ON)
         SET(CPACK_NSIS_DISPLAY_NAME "${CMAKE_PROJECT_NAME} ${VERSION}")
         SET(CPACK_NSIS_PACKAGE_NAME "${CMAKE_PROJECT_NAME}")
-        SET(CPACK_NSIS_INSTALLED_ICON_NAME "scantailor-universal.exe")
+        SET(CPACK_NSIS_INSTALLED_ICON_NAME "scantailor-deviant.exe")
         SET(CPACK_NSIS_EXECUTABLES_DIRECTORY .)
 ELSEIF(APPLE)
 ELSE()
@@ -444,7 +449,7 @@ ELSE()
         STRING(REPLACE ";" "" CPACK_DEBIAN_PACKAGE_DESCRIPTION ${CPACK_DEBIAN_PACKAGE_DESCRIPTION})
         SET(CPACK_DEBIAN_PACKAGE_SECTION graphics)
         SET(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
-        SET(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/trufanov-nok/scantailor-universal/")
+        SET(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/ImageProcessing-ElectronicPublications/scantailor-deviant/")
 ENDIF()
 
 SET(CPACK_SOURCE_IGNORE_FILES

@@ -46,13 +46,8 @@ SET(
         DespeckleView.cpp DespeckleView.h
         DespeckleVisualization.cpp DespeckleVisualization.h
         DespeckleLevel.cpp DespeckleLevel.h
-        DewarpingView.cpp DewarpingView.h
-        DewarpingMode.cpp DewarpingMode.h
-        ChangeDewarpingWidget.cpp ChangeDewarpingWidget.h
-        DepthPerception.cpp DepthPerception.h
         OrderByModeProvider.cpp OrderByModeProvider.h
         OrderBySourceColor.cpp OrderBySourceColor.h
-        OrderByDewarpingModeProvider.cpp OrderByDewarpingModeProvider.h
         ${exiv2_sources}
 )
 SOURCE_GROUP("Sources" FILES ${sources})
@@ -68,4 +63,4 @@ ADD_LIBRARY(output STATIC ${sources} ${ui_sources})
 QT5_USE_MODULES(output Widgets Xml)
 ADD_DEPENDENCIES(output toplevel_ui_sources)
 
-TRANSLATION_SOURCES(scantailor-universal ${sources} ${ui_files})
+TRANSLATION_SOURCES(scantailor-deviant ${sources} ${ui_files})

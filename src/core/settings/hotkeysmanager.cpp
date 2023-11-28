@@ -290,7 +290,7 @@ bool QHotKeys::load(QSettings* _settings)
             // this might be needed if new HotKayIds were added into existing group
             QString warning = QObject::tr("The hotkeys scheme in your settings file is incompatible with current application version. Hotkeys settings will be reseted.");
             if (CommandLine::get().isGui()) {
-                QMessageBox::warning(nullptr, QObject::tr("Scan Tailor Universal"), warning);
+                QMessageBox::warning(nullptr, QObject::tr("Scan Tailor Deviant"), warning);
             } else {
                 std::cerr << warning.toStdString().c_str() << std::endl;
             }

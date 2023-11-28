@@ -143,10 +143,6 @@ private slots:
 
     void on_gbMarginsAuto_toggled(bool arg1);
 
-    void on_cbTryVertHalfCorrection_toggled(bool checked);
-
-    void on_cbTryDeskewAfterDewarp_toggled(bool checked);
-
     void on_cbOrderHints_toggled(bool checked);
 
     void on_cbDontUseNativeDlg_clicked(bool checked);

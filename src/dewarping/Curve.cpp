@@ -19,18 +19,16 @@
 #include "Curve.h"
 #include "XmlMarshaller.h"
 #include "XmlUnmarshaller.h"
-#include "VecNT.h"
-#include <QByteArray>
+#include "STEX_VecNT.h"
 #include <QDataStream>
 #include <QDomDocument>
 #include <QDomElement>
-#include <QString>
-#include <algorithm>
 
 namespace dewarping
 {
 
-struct Curve::CloseEnough {
+struct Curve::CloseEnough
+{
     bool operator()(QPointF const& p1, QPointF const& p2)
     {
         QPointF const d(p1 - p2);
@@ -43,26 +41,27 @@ Curve::Curve()
 }
 
 Curve::Curve(std::vector<QPointF> const& polyline)
-    :   m_polyline(polyline)
+    :	m_polyline(polyline)
 {
 }
 
 Curve::Curve(XSpline const& xspline)
-    :   m_xspline(xspline),
-        m_polyline(xspline.toPolyline())
+    :	m_xspline(xspline),
+      m_polyline(xspline.toPolyline())
 {
 }
 
 Curve::Curve(QDomElement const& el)
-    :   m_xspline(deserializeXSpline(el.namedItem("xspline").toElement())),
-        m_polyline(deserializePolyline(el.namedItem("polyline").toElement()))
+    :	m_xspline(deserializeXSpline(el.namedItem("xspline").toElement())),
+      m_polyline(deserializePolyline(el.namedItem("polyline").toElement()))
 {
 }
 
 QDomElement
 Curve::toXml(QDomDocument& doc, QString const& name) const
 {
-    if (!isValid()) {
+    if (!isValid())
+    {
         return QDomElement();
     }
 
@@ -81,7 +80,8 @@ Curve::isValid() const
 bool
 Curve::matches(Curve const& other) const
 {
-    if (!approxPolylineMatch(m_polyline, other.m_polyline)) {
+    if (!approxPolylineMatch(m_polyline, other.m_polyline))
+    {
         return false;
     }
 
@@ -100,7 +100,8 @@ Curve::deserializePolyline(QDomElement const& el)
     std::vector<QPointF> points;
     points.reserve(num_points);
 
-    for (unsigned i = 0; i < num_points; ++i) {
+    for (unsigned i = 0; i < num_points; ++i)
+    {
         float x = 0, y = 0;
         strm >> x >> y;
         points.push_back(QPointF(x, y));
@@ -113,7 +114,8 @@ QDomElement
 Curve::serializePolyline(
     std::vector<QPointF> const& polyline, QDomDocument& doc, QString const& name)
 {
-    if (polyline.empty()) {
+    if (polyline.empty())
+    {
         return QDomElement();
     }
 
@@ -123,12 +125,13 @@ Curve::serializePolyline(
     strm.setVersion(QDataStream::Qt_4_4);
     strm.setByteOrder(QDataStream::LittleEndian);
 
-    for (QPointF const& pt : polyline) {
+    for(QPointF const& pt: polyline)
+    {
         strm << (float)pt.x() << (float)pt.y();
     }
 
     QDomElement el(doc.createElement(name));
-    el.appendChild(doc.createTextNode(QLatin1String(ba.toBase64())));
+    el.appendChild(doc.createTextNode(QString::fromLatin1(ba.toBase64())));
 
     return el;
 }
@@ -137,11 +140,13 @@ bool
 Curve::approxPolylineMatch(
     std::vector<QPointF> const& polyline1, std::vector<QPointF> const& polyline2)
 {
-    if (polyline1.size() != polyline2.size()) {
+    if (polyline1.size() != polyline2.size())
+    {
         return false;
     }
 
-    if (!std::equal(polyline1.begin(), polyline1.end(), polyline2.begin(), CloseEnough())) {
+    if (!std::equal(polyline1.begin(), polyline1.end(), polyline2.begin(), CloseEnough()))
+    {
         return false;
     }
 
@@ -152,7 +157,8 @@ QDomElement
 Curve::serializeXSpline(
     XSpline const& xspline, QDomDocument& doc, QString const& name)
 {
-    if (xspline.numControlPoints() == 0) {
+    if (xspline.numControlPoints() == 0)
+    {
         return QDomElement();
     }
 
@@ -160,13 +166,15 @@ Curve::serializeXSpline(
     XmlMarshaller marshaller(doc);
 
     int const num_control_points = xspline.numControlPoints();
-    for (int i = 0; i < num_control_points; ++i) {
+    for (int i = 0; i < num_control_points; ++i)
+    {
         QPointF const pt(xspline.controlPointPosition(i));
         el.appendChild(marshaller.pointF(pt, "point"));
     }
 
     return el;
 }
+
 
 XSpline
 Curve::deserializeXSpline(QDomElement const& el)
@@ -175,17 +183,21 @@ Curve::deserializeXSpline(QDomElement const& el)
 
     QString const point_tag_name("point");
     QDomNode node(el.firstChild());
-    for (; !node.isNull(); node = node.nextSibling()) {
-        if (!node.isElement()) {
+    for (; !node.isNull(); node = node.nextSibling())
+    {
+        if (!node.isElement())
+        {
             continue;
         }
-        if (node.nodeName() != point_tag_name) {
+        if (node.nodeName() != point_tag_name)
+        {
             continue;
         }
         xspline.appendControlPoint(XmlUnmarshaller::pointF(node.toElement()), 1);
     }
 
-    if (xspline.numControlPoints() > 0) {
+    if (xspline.numControlPoints() > 0)
+    {
         xspline.setControlPointTension(0, 0);
         xspline.setControlPointTension(xspline.numControlPoints() - 1, 0);
     }
@@ -199,23 +211,17 @@ Curve::splineHasLoops(XSpline const& spline)
     int const num_control_points = spline.numControlPoints();
     Vec2d const main_direction(spline.pointAt(1) - spline.pointAt(0));
 
-    for (int i = 1; i < num_control_points; ++i) {
+    for (int i = 1; i < num_control_points; ++i)
+    {
         QPointF const cp1(spline.controlPointPosition(i - 1));
         QPointF const cp2(spline.controlPointPosition(i));
-        if (Vec2d(cp2 - cp1).dot(main_direction) < 0) {
+        if (Vec2d(cp2 - cp1).dot(main_direction) < 0)
+        {
             return true;
         }
-#if 0
-        double const t1 = spline.controlPointIndexToT(i - 1);
-        double const t2 = spline.controlPointIndexToT(i);
-        if (Vec2d(spline.pointAt(t2) - spline.pointAt(t1)).dot(main_direction)) < 0) {
-            return true;
-        }
-#endif
     }
 
     return false;
 }
 
 } // namespace dewarping
-

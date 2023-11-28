@@ -94,8 +94,7 @@ CacheDrivenTask::process(
             OutputImageParams const new_output_image_params(
                 generator.outputImageSize(), generator.outputContentRect(),
                 new_xform, params.outputDpi(), params.colorParams(),
-                params.dewarpingMode(), params.distortionModel(),
-                params.depthPerception(), params.despeckleLevel(),
+                params.despeckleLevel(),
                 params.colorParams().colorMode() == ColorParams::BLACK_AND_WHITE ?
                             GlobalStaticSettings::m_tiff_compr_method_bw :
                             GlobalStaticSettings::m_tiff_compr_method_color

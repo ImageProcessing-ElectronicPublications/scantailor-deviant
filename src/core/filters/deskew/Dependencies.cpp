@@ -1,6 +1,6 @@
 /*
     Scan Tailor - Interactive post-processing tool for scanned pages.
-    Copyright (C) 2007-2008  Joseph Artsimovich <joseph_a@mail.ru>
+    Copyright (C) 2007-2015  Joseph Artsimovich <joseph.artsimovich@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -34,21 +34,19 @@ Dependencies::Dependencies()
 
 Dependencies::Dependencies(
     QPolygonF const& page_outline, OrthogonalRotation const rotation)
-    :   m_pageOutline(page_outline),
-        m_rotation(rotation)
+    :	m_pageOutline(page_outline),
+      m_rotation(rotation)
 {
 }
 
 Dependencies::Dependencies(QDomElement const& deps_el)
-    :   m_pageOutline(
-            XmlUnmarshaller::polygonF(
-                deps_el.namedItem("page-outline").toElement()
-            )
-        ),
-        m_rotation(
-            XmlUnmarshaller::rotation(
-                deps_el.namedItem("rotation").toElement()
-            )
+    :	m_pageOutline(
+          XmlUnmarshaller::polygonF(
+              deps_el.namedItem("page-outline").toElement()
+          )
+        )
+    ,   m_rotation(
+            XmlUnmarshaller::rotation(deps_el.namedItem("rotation").toElement())
         )
 {
 }
@@ -60,10 +58,12 @@ Dependencies::~Dependencies()
 bool
 Dependencies::matches(Dependencies const& other) const
 {
-    if (m_rotation != other.m_rotation) {
+    if (m_rotation != other.m_rotation)
+    {
         return false;
     }
-    if (!PolygonUtils::fuzzyCompare(m_pageOutline, other.m_pageOutline)) {
+    if (!PolygonUtils::fuzzyCompare(m_pageOutline, other.m_pageOutline))
+    {
         return false;
     }
     return true;

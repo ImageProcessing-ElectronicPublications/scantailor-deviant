@@ -1,6 +1,6 @@
 /*
     Scan Tailor - Interactive post-processing tool for scanned pages.
-    Copyright (C)  Joseph Artsimovich <joseph.artsimovich@gmail.com>
+    Copyright (C) 2015  Joseph Artsimovich <joseph.artsimovich@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 #ifndef DEWARPING_DISTORTION_MODEL_BUILDER_H_
 #define DEWARPING_DISTORTION_MODEL_BUILDER_H_
 
-#include "VecNT.h"
+#include "STEX_VecNT.h"
 #include <QTransform>
 #include <QPointF>
 #include <QLineF>
@@ -110,8 +110,7 @@ private:
     static void intersectBack(std::deque<QPointF>& polyline, QLineF const& bound);
 
     static XSpline fitExtendedSpline(
-        std::vector<QPointF> const& polyline, Vec2d const& centroid,
-        std::pair<QLineF, QLineF> const& bounds);
+        std::vector<QPointF> const& polyline, std::pair<QLineF, QLineF> const& bounds);
 
     QImage visualizeTrimmedPolylines(
         QImage const& background, std::vector<TracedCurve> const& curves) const;

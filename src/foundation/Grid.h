@@ -19,7 +19,9 @@
 #ifndef GRID_H_
 #define GRID_H_
 
+#include "GridAccessor.h"
 #include <boost/scoped_array.hpp>
+#include <utility>
 
 template<typename Node>
 class Grid
@@ -32,8 +34,10 @@ public:
 
     /**
      * \brief Creates a width x height grid with specified padding on each side.
+     *
+     * If type Node doesn't require construction, the grid data is left uninitialized.
      */
-    Grid(int width, int height, int padding);
+    Grid(int width, int height, int padding = 0);
 
     /**
      * \brief Creates a deep copy of another grid including padding.
@@ -41,6 +45,21 @@ public:
      * Stride is also preserved.
      */
     Grid(Grid const& other);
+
+    /**
+     * @brief A move constructor.
+     */
+    Grid(Grid&& other);
+
+    /**
+     * @brief Assignment operator. Implemented in terms of the copy constructor and swap().
+     */
+    Grid& operator=(Grid const& other);
+
+    /**
+     * @brief The move assignment operator.
+     */
+    Grid& operator=(Grid&& other);
 
     bool isNull() const
     {
@@ -50,6 +69,20 @@ public:
     void initPadding(Node const& padding_node);
 
     void initInterior(Node const& interior_node);
+
+    GridAccessor<Node const> accessor() const;
+
+    GridAccessor<Node> accessor();
+
+    Node& operator()(int x, int y)
+    {
+        return m_pData[m_stride * y + x];
+    }
+
+    Node const& operator()(int x, int y) const
+    {
+        return m_pData[m_stride * y + x];
+    }
 
     /**
      * \brief Returns a pointer to the beginning of unpadded data.
@@ -115,6 +148,15 @@ public:
         return m_padding;
     }
 
+    /**
+     * Returns the total number of bytes in memory occupied by this grid,
+     * assuming Node is a POD type.
+     */
+    size_t totalBytes() const
+    {
+        return sizeof(Node) * size_t(m_stride) * size_t(m_height + m_padding * 2);
+    }
+
     void swap(Grid& other);
 private:
     template<typename T>
@@ -169,6 +211,29 @@ Grid<Node>::Grid(Grid const& other)
 }
 
 template<typename Node>
+Grid<Node>::Grid(Grid&& other)
+    : Grid()
+{
+    swap(other);
+}
+
+template<typename Node>
+Grid<Node>&
+Grid<Node>::operator=(Grid const& other)
+{
+    Grid(other).swap(*this);
+    return *this;
+}
+
+template<typename Node>
+Grid<Node>&
+Grid<Node>::operator=(Grid&& other)
+{
+    Grid(std::move(other)).swap(*this);
+    return *this;
+}
+
+template<typename Node>
 void
 Grid<Node>::initPadding(Node const& padding_node)
 {
@@ -214,6 +279,20 @@ Grid<Node>::initInterior(Node const& interior_node)
         }
         line += m_stride;
     }
+}
+
+template<typename Node>
+GridAccessor<Node const>
+Grid<Node>::accessor() const
+{
+    return GridAccessor<Node const> {m_pData, m_stride, m_width, m_height};
+}
+
+template<typename Node>
+GridAccessor<Node>
+Grid<Node>::accessor()
+{
+    return GridAccessor<Node> {m_pData, m_stride, m_width, m_height};
 }
 
 template<typename Node>

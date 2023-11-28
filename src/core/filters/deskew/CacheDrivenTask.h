@@ -23,14 +23,13 @@
 #include "RefCountable.h"
 #include "IntrusivePtr.h"
 
-class QSizeF;
 class PageInfo;
 class AbstractFilterDataCollector;
 class ImageTransformation;
 
 namespace select_content
 {
-class CacheDrivenTask;
+    class CacheDrivenTask;
 }
 
 namespace deskew
@@ -52,8 +51,8 @@ public:
         PageInfo const& page_info, AbstractFilterDataCollector* collector,
         ImageTransformation const& xform);
 private:
-    IntrusivePtr<select_content::CacheDrivenTask> m_ptrNextTask;
     IntrusivePtr<Settings> m_ptrSettings;
+    IntrusivePtr<select_content::CacheDrivenTask> m_ptrNextTask;
 };
 
 } // namespace deskew

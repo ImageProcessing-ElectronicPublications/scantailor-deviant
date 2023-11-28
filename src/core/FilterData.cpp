@@ -32,6 +32,16 @@ FilterData::FilterData(QString const& filename, QImage const& image)
 {
 }
 
+FilterData::FilterData(QString const& filename, QImage const& image, QPolygonF const& preCropArea)
+    : m_origImageFilename(filename),
+    m_origImage(image),
+    m_grayImage(toGrayscale(m_origImage)),
+    m_xform(image.rect(), Dpm(image)),
+    m_bwThreshold(BinaryThreshold::otsuThreshold(m_grayImage))
+{
+    m_xform.setPreCropArea(preCropArea);
+}
+
 FilterData::FilterData(FilterData const& other, ImageTransformation const& xform)
     :   m_origImageFilename(other.m_origImageFilename),
         m_origImage(other.m_origImage),

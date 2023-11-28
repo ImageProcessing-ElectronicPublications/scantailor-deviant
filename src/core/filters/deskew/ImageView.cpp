@@ -1,6 +1,6 @@
 /*
     Scan Tailor - Interactive post-processing tool for scanned pages.
-    Copyright (C)  Joseph Artsimovich <joseph.artsimovich@gmail.com>
+    Copyright (C) 2007-2009  Joseph Artsimovich <joseph_a@mail.ru>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,66 +17,60 @@
 */
 
 #include "ImageView.h"
-
 #include "ImageTransformation.h"
 #include "ImagePresentation.h"
-#include "InteractionState.h"
+#include "MultipleTargetsSupport.h"
 #include "imageproc/Constants.h"
-#include "settings/globalstaticsettings.h"
-#include <QAction>
-#include <QRect>
-#include <QSizeF>
 #include <QPainter>
 #include <QWheelEvent>
-#include <QVector>
-#include <QLineF>
 #include <QScrollBar>
 #include <QStyle>
-#include <Qt>
-#ifndef Q_MOC_RUN
-#include <boost/bind.hpp>
-#endif
-#include <algorithm>
-#include <math.h>
+#include <boost/bind/bind.hpp>
 
 namespace deskew
 {
 
 double const ImageView::m_maxRotationDeg = 45.0;
 double const ImageView::m_maxRotationSin = sin(
-            m_maxRotationDeg * imageproc::constants::DEG2RAD
-        );
+    m_maxRotationDeg * imageproc::constants::DEG2RAD
+);
 int const ImageView::m_cellSize = 20;
 
 ImageView::ImageView(
     QImage const& image, QImage const& downscaled_image,
-    ImageTransformation const& xform)
-    :   ImageViewBase(
-            image, downscaled_image,
-            ImagePresentation(xform.transform(), xform.resultingPreCropArea())
-        ),
-        m_handlePixmap(":/icons/aqua-sphere.png"),
-        m_dragHandler(*this),
-        m_zoomHandler(*this),
-        m_xform(xform)
+    ImageTransformation const& xform,
+    double rotation_angle_deg)
+    : ImageViewBase(
+        image, downscaled_image,
+        ImagePresentation(
+            xform.transform(),
+            xform.resultingPreCropArea()
+        )
+      )
+    , m_handlePixmap(":/icons/aqua-sphere.png")
+    , m_dragHandler(*this)
+    , m_zoomHandler(*this)
+    , m_xform(xform)
+    , m_rotationAngleDeg(rotation_angle_deg)
 {
+    setRotationAngle(rotation_angle_deg, /*preserve_scale=*/false);
+
     setMouseTracking(true);
 
     interactionState().setDefaultStatusTip(
-        tr("Use %1+Wheel to rotate or %2+Wheel for finer rotation.")
-        .arg(GlobalStaticSettings::getShortcutText(DeskewChange),
-        GlobalStaticSettings::getShortcutText(DeskewChangePrec))
+        tr("Use Ctrl+Wheel to rotate or Ctrl+Shift+Wheel for finer rotation.")
     );
 
     QString const tip(tr("Drag this handle to rotate the image."));
     double const hit_radius = std::max<double>(0.5 * m_handlePixmap.width(), 15.0);
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 0; i < 2; ++i)
+    {
         m_handles[i].setHitRadius(hit_radius);
         m_handles[i].setPositionCallback(
             boost::bind(&ImageView::handlePosition, this, i)
         );
         m_handles[i].setMoveRequestCallback(
-            boost::bind(&ImageView::handleMoveRequest, this, i, _1)
+            boost::bind(&ImageView::handleMoveRequest, this, i, boost::placeholders::_1)
         );
         m_handles[i].setDragFinishedCallback(
             boost::bind(&ImageView::dragFinished, this)
@@ -93,47 +87,38 @@ ImageView::ImageView(
     rootInteractionHandler().makeLastFollower(*this);
     rootInteractionHandler().makeLastFollower(m_dragHandler);
     rootInteractionHandler().makeLastFollower(m_zoomHandler);
-
-    QAction* rotateLeft = new QAction(0);
-    rotateLeft->setShortcut(QKeySequence(","));
-    connect(rotateLeft, SIGNAL(triggered(bool)), SLOT(doRotateLeft()));
-    addAction(rotateLeft);
-
-    QAction* rotateRight = new QAction(0);
-    rotateRight->setShortcut(QKeySequence("."));
-    connect(rotateRight, SIGNAL(triggered(bool)), SLOT(doRotateRight()));
-    addAction(rotateRight);
 }
 
 ImageView::~ImageView()
 {
 }
 
-void ImageView::doRotate(double deg)
-{
-    manualDeskewAngleSetExternally(m_xform.postRotation() + deg);
-    emit manualDeskewAngleSet(m_xform.postRotation());
-}
-
-void ImageView::doRotateLeft()
-{
-    doRotate(-0.10);
-}
-
-void ImageView::doRotateRight()
-{
-    doRotate(0.10);
-}
-
 void
 ImageView::manualDeskewAngleSetExternally(double const degrees)
 {
-    if (m_xform.postRotation() == degrees) {
-        return;
-    }
+    setRotationAngle(degrees, /*preserve_scale=*/false);
+}
 
-    m_xform.setPostRotation(degrees);
-    updateTransform(ImagePresentation(m_xform.transform(), m_xform.resultingPreCropArea()));
+void
+ImageView::setRotationAngle(double const degrees, bool preserve_scale)
+{
+    m_rotationAngleDeg = degrees;
+
+    ImageTransformation rotated_xform(m_xform);
+    rotated_xform.setPostRotation(degrees);
+
+    ImagePresentation const presentation(
+        rotated_xform.transform(), rotated_xform.resultingPreCropArea()
+    );
+
+    if (preserve_scale)
+    {
+        updateTransformPreservingScale(presentation);
+    }
+    else
+    {
+        updateTransform(presentation);
+    }
 }
 
 void
@@ -147,27 +132,31 @@ ImageView::onPaint(QPainter& painter, InteractionState const& interaction)
     QPointF const center(getImageRotationOrigin());
 
     // Draw the semi-transparent grid.
-    QPen pen(GlobalStaticSettings::m_deskew_controls_color);
+    QPen pen(QColor(0, 0, 255, 90));
     pen.setCosmetic(true);
     pen.setWidth(1);
     painter.setPen(pen);
     QVector<QLineF> lines;
-    for (double y = center.y(); (y -= m_cellSize) > 0.0;) {
+    for (double y = center.y(); (y -= m_cellSize) > 0.0;)
+    {
         lines.push_back(QLineF(0.5, y, w - 0.5, y));
     }
-    for (double y = center.y(); (y += m_cellSize) < h;) {
+    for (double y = center.y(); (y += m_cellSize) < h;)
+    {
         lines.push_back(QLineF(0.5, y, w - 0.5, y));
     }
-    for (double x = center.x(); (x -= m_cellSize) > 0.0;) {
+    for (double x = center.x(); (x -= m_cellSize) > 0.0;)
+    {
         lines.push_back(QLineF(x, 0.5, x, h - 0.5));
     }
-    for (double x = center.x(); (x += m_cellSize) < w;) {
+    for (double x = center.x(); (x += m_cellSize) < w;)
+    {
         lines.push_back(QLineF(x, 0.5, x, h - 0.5));
     }
     painter.drawLines(lines);
 
     // Draw the horizontal and vertical line crossing at the center.
-    pen.setColor(GlobalStaticSettings::m_deskew_controls_color_pen);
+    pen.setColor(QColor(0, 0, 255));
     painter.setPen(pen);
     painter.setBrush(Qt::NoBrush);
     painter.drawLine(
@@ -212,42 +201,49 @@ ImageView::onPaint(QPainter& painter, InteractionState const& interaction)
 void
 ImageView::onWheelEvent(QWheelEvent* event, InteractionState& interaction)
 {
-    if (interaction.captured()) {
+    if (interaction.captured())
+    {
         return;
     }
 
     double degree_fraction = 0;
 
-    if (GlobalStaticSettings::checkModifiersMatch(DeskewChange, event->modifiers())) {
+    if (event->modifiers() == Qt::ControlModifier)
+    {
         degree_fraction = 0.1;
-    } else if (GlobalStaticSettings::checkModifiersMatch(DeskewChangePrec, event->modifiers())) {
+    }
+    else if (event->modifiers() == (Qt::ControlModifier|Qt::ShiftModifier))
+    {
         degree_fraction = 0.05;
-    } else {
+    }
+    else
+    {
         return;
     }
 
     event->accept();
-    double const delta = degree_fraction * event->delta() / 120;
-    double angle_deg = m_xform.postRotation() - delta;
+    double const delta = degree_fraction * QWheelEventDelta(event) / 120;
+    double angle_deg = m_rotationAngleDeg - delta;
     angle_deg = qBound(-m_maxRotationDeg, angle_deg, m_maxRotationDeg);
-    if (angle_deg == m_xform.postRotation()) {
+    if (angle_deg == m_rotationAngleDeg)
+    {
         return;
     }
 
-    m_xform.setPostRotation(angle_deg);
-    updateTransformPreservingScale(
-        ImagePresentation(m_xform.transform(), m_xform.resultingPreCropArea())
-    );
-    emit manualDeskewAngleSet(m_xform.postRotation());
+    setRotationAngle(angle_deg, /*preserve_scale=*/false);
+    emit manualDeskewAngleSet(angle_deg);
 }
 
 QPointF
 ImageView::handlePosition(int idx) const
 {
     std::pair<QPointF, QPointF> const handles(getRotationHandles(getRotationArcSquare()));
-    if (idx == 0) {
+    if (idx == 0)
+    {
         return handles.first;
-    } else {
+    }
+    else
+    {
         return handles.second;
     }
 }
@@ -262,23 +258,24 @@ ImageView::handleMoveRequest(int idx, QPointF const& pos)
     rel_y = qBound(-arc_radius, rel_y, arc_radius);
 
     double angle_rad = asin(rel_y / arc_radius);
-    if (idx == 0) {
+    if (idx == 0)
+    {
         angle_rad = -angle_rad;
     }
     double angle_deg = angle_rad * imageproc::constants::RAD2DEG;
     angle_deg = qBound(-m_maxRotationDeg, angle_deg, m_maxRotationDeg);
-    if (angle_deg == m_xform.postRotation()) {
+    if (angle_deg == m_rotationAngleDeg)
+    {
         return;
     }
 
-    m_xform.setPostRotation(angle_deg);
-    updateTransformPreservingScale(ImagePresentation(m_xform.transform(), m_xform.resultingPreCropArea()));
+    setRotationAngle(angle_deg, /*preserve_scale=*/true);
 }
 
 void
 ImageView::dragFinished()
 {
-    emit manualDeskewAngleSet(m_xform.postRotation());
+    emit manualDeskewAngleSet(m_rotationAngleDeg);
 }
 
 /**
@@ -290,9 +287,9 @@ ImageView::getImageRotationOrigin() const
 {
     QRectF const viewport_rect(maxViewportRect());
     return QPointF(
-               floor(0.5 * viewport_rect.width()) + 0.5,
-               floor(0.5 * viewport_rect.height()) + 0.5
-           );
+        floor(0.5 * viewport_rect.width()) + 0.5,
+        floor(0.5 * viewport_rect.height()) + 0.5
+    );
 }
 
 /**
@@ -302,9 +299,9 @@ QRectF
 ImageView::getRotationArcSquare() const
 {
     double const h_margin = 0.5 * m_handlePixmap.width()
-                            + verticalScrollBar()->style()->pixelMetric(QStyle::PM_ScrollBarExtent, 0, verticalScrollBar());
+        + verticalScrollBar()->style()->pixelMetric(QStyle::PM_ScrollBarExtent, 0, verticalScrollBar());
     double const v_margin = 0.5 * m_handlePixmap.height()
-                            + horizontalScrollBar()->style()->pixelMetric(QStyle::PM_ScrollBarExtent, 0, horizontalScrollBar());
+        + horizontalScrollBar()->style()->pixelMetric(QStyle::PM_ScrollBarExtent, 0, horizontalScrollBar());
 
     QRectF reduced_screen_rect(maxViewportRect());
     reduced_screen_rect.adjust(h_margin, v_margin, -h_margin, -v_margin);
@@ -322,8 +319,10 @@ ImageView::getRotationArcSquare() const
 std::pair<QPointF, QPointF>
 ImageView::getRotationHandles(QRectF const& arc_square) const
 {
-    double const rot_sin = m_xform.postRotationSin();
-    double const rot_cos = m_xform.postRotationCos();
+    using imageproc::constants::DEG2RAD;
+
+    double const rot_sin = sin(m_rotationAngleDeg * DEG2RAD);
+    double const rot_cos = cos(m_rotationAngleDeg * DEG2RAD);
     double const arc_radius = 0.5 * arc_square.width();
     QPointF const arc_center(arc_square.center());
     QPointF left_handle(-rot_cos * arc_radius, -rot_sin * arc_radius);

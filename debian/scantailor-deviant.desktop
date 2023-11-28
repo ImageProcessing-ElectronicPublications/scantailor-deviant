@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Scan Tailor Deviant
+Version=1.0
+Exec=scantailor-deviant %f
+Comment=Interactive post-processing tool for scanned pages
+Icon=scantailor-deviant
+Type=Application
+Terminal=false
+StartupNotify=true
+Encoding=UTF-8
+Categories=2DGraphics;Graphics;RasterGraphics;Scanning;Qt;

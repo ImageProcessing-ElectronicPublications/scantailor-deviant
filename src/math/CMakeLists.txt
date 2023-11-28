@@ -12,6 +12,7 @@ SET(
         ArcLengthMapper.cpp ArcLengthMapper.h
         LineIntersectionScalar.cpp LineIntersectionScalar.h
         LineBoundedByRect.cpp LineBoundedByRect.h
+        LineBoundedByPolygon.cpp LineBoundedByPolygon.h
         PolylineIntersector.cpp PolylineIntersector.h
         LinearFunction.cpp LinearFunction.h
         QuadraticFunction.cpp QuadraticFunction.h
@@ -44,7 +45,7 @@ SET(
 SOURCE_GROUP("Sources\\Differentiation Framework" FILES ${ADIFF_SOURCES})
 
 ADD_LIBRARY(math STATIC ${GENERIC_SOURCES} ${SPFIT_SOURCES} ${ADIFF_SOURCES})
-QT5_USE_MODULES(math Core)
+QT5_USE_MODULES(math Core Gui)
 IF(ENABLE_TESTS)
         ADD_SUBDIRECTORY(spfit/tests)
         ADD_SUBDIRECTORY(adiff/tests)

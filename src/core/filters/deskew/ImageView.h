@@ -25,15 +25,6 @@
 #include "ZoomHandler.h"
 #include "ObjectDragHandler.h"
 #include "DraggablePoint.h"
-#include <QPolygonF>
-#include <QPoint>
-#include <QPointF>
-#include <QRectF>
-#include <QPixmap>
-#include <QString>
-#include <utility>
-
-class QRect;
 
 namespace deskew
 {
@@ -42,26 +33,25 @@ class ImageView :
     public ImageViewBase,
     private InteractionHandler
 {
-    Q_OBJECT
+Q_OBJECT
 public:
     ImageView(
         QImage const& image, QImage const& downscaled_image,
-        ImageTransformation const& xform);
+        ImageTransformation const& xform,
+        double rotation_angle_deg);
 
     virtual ~ImageView();
 signals:
     void manualDeskewAngleSet(double degrees);
 public slots:
     void manualDeskewAngleSetExternally(double degrees);
-    void doRotateLeft();
-    void doRotateRight();
 protected:
     virtual void onPaint(QPainter& painter, InteractionState const& interaction);
 
     virtual void onWheelEvent(QWheelEvent* event, InteractionState& interaction);
-
-    void doRotate(double deg);
 private:
+    void setRotationAngle(double degrees, bool preserve_scale);
+
     QPointF handlePosition(int idx) const;
 
     void handleMoveRequest(int idx, QPointF const& pos);
@@ -84,6 +74,7 @@ private:
     DragHandler m_dragHandler;
     ZoomHandler m_zoomHandler;
     ImageTransformation m_xform;
+    double m_rotationAngleDeg;
 };
 
 } // namespace deskew

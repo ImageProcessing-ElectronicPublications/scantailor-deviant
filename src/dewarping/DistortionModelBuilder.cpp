@@ -1,6 +1,6 @@
 /*
     Scan Tailor - Interactive post-processing tool for scanned pages.
-    Copyright (C)  Joseph Artsimovich <joseph.artsimovich@gmail.com>
+    Copyright (C) 2015  Joseph Artsimovich <joseph.artsimovich@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,34 +24,32 @@
 #include "SidesOfLine.h"
 #include "XSpline.h"
 #include "DebugImages.h"
-#include "VecNT.h"
-#include "MatMNT.h"
-#include "MatrixCalc.h"
-#include "spfit/FrenetFrame.h"
-#include "spfit/SqDistApproximant.h"
-#include "spfit/PolylineModelShape.h"
-#include "spfit/SplineFitter.h"
-#include "spfit/LinearForceBalancer.h"
-#include "spfit/ConstraintSet.h"
+#include "STEX_VecNT.h"
+#include "STEX_ToVec.h"
+#include "foundation/MultipleTargetsSupport.h"
 #include <QTransform>
 #include <QImage>
 #include <QPainter>
 #include <QPen>
 #include <QColor>
 #include <QDebug>
+#include <boost/foreach.hpp>
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_int_distribution.hpp>
 #include <algorithm>
 #include <exception>
 #include <iterator>
 #include <limits>
-#include <math.h>
-#include <assert.h>
+#include <cmath>
+#include <cassert>
 
 using namespace imageproc;
 
 namespace dewarping
 {
 
-struct DistortionModelBuilder::TracedCurve {
+struct DistortionModelBuilder::TracedCurve
+{
     std::vector<QPointF> trimmedPolyline;  // Both are left to right.
     std::vector<QPointF> extendedPolyline; //
     XSpline extendedSpline;
@@ -69,7 +67,8 @@ struct DistortionModelBuilder::TracedCurve {
     }
 };
 
-struct DistortionModelBuilder::RansacModel {
+struct DistortionModelBuilder::RansacModel
+{
     TracedCurve const* topCurve;
     TracedCurve const* bottomCurve;
     double totalError;
@@ -101,12 +100,10 @@ public:
         return m_bestModel;
     }
 private:
-    double calcReferenceHeight(
-        CylindricalSurfaceDewarper const& dewarper, QPointF const& loc);
-
     RansacModel m_bestModel;
     std::vector<TracedCurve> const& m_rAllCurves;
 };
+
 
 class DistortionModelBuilder::BadCurve : public std::exception
 {
@@ -117,9 +114,10 @@ public:
     }
 };
 
+
 DistortionModelBuilder::DistortionModelBuilder(Vec2d const& down_direction)
-    :   m_downDirection(down_direction),
-        m_rightDirection(down_direction[1], -down_direction[0])
+    :	m_downDirection(down_direction),
+      m_rightDirection(down_direction[1], -down_direction[0])
 {
     assert(down_direction.squaredNorm() > 0);
 }
@@ -140,13 +138,17 @@ DistortionModelBuilder::verticalBounds() const
 void
 DistortionModelBuilder::addHorizontalCurve(std::vector<QPointF> const& polyline)
 {
-    if (polyline.size() < 2) {
+    if (polyline.size() < 2)
+    {
         return;
     }
 
-    if (Vec2d(polyline.back() - polyline.front()).dot(m_rightDirection) > 0) {
+    if (Vec2d(polyline.back() - polyline.front()).dot(m_rightDirection) > 0)
+    {
         m_ltrPolylines.push_back(polyline);
-    } else {
+    }
+    else
+    {
         m_ltrPolylines.push_back(std::vector<QPointF>(polyline.rbegin(), polyline.rend()));
     }
 }
@@ -164,8 +166,10 @@ DistortionModelBuilder::transform(QTransform const& xform)
     m_bound1 = xform.map(m_bound1);
     m_bound2 = xform.map(m_bound2);
 
-    for (std::vector<QPointF>& polyline : m_ltrPolylines) {
-        for (QPointF& pt : polyline) {
+    BOOST_FOREACH(std::vector<QPointF>& polyline, m_ltrPolylines)
+    {
+        BOOST_FOREACH(QPointF& pt, polyline)
+        {
             pt = xform.map(pt);
         }
     }
@@ -176,64 +180,82 @@ DistortionModelBuilder::tryBuildModel(DebugImages* dbg, QImage const* dbg_backgr
 {
     int num_curves = m_ltrPolylines.size();
 
-    if (num_curves < 2 || m_bound1.p1() == m_bound1.p2() || m_bound2.p1() == m_bound2.p2()) {
+    if (num_curves < 2 || m_bound1.p1() == m_bound1.p2() || m_bound2.p1() == m_bound2.p2())
+    {
         return DistortionModel();
     }
 
     std::vector<TracedCurve> ordered_curves;
     ordered_curves.reserve(num_curves);
 
-    for (std::vector<QPointF> const& polyline : m_ltrPolylines) {
-        try {
+    BOOST_FOREACH(std::vector<QPointF> const& polyline, m_ltrPolylines)
+    {
+        try
+        {
             ordered_curves.push_back(polylineToCurve(polyline));
-        } catch (BadCurve const&) {
+        }
+        catch (BadCurve const&)
+        {
             // Just skip it.
         }
     }
     num_curves = ordered_curves.size();
-    if (num_curves == 0) {
+    if (num_curves < 2)
+    {
         return DistortionModel();
     }
-    //if (num_curves < 2) {
-    //  return DistortionModel();
-    //}
 
     std::sort(ordered_curves.begin(), ordered_curves.end());
 
     // Select the best pair using RANSAC.
     RansacAlgo ransac(ordered_curves);
 
-    // First let's try to combine each of the 3 top-most lines
+    ransac.buildAndAssessModel(&ordered_curves.front(), &ordered_curves.back());
+
+    // First let's try to combine each of the 5 top-most lines
     // with each of the 3 bottom-most ones.
-    for (int i = 0; i < std::min<int>(3, num_curves); ++i) {
-        for (int j = std::max<int>(0, num_curves - 3); j < num_curves; ++j) {
-            if (i < j) {
+    int const exhaustive_search_threshold = 5;
+    for (int i = 0; i < std::min<int>(exhaustive_search_threshold, num_curves); ++i)
+    {
+        for (int j = std::max<int>(0, num_curves - exhaustive_search_threshold); j < num_curves; ++j)
+        {
+            if (i < j)
+            {
                 ransac.buildAndAssessModel(&ordered_curves[i], &ordered_curves[j]);
             }
         }
     }
 
     // Continue by throwing in some random pairs of lines.
-    qsrand(0); // Repeatablity is important.
-    int random_pairs_remaining = 10;
-    while (random_pairs_remaining-- > 0) {
-        int i = qrand() % num_curves;
-        int j = qrand() % num_curves;
-        if (i > j) {
+
+    // Repeatablity is important, so don't seed the RNG.
+    boost::random::mt19937 rng;
+    boost::random::uniform_int_distribution<> rng_dist(0, num_curves - 1);
+    int random_pairs_remaining = num_curves <= exhaustive_search_threshold
+                                 ? 0 : exhaustive_search_threshold * exhaustive_search_threshold;
+    while (random_pairs_remaining-- > 0)
+    {
+        int i = rng_dist(rng);
+        int j = rng_dist(rng);
+        if (i > j)
+        {
             std::swap(i, j);
         }
-        if (i < j) {
+        if (i < j)
+        {
             ransac.buildAndAssessModel(&ordered_curves[i], &ordered_curves[j]);
         }
     }
 
-    if (dbg && dbg_background) {
+    if (dbg && dbg_background)
+    {
         dbg->add(visualizeTrimmedPolylines(*dbg_background, ordered_curves), "trimmed_polylines");
         dbg->add(visualizeModel(*dbg_background, ordered_curves, ransac.bestModel()), "distortion_model");
     }
 
     DistortionModel model;
-    if (ransac.bestModel().isValid()) {
+    if (ransac.bestModel().isValid())
+    {
         model.setTopCurve(Curve(ransac.bestModel().topCurve->extendedPolyline));
         model.setBottomCurve(Curve(ransac.bestModel().bottomCurve->extendedPolyline));
     }
@@ -248,12 +270,10 @@ DistortionModelBuilder::polylineToCurve(std::vector<QPointF> const& polyline) co
     // Trim the polyline if necessary.
     std::vector<QPointF> const trimmed_polyline(maybeTrimPolyline(polyline, bounds));
 
-    Vec2d const centroid(this->centroid(polyline));
+    // Fit a spline to a polyline, extending it to bounds at the same time.
+    XSpline const extended_spline(fitExtendedSpline(trimmed_polyline, bounds));
 
-    // Fit the polyline to a spline, extending it to bounds at the same time.
-    XSpline const extended_spline(fitExtendedSpline(trimmed_polyline, centroid, bounds));
-
-    double const order = centroid.dot(m_downDirection);
+    double const order = centroid(polyline).dot(m_downDirection);
     return TracedCurve(trimmed_polyline, extended_spline, order);
 }
 
@@ -261,16 +281,20 @@ Vec2d
 DistortionModelBuilder::centroid(std::vector<QPointF> const& polyline)
 {
     int const num_points = polyline.size();
-    if (num_points == 0) {
+    if (num_points == 0)
+    {
         return Vec2d();
-    } else if (num_points == 1) {
+    }
+    else if (num_points == 1)
+    {
         return Vec2d(polyline.front());
     }
 
     Vec2d accum(0, 0);
     double total_weight = 0;
 
-    for (int i = 1; i < num_points; ++i) {
+    for (int i = 1; i < num_points; ++i)
+    {
         QLineF const segment(polyline[i - 1], polyline[i]);
         Vec2d const center(0.5 * (segment.p1() + segment.p2()));
         double const weight = segment.length();
@@ -278,9 +302,12 @@ DistortionModelBuilder::centroid(std::vector<QPointF> const& polyline)
         total_weight += weight;
     }
 
-    if (total_weight < 1e-06) {
+    if (total_weight < 1e-06)
+    {
         return Vec2d(polyline.front());
-    } else {
+    }
+    else
+    {
         return accum / total_weight;
     }
 }
@@ -299,9 +326,12 @@ DistortionModelBuilder::frontBackBounds(std::vector<QPointF> const& polyline) co
     ToLineProjector const proj1(m_bound1);
     ToLineProjector const proj2(m_bound2);
     if (proj1.projectionDist(polyline.front()) + proj2.projectionDist(polyline.back()) <
-            proj1.projectionDist(polyline.back()) + proj2.projectionDist(polyline.front())) {
+            proj1.projectionDist(polyline.back()) + proj2.projectionDist(polyline.front()))
+    {
         return std::pair<QLineF, QLineF>(m_bound1, m_bound2);
-    } else {
+    }
+    else
+    {
         return std::pair<QLineF, QLineF>(m_bound2, m_bound1);
     }
 }
@@ -319,12 +349,14 @@ DistortionModelBuilder::maybeTrimPolyline(
 bool
 DistortionModelBuilder::maybeTrimFront(std::deque<QPointF>& polyline, QLineF const& bound)
 {
-    if (sidesOfLine(bound, polyline.front(), polyline.back()) >= 0) {
+    if (sidesOfLine(bound, polyline.front(), polyline.back()) >= 0)
+    {
         // Doesn't need trimming.
         return false;
     }
 
-    while (polyline.size() > 2 && sidesOfLine(bound, polyline.front(), polyline[1]) > 0) {
+    while (polyline.size() > 2 && sidesOfLine(bound, polyline.front(), polyline[1]) > 0)
+    {
         polyline.pop_front();
     }
 
@@ -336,12 +368,14 @@ DistortionModelBuilder::maybeTrimFront(std::deque<QPointF>& polyline, QLineF con
 bool
 DistortionModelBuilder::maybeTrimBack(std::deque<QPointF>& polyline, QLineF const& bound)
 {
-    if (sidesOfLine(bound, polyline.front(), polyline.back()) >= 0) {
+    if (sidesOfLine(bound, polyline.front(), polyline.back()) >= 0)
+    {
         // Doesn't need trimming.
         return false;
     }
 
-    while (polyline.size() > 2 && sidesOfLine(bound, polyline[polyline.size() - 2], polyline.back()) > 0) {
+    while (polyline.size() > 2 && sidesOfLine(bound, polyline[polyline.size() - 2], polyline.back()) > 0)
+    {
         polyline.pop_back();
     }
 
@@ -358,7 +392,8 @@ DistortionModelBuilder::intersectFront(
 
     QLineF const front_segment(polyline.front(), polyline[1]);
     QPointF intersection;
-    if (bound.intersect(front_segment, &intersection) != QLineF::NoIntersection) {
+    if (QLineIntersect(bound, front_segment, &intersection) != QLineF::NoIntersection)
+    {
         polyline.front() = intersection;
     }
 }
@@ -371,111 +406,52 @@ DistortionModelBuilder::intersectBack(
 
     QLineF const back_segment(polyline[polyline.size() - 2], polyline.back());
     QPointF intersection;
-    if (bound.intersect(back_segment, &intersection) != QLineF::NoIntersection) {
+    if (QLineIntersect(bound, back_segment, &intersection) != QLineF::NoIntersection)
+    {
         polyline.back() = intersection;
     }
 }
 
 XSpline
 DistortionModelBuilder::fitExtendedSpline(
-    std::vector<QPointF> const& polyline, Vec2d const& centroid,
-    std::pair<QLineF, QLineF> const& bounds)
+    std::vector<QPointF> const& polyline, std::pair<QLineF, QLineF> const& bounds)
 {
-    using namespace spfit;
-
-    QLineF const chord(polyline.front(), polyline.back());
     XSpline spline;
-    int const initial_spline_points = 5;
-    spline.appendControlPoint(chord.pointAt(0), 1);
-    for (int i = 1; i < initial_spline_points - 1; ++i) {
-        double const fraction = i / (initial_spline_points - 1.0);
-        spline.appendControlPoint(chord.pointAt(fraction), 1);
-    }
-    spline.appendControlPoint(chord.pointAt(1), 1);
 
-    //initialSplinePositioning(spline, 0, chord.p1(), 1, chord.p2());
-
-    class ModelShape : public PolylineModelShape
+    // Left extension.
     {
-    public:
-        ModelShape(std::vector<QPointF> const& polyline) : PolylineModelShape(polyline) {}
-    protected:
-        virtual SqDistApproximant calcApproximant(
-            QPointF const& pt, FittableSpline::SampleFlags sample_flags,
-            Flags polyline_flags, FrenetFrame const& frenet_frame, double signed_curvature) const
+        QLineF const line(polyline[0], polyline[1]);
+        QPointF intersection;
+        if (QLineIntersect(line, bounds.first, &intersection) != QLineF::NoIntersection)
         {
-
-            if (polyline_flags & (POLYLINE_FRONT | POLYLINE_BACK)) {
-                if (sample_flags & FittableSpline::JUNCTION_SAMPLE) {
-                    return SqDistApproximant::pointDistance(frenet_frame.origin());
-                } else {
-                    return SqDistApproximant();
-                }
-            } else {
-                return SqDistApproximant::curveDistance(pt, frenet_frame, signed_curvature);
+            if (Vec2d(intersection - polyline[0]).squaredNorm() > 1.0)
+            {
+                spline.appendControlPoint(intersection, -1.0);
             }
         }
-    };
-
-    ModelShape const model_shape(polyline);
-    SplineFitter fitter(&spline);
-
-    FittableSpline::SamplingParams sampling_params;
-    sampling_params.maxDistBetweenSamples = 10;
-    fitter.setSamplingParams(sampling_params);
-
-    int iterations_remaining = 20;
-    LinearForceBalancer balancer(0.8);
-    balancer.setTargetRatio(0.1);
-    balancer.setIterationsToTarget(iterations_remaining - 1);
-
-    // Initial fitting: just uniform distribution of junction points on a spline.
-    {
-        ConstraintSet constraints(&spline);
-        constraints.constrainSplinePoint(0, bounds.first);
-        constraints.constrainSplinePoint(1, bounds.second);
-        for (int i = 0; i < initial_spline_points; ++i) {
-            constraints.constrainSplinePoint(spline.controlPointIndexToT(i), chord);
-        }
-        fitter.setConstraints(constraints);
-        fitter.addInternalForce(spline.junctionPointsAttractionForce());
-
-        // We don't have any external forces, so we can choose any non-zero
-        // weight for internal force.
-        fitter.optimize(1);
-        assert(!Curve::splineHasLoops(spline));
     }
 
-    ConstraintSet constraints(&spline);
-    constraints.constrainSplinePoint(0, bounds.first);
-    constraints.constrainSplinePoint(1, bounds.second);
-    fitter.setConstraints(constraints);
+    for (QPointF const& pt : polyline)
+    {
+        spline.appendControlPoint(pt, -1.0);
+    }
 
-    for (int iteration = 0; iterations_remaining > 0; ++iteration, --iterations_remaining, balancer.nextIteration()) {
-        fitter.addAttractionForces(model_shape);
-        fitter.addInternalForce(spline.controlPointsAttractionForce());
-
-        double internal_force_weight = balancer.calcInternalForceWeight(
-                                           fitter.internalForce(), fitter.externalForce()
-                                       );
-        OptimizationResult const res(fitter.optimize(internal_force_weight));
-        if (Curve::splineHasLoops(spline)) {
-            if (iteration == 0) {
-                // Having a loop on the first iteration is not good at all.
-                throw BadCurve();
-            } else {
-                fitter.undoLastStep();
-                break;
+    // Right extension.
+    {
+        QLineF const line(polyline[polyline.size() - 2], polyline.back());
+        QPointF intersection;
+        if (QLineIntersect(line, bounds.second, &intersection) != QLineF::NoIntersection)
+        {
+            if (Vec2d(intersection - polyline.back()).squaredNorm() > 1.0)
+            {
+                spline.appendControlPoint(intersection, -1.0);
             }
-        }
-
-        if (res.improvementPercentage() < 0.5) {
-            break;
         }
     }
 
     return spline;
 }
+
 
 /*============================== RansacAlgo ============================*/
 
@@ -487,7 +463,8 @@ try
     DistortionModel model;
     model.setTopCurve(Curve(top_curve->extendedPolyline));
     model.setBottomCurve(Curve(bottom_curve->extendedPolyline));
-    if (!model.isValid()) {
+    if (!model.isValid())
+    {
         return;
     }
 
@@ -496,83 +473,81 @@ try
         top_curve->extendedPolyline, bottom_curve->extendedPolyline, depth_perception
     );
 
-    double error = 0;
-    for (TracedCurve const& curve : m_rAllCurves) {
+    // CylindricalSurfaceDewarper maps the curved quadrilateral to a unit
+    // square. We introduce additional scaling to map it to a 1000x1000
+    // square, so that sqrt() applied on distances has a more familiar effect.
+    auto dewarp = [&dewarper](QPointF const& pt)
+    {
+        return dewarper.mapToDewarpedSpace(pt) * 1000.0;
+    };
+
+    double total_error = 0;
+    for (TracedCurve const& curve : m_rAllCurves)
+    {
         size_t const polyline_size = curve.trimmedPolyline.size();
-        double const r_reference_height = 1.0 / 1.0; //calcReferenceHeight(dewarper, curve.centroid);
+        assert(polyline_size > 0); // Guaranteed by addHorizontalCurve().
 
-        // We are going to approximate the dewarped polyline by a straight line
-        // using linear least-squares: At*A*x = At*B -> x = (At*A)-1 * At*B
-        std::vector<double> At;
-        At.reserve(polyline_size * 2);
-        std::vector<double> B;
-        B.reserve(polyline_size);
+        // We want to penalize the line both for being not straight and also
+        // for being non-horizontal. The penalty metric we use is:
+        // sqrt(max_y(dewarped_points) - min_y(dewarped_points) + 1.0) - 1.0
+        // The square root is necessary to de-emphasize outliers.
 
-        for (QPointF const& warped_pt : curve.trimmedPolyline) {
+        double min_y = std::numeric_limits<double>::max();
+        double max_y = std::numeric_limits<double>::min();
+
+        for (QPointF const& warped_pt : curve.trimmedPolyline)
+        {
             // TODO: add another signature with hint for efficiency.
-            QPointF const dewarped_pt(dewarper.mapToDewarpedSpace(warped_pt));
+            QPointF const dewarped_pt(dewarp(warped_pt));
 
-            // ax + b = y  <-> x * a + 1 * b = y
-            At.push_back(dewarped_pt.x());
-            At.push_back(1);
-            B.push_back(dewarped_pt.y());
+            min_y = std::min<double>(min_y, dewarped_pt.y());
+            max_y = std::max<double>(max_y, dewarped_pt.y());
         }
 
-        DynamicMatrixCalc<double> mc;
-
-        // A = Att
-        boost::scoped_array<double> A(new double[polyline_size * 2]);
-        mc(&At[0], 2, polyline_size).transWrite(&A[0]);
-
-        try {
-            boost::scoped_array<double> errvec(new double[polyline_size]);
-            double ab[2]; // As in "y = ax + b".
-
-            // errvec = B - A * (At*A)-1 * At * B
-            // ab = (At*A)-1 * At * B
-            (
-                mc(&B[0], polyline_size, 1) - mc(&A[0], polyline_size, 2)
-                * ((mc(&At[0], 2, polyline_size)*mc(&A[0], polyline_size, 2)).inv()
-                   * (mc(&At[0], 2, polyline_size)*mc(&B[0], polyline_size, 1))).write(ab)
-            ).write(&errvec[0]);
-
-            double sum_abs_err = 0;
-            for (size_t i = 0; i < polyline_size; ++i) {
-                sum_abs_err += fabs(errvec[i]) * r_reference_height;
-            }
-
-            // Penalty for not being straight.
-            error += sum_abs_err / polyline_size;
-
-            // TODO: penalty for not being horizontal.
-        } catch (std::runtime_error const&) {
-            // Strictly vertical line?
-            error += 1000;
-        }
+        total_error += std::sqrt(max_y - min_y + 1.0) - 1.0;
     }
 
-    if (error < m_bestModel.totalError) {
+    // We want to promote curves that reach to the vertical boundaries
+    // over those that had to be extended. To do that, we add a square
+    // root of extension distance to total_error.
+
+    auto get_dewarped_distance = [dewarp](QPointF const& warped_pt1, QPointF const& warped_pt2)
+    {
+        QPointF const dewarped_pt1 = dewarp(warped_pt1);
+        QPointF const dewarped_pt2 = dewarp(warped_pt2);
+        return Vec2d(dewarped_pt1 - dewarped_pt2).norm();
+    };
+
+    auto get_extension_distance = [get_dewarped_distance](TracedCurve const* curve)
+    {
+        auto const& extended = curve->extendedPolyline;
+        auto const& trimmed = curve->trimmedPolyline;
+        double const front = get_dewarped_distance(extended.front(), trimmed.front());
+        double const back = get_dewarped_distance(extended.back(), trimmed.back());
+        return front + back;
+    };
+
+    double const top_curve_extension = get_extension_distance(top_curve);
+    double const bottom_curve_extension = get_extension_distance(bottom_curve);
+    double const extension_importance_factor = 1.0;
+
+    total_error += extension_importance_factor * (
+                       std::sqrt(top_curve_extension + 1.0) - 1.0 +
+                       std::sqrt(bottom_curve_extension + 1.0) - 1.0
+                   );
+
+    if (total_error < m_bestModel.totalError)
+    {
         m_bestModel.topCurve = top_curve;
         m_bestModel.bottomCurve = bottom_curve;
-        m_bestModel.totalError = error;
+        m_bestModel.totalError = total_error;
     }
-} catch (std::runtime_error const&)
+}
+catch (std::runtime_error const&)
 {
     // Probably CylindricalSurfaceDewarper didn't like something.
 }
-#if 0
-double
-DistortionModelBuilder::RansacAlgo::calcReferenceHeight(
-    CylindricalSurfaceDewarper const& dewarper, QPointF const& loc)
-{
-    // TODO: ideally, we would use the counterpart of CylindricalSurfaceDewarper::mapGeneratrix(),
-    // that would map it the other way, and which doesn't currently exist.
 
-    QPointF const pt1(dewarper.mapToDewarpedSpace(loc + QPointF(0.0, -10)));
-    QPointF const pt2(dewarper.mapToDewarpedSpace(loc + QPointF(0.0, 10)));
-    return fabs(pt1.y() - pt2.y());
-}
-#endif
 QImage
 DistortionModelBuilder::visualizeTrimmedPolylines(
     QImage const& background, std::vector<TracedCurve> const& curves) const
@@ -598,8 +573,10 @@ DistortionModelBuilder::visualizeTrimmedPolylines(
     painter.drawLine(bound1);
     painter.drawLine(bound2);
 
-    for (TracedCurve const& curve : curves) {
-        if (!curve.trimmedPolyline.empty()) {
+    BOOST_FOREACH(TracedCurve const& curve, curves)
+    {
+        if (!curve.trimmedPolyline.empty())
+        {
             painter.drawPolyline(&curve.trimmedPolyline[0], curve.trimmedPolyline.size());
         }
     }
@@ -608,9 +585,11 @@ DistortionModelBuilder::visualizeTrimmedPolylines(
     QBrush knot_brush(Qt::magenta);
     painter.setBrush(knot_brush);
     painter.setPen(Qt::NoPen);
-    for (TracedCurve const& curve : curves) {
+    BOOST_FOREACH(TracedCurve const& curve, curves)
+    {
         QRectF rect(0, 0, stroke_width, stroke_width);
-        for (QPointF const& knot : curve.trimmedPolyline) {
+        BOOST_FOREACH(QPointF const& knot, curve.trimmedPolyline)
+        {
             rect.moveCenter(knot);
             painter.drawEllipse(rect);
         }
@@ -658,13 +637,20 @@ DistortionModelBuilder::visualizeModel(
 
     QBrush junction_point_brush(QColor(0xff, 0x00, 0xff, 255));
 
-    for (TracedCurve const& curve : curves) {
-        if (curve.extendedPolyline.empty()) {
+    QBrush polyline_knot_brush(QColor(0xff, 0x00, 0xff, 180));
+
+    BOOST_FOREACH(TracedCurve const& curve, curves)
+    {
+        if (curve.extendedPolyline.empty())
+        {
             continue;
         }
-        if (&curve == model.topCurve || &curve == model.bottomCurve) {
+        if (&curve == model.topCurve || &curve == model.bottomCurve)
+        {
             painter.setPen(active_curve_pen);
-        } else {
+        }
+        else
+        {
             painter.setPen(inactive_curve_pen);
         }
 
@@ -674,17 +660,22 @@ DistortionModelBuilder::visualizeModel(
         Vec2d const main_direction(curve.extendedPolyline.back() - curve.extendedPolyline.front());
         std::list<std::vector<int> > reverse_segments;
 
-        for (size_t i = 1; i < size; ++i) {
+        for (size_t i = 1; i < size; ++i)
+        {
             Vec2d const dir(curve.extendedPolyline[i] - curve.extendedPolyline[i - 1]);
-            if (dir.dot(main_direction) >= 0) {
+            if (dir.dot(main_direction) >= 0)
+            {
                 continue;
             }
 
             // We've got a reverse segment.
-            if (!reverse_segments.empty() && reverse_segments.back().back() == int(i) - 1) {
+            if (!reverse_segments.empty() && reverse_segments.back().back() == int(i) - 1)
+            {
                 // Continue the previous sequence.
                 reverse_segments.back().push_back(i);
-            } else {
+            }
+            else
+            {
                 // Start a new sequence.
                 reverse_segments.push_back(std::vector<int>());
                 std::vector<int>& sequence = reverse_segments.back();
@@ -695,12 +686,15 @@ DistortionModelBuilder::visualizeModel(
 
         QVector<QPointF> polyline;
 
-        if (!reverse_segments.empty()) {
+        if (!reverse_segments.empty())
+        {
             painter.setPen(reverse_segments_pen);
-            for (std::vector<int> const& sequence : reverse_segments) {
+            BOOST_FOREACH(std::vector<int> const& sequence, reverse_segments)
+            {
                 assert(!sequence.empty());
                 polyline.clear();
-                for (int idx : sequence) {
+                BOOST_FOREACH(int idx, sequence)
+                {
                     polyline << curve.extendedPolyline[idx];
                 }
                 painter.drawPolyline(polyline);
@@ -710,20 +704,12 @@ DistortionModelBuilder::visualizeModel(
         int const num_control_points = curve.extendedSpline.numControlPoints();
         QRectF rect(0, 0, stroke_width, stroke_width);
 
-        // Draw junction points.
+        // Draw original polyline knots.
         painter.setPen(Qt::NoPen);
-        painter.setBrush(junction_point_brush);
-        for (int i = 0; i < num_control_points; ++i) {
-            double const t = curve.extendedSpline.controlPointIndexToT(i);
-            rect.moveCenter(curve.extendedSpline.pointAt(t));
-            painter.drawEllipse(rect);
-        }
-
-        // Draw control points.
-        painter.setPen(Qt::NoPen);
-        painter.setBrush(control_point_brush);
-        for (int i = 0; i < num_control_points; ++i) {
-            rect.moveCenter(curve.extendedSpline.controlPointPosition(i));
+        painter.setBrush(polyline_knot_brush);
+        for (QPointF const& knot : curve.trimmedPolyline)
+        {
+            rect.moveCenter(knot);
             painter.drawEllipse(rect);
         }
     }

@@ -17,22 +17,15 @@
 */
 
 #include "Settings.h"
-#include "Utils.h"
 #include "RelinkablePath.h"
 #include "AbstractRelinker.h"
-#include <QMutexLocker>
-#include "settings/ini_keys.h"
-#include <cmath>
-#include <iostream>
+#include "../../Utils.h"
 
 namespace deskew
 {
 
-Settings::Settings() :
-    m_avg(0.0),
-    m_sigma(0.0)
+Settings::Settings()
 {
-    m_maxDeviation = CommandLine::get().getSkewDeviation();
 }
 
 Settings::~Settings()
@@ -52,7 +45,8 @@ Settings::performRelinking(AbstractRelinker const& relinker)
     QMutexLocker locker(&m_mutex);
     PerPageParams new_params;
 
-    for (PerPageParams::value_type const& kv : m_perPageParams) {
+    for(PerPageParams::value_type const& kv: m_perPageParams)
+    {
         RelinkablePath const old_path(kv.first.imageId().filePath(), RelinkablePath::File);
         PageId new_page_id(kv.first);
         new_page_id.imageId().setFilePath(relinker.substitutionPathFor(old_path));
@@ -62,42 +56,11 @@ Settings::performRelinking(AbstractRelinker const& relinker)
     m_perPageParams.swap(new_params);
 }
 
-void Settings::updateDeviation()
-{
-    m_avg = 0.0;
-    for (PerPageParams::value_type const& kv : m_perPageParams) {
-        m_avg += kv.second.deskewAngle();
-    }
-    m_avg = m_avg / m_perPageParams.size();
-#ifdef DEBUG
-    std::cout << "avg skew = " << m_avg << std::endl;
-#endif
-
-    double sigma2 = 0.0;
-    for (PerPageParams::value_type& kv : m_perPageParams) {
-        kv.second.computeDeviation(m_avg);
-        sigma2 += kv.second.deviation() * kv.second.deviation();
-    }
-    sigma2 = sigma2 / m_perPageParams.size();
-    m_sigma = sqrt(sigma2);
-#ifdef DEBUG
-    std::cout << "sigma2 = " << sigma2 << std::endl;
-    std::cout << "sigma = " << m_sigma << std::endl;
-#endif
-}
-
 void
 Settings::setPageParams(PageId const& page_id, Params const& params)
 {
     QMutexLocker locker(&m_mutex);
     Utils::mapSetValue(m_perPageParams, page_id, params);
-}
-
-void
-Settings::clearPageParams(PageId const& page_id)
-{
-    QMutexLocker locker(&m_mutex);
-    m_perPageParams.erase(page_id);
 }
 
 std::unique_ptr<Params>
@@ -106,19 +69,73 @@ Settings::getPageParams(PageId const& page_id) const
     QMutexLocker locker(&m_mutex);
 
     PerPageParams::const_iterator it(m_perPageParams.find(page_id));
-    if (it != m_perPageParams.end()) {
+    if (it != m_perPageParams.end())
+    {
         return std::unique_ptr<Params>(new Params(it->second));
-    } else {
+    }
+    else
+    {
         return std::unique_ptr<Params>();
     }
 }
 
+DistortionType
+Settings::getDistortionType(PageId const& page_id) const
+{
+    QMutexLocker locker(&m_mutex);
+
+    PerPageParams::const_iterator it(m_perPageParams.find(page_id));
+    if (it != m_perPageParams.end())
+    {
+        return it->second.distortionType();
+    }
+    else
+    {
+        return Params::defaultDistortionType();
+    }
+}
+
 void
-Settings::setDegress(std::set<PageId> const& pages, Params const& params)
+Settings::setDistortionType(
+    std::set<PageId> const& pages, DistortionType const& distortion_type)
 {
     QMutexLocker const locker(&m_mutex);
-    for (PageId const& page : pages) {
-        Utils::mapSetValue(m_perPageParams, page, params);
+
+    for (PageId const& page_id : pages)
+    {
+        PerPageParams::iterator it = m_perPageParams.find(page_id);
+        if (it != m_perPageParams.end())
+        {
+            it->second.setDistortionType(distortion_type);
+        }
+        else
+        {
+            Params params((Dependencies()));
+            params.setDistortionType(distortion_type);
+            Utils::mapSetValue(m_perPageParams, page_id, params);
+        }
+    }
+}
+
+void
+Settings::setDepthPerception(
+    std::set<PageId> const& pages, dewarping::DepthPerception const& depth_perception)
+{
+    QMutexLocker const locker(&m_mutex);
+
+    for (PageId const& page_id : pages)
+    {
+        PerPageParams::iterator it = m_perPageParams.find(page_id);
+        if (it != m_perPageParams.end())
+        {
+            it->second.dewarpingParams().setDepthPerception(depth_perception);
+        }
+        else
+        {
+            Params params((Dependencies()));
+            params.dewarpingParams().setDepthPerception(depth_perception);
+            Utils::mapSetValue(m_perPageParams, page_id, params);
+        }
     }
 }
 

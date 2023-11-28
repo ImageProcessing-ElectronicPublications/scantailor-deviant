@@ -2,11 +2,17 @@ PROJECT(imageproc)
 
 SET(
         sources
+        AbstractImageTransform.h
+        AffineImageTransform.cpp AffineImageTransform.h
+        AffineTransform.cpp AffineTransform.h
+        AffineTransformedImage.cpp AffineTransformedImage.h
         Constants.h Constants.cpp
         BinaryImage.cpp BinaryImage.h
         BinaryThreshold.cpp BinaryThreshold.h
         SlicedHistogram.cpp SlicedHistogram.h
         ByteOrder.h BWColor.h
+        BWPixelProxy.h
+        BadAllocIfNull.cpp BadAllocIfNull.h
         ConnComp.h Connectivity.h
         BitOps.cpp BitOps.h
         SeedFill.cpp SeedFill.h
@@ -49,6 +55,9 @@ SET(
         FindPeaksGeneric.h
         ColorMixer.h
         ColorForId.h
+        TraverseBorders.h
+        PlugHoles.h
+        WatershedSegmentation.cpp WatershedSegmentation.h
 )
 
 SOURCE_GROUP(Sources FILES ${sources})

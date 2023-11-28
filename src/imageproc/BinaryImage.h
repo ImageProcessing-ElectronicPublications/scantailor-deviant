@@ -20,12 +20,14 @@
 #define IMAGEPROC_BINARYIMAGE_H_
 
 #include "BWColor.h"
+#include "BWPixelProxy.h"
 #include "BinaryThreshold.h"
 #include <QRect>
 #include <QSize>
 #include <QColor>
 #include <stdint.h>
 #include <vector>
+#include <tuple>
 
 class QImage;
 
@@ -320,6 +322,64 @@ private:
     int m_height;
     int m_wpl; // words per line
 };
+
+/** Provides integration of BinaryImage into rasterOpGeneric. */
+class ConstBinaryImageLineAccessor
+{
+public:
+    explicit ConstBinaryImageLineAccessor(BinaryImage const& image)
+        : m_pLine(image.data()), m_stride(image.wordsPerLine()) {}
+
+    uint32_t operator[](ptrdiff_t x) const
+    {
+        return (m_pLine[x >> 5] >> (31 - (x & 31))) & uint32_t(1);
+    }
+
+    void nextLine()
+    {
+        m_pLine += m_stride;
+    }
+private:
+    uint32_t const* m_pLine;
+    ptrdiff_t m_stride;
+};
+
+/** Provides integration of BinaryImage into rasterOpGeneric. */
+class MutableBinaryImageLineAccessor
+{
+public:
+    explicit MutableBinaryImageLineAccessor(BinaryImage& image)
+        : m_pLine(image.data()), m_stride(image.wordsPerLine()) {}
+
+    BWPixelProxy operator[](ptrdiff_t x) const
+    {
+        return BWPixelProxy(m_pLine[x >> 5], x & 31);
+    }
+
+    void nextLine()
+    {
+        m_pLine += m_stride;
+    }
+private:
+    uint32_t* m_pLine;
+    ptrdiff_t m_stride;
+};
+
+inline ConstBinaryImageLineAccessor createLineAccessor(BinaryImage const& image)
+{
+    return ConstBinaryImageLineAccessor(image);
+}
+
+inline MutableBinaryImageLineAccessor createLineAccessor(BinaryImage& image)
+{
+    return MutableBinaryImageLineAccessor(image);
+}
+
+
+inline std::tuple<int, int> extractDimensions(BinaryImage const& image)
+{
+    return std::make_tuple(image.width(), image.height());
+}
 
 inline void swap(BinaryImage& o1, BinaryImage& o2)
 {

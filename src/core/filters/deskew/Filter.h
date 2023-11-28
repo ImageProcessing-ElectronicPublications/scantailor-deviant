@@ -25,7 +25,6 @@
 #include "IntrusivePtr.h"
 #include "FilterResult.h"
 #include "SafeDeletingQObjectPtr.h"
-#include "Settings.h"
 
 class PageId;
 class QString;
@@ -61,17 +60,6 @@ public:
 
     virtual void preUpdateUI(FilterUiInterface* ui, PageId const& page_id);
 
-    virtual void updateStatistics()
-    {
-        m_ptrSettings->updateDeviation();
-    }
-
-    virtual int selectedPageOrder() const;
-
-    virtual void selectPageOrder(int option);
-
-    virtual std::vector<PageOrderOption> pageOrderOptions() const;
-
     virtual QDomElement saveSettings(
         ProjectWriter const& writer, QDomDocument& doc) const;
 
@@ -93,8 +81,7 @@ public:
     Settings* getSettings()
     {
         return m_ptrSettings.get();
-    }
-    void invalidateSetting(PageId const& page_id);
+    };
 private:
     void writePageSettings(
         QDomDocument& doc, QDomElement& filter_el,
@@ -102,8 +89,6 @@ private:
 
     IntrusivePtr<Settings> m_ptrSettings;
     SafeDeletingQObjectPtr<OptionsWidget> m_ptrOptionsWidget;
-    std::vector<PageOrderOption> m_pageOrderOptions;
-    int m_selectedPageOrder;
 };
 
 } // namespace deskew

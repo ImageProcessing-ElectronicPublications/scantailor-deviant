@@ -19,12 +19,10 @@
 #ifndef DEWARPING_CYLINDRICAL_SURFACE_DEWARPER_H_
 #define DEWARPING_CYLINDRICAL_SURFACE_DEWARPER_H_
 
-#include "HomographicTransform.h"
+#include "STEX_HomographicTransform.h"
 #include "PolylineIntersector.h"
 #include "ArcLengthMapper.h"
-#ifndef Q_MOC_RUN
 #include <boost/array.hpp>
-#endif
 #include <vector>
 #include <utility>
 #include <QPointF>
@@ -33,6 +31,13 @@
 namespace dewarping
 {
 
+/**
+ * @brief A model for mapping a curved quadrilateral into a rectangle.
+ *
+ * Implements a model from [17] plus a homographic transform on top.
+ *
+ * @see Help -> About -> References -> [17]
+ */
 class CylindricalSurfaceDewarper
 {
 public:
@@ -45,7 +50,8 @@ public:
         ArcLengthMapper::Hint m_arcLengthHint;
     };
 
-    struct Generatrix {
+    struct Generatrix
+    {
         QLineF imgLine;
         HomographicTransform<1, double> pln2img;
 
@@ -84,6 +90,12 @@ public:
     QPointF mapToDewarpedSpace(QPointF const& img_pt) const;
 
     /**
+     * This version may achieve higher performance when transforming many
+     * points at once.
+     */
+    QPointF mapToDewarpedSpace(QPointF const& img_pt, State& state) const;
+
+    /**
      * Transforms a point from dewarped normalized coordinates
      * to warped image coordinates.  See comments in the beginning
      * of the *.cpp file for more information about coordinate
@@ -100,8 +112,8 @@ private:
     static double calcPlnStraightLineY(
         std::vector<QPointF> const& img_directrix1,
         std::vector<QPointF> const& img_directrix2,
-        HomographicTransform<2, double> const& pln2img,
-        HomographicTransform<2, double> const& img2pln);
+        HomographicTransform<2, double> pln2img,
+        HomographicTransform<2, double> img2pln);
 
     static HomographicTransform<2, double> fourPoint2DHomography(
         boost::array<std::pair<QPointF, QPointF>, 4> const& pairs);

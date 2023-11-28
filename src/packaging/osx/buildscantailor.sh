@@ -4,7 +4,7 @@ OURDIR=`dirname $0`
 OURDIR=`cd $OURDIR; pwd`
 STSRC=`cd $OURDIR/../../..; pwd`
 STHOME=`cd $OURDIR/../../../..; pwd`
-echo -e "Building ScanTailor Universal - Base Directory: $STHOME\n\n"
+echo -e "Building ScanTailor Deviant - Base Directory: $STHOME\n\n"
 
 # I’ve hardcoded path to SDK [truf]
 PATH_TO_SDK="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk"
@@ -12,8 +12,8 @@ PATH_TO_SDK="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platfor
 PREFIX_PATH=$HOME"/build/Qt/5.8/clang_64"
 
 
-export BUILDDIR=$STHOME/scantailor-universal-deps-build
-export STBUILDDIR=$STHOME/scantailor-universal-build
+export BUILDDIR=$STHOME/scantailor-deviant-deps-build
+export STBUILDDIR=$STHOME/scantailor-deviant-build
 export CMAKE_PREFIX_PATH=$BUILDDIR
 export CMAKE_INCLUDE_PATH=$BUILDDIR
 export CMAKE_LIBRARY_PATH=$BUILDDIR

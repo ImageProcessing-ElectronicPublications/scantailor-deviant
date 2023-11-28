@@ -1,6 +1,6 @@
 /*
     Scan Tailor - Interactive post-processing tool for scanned pages.
-    Copyright (C)  Joseph Artsimovich <joseph.artsimovich@gmail.com>
+    Copyright (C) 2015 Joseph Artsimovich <joseph.artsimovich@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,28 +19,23 @@
 #ifndef DEWARPING_TEXT_LINE_TRACER_H_
 #define DEWARPING_TEXT_LINE_TRACER_H_
 
-#include "Grid.h"
-#include "VecNT.h"
-#include <QPoint>
+#include "foundation/Grid.h"
+#include "STEX_VecNT.h"
 #include <QPointF>
 #include <QLineF>
 #include <vector>
 #include <list>
 #include <utility>
-#include <stdint.h>
+#include <memory>
 
-class Dpi;
 class QImage;
-class QSize;
-class QRect;
 class TaskStatus;
 class DebugImages;
 
 namespace imageproc
 {
-class BinaryImage;
 class GrayImage;
-class SEDM;
+class AffineTransformedImage;
 }
 
 namespace dewarping
@@ -52,52 +47,33 @@ class TextLineTracer
 {
 public:
     static void trace(
-        imageproc::GrayImage const& input, Dpi const& dpi,
-        QRect const& content_rect, DistortionModelBuilder& output,
-        TaskStatus const& status, DebugImages* dbg = 0);
+        imageproc::AffineTransformedImage const& input,
+        DistortionModelBuilder& output,
+        TaskStatus const& status, DebugImages* dbg = nullptr);
 private:
-    static imageproc::GrayImage downscale(imageproc::GrayImage const& input, Dpi const& dpi);
+    static float attractionForceAt(
+        Grid<float> const& field, Vec2f pos, float outside_force);
 
-    static void sanitizeBinaryImage(imageproc::BinaryImage& image, QRect const& content_rect);
+    static Grid<Vec2f> calcGradient(imageproc::GrayImage const& image, DebugImages* dbg);
 
-    static void extractTextLines(
-        std::list<std::vector<QPointF> >& out, imageproc::GrayImage const& image,
-        std::pair<QLineF, QLineF> const& bounds, DebugImages* dbg);
+    static Grid<float> calcDirectionalDerivative(
+        Grid<Vec2f> const& gradient, Grid<Vec2f> const& downscaled_direction_map);
 
-    static Vec2f calcAvgUnitVector(std::pair<QLineF, QLineF> const& bounds);
+    static void filterOutOfBoundsCurves(
+        std::list<std::vector<QPointF>>& polylines,
+        QLineF const& left_bound, QLineF const& right_bound);
 
-    static imageproc::BinaryImage closeWithObstacles(
-        imageproc::BinaryImage const& image,
-        imageproc::BinaryImage const& obstacles, QSize const& brick);
-
-    static QLineF calcMidLine(QLineF const& line1, QLineF const& line2);
-
-    static void findMidLineSeeds(
-        imageproc::SEDM const& sedm, QLineF mid_line, std::vector<QPoint>& seeds);
-
-    static bool isCurvatureConsistent(std::vector<QPointF> const& polyline);
-
-    static bool isInsideBounds(
-        QPointF const& pt, QLineF const& left_bound, QLineF const& right_bound);
-
-    static void filterShortCurves(std::list<std::vector<QPointF> >& polylines,
-                                  QLineF const& left_bound, QLineF const& right_bound);
-
-    static void filterOutOfBoundsCurves(std::list<std::vector<QPointF> >& polylines,
-                                        QLineF const& left_bound, QLineF const& right_bound);
-
-    static void filterEdgyCurves(std::list<std::vector<QPointF> >& polylines);
+    static void filterShortCurves(
+        std::list<std::vector<QPointF>>& polylines,
+        QLineF const& left_bound, QLineF const& right_bound);
 
     static QImage visualizeVerticalBounds(
-        QImage const& background, std::pair<QLineF, QLineF> const& bounds);
+        QImage const& background, std::pair<QLineF, QLineF> bounds);
 
     static QImage visualizeGradient(QImage const& background, Grid<float> const& grad);
 
-    static QImage visualizeMidLineSeeds(QImage const& background, imageproc::BinaryImage const& overlay,
-                                        std::pair<QLineF, QLineF> bounds, QLineF mid_line, std::vector<QPoint> const& seeds);
-
     static QImage visualizePolylines(
-        QImage const& background, std::list<std::vector<QPointF> > const& polylines,
+        QImage const& background, std::list<std::vector<QPointF>> const& polylines,
         std::pair<QLineF, QLineF> const* vert_bounds = 0);
 };
 

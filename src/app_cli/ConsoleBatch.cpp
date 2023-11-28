@@ -312,27 +312,6 @@ ConsoleBatch::setupPageSplit(std::set<PageId> allPages)
 void
 ConsoleBatch::setupDeskew(std::set<PageId> allPages)
 {
-    IntrusivePtr<deskew::Filter> deskew = m_ptrStages->deskewFilter();
-    CommandLine const& cli = CommandLine::get();
-
-    for (PageId const& page : allPages) {
-
-        // DESKEW FILTER
-        OrthogonalRotation rotation;
-        if (cli.hasDeskewAngle() || cli.hasDeskew()) {
-            double angle = 0.0;
-            if (cli.hasDeskewAngle()) {
-                angle = cli.getDeskewAngle();
-            }
-            deskew::Dependencies deps(QPolygonF(), rotation);
-            deskew::Params params(angle, deps, MODE_MANUAL);
-            deskew->getSettings()->setPageParams(page, params);
-        }
-    }
-
-    if (cli.hasSkewDeviation()) {
-        deskew->getSettings()->setMaxDeviation(cli.getSkewDeviation());
-    }
 }
 
 void
@@ -485,13 +464,6 @@ ConsoleBatch::setupOutput(std::set<PageId> allPages)
 
         if (cli.hasDespeckle()) {
             params.setDespeckleLevel(cli.getDespeckleLevel());
-        }
-
-        if (cli.hasDewarping()) {
-            params.setDewarpingMode(cli.getDewarpingMode());
-        }
-        if (cli.hasDepthPerception()) {
-            params.setDepthPerception(cli.getDepthPerception());
         }
 
         if (cli.hasTiffCompressionBW()) {
