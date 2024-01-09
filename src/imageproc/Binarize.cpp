@@ -86,6 +86,10 @@ BinaryImage binarizeMean(QImage const& src, int const delta)
     }
 
     GrayImage gray(src);
+    if (gray.isNull())
+    {
+        return BinaryImage();
+    }
 
     unsigned int const w = gray.width();
     unsigned int const h = gray.height();
@@ -162,6 +166,11 @@ BinaryImage binarizeMean(QImage const& src, int const delta)
     countb += countb;
 
     BinaryImage bw_img(w, h);
+    if (bw_img.isNull())
+    {
+        return BinaryImage();
+    }
+
     uint32_t* bw_line = bw_img.data();
     unsigned int const bw_stride = bw_img.wordsPerLine();
 
@@ -206,6 +215,11 @@ BinaryImage binarizeFromMap(GrayImage const& src, GrayImage const& threshold,
     unsigned int const threshold_stride = threshold.stride();
 
     BinaryImage bw_img(w, h);
+    if (bw_img.isNull())
+    {
+        return BinaryImage();
+    }
+
     uint32_t* bw_line = bw_img.data();
     unsigned int const bw_stride = bw_img.wordsPerLine();
 
@@ -237,6 +251,11 @@ GrayImage binarizeNiblackMap(
     }
 
     GrayImage gray = GrayImage(src);
+    if (gray.isNull())
+    {
+        return GrayImage();
+    }
+
     int const w = src.width();
     int const h = src.height();
     uint8_t const* src_line = src.data();
@@ -316,6 +335,10 @@ BinaryImage binarizeNiblack(
     }
 
     GrayImage gray(src);
+    if (gray.isNull())
+    {
+        return BinaryImage();
+    }
 
     GrayImage threshold_map(binarizeNiblackMap(gray, window_size, k));
     BinaryImage bw_img(binarizeFromMap(gray, threshold_map, 0, 255, delta));
@@ -478,6 +501,10 @@ BinaryImage binarizeGatos(
     }
 
     GrayImage gray(src);
+    if (gray.isNull())
+    {
+        return BinaryImage();
+    }
 
     int const w = src.width();
     int const h = src.height();
@@ -503,6 +530,11 @@ GrayImage binarizeSauvolaMap(
     }
 
     GrayImage gray = GrayImage(src);
+    if (gray.isNull())
+    {
+        return GrayImage();
+    }
+
     int const w = src.width();
     int const h = src.height();
     uint8_t const* src_line = src.data();
@@ -571,11 +603,16 @@ BinaryImage binarizeSauvola(
         throw std::invalid_argument("binarizeSauvola: invalid window_size");
     }
 
-    if (src.isNull()) {
+    if (src.isNull())
+    {
         return BinaryImage();
     }
 
     GrayImage const gray(src);
+    if (gray.isNull())
+    {
+        return BinaryImage();
+    }
 
     GrayImage threshold_map(binarizeSauvolaMap(gray, window_size, k));
     BinaryImage bw_img(binarizeFromMap(gray, threshold_map, 0, 255, delta));
@@ -597,6 +634,11 @@ GrayImage binarizeWolfMap(
     }
 
     GrayImage gray = GrayImage(src);
+    if (gray.isNull())
+    {
+        return GrayImage();
+    }
+
     int const w = src.width();
     int const h = src.height();
     uint8_t const* src_line = src.data();
@@ -681,15 +723,21 @@ BinaryImage binarizeWolf(
     unsigned char const lower_bound, unsigned char const upper_bound,
     double const k, int const delta)
 {
-    if (window_size.isEmpty()) {
+    if (window_size.isEmpty())
+    {
         throw std::invalid_argument("binarizeWolf: invalid window_size");
     }
 
-    if (src.isNull()) {
+    if (src.isNull())
+    {
         return BinaryImage();
     }
 
     GrayImage const gray(src);
+    if (gray.isNull())
+    {
+        return BinaryImage();
+    }
 
     GrayImage threshold_map(binarizeWolfMap(gray, window_size, k));
     BinaryImage bw_img(binarizeFromMap(gray, threshold_map, lower_bound, upper_bound, delta));
@@ -711,6 +759,11 @@ GrayImage binarizeBradleyMap(
     }
 
     GrayImage gray = GrayImage(src);
+    if (gray.isNull())
+    {
+        return GrayImage();
+    }
+
     int const w = src.width();
     int const h = src.height();
     uint8_t const* src_line = src.data();
@@ -799,6 +852,11 @@ BinaryImage binarizeEdgeDiv(
     }
 
     QImage gray(toGrayscale(src));
+    if (gray.isNull())
+    {
+        return BinaryImage();
+    }
+
     int const w = gray.width();
     int const h = gray.height();
 
@@ -890,6 +948,11 @@ GrayImage binarizeMScaleMap(
     }
 
     GrayImage gray = GrayImage(src);
+    if (gray.isNull())
+    {
+        return GrayImage();
+    }
+
     int const w = src.width();
     int const h = src.height();
     uint8_t const* src_line = src.data();
@@ -1049,6 +1112,11 @@ BinaryImage binarizeMScale(
     }
 
     GrayImage gray = GrayImage(src);
+    if (gray.isNull())
+    {
+        return BinaryImage();
+    }
+
 
     GrayImage threshold_map(binarizeMScaleMap(gray, window_size, coef));
     BinaryImage bw_img(binarizeFromMap(gray, threshold_map, 0, 255, delta));
