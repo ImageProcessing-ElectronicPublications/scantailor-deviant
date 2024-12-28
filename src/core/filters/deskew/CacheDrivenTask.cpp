@@ -26,6 +26,9 @@
 #include "ThumbnailBase.h"
 #include "ThumbnailCollector.h"
 #include "filters/select_content/CacheDrivenTask.h"
+#include "dewarping/DewarpingImageTransform.h"
+
+using namespace dewarping;
 
 namespace deskew
 {
@@ -70,7 +73,7 @@ CacheDrivenTask::process(
 
     if (m_ptrNextTask)
     {
-        std::shared_ptr<ImageTransformation const> new_transform;
+        std::shared_ptr<ImageTransformation> new_transform;
         
         switch (params->distortionType())
         {
@@ -99,14 +102,48 @@ CacheDrivenTask::process(
                     params->perspectiveParams().corner(PerspectiveParams::BOTTOM_LEFT),
                     params->perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT)
                 };
-                auto stub = std::make_shared<ImageTransformation>(xform);
-                new_transform = std::move(stub);
+
+                DewarpingImageTransform perspective_transform(
+                    QSize(
+                        xform.origRect().width(),
+                        xform.origRect().height()
+                    ),
+                    xform.preCropArea(),
+                    top_curve, bottom_curve,
+                    dewarping::DepthPerception()
+                );
+
+                new_transform = std::make_shared<ImageTransformation>(
+                    perspective_transform.transformedCropArea().boundingRect(),
+                    xform.origDpi()
+                );
+
+                if (new_transform.get())
+                    new_transform->setPreCropArea(perspective_transform.transformedCropArea());
+
                 break;
             }
             case DistortionType::WARP:
             {
-                auto stub = std::make_shared<ImageTransformation>(xform);
-                new_transform = std::move(stub);
+                DewarpingImageTransform perspective_transform(
+                    QSize(
+                        xform.origRect().width(),
+                        xform.origRect().height()
+                    ),
+                    xform.preCropArea(),
+                    params->dewarpingParams().distortionModel().topCurve().polyline(),
+                    params->dewarpingParams().distortionModel().bottomCurve().polyline(),
+                    params->dewarpingParams().depthPerception()
+                );
+
+                new_transform = std::make_shared<ImageTransformation>(
+                    perspective_transform.transformedCropArea().boundingRect(),
+                    xform.origDpi()
+                );
+
+                if (new_transform.get())
+                    new_transform->setPreCropArea(perspective_transform.transformedCropArea());
+
                 break;
             }
         }
