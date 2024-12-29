@@ -30,6 +30,7 @@
 #include "NoDistortionView.h"
 #include "ImageView.h"
 #include "DewarpingView.h"
+#include "ThumbnailPixmapCache.h"
 #include "dewarping/DewarpingImageTransform.h"
 #include "dewarping/DistortionModelBuilder.h"
 #include "dewarping/TextLineTracer.h"
@@ -182,10 +183,12 @@ private:
 Task::Task(
     IntrusivePtr<Filter> const& filter,
     IntrusivePtr<Settings> const& settings,
+    IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
     IntrusivePtr<select_content::Task> const& next_task,
     PageId const& page_id, bool batch_processing, bool debug)
     : m_ptrFilter(filter)
     , m_ptrSettings(settings)
+    , m_ptrThumbnailCache(thumbnail_cache)
     , m_ptrNextTask(next_task)
     , m_pageId(page_id)
     , m_batchProcessing(batch_processing)

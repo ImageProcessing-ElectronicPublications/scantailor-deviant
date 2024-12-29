@@ -158,7 +158,7 @@ ConsoleBatch::createCompositeTask(
     }
     if (last_filter_idx >= m_ptrStages->deskewFilterIdx()) {
         deskew_task = m_ptrStages->deskewFilter()->createTask(
-                          page.id(), select_content_task, batch, debug
+                          page.id(), m_ptrThumbnailCache, select_content_task, batch, debug
                       );
         debug = false;
     }
