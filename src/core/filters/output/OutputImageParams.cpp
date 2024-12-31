@@ -21,6 +21,7 @@
 #include "XmlMarshaller.h"
 #include "XmlUnmarshaller.h"
 #include "../../Utils.h"
+#include "FuzzyEquals.h"
 #include <QPolygonF>
 #include <QDomDocument>
 #include <QDomElement>
@@ -76,11 +77,13 @@ OutputImageParams::toXml(QDomDocument& doc, QString const& name) const
 bool
 OutputImageParams::matches(OutputImageParams const& other) const
 {
-    if (m_size != other.m_size) {
+    unsigned const tol = 2;
+
+    if (!fuzzyEquals(m_size, other.m_size, tol)) {
         return false;
     }
 
-    if (m_contentRect != other.m_contentRect) {
+    if (!fuzzyEquals(m_contentRect, other.m_contentRect, tol)) {
         return false;
     }
 
