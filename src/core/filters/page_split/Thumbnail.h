@@ -27,6 +27,7 @@
 class QPointF;
 class QSizeF;
 class QPolygonF;
+class QString;
 class ThumbnailPixmapCache;
 class ImageId;
 class ImageTransformation;
@@ -38,7 +39,7 @@ class Thumbnail : public ThumbnailBase
 {
 public:
     Thumbnail(IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
-              QSizeF const& max_size, ImageId const& image_id,
+              QSizeF const& max_size, ImageId const& image_id, QString const& version,
               ImageTransformation const& xform, PageLayout const& layout,
               bool left_half_removed, bool right_half_removed);
 

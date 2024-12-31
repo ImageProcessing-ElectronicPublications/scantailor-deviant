@@ -26,6 +26,7 @@ class ThumbnailPixmapCache;
 class ImageTransformation;
 class ImageId;
 class QSizeF;
+class QString;
 
 namespace output
 {
@@ -35,7 +36,7 @@ class Thumbnail : public ThumbnailBase
 public:
     Thumbnail(IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
               QSizeF const& max_size, ImageId const& image_id,
-              ImageTransformation const& xform);
+              QString const& version, ImageTransformation const& xform);
 };
 
 } // namespace output

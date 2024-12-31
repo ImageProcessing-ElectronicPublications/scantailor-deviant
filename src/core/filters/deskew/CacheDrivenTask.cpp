@@ -27,6 +27,7 @@
 #include "ThumbnailCollector.h"
 #include "filters/select_content/CacheDrivenTask.h"
 #include "dewarping/DewarpingImageTransform.h"
+#include <QString>
 
 using namespace dewarping;
 
@@ -63,7 +64,7 @@ CacheDrivenTask::process(
                     new IncompleteThumbnail(
                         thumb_col->thumbnailCache(),
                         thumb_col->maxLogicalThumbSize(),
-                        page_info.imageId(), xform
+                        page_info.imageId(), QString(), xform
                     )
                 )
             );
@@ -74,6 +75,7 @@ CacheDrivenTask::process(
     if (m_ptrNextTask)
     {
         std::shared_ptr<ImageTransformation> new_transform;
+        QString const thumb_version;
         
         switch (params->distortionType())
         {
@@ -149,7 +151,7 @@ CacheDrivenTask::process(
         }
 
         assert(new_transform);
-        m_ptrNextTask->process(page_info, collector, *new_transform);
+        m_ptrNextTask->process(page_info, collector, *new_transform, thumb_version);
         return;
     }
 
@@ -165,7 +167,7 @@ CacheDrivenTask::process(
                     new RotationThumbnail(
                         thumb_col->thumbnailCache(),
                         thumb_col->maxLogicalThumbSize(),
-                        page_info.imageId(), xform,
+                        page_info.imageId(), QString(), xform,
                         0.0,
                         false
                     )
@@ -178,7 +180,7 @@ CacheDrivenTask::process(
                     new RotationThumbnail(
                         thumb_col->thumbnailCache(),
                         thumb_col->maxLogicalThumbSize(),
-                        page_info.imageId(), xform,
+                        page_info.imageId(), QString(), xform,
                         params->rotationParams().compensationAngleDeg(),
                         true
                     )
@@ -197,12 +199,15 @@ CacheDrivenTask::process(
                     params->perspectiveParams().corner(PerspectiveParams::BOTTOM_LEFT),
                     params->perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT)
                 };
+
+                QString const thumb_version;
+
                 thumb.reset(
                     new DewarpingThumbnail(
                         thumb_col->thumbnailCache(),
                         thumb_col->maxLogicalThumbSize(),
-                        page_info.imageId(), xform,
-                        top_curve, bottom_curve,
+                        page_info.imageId(), thumb_version,
+                        xform, top_curve, bottom_curve,
                         dewarping::DepthPerception()
                     )
                 );
@@ -210,11 +215,13 @@ CacheDrivenTask::process(
             }
             case DistortionType::WARP:
             {
+                QString const thumb_version;
+
                 thumb.reset(
                     new DewarpingThumbnail(
                         thumb_col->thumbnailCache(),
                         thumb_col->maxLogicalThumbSize(),
-                        page_info.imageId(), xform,
+                        page_info.imageId(), thumb_version, xform,
                         params->dewarpingParams().distortionModel().topCurve().polyline(),
                         params->dewarpingParams().distortionModel().bottomCurve().polyline(),
                         params->dewarpingParams().depthPerception()

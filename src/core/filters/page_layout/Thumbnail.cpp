@@ -33,9 +33,10 @@ namespace page_layout
 
 Thumbnail::Thumbnail(
     IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
-    QSizeF const& max_size, ImageId const& image_id, Params const& params,
+    QSizeF const& max_size, ImageId const& image_id,
+    QString const& version, Params const& params, 
     ImageTransformation const& xform, QPolygonF const& phys_content_rect)
-    :   ThumbnailBase(thumbnail_cache, max_size, image_id, xform),
+    :   ThumbnailBase(thumbnail_cache, max_size, image_id, version, xform),
         m_params(params),
         m_virtContentRect(xform.transform().map(phys_content_rect).boundingRect()),
         m_virtOuterRect(xform.resultingPostCropArea().boundingRect())

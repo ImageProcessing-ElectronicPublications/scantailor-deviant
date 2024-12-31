@@ -25,6 +25,7 @@
 #include "OutputFileNameGenerator.h"
 
 class QPolygonF;
+class QString;
 class PageInfo;
 class AbstractFilterDataCollector;
 class ImageTransformation;
@@ -46,7 +47,8 @@ public:
 
     void process(
         PageInfo const& page_info, AbstractFilterDataCollector* collector,
-        ImageTransformation const& xform, QPolygonF const& content_rect_phys);
+        ImageTransformation const& xform, QPolygonF const& content_rect_phys,
+        QString const& thumb_version);
 private:
     IntrusivePtr<Settings> m_ptrSettings;
     OutputFileNameGenerator m_outFileNameGen;

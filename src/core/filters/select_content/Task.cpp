@@ -90,7 +90,10 @@ Task::~Task()
 }
 
 FilterResultPtr
-Task::process(TaskStatus const& status, FilterData const& data)
+Task::process(
+    TaskStatus const& status,
+    FilterData const& data,
+    QString const& thumb_version)
 {
     status.throwIfCancelled();
 
@@ -263,7 +266,8 @@ Task::process(TaskStatus const& status, FilterData const& data)
     if (m_ptrNextTask) {
         return m_ptrNextTask->process(
                    status, FilterData(data, data.xform()),
-                   ui_data.pageRect(), ui_data.contentRect()
+                   ui_data.pageRect(), ui_data.contentRect(),
+                   thumb_version
                );
     } else {
         return FilterResultPtr(

@@ -26,6 +26,7 @@
 #include "AbstractFilterDataCollector.h"
 #include "ThumbnailCollector.h"
 #include "filters/deskew/CacheDrivenTask.h"
+#include <QString>
 
 namespace page_split
 {
@@ -108,7 +109,7 @@ CacheDrivenTask::process(
                         new IncompleteThumbnail(
                             thumb_col->thumbnailCache(),
                             thumb_col->maxLogicalThumbSize(),
-                            page_info.imageId(), xform
+                            page_info.imageId(), QString(), xform
                         )
                     )
                 );
@@ -144,7 +145,7 @@ CacheDrivenTask::process(
                 new Thumbnail(
                     thumb_col->thumbnailCache(),
                     thumb_col->maxLogicalThumbSize(),
-                    page_info.imageId(), xform, layout,
+                    page_info.imageId(), QString(), xform, layout,
                     page_info.leftHalfRemoved(),
                     page_info.rightHalfRemoved()
                 )

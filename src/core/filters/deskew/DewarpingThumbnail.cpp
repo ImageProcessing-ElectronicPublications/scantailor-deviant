@@ -32,13 +32,13 @@ namespace deskew
 DewarpingThumbnail::DewarpingThumbnail(
 	IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
 	QSizeF const& max_size, ImageId const& image_id,
-	ImageTransformation const& xform,
+    QString const& version,	ImageTransformation const& xform,
 	std::vector<QPointF> const& top_curve,
 	std::vector<QPointF> const& bottom_curve,
 	dewarping::DepthPerception const& depth_perception)
 	: ThumbnailBase(
         thumbnail_cache, max_size, 
-        image_id, xform
+        image_id, version, xform
       )
     , m_topCurve(top_curve)
     , m_bottomCurve(bottom_curve)

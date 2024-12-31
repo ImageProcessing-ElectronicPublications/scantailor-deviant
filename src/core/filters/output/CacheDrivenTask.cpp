@@ -57,7 +57,8 @@ CacheDrivenTask::~CacheDrivenTask()
 void
 CacheDrivenTask::process(
     PageInfo const& page_info, AbstractFilterDataCollector* collector,
-    ImageTransformation const& xform, QPolygonF const& content_rect_phys)
+    ImageTransformation const& xform, QPolygonF const& content_rect_phys,
+    QString const& thumb_version)
 {
     if (ThumbnailCollector* thumb_col = dynamic_cast<ThumbnailCollector*>(collector)) {
 
@@ -143,7 +144,8 @@ CacheDrivenTask::process(
                     new IncompleteThumbnail(
                         thumb_col->thumbnailCache(),
                         thumb_col->maxLogicalThumbSize(),
-                        page_info.imageId(), new_xform
+                        page_info.imageId(), thumb_version,
+                        new_xform
                     )
                 )
             );
@@ -157,7 +159,8 @@ CacheDrivenTask::process(
                     new Thumbnail(
                         thumb_col->thumbnailCache(),
                         thumb_col->maxLogicalThumbSize(),
-                        ImageId(out_file_path), out_xform
+                        ImageId(out_file_path), QString(),
+                        out_xform
                     )
                 )
             );

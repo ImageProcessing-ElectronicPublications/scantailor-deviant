@@ -23,6 +23,7 @@
 #include <QRectF>
 
 class QSizeF;
+class QString;
 class ThumbnailPixmapCache;
 class ImageId;
 class ImageTransformation;
@@ -34,7 +35,7 @@ class Thumbnail : public ThumbnailBase
 {
 public:
     Thumbnail(IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
-              QSizeF const& max_size, ImageId const& image_id,
+              QSizeF const& max_size, ImageId const& image_id, QString const& version,
               ImageTransformation const& xform, QRectF const& content_rect, bool deviant);
 
     virtual void paintOverImage(

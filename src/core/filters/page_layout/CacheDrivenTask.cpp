@@ -51,7 +51,8 @@ CacheDrivenTask::~CacheDrivenTask()
 void
 CacheDrivenTask::process(
     PageInfo const& page_info, AbstractFilterDataCollector* collector,
-    ImageTransformation const& xform, QRectF const& content_rect)
+    ImageTransformation const& xform, QRectF const& content_rect,
+    QString const& thumb_version)
 {
     std::unique_ptr<Params> const params(
         m_ptrSettings->getPageParams(page_info.id())
@@ -76,7 +77,7 @@ CacheDrivenTask::process(
                     new IncompleteThumbnail(
                         thumb_col->thumbnailCache(),
                         thumb_col->maxLogicalThumbSize(),
-                        page_info.imageId(), xform
+                        page_info.imageId(), thumb_version, xform
                     )
                 )
             );
@@ -100,7 +101,7 @@ CacheDrivenTask::process(
     new_xform.setPostCropArea(xform.transform().map(page_rect_phys));
 
     if (m_ptrNextTask) {
-        m_ptrNextTask->process(page_info, collector, new_xform, content_rect_phys);
+        m_ptrNextTask->process(page_info, collector, new_xform, content_rect_phys, thumb_version);
         return;
     }
 
@@ -111,8 +112,8 @@ CacheDrivenTask::process(
                 new Thumbnail(
                     thumb_col->thumbnailCache(),
                     thumb_col->maxLogicalThumbSize(),
-                    page_info.imageId(), *params,
-                    new_xform, content_rect_phys
+                    page_info.imageId(), thumb_version,
+                    *params, new_xform, content_rect_phys
                 )
             )
         );

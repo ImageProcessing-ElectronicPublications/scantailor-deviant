@@ -28,6 +28,7 @@
 
 class ThumbnailPixmapCache;
 class ImageId;
+class QString;
 
 namespace page_layout
 {
@@ -36,7 +37,8 @@ class Thumbnail : public ThumbnailBase
 {
 public:
     Thumbnail(IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
-              QSizeF const& max_size, ImageId const& image_id, Params const& params,
+              QSizeF const& max_size, ImageId const& image_id,
+              QString const& version, Params const& params, 
               ImageTransformation const& xform, QPolygonF const& phys_content_rect);
 
     virtual void paintOverImage(

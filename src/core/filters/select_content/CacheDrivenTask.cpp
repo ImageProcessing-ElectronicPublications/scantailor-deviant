@@ -48,7 +48,7 @@ CacheDrivenTask::~CacheDrivenTask()
 void
 CacheDrivenTask::process(
     PageInfo const& page_info, AbstractFilterDataCollector* collector,
-    ImageTransformation const& xform)
+    ImageTransformation const& xform, QString const& thumb_version)
 {
     std::unique_ptr<Params> params(m_ptrSettings->getPageParams(page_info.id()));
 
@@ -73,7 +73,7 @@ CacheDrivenTask::process(
                     new IncompleteThumbnail(
                         thumb_col->thumbnailCache(),
                         thumb_col->maxLogicalThumbSize(),
-                        page_info.imageId(), xform
+                        page_info.imageId(), thumb_version, xform
                     )
                 )
             );
@@ -87,7 +87,7 @@ CacheDrivenTask::process(
     }
 
     if (m_ptrNextTask) {
-        m_ptrNextTask->process(page_info, collector, xform, params->contentRect());
+        m_ptrNextTask->process(page_info, collector, xform, params->contentRect(), thumb_version);
         return;
     }
 
@@ -97,7 +97,7 @@ CacheDrivenTask::process(
                 new Thumbnail(
                     thumb_col->thumbnailCache(),
                     thumb_col->maxLogicalThumbSize(),
-                    page_info.imageId(), xform,
+                    page_info.imageId(), thumb_version, xform,
                     params->contentRect(),
                     params->isDeviant(m_ptrSettings->std(), m_ptrSettings->maxDeviation())
                 )

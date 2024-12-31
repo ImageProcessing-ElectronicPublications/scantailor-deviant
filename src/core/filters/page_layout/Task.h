@@ -28,6 +28,7 @@ class TaskStatus;
 class FilterData;
 class ImageTransformation;
 class QRectF;
+class QString;
 
 namespace output
 {
@@ -53,7 +54,8 @@ public:
 
     FilterResultPtr process(
         TaskStatus const& status, FilterData const& data,
-        QRectF const& page_rect, QRectF const& content_rect);
+        QRectF const& page_rect, QRectF const& content_rect,
+        QString const& thumb_version);
 private:
     class UiUpdater;
 

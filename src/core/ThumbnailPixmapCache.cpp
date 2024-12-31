@@ -322,42 +322,49 @@ ThumbnailPixmapCache::setThumbDir(QString const& thumb_dir)
 }
 
 ThumbnailPixmapCache::Status
-ThumbnailPixmapCache::loadFromCache(ImageId const& image_id, QPixmap& pixmap)
+ThumbnailPixmapCache::loadFromCache(
+    ImageId const& image_id, QString const& version, QPixmap& pixmap)
 {
-    ThumbId const stub(image_id, "X");
-    return m_ptrImpl->request(stub, pixmap);
+    return m_ptrImpl->request(
+        ThumbId(image_id, version),
+        pixmap);
 }
 
 ThumbnailPixmapCache::Status
-ThumbnailPixmapCache::loadNow(ImageId const& image_id, QPixmap& pixmap)
+ThumbnailPixmapCache::loadNow(
+    ImageId const& image_id, QString const& version, QPixmap& pixmap)
 {
-    ThumbId const stub(image_id, "X");
-    return m_ptrImpl->request(stub, pixmap, true);
+    return m_ptrImpl->request(
+        ThumbId(image_id, version),
+        pixmap, true);
 }
 
 ThumbnailPixmapCache::Status
 ThumbnailPixmapCache::loadRequest(
-    ImageId const& image_id, QPixmap& pixmap,
+    ImageId const& image_id, QString const& version, QPixmap& pixmap,
     boost::weak_ptr<CompletionHandler> const& completion_handler)
 {
-    ThumbId const stub(image_id, "X");
-    return m_ptrImpl->request(stub, pixmap, false, &completion_handler);
+    return m_ptrImpl->request(
+        ThumbId(image_id, version),
+        pixmap, false, &completion_handler);
 }
 
 void
 ThumbnailPixmapCache::ensureThumbnailExists(
-    ImageId const& image_id, QImage const& image)
+    ImageId const& image_id, QString const& version, QImage const& image)
 {
-    ThumbId const stub(image_id, "X");
-    m_ptrImpl->ensureThumbnailExists(stub, image);
+    m_ptrImpl->ensureThumbnailExists(
+        ThumbId(image_id, version),
+        image);
 }
 
 void
 ThumbnailPixmapCache::recreateThumbnail(
-    ImageId const& image_id, QImage const& image)
+    ImageId const& image_id, QString const& version, QImage const& image)
 {
-    ThumbId const stub(image_id, "X");
-    m_ptrImpl->recreateThumbnail(stub, image);
+    m_ptrImpl->recreateThumbnail(
+        ThumbId(image_id, version),
+        image);
 }
 
 /*======================= ThumbnailPixmapCache::Impl ========================*/

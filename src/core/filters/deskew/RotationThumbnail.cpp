@@ -41,10 +41,10 @@ ImageTransformation rotateXform(ImageTransformation const& xform, double angle)
 RotationThumbnail::RotationThumbnail(
 	IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
 	QSizeF const& max_size, ImageId const& image_id,
-	ImageTransformation const& xform,
+    QString const& version, ImageTransformation const& xform,
 	double compensation_angle_deg, bool draw_grid)
 	: ThumbnailBase(
-		thumbnail_cache, max_size, image_id,
+		thumbnail_cache, max_size, image_id, version,
 		rotateXform(xform, compensation_angle_deg)
 	)
 	, m_drawGrid(draw_grid)

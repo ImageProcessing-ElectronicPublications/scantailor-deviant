@@ -46,6 +46,7 @@
 #include "imageproc/SeedFill.h"
 #include "imageproc/Morphology.h"
 #include "math/XSpline.h"
+#include <QString>
 #include <memory>
 
 namespace deskew
@@ -267,7 +268,7 @@ Task::processNoDistortion(
     if (m_ptrNextTask)
     {
         return m_ptrNextTask->process(
-                    status, FilterData(data, data.xform())
+                    status, FilterData(data, data.xform()), QString()
                );
     }
     else
@@ -342,7 +343,7 @@ Task::processRotationDistortion(
         rotated_xform.setPostRotation(angle);
 
         return m_ptrNextTask->process(
-            status, FilterData(data, rotated_xform)
+            status, FilterData(data, rotated_xform), QString()
         );
     }
     else
@@ -486,8 +487,10 @@ Task::processPerspectiveDistortion(
             perspective_transform.transformedCropArea()
         );
 
+        QString const thumb_version;
+
         return m_ptrNextTask->process(
-            status, FilterData(data.origImageFilename(), transformed_image, crop_area)
+            status, FilterData(data.origImageFilename(), transformed_image, crop_area), thumb_version
         );
     }
     else
@@ -614,8 +617,10 @@ Task::processWarpDistortion(
             perspective_transform.transformedCropArea()
         );
 
+        QString const thumb_version;
+
         return m_ptrNextTask->process(
-            status, FilterData(data.origImageFilename(), transformed_image, crop_area)
+            status, FilterData(data.origImageFilename(), transformed_image, crop_area), thumb_version
         );
     }
     else
