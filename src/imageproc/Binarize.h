@@ -64,7 +64,7 @@ BinaryImage binarizeMokji(
   * \brief Image binarization using Niblack's local thresholding method.
   *
   * Niblack, Wayne. An introduction to digital image processing.
-  * Englewood Cliffs, N. J., Prentice Hall (1986) 115-116 
+  * Englewood Cliffs, N. J., Prentice Hall (1986) 115-116
   */
 GrayImage binarizeNiblackMap(
     GrayImage const& src, QSize window_size, double k = 0.20);
@@ -80,7 +80,7 @@ BinaryImage binarizeNiblack(
  *
  * Gatos, Basilios, Ioannis Pratikakis, and Stavros J. Perantonis.
  * "An adaptive binarization technique for low quality historical documents."
- * Document Analysis Systems VI. Springer Berlin Heidelberg, 2004. 102-113. 
+ * Document Analysis Systems VI. Springer Berlin Heidelberg, 2004. 102-113.
  */
 BinaryImage binarizeGatosCleaner(
     GrayImage& wiener, BinaryImage const& niblack,
@@ -95,6 +95,8 @@ BinaryImage binarizeGatos(
  * Sauvola, J. and M. Pietikainen. 2000. "Adaptive document image binarization".
  * http://www.mediateam.oulu.fi/publications/pdf/24.pdf
  */
+GrayImage binarizeSauvolaMap(
+    GrayImage const& src, QSize const window_size, double k = 0.34);
 BinaryImage binarizeSauvola(
     QImage const& src, QSize window_size,
     double k = 0.34, int delta = 0);
@@ -111,6 +113,8 @@ BinaryImage binarizeSauvola(
  * \param lower_bound The minimum possible gray level that can be made white.
  * \param upper_bound The maximum possible gray level that can be made black.
  */
+GrayImage binarizeWolfMap(
+    GrayImage const& src, QSize const window_size, double k = 0.30);
 BinaryImage binarizeWolf(
     QImage const& src, QSize window_size,
     unsigned char lower_bound = 1, unsigned char upper_bound = 254,
@@ -122,9 +126,11 @@ BinaryImage binarizeWolf(
  * Derek Bradley, Gerhard Roth. 2005. "Adaptive Thresholding Using the Integral Image".
  * http://www.scs.carleton.ca/~roth/iit-publications-iti/docs/gerh-50002.pdf
  */
+GrayImage binarizeBradleyMap(
+    GrayImage const& src, QSize const window_size, double k = 0.15);
 BinaryImage binarizeBradley(
     QImage const& src, QSize window_size,
-    double k = 0.75, int delta = 0);
+    double k = 0.15, int delta = 0);
 
 /**
  * \brief Image binarization using EdgeDiv (EdgePlus & BlurDiv) local/global thresholding method.
@@ -143,8 +149,7 @@ BinaryImage peakThreshold(QImage const& image);
  * MultiScale thresholding method.
  */
 GrayImage binarizeMScaleMap(
-    GrayImage const& src, QSize window_size,
-    double coef = 0.5);
+    GrayImage const& src, QSize window_size, double coef = 0.5);
 BinaryImage binarizeMScale(
     QImage const& src, QSize window_size,
     double coef = 0.5, int delta = 0);
