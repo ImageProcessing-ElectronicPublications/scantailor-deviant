@@ -25,6 +25,7 @@
 #include "ImageTransformation.h"
 #include "ThumbnailBase.h"
 #include "ThumbnailCollector.h"
+#include "ThumbnailVersionGenerator.h"
 #include "filters/select_content/CacheDrivenTask.h"
 #include "dewarping/DewarpingImageTransform.h"
 #include <QString>
@@ -75,7 +76,7 @@ CacheDrivenTask::process(
     if (m_ptrNextTask)
     {
         std::shared_ptr<ImageTransformation> new_transform;
-        QString const thumb_version;
+        QString thumb_version;
         
         switch (params->distortionType())
         {
@@ -123,6 +124,10 @@ CacheDrivenTask::process(
                 if (new_transform.get())
                     new_transform->setPreCropArea(perspective_transform.transformedCropArea());
 
+                thumb_version = ThumbnailVersionGenerator(
+                    page_info.id().subPage(), DistortionType::PERSPECTIVE
+                ).generate();
+
                 break;
             }
             case DistortionType::WARP:
@@ -145,6 +150,10 @@ CacheDrivenTask::process(
 
                 if (new_transform.get())
                     new_transform->setPreCropArea(perspective_transform.transformedCropArea());
+
+                thumb_version = ThumbnailVersionGenerator(
+                    page_info.id().subPage(), DistortionType::WARP
+                ).generate();
 
                 break;
             }
@@ -200,7 +209,9 @@ CacheDrivenTask::process(
                     params->perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT)
                 };
 
-                QString const thumb_version;
+                QString const thumb_version = ThumbnailVersionGenerator(
+                    page_info.id().subPage(), DistortionType::PERSPECTIVE
+                ).generate();
 
                 thumb.reset(
                     new DewarpingThumbnail(
@@ -215,7 +226,9 @@ CacheDrivenTask::process(
             }
             case DistortionType::WARP:
             {
-                QString const thumb_version;
+                QString const thumb_version = ThumbnailVersionGenerator(
+                    page_info.id().subPage(), DistortionType::WARP
+                ).generate();
 
                 thumb.reset(
                     new DewarpingThumbnail(

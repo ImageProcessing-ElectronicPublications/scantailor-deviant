@@ -20,6 +20,7 @@ SET(
         RotationParams.cpp RotationParams.h
         RotationThumbnail.cpp RotationThumbnail.h
         Settings.cpp Settings.h
+        ThumbnailVersionGenerator.h ThumbnailVersionGenerator.cpp
         STEX_PolylineModelShape.cpp STEX_PolylineModelShape.h
         Task.cpp Task.h
         Utils.cpp Utils.h
