@@ -146,6 +146,7 @@ public:
      */
     void recreateThumbnail(ImageId const& image_id, QImage const& image);
 private:
+    struct ThumbId;
     class Item;
     class Impl;
 
