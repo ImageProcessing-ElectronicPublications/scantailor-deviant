@@ -291,8 +291,8 @@ Task::processRotationDistortion(
 {
     if (!params.rotationParams().isValid())
     {
-        QRect const transformed_crop_rect(
-            data.xform().resultingPostCropArea().boundingRect().toRect()
+        QRectF const transformed_crop_rect(
+            data.xform().transformBack().mapRect(data.xform().resultingRect())
         );
 
         status.throwIfCancelled();
@@ -301,7 +301,11 @@ Task::processRotationDistortion(
         {
             BinaryImage bw_image(
                 data.grayImage(),
-                transformed_crop_rect,
+                QRect(
+                    0, 0,
+                    transformed_crop_rect.width(),
+                    transformed_crop_rect.height()
+                ),
                 data.bwThreshold()
             );
 
