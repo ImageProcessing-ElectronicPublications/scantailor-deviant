@@ -110,7 +110,7 @@ QSpinBox,
 QTabBar:tab,
 QToolButton
 {
-    border-color: #F0F0F0;
+    border-color: #E0E0E0;
 }
 
 QGroupBox,
@@ -179,7 +179,7 @@ QTreeView:item:first:hover
 QHeaderView:section,
 QWidget
 {
-    color: #F0F0F0;
+    color: #E0E0E0;
     background-color: #333333;
     selection-color: #FFFFFF;
     selection-background-color: #40A0F0;
@@ -308,6 +308,17 @@ QTreeView:item:selected
 {
     color: #FFFFFF;
     background-color: #40A0F0;
+}
+
+/* Colors - ThumbnailView */
+
+ThumbnailView
+{
+    qproperty-textColor: #D0D0D0;
+    qproperty-highlightedTextColor: #FFFFFF;
+    qproperty-targetedBackgroundColor: #3070B0;
+    qproperty-selectedBackgroundColor: #3070B0;
+    qproperty-leaderBackgroundColor: #70B0F0;
 }
 
 /*** Images ***/
