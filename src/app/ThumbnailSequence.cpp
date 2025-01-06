@@ -415,6 +415,7 @@ private:
 
     ThumbnailSequence::Impl& m_rOwner;
     ThumbnailSequence::Item const* m_pItem;
+    ThumbnailView::QssStyle const* m_ptrQssStyle;
     QGraphicsItem* m_pThumb;
     LabelGroup* m_pLabelGroup;
     LabelGroup* m_pHintGroup;
@@ -2108,6 +2109,7 @@ ThumbnailSequence::CompositeItem::CompositeItem(
     LabelGroup* hint_group)
     :   m_rOwner(owner),
         m_pItem(0),
+        m_ptrQssStyle(nullptr),
         m_pThumb(thumbnail),
         m_pLabelGroup(label_group),
         m_pHintGroup(hint_group), m_row(0), m_col(0)
@@ -2172,6 +2174,7 @@ ThumbnailSequence::CompositeItem::updateAppearence(
     ThumbnailView::QssStyle const* qssStyle,
     bool selected, bool selection_leader)
 {
+    m_ptrQssStyle = qssStyle;
     m_pLabelGroup->updateAppearence(qssStyle, selected, selection_leader);
     if (m_pHintGroup) {
         m_pHintGroup->updateAppearence(qssStyle, selected, selection_leader);
@@ -2197,13 +2200,13 @@ ThumbnailSequence::CompositeItem::paint(
     if (m_pItem->isSelected() || m_pItem->isTargeted()) {
         QColor clr;
         if (m_pItem->isTargeted()) {
-            clr = QColor(Qt::yellow).darker(150);
+            clr = m_ptrQssStyle->targetedBackgroundColor();
         } else {
-            clr = QApplication::palette().color(QPalette::Highlight);
+            clr = m_ptrQssStyle->selectedBackgroundColor();
         }
 
         if (!m_pItem->isSelectionLeader()) {
-            clr = clr.lighter(GlobalStaticSettings::m_highlightColorAdjustment);
+            clr = m_ptrQssStyle->leaderBackgroundColor();
         }
         painter->fillRect(boundingRect(), clr);
     }

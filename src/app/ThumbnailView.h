@@ -28,6 +28,9 @@ class ThumbnailView : public QGraphicsView
     Q_OBJECT
     Q_PROPERTY(QColor textColor READ textColor WRITE setTextColor)
     Q_PROPERTY(QColor highlightedTextColor READ highlightedTextColor WRITE setHighlightedTextColor)
+    Q_PROPERTY(QColor selectedBackgroundColor READ selectedBackgroundColor WRITE setSelectedBackgroundColor)
+    Q_PROPERTY(QColor targetedBackgroundColor READ targetedBackgroundColor WRITE setTargetedBackgroundColor)
+    Q_PROPERTY(QColor leaderBackgroundColor READ leaderBackgroundColor WRITE setLeaderBackgroundColor)
 public:
     ThumbnailView(QWidget* parent)
         : QGraphicsView(parent)
@@ -48,6 +51,21 @@ public:
         QColor const& highlightedTextColor() const
         {
             return m_rOwner.m_highlightedTextColor;
+        }
+
+        QColor const& selectedBackgroundColor() const
+        {
+            return m_rOwner.m_selectedBackgroundColor;
+        }
+
+        QColor const& targetedBackgroundColor() const
+        {
+            return m_rOwner.m_targetedBackgroundColor;
+        }
+
+        QColor const& leaderBackgroundColor() const
+        {
+            return m_rOwner.m_leaderBackgroundColor;
         }
 
     private:
@@ -77,8 +95,41 @@ private:
         m_highlightedTextColor = color;
     }
 
+    QColor const& selectedBackgroundColor() const
+    {
+        return m_selectedBackgroundColor;
+    }
+
+    void setSelectedBackgroundColor(QColor const& color)
+    {
+        m_selectedBackgroundColor = color;
+    }
+
+    QColor const& targetedBackgroundColor() const
+    {
+        return m_targetedBackgroundColor;
+    }
+
+    void setTargetedBackgroundColor(QColor const& color)
+    {
+        m_targetedBackgroundColor = color;
+    }
+
+    QColor const& leaderBackgroundColor() const
+    {
+        return m_leaderBackgroundColor;
+    }
+
+    void setLeaderBackgroundColor(QColor const& color)
+    {
+        m_leaderBackgroundColor = color;
+    }
+
     QColor m_textColor;
     QColor m_highlightedTextColor;
+    QColor m_selectedBackgroundColor;
+    QColor m_targetedBackgroundColor;
+    QColor m_leaderBackgroundColor;
     QssStyle m_qssStyle;
 };
 
