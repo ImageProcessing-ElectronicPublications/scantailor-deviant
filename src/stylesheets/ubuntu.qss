@@ -562,3 +562,10 @@ QScrollBar::down-arrow:vertical {
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
   	background: none;
 }
+ThumbnailView {
+    qproperty-textColor: #000000;
+    qproperty-highlightedTextColor: #FFFFFF;
+    qproperty-targetedBackgroundColor: #00508F;
+    qproperty-selectedBackgroundColor: #0078D7;
+    qproperty-leaderBackgroundColor: #43ACFF;
+}

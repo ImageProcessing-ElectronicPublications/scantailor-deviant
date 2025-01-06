@@ -31,7 +31,7 @@
 #include <set>
 
 class QGraphicsItem;
-class QGraphicsView;
+class ThumbnailView;
 class PageId;
 class ImageId;
 class PageInfo;
@@ -76,7 +76,7 @@ public:
 
     void setThumbnailFactory(IntrusivePtr<ThumbnailFactory> const& factory);
 
-    void attachView(QGraphicsView* view);
+    void attachView(ThumbnailView* view);
 
     /**
      * \brief Re-populate the list of thumbnails.
