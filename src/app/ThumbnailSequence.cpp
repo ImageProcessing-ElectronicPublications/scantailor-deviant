@@ -17,7 +17,7 @@
 */
 
 #include "ThumbnailSequence.h"
-
+#include "ThumbnailView.h"
 #include "ThumbnailFactory.h"
 #include "IncompleteThumbnail.h"
 #include "PageSequence.h"
@@ -100,9 +100,13 @@ public:
         return m_isTargeted;
     }
 
-    void setSelected(bool selected) const;
+    void setSelected(
+        ThumbnailView::QssStyle const* qssStyle,
+        bool selected) const;
 
-    void setSelectionLeader(bool selection_leader) const;
+    void setSelectionLeader(
+        ThumbnailView::QssStyle const* qssStyle,
+        bool selection_leader) const;
 
     void setTargeted(bool targeted) const;
 
@@ -146,7 +150,7 @@ public:
 
     void setThumbnailFactory(IntrusivePtr<ThumbnailFactory> const& factory);
 
-    void attachView(QGraphicsView* view);
+    void attachView(ThumbnailView* view);
 
     void reset(PageSequence const& pages,
                SelectionAction const selection_action,
@@ -288,6 +292,7 @@ private:
     void commitSceneRect();
 
     ThumbnailSequence& m_rOwner;
+    ThumbnailView::QssStyle const* m_ptrQssStyle;
     QSizeF m_maxLogicalThumbSize;
     Container m_items;
     ItemsById& m_itemsById;
@@ -341,7 +346,9 @@ public:
         QGraphicsSimpleTextItem* bold_label,
         QGraphicsPixmapItem* pixmap = nullptr);
 
-    void updateAppearence(bool selected, bool selection_leader);
+    void updateAppearence(
+        ThumbnailView::QssStyle const* qssStyle,
+        bool selected, bool selection_leader);
 private:
     QGraphicsSimpleTextItem* m_pNormalLabel;
     QGraphicsSimpleTextItem* m_pBoldLabel;
@@ -369,7 +376,9 @@ public:
 
     void updateSceneRect(QRectF& scene_rect);
 
-    void updateAppearence(bool selected, bool selection_leader);
+    void updateAppearence(
+        ThumbnailView::QssStyle const* qssStyle,
+        bool selected, bool selection_leader);
 
     virtual QRectF boundingRect() const;
 
@@ -433,7 +442,7 @@ ThumbnailSequence::setThumbnailFactory(IntrusivePtr<ThumbnailFactory> const& fac
 }
 
 void
-ThumbnailSequence::attachView(QGraphicsView* const view)
+ThumbnailSequence::attachView(ThumbnailView* const view)
 {
     m_ptrImpl->attachView(view);
 }
@@ -591,6 +600,7 @@ ThumbnailSequence::emitNewSelectionLeader(
 ThumbnailSequence::Impl::Impl(
     ThumbnailSequence& owner, QSizeF const& max_logical_thumb_size)
     :   m_rOwner(owner),
+        m_ptrQssStyle(nullptr),
         m_maxLogicalThumbSize(max_logical_thumb_size),
         m_items(),
         m_itemsById(m_items.get<ItemsByIdTag>()),
@@ -617,9 +627,10 @@ ThumbnailSequence::Impl::setThumbnailFactory(
 }
 
 void
-ThumbnailSequence::Impl::attachView(QGraphicsView* const view)
+ThumbnailSequence::Impl::attachView(ThumbnailView* const view)
 {
     view->setScene(&m_graphicsScene);
+    m_ptrQssStyle = view->qssStyle();
 }
 
 void
@@ -655,7 +666,7 @@ ThumbnailSequence::Impl::reset(
         item->composite->setItem(item);
 
         if (selected.find(page_info.id()) != selected.end()) {
-            item->setSelected(true);
+            item->setSelected(m_ptrQssStyle, true);
             moveToSelected(item);
             some_selected_item = item;
         }
@@ -673,7 +684,7 @@ ThumbnailSequence::Impl::reset(
     }
 
     if (m_pSelectionLeader) {
-        m_pSelectionLeader->setSelectionLeader(true);
+        m_pSelectionLeader->setSelectionLeader(m_ptrQssStyle, true);
         m_rOwner.emitNewSelectionLeader(
             selection_leader, m_pSelectionLeader->composite, DEFAULT_SELECTION_FLAGS
         );
@@ -741,7 +752,7 @@ ThumbnailSequence::Impl::invalidateThumbnailImpl(ItemsById::iterator const id_it
     QSizeF const new_size(new_composite->boundingRect().size());
     QPointF const old_pos(new_composite->pos());
 
-    new_composite->updateAppearence(id_it->isSelected(), id_it->isSelectionLeader());
+    new_composite->updateAppearence(m_ptrQssStyle, id_it->isSelected(), id_it->isSelectionLeader());
 
     m_graphicsScene.addItem(composite.release());
     id_it->composite = new_composite;
@@ -982,7 +993,7 @@ ThumbnailSequence::Impl::invalidateAllThumbnails()
             composite->setPos(xoffset, yoffset);
             composite->setPosInView(cur_row, col);
             composite->updateSceneRect(m_sceneRect);
-            composite->updateAppearence(ord_it->isSelected(), ord_it->isSelectionLeader());
+            composite->updateAppearence(m_ptrQssStyle, ord_it->isSelected(), ord_it->isSelectionLeader());
             m_graphicsScene.addItem(composite);
             xoffset += composite->boundingRect().width() + adj_spacing;
             next_yoffset = std::max(composite->boundingRect().height() + GlobalStaticSettings::m_thumbsMinSpacing, next_yoffset);
@@ -1102,10 +1113,10 @@ ThumbnailSequence::Impl::setSelection(PageId const& page_id, ThumbnailSequence::
         if (&*id_it != &item) {
             if (action == ThumbnailSequence::KEEP_SELECTION) {
                 if (m_pSelectionLeader == &item) {
-                    item.setSelectionLeader(false);
+                    item.setSelectionLeader(m_ptrQssStyle, false);
                 }
             } else {
-                item.setSelected(false);
+                item.setSelected(m_ptrQssStyle, false);
                 moveToUnselected(&item);
             }
         }
@@ -1116,7 +1127,7 @@ ThumbnailSequence::Impl::setSelection(PageId const& page_id, ThumbnailSequence::
         if (!m_pSelectionLeader->isSelectionLeader()) {
             // need new selection leader
             m_pSelectionLeader = &*id_it;
-            m_pSelectionLeader->setSelectionLeader(true);
+            m_pSelectionLeader->setSelectionLeader(m_ptrQssStyle, true);
             moveToSelected(m_pSelectionLeader);
         } else {
             flags |= REDUNDANT_SELECTION;
@@ -1145,10 +1156,10 @@ ThumbnailSequence::Impl::setSelection(QSet<PageId> const& page_ids, ThumbnailSeq
         if (!page_ids.contains(item.pageId())) {
             if (action == ThumbnailSequence::KEEP_SELECTION) {
                 if (m_pSelectionLeader == &item) {
-                    item.setSelectionLeader(false);
+                    item.setSelectionLeader(m_ptrQssStyle, false);
                 }
             } else {
-                item.setSelected(false);
+                item.setSelected(m_ptrQssStyle, false);
                 moveToUnselected(&item);
             }
         }
@@ -1167,7 +1178,7 @@ ThumbnailSequence::Impl::setSelection(QSet<PageId> const& page_ids, ThumbnailSeq
     while (id_it != m_itemsById.end()) {
         if (page_ids.contains(id_it->pageId())) {
             Item const* item = &*id_it;
-            item->setSelected(true);
+            item->setSelected(m_ptrQssStyle, true);
             moveToSelected(item);
             if (need_new_selection_leader) {
                 m_pSelectionLeader = item;
@@ -1179,7 +1190,7 @@ ThumbnailSequence::Impl::setSelection(QSet<PageId> const& page_ids, ThumbnailSeq
     if (m_pSelectionLeader) {
         SelectionFlags flags = DEFAULT_SELECTION_FLAGS;
         if (need_new_selection_leader) {
-            m_pSelectionLeader->setSelectionLeader(true);
+            m_pSelectionLeader->setSelectionLeader(m_ptrQssStyle, true);
         } else {
             flags |= REDUNDANT_SELECTION;
         }
@@ -1547,10 +1558,10 @@ ThumbnailSequence::Impl::selectItemWithControl(ItemsById::iterator const& id_it)
 
     if (!id_it->isSelected()) {
         if (m_pSelectionLeader) {
-            m_pSelectionLeader->setSelectionLeader(false);
+            m_pSelectionLeader->setSelectionLeader(m_ptrQssStyle, false);
         }
         m_pSelectionLeader = &*id_it;
-        m_pSelectionLeader->setSelectionLeader(true);
+        m_pSelectionLeader->setSelectionLeader(m_ptrQssStyle, true);
         moveToSelected(m_pSelectionLeader);
 
         m_rOwner.emitNewSelectionLeader(
@@ -1571,7 +1582,7 @@ ThumbnailSequence::Impl::selectItemWithControl(ItemsById::iterator const& id_it)
     }
 
     // Unselect it.
-    id_it->setSelected(false);
+    id_it->setSelected(m_ptrQssStyle, false);
     moveToUnselected(&*id_it);
 
     if (m_pSelectionLeader != &*id_it) {
@@ -1604,7 +1615,7 @@ ThumbnailSequence::Impl::selectItemWithControl(ItemsById::iterator const& id_it)
     }
     assert(m_pSelectionLeader); // We had multiple selected items.
 
-    m_pSelectionLeader->setSelectionLeader(true);
+    m_pSelectionLeader->setSelectionLeader(m_ptrQssStyle, true);
     // No need to moveToSelected() as it was and remains selected.
 
     m_rOwner.emitNewSelectionLeader(
@@ -1672,15 +1683,15 @@ ThumbnailSequence::Impl::selectItemWithShift(ItemsById::iterator const& id_it)
 
     ++endpoint2; // Make the interval inclusive.
     for (; endpoint1 != endpoint2; ++endpoint1) {
-        endpoint1->setSelected(true);
+        endpoint1->setSelected(m_ptrQssStyle, true);
         moveToSelected(&*endpoint1);
     }
 
     // Switch the selection leader.
     assert(m_pSelectionLeader);
-    m_pSelectionLeader->setSelectionLeader(false);
+    m_pSelectionLeader->setSelectionLeader(m_ptrQssStyle, false);
     m_pSelectionLeader = &*id_it;
-    m_pSelectionLeader->setSelectionLeader(true);
+    m_pSelectionLeader->setSelectionLeader(m_ptrQssStyle, true);
 
     m_rOwner.emitNewSelectionLeader(id_it->pageInfo, id_it->composite, flags);
 }
@@ -1734,7 +1745,7 @@ ThumbnailSequence::Impl::selectItemNoModifiers(ItemsById::iterator const& id_it)
     clearSelection();
 
     m_pSelectionLeader = &*id_it;
-    m_pSelectionLeader->setSelectionLeader(true);
+    m_pSelectionLeader->setSelectionLeader(m_ptrQssStyle, true);
     moveToSelected(m_pSelectionLeader);
 
     m_rOwner.emitNewSelectionLeader(id_it->pageInfo, id_it->composite, flags);
@@ -1767,7 +1778,7 @@ ThumbnailSequence::Impl::clearSelection()
         if (!item.isSelected()) {
             break;
         }
-        item.setSelected(false);
+        item.setSelected(m_ptrQssStyle, false);
     }
 }
 
@@ -1884,7 +1895,7 @@ ThumbnailSequence::Impl::getLabelGroup(PageInfo const& page_info)
     QFont bold_font(bold_text_item->font());
 //  bold_font.setWeight(QFont::Bold);
     bold_text_item->setFont(bold_font);
-    bold_text_item->setBrush(QApplication::palette().highlightedText());
+    bold_text_item->setBrush(QBrush(m_ptrQssStyle->highlightedTextColor()));
 
     QRectF normal_text_box(normal_text_item->boundingRect());
     QRectF bold_text_box(bold_text_item->boundingRect());
@@ -1939,7 +1950,7 @@ ThumbnailSequence::Impl::getHintGroup(PageInfo const& page_info, PageOrderProvid
     QFont bold_font(bold_text_item->font());
     bold_font.setItalic(true);
     bold_text_item->setFont(bold_font);
-    bold_text_item->setBrush(QApplication::palette().highlightedText());
+    bold_text_item->setBrush(QBrush(m_ptrQssStyle->highlightedTextColor()));
 
     QRectF normal_text_box(italic_text_item->boundingRect());
     QRectF bold_text_box(bold_text_item->boundingRect());
@@ -1989,7 +2000,7 @@ ThumbnailSequence::Item::Item(PageInfo const& page_info, CompositeItem* comp_ite
 }
 
 void
-ThumbnailSequence::Item::setSelected(bool selected) const
+ThumbnailSequence::Item::setSelected(ThumbnailView::QssStyle const* qssStyle, bool selected) const
 {
     bool const was_selected = m_isSelected;
     bool const was_selection_leader = m_isSelectionLeader;
@@ -1997,7 +2008,7 @@ ThumbnailSequence::Item::setSelected(bool selected) const
     m_isSelectionLeader = m_isSelectionLeader && selected;
 
     if (was_selected != m_isSelected || was_selection_leader != m_isSelectionLeader) {
-        composite->updateAppearence(m_isSelected, m_isSelectionLeader);
+        composite->updateAppearence(qssStyle, m_isSelected, m_isSelectionLeader);
     }
     if (was_selected != m_isSelected) {
         composite->update();
@@ -2005,7 +2016,9 @@ ThumbnailSequence::Item::setSelected(bool selected) const
 }
 
 void
-ThumbnailSequence::Item::setSelectionLeader(bool selection_leader) const
+ThumbnailSequence::Item::setSelectionLeader(
+    ThumbnailView::QssStyle const* qssStyle,
+    bool selection_leader) const
 {
     bool const was_selected = m_isSelected;
     bool const was_selection_leader = m_isSelectionLeader;
@@ -2013,7 +2026,7 @@ ThumbnailSequence::Item::setSelectionLeader(bool selection_leader) const
     m_isSelectionLeader = selection_leader;
 
     if (was_selected != m_isSelected || was_selection_leader != m_isSelectionLeader) {
-        composite->updateAppearence(m_isSelected, m_isSelectionLeader);
+        composite->updateAppearence(qssStyle, m_isSelected, m_isSelectionLeader);
         composite->update();
     }
 }
@@ -2070,7 +2083,9 @@ ThumbnailSequence::LabelGroup::LabelGroup(
 }
 
 void
-ThumbnailSequence::LabelGroup::updateAppearence(bool selected, bool selection_leader)
+ThumbnailSequence::LabelGroup::updateAppearence(
+    ThumbnailView::QssStyle const* qssStyle,
+    bool selected, bool selection_leader)
 {
     m_pNormalLabel->setVisible(!selection_leader);
     m_pBoldLabel->setVisible(selection_leader);
@@ -2078,9 +2093,9 @@ ThumbnailSequence::LabelGroup::updateAppearence(bool selected, bool selection_le
     if (selection_leader) {
         assert(selected);
     } else if (selected) {
-        m_pNormalLabel->setBrush(QApplication::palette().highlightedText());
+        m_pNormalLabel->setBrush(QBrush(qssStyle->highlightedTextColor()));
     } else {
-        m_pNormalLabel->setBrush(QApplication::palette().text());
+        m_pNormalLabel->setBrush(QBrush(qssStyle->textColor()));
     }
 }
 
@@ -2153,11 +2168,13 @@ ThumbnailSequence::CompositeItem::updateSceneRect(QRectF& scene_rect)
 }
 
 void
-ThumbnailSequence::CompositeItem::updateAppearence(bool selected, bool selection_leader)
+ThumbnailSequence::CompositeItem::updateAppearence(
+    ThumbnailView::QssStyle const* qssStyle,
+    bool selected, bool selection_leader)
 {
-    m_pLabelGroup->updateAppearence(selected, selection_leader);
+    m_pLabelGroup->updateAppearence(qssStyle, selected, selection_leader);
     if (m_pHintGroup) {
-        m_pHintGroup->updateAppearence(selected, selection_leader);
+        m_pHintGroup->updateAppearence(qssStyle, selected, selection_leader);
     }
 }
 

@@ -35,6 +35,7 @@ SET(
         ProjectCreationContext.cpp ProjectCreationContext.h
         ProjectOpeningContext.cpp ProjectOpeningContext.h
         OutOfMemoryDialog.cpp OutOfMemoryDialog.h
+        ThumbnailView.h
         ThumbnailSequence.cpp ThumbnailSequence.h
         ProjectFilesDialog.cpp ProjectFilesDialog.h
         NewOpenProjectPanel.cpp NewOpenProjectPanel.h
