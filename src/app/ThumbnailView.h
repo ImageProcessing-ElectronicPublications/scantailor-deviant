@@ -32,11 +32,7 @@ class ThumbnailView : public QGraphicsView
     Q_PROPERTY(QColor targetedBackgroundColor READ targetedBackgroundColor WRITE setTargetedBackgroundColor)
     Q_PROPERTY(QColor leaderBackgroundColor READ leaderBackgroundColor WRITE setLeaderBackgroundColor)
 public:
-    ThumbnailView(QWidget* parent)
-        : QGraphicsView(parent)
-        , m_qssStyle(*this)
-    {
-    }
+    ThumbnailView(QWidget* parent);
 
     class QssStyle
     {
