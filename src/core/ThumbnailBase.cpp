@@ -123,8 +123,14 @@ ThumbnailBase::paint(QPainter* painter,
     QTransform pre_scale_xform;
     pre_scale_xform.scale(x_pre_scale, y_pre_scale);
 
+    QRectF const& dewarped_image_offset = m_imageXform.origRect();
+    QTransform dewarp_compensation = m_imageXform.transform();
+    dewarp_compensation.translate(
+        dewarped_image_offset.x(),
+        dewarped_image_offset.y()
+    );
     QTransform const pixmap_to_thumb(
-        pre_scale_xform * m_imageXform.transform() * m_postScaleXform
+        pre_scale_xform * dewarp_compensation * m_postScaleXform
     );
 
     // The polygon to draw into in original image coordinates.
