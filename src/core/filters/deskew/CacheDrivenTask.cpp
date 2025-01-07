@@ -209,15 +209,11 @@ CacheDrivenTask::process(
                     params->perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT)
                 };
 
-                QString const thumb_version = ThumbnailVersionGenerator(
-                    page_info.id().subPage(), DistortionType::PERSPECTIVE
-                ).generate();
-
                 thumb.reset(
                     new DewarpingThumbnail(
                         thumb_col->thumbnailCache(),
                         thumb_col->maxLogicalThumbSize(),
-                        page_info.imageId(), thumb_version,
+                        page_info.imageId(), QString(),
                         xform, top_curve, bottom_curve,
                         dewarping::DepthPerception()
                     )
@@ -226,15 +222,11 @@ CacheDrivenTask::process(
             }
             case DistortionType::WARP:
             {
-                QString const thumb_version = ThumbnailVersionGenerator(
-                    page_info.id().subPage(), DistortionType::WARP
-                ).generate();
-
                 thumb.reset(
                     new DewarpingThumbnail(
                         thumb_col->thumbnailCache(),
                         thumb_col->maxLogicalThumbSize(),
-                        page_info.imageId(), thumb_version, xform,
+                        page_info.imageId(), QString(), xform,
                         params->dewarpingParams().distortionModel().topCurve().polyline(),
                         params->dewarpingParams().distortionModel().bottomCurve().polyline(),
                         params->dewarpingParams().depthPerception()
