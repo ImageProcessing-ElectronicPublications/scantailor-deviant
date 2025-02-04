@@ -62,7 +62,6 @@ QWidget
     selection-color: #eff0f1;
     background-clip: border;
     border-image: none;
-    border: 0px transparent black;
     outline: 0;
 }
 
@@ -1659,4 +1658,13 @@ QDoubleSpinBox::down-arrow:off
 RelinkingDialog QListView::item
 {
     margin-right: 1.8em;
+}
+
+ThumbnailView
+{
+    qproperty-textColor: #EFF0F0;
+    qproperty-highlightedTextColor: #FFFFFF;
+    qproperty-targetedBackgroundColor: #0078D7;
+    qproperty-selectedBackgroundColor: #0078D7;
+    qproperty-leaderBackgroundColor: #2EA3FF;
 }

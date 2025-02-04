@@ -24,6 +24,8 @@
 #include "dewarping/DepthPerception.h"
 #include <vector>
 
+class QString;
+
 namespace deskew
 {
 
@@ -33,7 +35,7 @@ public:
     DewarpingThumbnail(
         IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
         QSizeF const& max_size, ImageId const& image_id,
-        ImageTransformation const& xform,
+        QString const& version, ImageTransformation const& xform,
         std::vector<QPointF> const& top_curve,
         std::vector<QPointF> const& bottom_curve,
         dewarping::DepthPerception const& depth_perception);

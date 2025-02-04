@@ -62,11 +62,12 @@ private:
 
 ThumbnailBase::ThumbnailBase(
     IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
-    QSizeF const& max_size, ImageId const& image_id,
+    QSizeF const& max_size, ImageId const& image_id, QString const& version,
     ImageTransformation const& image_xform)
     :   m_ptrThumbnailCache(thumbnail_cache),
         m_maxSize(max_size),
         m_imageId(image_id),
+        m_version(version),
         m_imageXform(image_xform),
         m_extendedClipArea(false)
 {
@@ -94,7 +95,7 @@ ThumbnailBase::paint(QPainter* painter,
             new LoadCompletionHandler(this)
         );
         ThumbnailPixmapCache::Status const status =
-            m_ptrThumbnailCache->loadRequest(m_imageId, pixmap, handler);
+            m_ptrThumbnailCache->loadRequest(m_imageId, m_version, pixmap, handler);
         if (status == ThumbnailPixmapCache::QUEUED) {
             m_ptrCompletionHandler.swap(handler);
         }
@@ -122,8 +123,14 @@ ThumbnailBase::paint(QPainter* painter,
     QTransform pre_scale_xform;
     pre_scale_xform.scale(x_pre_scale, y_pre_scale);
 
+    QRectF const& dewarped_image_offset = m_imageXform.origRect();
+    QTransform dewarp_compensation = m_imageXform.transform();
+    dewarp_compensation.translate(
+        dewarped_image_offset.x(),
+        dewarped_image_offset.y()
+    );
     QTransform const pixmap_to_thumb(
-        pre_scale_xform * m_imageXform.transform() * m_postScaleXform
+        pre_scale_xform * dewarp_compensation * m_postScaleXform
     );
 
     // The polygon to draw into in original image coordinates.

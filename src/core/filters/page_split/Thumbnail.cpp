@@ -32,10 +32,10 @@ namespace page_split
 
 Thumbnail::Thumbnail(
     IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
-    QSizeF const& max_size, ImageId const& image_id,
+    QSizeF const& max_size, ImageId const& image_id, QString const& version,
     ImageTransformation const& xform, PageLayout const& layout,
     bool left_half_removed, bool right_half_removed)
-    :   ThumbnailBase(thumbnail_cache, max_size, image_id, xform),
+    :   ThumbnailBase(thumbnail_cache, max_size, image_id, version, xform),
         m_layout(layout),
         m_leftHalfRemoved(left_half_removed),
         m_rightHalfRemoved(right_half_removed)

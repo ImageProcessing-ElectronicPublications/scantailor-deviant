@@ -92,7 +92,8 @@ Task::~Task()
 FilterResultPtr
 Task::process(
     TaskStatus const& status, FilterData const& data,
-    QRectF const& page_rect, QRectF const& content_rect)
+    QRectF const& page_rect, QRectF const& content_rect,
+    QString const& thumb_version)
 {
     status.throwIfCancelled();
 
@@ -143,7 +144,7 @@ Task::process(
         new_xform.setPostCropArea(new_xform.transform().map(page_rect_phys));
 
         return m_ptrNextTask->process(
-                   status, FilterData(data, new_xform), content_rect_phys
+                   status, FilterData(data, new_xform), content_rect_phys, thumb_version
                );
     } else if (m_ptrFilter->optionsWidget() != 0) {
         return FilterResultPtr(

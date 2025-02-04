@@ -22,6 +22,8 @@
 #include "ThumbnailBase.h"
 #include "IntrusivePtr.h"
 
+class QString;
+
 namespace deskew
 {
 
@@ -31,7 +33,7 @@ public:
     RotationThumbnail(
         IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
         QSizeF const& max_size, ImageId const& image_id,
-        ImageTransformation const& xform,
+        QString const& version, ImageTransformation const& xform,
         double compensation_angle_deg, bool draw_grid);
 
     virtual void paintOverImage(

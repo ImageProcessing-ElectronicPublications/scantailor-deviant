@@ -2144,7 +2144,7 @@ MainWindow::exportRequestedReprocessing(const PageId& page_id, QImage* fore_subs
                 page_id, page_layout_task, false, false
                 );
     auto deskew_task = m_ptrStages->deskewFilter()->createTask(
-                page_id, select_content_task, false, false
+                page_id, m_ptrThumbnailCache, select_content_task, false, false
                 );
     auto page_split_task = m_ptrStages->pageSplitFilter()->createTask(
                 page_info,
@@ -2931,7 +2931,7 @@ MainWindow::createCompositeTask(
     }
     if (last_filter_idx >= m_ptrStages->deskewFilterIdx()) {
         deskew_task = m_ptrStages->deskewFilter()->createTask(
-                          page.id(), select_content_task, batch, debug
+                          page.id(), m_ptrThumbnailCache, select_content_task, batch, debug
                       );
         debug = false;
     }

@@ -1,6 +1,6 @@
 /*
     Scan Tailor - Interactive post-processing tool for scanned pages.
-    Copyright (C)  Joseph Artsimovich <joseph.artsimovich@gmail.com>
+    Copyright (C) 2007-2009  Joseph Artsimovich <joseph_a@mail.ru>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,29 +16,17 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef OUTPUT_THUMBNAIL_H_
-#define OUTPUT_THUMBNAIL_H_
+#include "ThumbnailView.h"
+#include <QApplication>
+#include <QPalette>
 
-#include "ThumbnailBase.h"
-#include "IntrusivePtr.h"
-
-class ThumbnailPixmapCache;
-class ImageTransformation;
-class ImageId;
-class QSizeF;
-class QString;
-
-namespace output
+ThumbnailView::ThumbnailView(QWidget* parent)
+    : QGraphicsView(parent)
+    , m_textColor(QApplication::palette().color(QPalette::Text))
+    , m_highlightedTextColor(QApplication::palette().color(QPalette::HighlightedText))
+    , m_selectedBackgroundColor(QApplication::palette().color(QPalette::Highlight))
+    , m_targetedBackgroundColor(QApplication::palette().color(QPalette::Highlight).darker(150))
+    , m_leaderBackgroundColor(QApplication::palette().color(QPalette::Highlight).lighter(150))
+    , m_qssStyle(*this)
 {
-
-class Thumbnail : public ThumbnailBase
-{
-public:
-    Thumbnail(IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
-              QSizeF const& max_size, ImageId const& image_id,
-              QString const& version, ImageTransformation const& xform);
-};
-
-} // namespace output
-
-#endif
+}

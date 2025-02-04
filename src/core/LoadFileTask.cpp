@@ -95,7 +95,7 @@ LoadFileTask::operator()()
 
             updateImageSizeIfChanged(image);
             overrideDpi(image);
-            m_ptrThumbnailCache->ensureThumbnailExists(m_imageId, image);
+            m_ptrThumbnailCache->ensureThumbnailExists(m_imageId, QString(), image);
             return m_ptrNextTask->process(*this, FilterData(m_imageId.filePath(), image));
         }
     } catch (CancelledException const&) {

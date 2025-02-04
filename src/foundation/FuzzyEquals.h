@@ -16,29 +16,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef OUTPUT_THUMBNAIL_H_
-#define OUTPUT_THUMBNAIL_H_
+class QSize;
+class QRect;
 
-#include "ThumbnailBase.h"
-#include "IntrusivePtr.h"
+#ifndef FUZZYEQUALS_H_
+#define FUZZYEQUALS_H_
 
-class ThumbnailPixmapCache;
-class ImageTransformation;
-class ImageId;
-class QSizeF;
-class QString;
-
-namespace output
-{
-
-class Thumbnail : public ThumbnailBase
-{
-public:
-    Thumbnail(IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
-              QSizeF const& max_size, ImageId const& image_id,
-              QString const& version, ImageTransformation const& xform);
-};
-
-} // namespace output
+bool fuzzyEquals(QSize const& lhs, QSize const& rhs, int tol);
+bool fuzzyEquals(QRect const& lhs, QRect const& rhs, int tol);
 
 #endif

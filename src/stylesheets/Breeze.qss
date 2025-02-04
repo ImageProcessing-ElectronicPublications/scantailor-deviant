@@ -1665,3 +1665,12 @@ RelinkingDialog QListView::item
 {
     margin-right: 1.8em;
 }
+
+ThumbnailView
+{
+    qproperty-textColor: #000000;
+    qproperty-highlightedTextColor: #FFFFFF;
+    qproperty-targetedBackgroundColor: #00508F;
+    qproperty-selectedBackgroundColor: #0078D7;
+    qproperty-leaderBackgroundColor: #43ACFF;
+}

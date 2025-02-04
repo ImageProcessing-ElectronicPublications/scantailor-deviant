@@ -30,7 +30,7 @@
 #include <QTransform>
 #include <QGraphicsItem>
 #include <QSizeF>
-#include <QRectF>
+#include <QString>
 
 class ThumbnailLoadResult;
 
@@ -40,7 +40,7 @@ class ThumbnailBase : public QGraphicsItem
 public:
     ThumbnailBase(
         IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
-        QSizeF const& max_size, ImageId const& image_id,
+        QSizeF const& max_size, ImageId const& image_id, QString const& version,
         ImageTransformation const& image_xform);
 
     virtual ~ThumbnailBase();
@@ -111,6 +111,7 @@ private:
     IntrusivePtr<ThumbnailPixmapCache> m_ptrThumbnailCache;
     QSizeF m_maxSize;
     ImageId m_imageId;
+    QString m_version;
     ImageTransformation m_imageXform;
     QRectF m_boundingRect;
 

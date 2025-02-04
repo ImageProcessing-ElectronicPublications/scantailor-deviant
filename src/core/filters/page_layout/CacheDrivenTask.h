@@ -24,6 +24,7 @@
 #include "IntrusivePtr.h"
 
 class QRectF;
+class QString;
 class PageInfo;
 class AbstractFilterDataCollector;
 class ImageTransformation;
@@ -49,7 +50,8 @@ public:
 
     void process(
         PageInfo const& page_info, AbstractFilterDataCollector* collector,
-        ImageTransformation const& xform, QRectF const& content_rect);
+        ImageTransformation const& xform, QRectF const& content_rect,
+        QString const& thumb_version);
 private:
     IntrusivePtr<output::CacheDrivenTask> m_ptrNextTask;
     IntrusivePtr<Settings> m_ptrSettings;

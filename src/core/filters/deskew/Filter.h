@@ -29,6 +29,7 @@
 class PageId;
 class QString;
 class PageSelectionAccessor;
+class ThumbnailPixmapCache;
 
 namespace select_content
 {
@@ -68,6 +69,7 @@ public:
 
     IntrusivePtr<Task> createTask(
         PageId const& page_id,
+        IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
         IntrusivePtr<select_content::Task> const& next_task,
         bool batch_processing, bool debug);
 

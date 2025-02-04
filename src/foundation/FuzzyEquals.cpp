@@ -16,29 +16,21 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef OUTPUT_THUMBNAIL_H_
-#define OUTPUT_THUMBNAIL_H_
+#include "FuzzyEquals.h"
+#include <QSize>
+#include <QRect>
+#include <cmath>
 
-#include "ThumbnailBase.h"
-#include "IntrusivePtr.h"
-
-class ThumbnailPixmapCache;
-class ImageTransformation;
-class ImageId;
-class QSizeF;
-class QString;
-
-namespace output
+bool fuzzyEquals(QSize const& lhs, QSize const& rhs, int tol)
 {
+    return std::abs(lhs.width() - rhs.width()) < tol
+        && std::abs(lhs.height() - rhs.height()) < tol;
+}
 
-class Thumbnail : public ThumbnailBase
+bool fuzzyEquals(QRect const& lhs, QRect const& rhs, int tol)
 {
-public:
-    Thumbnail(IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
-              QSizeF const& max_size, ImageId const& image_id,
-              QString const& version, ImageTransformation const& xform);
-};
-
-} // namespace output
-
-#endif
+    return std::abs(lhs.left() - rhs.left()) < tol
+        && std::abs(lhs.top() - rhs.top()) < tol
+        && std::abs(lhs.width() - rhs.width()) < tol
+        && std::abs(lhs.height() - rhs.height()) < tol;
+}

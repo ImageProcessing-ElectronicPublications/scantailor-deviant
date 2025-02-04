@@ -150,12 +150,13 @@ Filter::writePageSettings(
 IntrusivePtr<Task>
 Filter::createTask(
     PageId const& page_id,
+    IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
     IntrusivePtr<select_content::Task> const& next_task,
     bool const batch_processing, bool const debug)
 {
     return IntrusivePtr<Task>(
         new Task(
-            IntrusivePtr<Filter>(this), m_ptrSettings,
+            IntrusivePtr<Filter>(this), m_ptrSettings, thumbnail_cache,
             next_task, page_id, batch_processing, debug
         )
     );

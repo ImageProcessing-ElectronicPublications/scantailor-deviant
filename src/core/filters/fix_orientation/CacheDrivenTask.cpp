@@ -27,6 +27,7 @@
 #include "ThumbnailCollector.h"
 #include "PageOrientationCollector.h"
 #include "filters/page_split/CacheDrivenTask.h"
+#include <QString>
 
 namespace fix_orientation
 {
@@ -66,7 +67,7 @@ CacheDrivenTask::process(
                 new ThumbnailBase(
                     thumb_col->thumbnailCache(),
                     thumb_col->maxLogicalThumbSize(),
-                    page_info.imageId(), xform
+                    page_info.imageId(), QString(), xform
                 )
             )
         );

@@ -197,7 +197,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QGraphicsView" name="thumbView">
+        <widget class="ThumbnailView" name="thumbView">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>1</horstretch>
@@ -939,6 +939,11 @@
    <extends>QWidget</extends>
    <header>NonOwningWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ThumbnailView</class>
+   <extends>QGraphicsView</extends>
+   <header>ThumbnailView.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

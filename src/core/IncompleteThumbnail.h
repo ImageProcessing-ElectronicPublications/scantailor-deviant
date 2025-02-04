@@ -26,6 +26,7 @@
 class ThumbnailPixmapCache;
 class QSizeF;
 class QRectF;
+class QString;
 
 /**
  * \brief A thumbnail represeting a page not completely processed.
@@ -44,7 +45,7 @@ class IncompleteThumbnail : public ThumbnailBase
 public:
     IncompleteThumbnail(
         IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
-        QSizeF const& max_size, ImageId const& image_id,
+        QSizeF const& max_size, ImageId const& image_id, QString const& version,
         ImageTransformation const& image_xform);
 
     virtual ~IncompleteThumbnail();

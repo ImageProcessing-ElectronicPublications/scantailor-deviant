@@ -33,6 +33,7 @@ class QImage;
 class QPixmap;
 class QString;
 class QSize;
+class QString;
 
 class ThumbnailPixmapCache : public RefCountable
 {
@@ -79,14 +80,16 @@ public:
      *
      * \note This function is to be called from the GUI thread only.
      */
-    Status loadFromCache(ImageId const& image_id, QPixmap& pixmap);
+    Status loadFromCache(
+        ImageId const& image_id, QString const& version, QPixmap& pixmap);
 
     /**
      * \brief Take the pixmap from cache or from disk, blocking if necessary.
      *
      * \note This function is to be called from the GUI thread only.
      */
-    Status loadNow(ImageId const& image_id, QPixmap& pixmap);
+    Status loadNow(
+        ImageId const& image_id, QString const& version, QPixmap& pixmap);
 
     /**
      * \brief Take the pixmap from cache or schedule a load request.
@@ -119,7 +122,7 @@ public:
      * Other methods, for example boost::lambda::bind() can't do that.
      */
     Status loadRequest(
-        ImageId const& image_id, QPixmap& pixmap,
+        ImageId const& image_id, QString const& version, QPixmap& pixmap,
         boost::weak_ptr<CompletionHandler> const& completion_handler);
 
     /**
@@ -134,7 +137,8 @@ public:
      *
      * \note This function may be called from any thread, even concurrently.
      */
-    void ensureThumbnailExists(ImageId const& image_id, QImage const& image);
+    void ensureThumbnailExists(
+        ImageId const& image_id, QString const& version, QImage const& image);
 
     /**
      * \brief Re-create and replace the existing thumnail.
@@ -144,8 +148,10 @@ public:
      *
      * \note This function may be called from any thread, even concurrently.
      */
-    void recreateThumbnail(ImageId const& image_id, QImage const& image);
+    void recreateThumbnail(
+        ImageId const& image_id, QString const& version, QImage const& image);
 private:
+    struct ThumbId;
     class Item;
     class Impl;
 

@@ -1,6 +1,6 @@
 /*
     Scan Tailor - Interactive post-processing tool for scanned pages.
-    Copyright (C)  Joseph Artsimovich <joseph.artsimovich@gmail.com>
+	Copyright (C) 2015  Joseph Artsimovich <joseph.artsimovich@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,29 +16,31 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef OUTPUT_THUMBNAIL_H_
-#define OUTPUT_THUMBNAIL_H_
+#ifndef DESKEW_THUMBNAILVERSIONGENERATOR_H
+#define DESKEW_THUMBNAILVERSIONGENERATOR_H
 
-#include "ThumbnailBase.h"
-#include "IntrusivePtr.h"
+#include "PageId.h"
+#include "DistortionType.h"
 
-class ThumbnailPixmapCache;
-class ImageTransformation;
-class ImageId;
-class QSizeF;
 class QString;
 
-namespace output
+namespace deskew
 {
 
-class Thumbnail : public ThumbnailBase
+class ThumbnailVersionGenerator
 {
 public:
-    Thumbnail(IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
-              QSizeF const& max_size, ImageId const& image_id,
-              QString const& version, ImageTransformation const& xform);
+    ThumbnailVersionGenerator(
+        PageId::SubPage sub_page,
+        DistortionType::Type distortion_type);
+
+    QString generate();
+
+private:
+    PageId::SubPage m_subPage;
+    DistortionType::Type m_distortionType;
 };
 
-} // namespace output
+} // namespace deskew
 
 #endif

@@ -185,7 +185,7 @@ addVirtualZones(const ZoneSet& zones, const ImageTransformation& xform, ZoneSet&
 FilterResultPtr
 Task::process(
     TaskStatus const& status, FilterData const& data,
-    QPolygonF const& content_rect_phys)
+    QPolygonF const& content_rect_phys, QString const& thumb_version)
 {
     status.throwIfCancelled();
 
@@ -497,7 +497,7 @@ Task::process(
             m_ptrSettings->setOutputParams(m_pageId, out_params);
         }
 
-        m_ptrThumbnailCache->recreateThumbnail(ImageId(out_file_path), out_img);
+        m_ptrThumbnailCache->recreateThumbnail(ImageId(out_file_path), QString(), out_img);
     }
 
     DespeckleState const despeckle_state(

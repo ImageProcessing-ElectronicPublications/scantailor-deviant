@@ -30,6 +30,8 @@
 #include "NoDistortionView.h"
 #include "ImageView.h"
 #include "DewarpingView.h"
+#include "ThumbnailPixmapCache.h"
+#include "ThumbnailVersionGenerator.h"
 #include "dewarping/DewarpingImageTransform.h"
 #include "dewarping/DistortionModelBuilder.h"
 #include "dewarping/TextLineTracer.h"
@@ -45,6 +47,7 @@
 #include "imageproc/SeedFill.h"
 #include "imageproc/Morphology.h"
 #include "math/XSpline.h"
+#include <QString>
 #include <memory>
 
 namespace deskew
@@ -182,10 +185,12 @@ private:
 Task::Task(
     IntrusivePtr<Filter> const& filter,
     IntrusivePtr<Settings> const& settings,
+    IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
     IntrusivePtr<select_content::Task> const& next_task,
     PageId const& page_id, bool batch_processing, bool debug)
     : m_ptrFilter(filter)
     , m_ptrSettings(settings)
+    , m_ptrThumbnailCache(thumbnail_cache)
     , m_ptrNextTask(next_task)
     , m_pageId(page_id)
     , m_batchProcessing(batch_processing)
@@ -264,7 +269,7 @@ Task::processNoDistortion(
     if (m_ptrNextTask)
     {
         return m_ptrNextTask->process(
-                    status, FilterData(data, data.xform())
+                    status, FilterData(data, data.xform()), QString()
                );
     }
     else
@@ -286,8 +291,8 @@ Task::processRotationDistortion(
 {
     if (!params.rotationParams().isValid())
     {
-        QRect const transformed_crop_rect(
-            data.xform().resultingPostCropArea().boundingRect().toRect()
+        QRectF const transformed_crop_rect(
+            data.xform().transformBack().mapRect(data.xform().resultingRect())
         );
 
         status.throwIfCancelled();
@@ -296,7 +301,11 @@ Task::processRotationDistortion(
         {
             BinaryImage bw_image(
                 data.grayImage(),
-                transformed_crop_rect,
+                QRect(
+                    0, 0,
+                    transformed_crop_rect.width(),
+                    transformed_crop_rect.height()
+                ),
                 data.bwThreshold()
             );
 
@@ -339,7 +348,7 @@ Task::processRotationDistortion(
         rotated_xform.setPostRotation(angle);
 
         return m_ptrNextTask->process(
-            status, FilterData(data, rotated_xform)
+            status, FilterData(data, rotated_xform), QString()
         );
     }
     else
@@ -483,8 +492,14 @@ Task::processPerspectiveDistortion(
             perspective_transform.transformedCropArea()
         );
 
+        QString const thumb_version = ThumbnailVersionGenerator(
+            m_pageId.subPage(), DistortionType::PERSPECTIVE
+        ).generate();
+
+        m_ptrThumbnailCache->recreateThumbnail(m_pageId.imageId(), thumb_version, transformed_image);
+
         return m_ptrNextTask->process(
-            status, FilterData(data.origImageFilename(), transformed_image, crop_area)
+            status, FilterData(data.origImageFilename(), transformed_image, crop_area), thumb_version
         );
     }
     else
@@ -611,8 +626,14 @@ Task::processWarpDistortion(
             perspective_transform.transformedCropArea()
         );
 
+        QString const thumb_version = ThumbnailVersionGenerator(
+            m_pageId.subPage(), DistortionType::WARP
+        ).generate();
+
+        m_ptrThumbnailCache->recreateThumbnail(m_pageId.imageId(), thumb_version, transformed_image);
+
         return m_ptrNextTask->process(
-            status, FilterData(data.origImageFilename(), transformed_image, crop_area)
+            status, FilterData(data.origImageFilename(), transformed_image, crop_area), thumb_version
         );
     }
     else

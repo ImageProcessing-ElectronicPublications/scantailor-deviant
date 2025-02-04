@@ -37,6 +37,7 @@ class ImageTransformation;
 class QPolygonF;
 class QSize;
 class QImage;
+class QString;
 class Dpi;
 
 namespace imageproc
@@ -67,7 +68,7 @@ public:
 
     FilterResultPtr process(
         TaskStatus const& status, FilterData const& data,
-        QPolygonF const& content_rect_phys);
+        QPolygonF const& content_rect_phys, QString const& thumb_version);
 
     QObject* getSettingsListener();
 private:

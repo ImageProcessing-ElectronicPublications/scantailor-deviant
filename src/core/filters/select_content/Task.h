@@ -31,6 +31,7 @@ class TaskStatus;
 class FilterData;
 class DebugImages;
 class ImageTransformation;
+class QString;
 
 namespace page_layout
 {
@@ -54,7 +55,10 @@ public:
 
     virtual ~Task();
 
-    FilterResultPtr process(TaskStatus const& status, FilterData const& data);
+    FilterResultPtr process(
+        TaskStatus const& status,
+        FilterData const& data,
+        QString const& thumb_version);
 private:
     class UiUpdater;
 

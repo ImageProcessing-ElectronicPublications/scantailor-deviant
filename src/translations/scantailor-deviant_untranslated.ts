@@ -9,93 +9,93 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="27"/>
+        <location filename="../app/ui/AboutDialog.ui" line="30"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="33"/>
+        <location filename="../app/ui/AboutDialog.ui" line="36"/>
         <source>Scan Tailor is an interactive post-processing tool for scanned pages. It performs operations such as page splitting, skew correction, adding/removing margins, and others. You give it raw scans, and you get pages ready to be printed or assembled into a PDF or DJVU file.  Scanning and optical character recognition is out of scope of this project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="116"/>
+        <location filename="../app/ui/AboutDialog.ui" line="119"/>
         <source>Authors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="143"/>
+        <location filename="../app/ui/AboutDialog.ui" line="146"/>
         <source>Lead Developer of original version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="150"/>
+        <location filename="../app/ui/AboutDialog.ui" line="153"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/Tulon&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Joseph Artsimovich&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="160"/>
+        <location filename="../app/ui/AboutDialog.ui" line="163"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lead Developer of &lt;a href=&quot;https://github.com/ImageProcessing-ElectronicPublications/scantailor-deviant&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Deviant&lt;/span&gt;&lt;/a&gt; version&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="167"/>
+        <location filename="../app/ui/AboutDialog.ui" line="170"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/trufanov-nok&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Alexander Trufanov&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="180"/>
+        <location filename="../app/ui/AboutDialog.ui" line="183"/>
         <source>Based of following projects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="193"/>
+        <location filename="../app/ui/AboutDialog.ui" line="196"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://scantailor.org/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;ScanTailor&lt;/span&gt;&lt;/a&gt; (master and &lt;a href=&quot;https://github.com/scantailor/scantailor/tree/qt5&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;qt5&lt;/span&gt;&lt;/a&gt; branch) by &lt;a href=&quot;https://github.com/Tulon&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Joseph Artsimovich&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;ScanTailor &lt;a href=&quot;https://github.com/Tulon/scantailor/tree/experimental&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Experimental&lt;/span&gt;&lt;/a&gt; by &lt;a href=&quot;https://github.com/Tulon&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Joseph Artsimovich&lt;/span&gt;&lt;/a&gt; (Tulon)&lt;br/&gt;ScanTailor &lt;a href=&quot;https://github.com/scantailor/scantailor/tree/enhanced&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Enhanced&lt;/span&gt;&lt;/a&gt; by &lt;a href=&quot;https://github.com/pejuko&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Petr Kovář&lt;/span&gt;&lt;/a&gt; (pejuko)&lt;br/&gt;ScanTailor &lt;a href=&quot;https://github.com/scantailor/scantailor/tree/featured&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Featured&lt;/span&gt;&lt;/a&gt; by &lt;a href=&quot;http://djvu-soft.narod.ru/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Victor Ivanov&lt;/span&gt;&lt;/a&gt; (monday2000)&lt;br/&gt;ScanTailor &lt;a href=&quot;https://github.com/scantailor/scantailor/tree/plus&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Plus&lt;/span&gt;&lt;/a&gt; by &lt;a href=&quot;https://github.com/DikBSD&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Vadim Kuznetsov&lt;/span&gt;&lt;/a&gt; (DikBSD)&lt;br/&gt;ScanTailor &lt;a href=&quot;https://github.com/4lex4/scantailor-advanced&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Advanced&lt;/span&gt;&lt;/a&gt; by &lt;a href=&quot;https://github.com/4lex4&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;4lex4&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="221"/>
+        <location filename="../app/ui/AboutDialog.ui" line="224"/>
         <source>Notable ST contributors:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="228"/>
+        <location filename="../app/ui/AboutDialog.ui" line="231"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Robert B. - First generation dewarping algorithm&lt;br&gt;Andrey Bergman - System load adjustment&lt;br&gt;U235 - Picture auto-detection algorithm&lt;br&gt;Petr Kovář - Command line interface&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="241"/>
+        <location filename="../app/ui/AboutDialog.ui" line="244"/>
         <source>Translators</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="248"/>
+        <location filename="../app/ui/AboutDialog.ui" line="251"/>
         <source>English - Alexander Trufanov
 Russian - Alexander Trufanov</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="262"/>
+        <location filename="../app/ui/AboutDialog.ui" line="265"/>
         <source>Documentation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="269"/>
+        <location filename="../app/ui/AboutDialog.ui" line="272"/>
         <source>&lt;a href=https://github.com/ashipunov&gt;Alexey Shipunov&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="279"/>
+        <location filename="../app/ui/AboutDialog.ui" line="282"/>
         <source>ST documentation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="314"/>
+        <location filename="../app/ui/AboutDialog.ui" line="317"/>
         <source>References</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="335"/>
+        <location filename="../app/ui/AboutDialog.ui" line="338"/>
         <source>&lt;p&gt;
 &lt;a href=&quot;http://scholar.google.com/scholar?q=Recursive+implementation+of+the+Gaussian+filter&quot;&gt;[1]&lt;/a&gt; Young, Ian T., and Lucas J. Van Vliet. &quot;Recursive implementation of the Gaussian filter.&quot; Signal processing 44.2 (1995): 139-151.
 &lt;/p&gt;
@@ -159,7 +159,7 @@ Russian - Alexander Trufanov</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/AboutDialog.ui" line="421"/>
+        <location filename="../app/ui/AboutDialog.ui" line="424"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
@@ -303,23 +303,64 @@ Do you want to replace it?</source>
 <context>
     <name>DeskewOptionsWidget</name>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="20"/>
-        <source>Deskew</source>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="14"/>
+        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="41"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="20"/>
+        <source>Distortion type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="44"/>
+        <source>No distortion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="71"/>
+        <source>Page skew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="98"/>
+        <source>Keystoning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="125"/>
+        <source>Curved lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="182"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="356"/>
+        <source>Apply To ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="207"/>
+        <source>Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="226"/>
         <source>Auto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="57"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="242"/>
         <source>Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="140"/>
-        <source>Apply To...</source>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="274"/>
+        <source>Rotation angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="319"/>
+        <source>Depth perception</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -335,159 +376,159 @@ Do you want to replace it?</source>
     <name>ExportDialog</name>
     <message>
         <location filename="../app/ui/ExportDialog.ui" line="14"/>
-        <location filename="../app/ui/ExportDialog.ui" line="314"/>
+        <location filename="../app/ui/ExportDialog.ui" line="317"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="30"/>
+        <location filename="../app/ui/ExportDialog.ui" line="33"/>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="58"/>
+        <location filename="../app/ui/ExportDialog.ui" line="61"/>
         <source>Only black (#000000) and white (#ffffff) pixels of the image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="61"/>
+        <location filename="../app/ui/ExportDialog.ui" line="64"/>
         <source>Foreground (b/w text and graphics)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="36"/>
+        <location filename="../app/ui/ExportDialog.ui" line="39"/>
         <source>Data to export:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="48"/>
+        <location filename="../app/ui/ExportDialog.ui" line="51"/>
         <source>Image as it is in ./out subfolder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="51"/>
+        <location filename="../app/ui/ExportDialog.ui" line="54"/>
         <source>Whole image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="87"/>
+        <location filename="../app/ui/ExportDialog.ui" line="90"/>
         <source>Automask (b/w mask for auto layer)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="97"/>
+        <location filename="../app/ui/ExportDialog.ui" line="100"/>
         <source>Mask (b/w mask for background)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="107"/>
+        <location filename="../app/ui/ExportDialog.ui" line="110"/>
         <source>Coordinates of zones</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="117"/>
+        <location filename="../app/ui/ExportDialog.ui" line="120"/>
         <source>Default export folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="130"/>
+        <location filename="../app/ui/ExportDialog.ui" line="133"/>
         <source>Output Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="157"/>
+        <location filename="../app/ui/ExportDialog.ui" line="160"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="184"/>
+        <location filename="../app/ui/ExportDialog.ui" line="187"/>
         <source>Export selected pages only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="194"/>
+        <location filename="../app/ui/ExportDialog.ui" line="197"/>
         <source>Rare options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="200"/>
+        <location filename="../app/ui/ExportDialog.ui" line="203"/>
         <source>Save images as multipage tiff file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="207"/>
+        <location filename="../app/ui/ExportDialog.ui" line="210"/>
         <source>Generate blank background subscans</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="214"/>
+        <location filename="../app/ui/ExportDialog.ui" line="217"/>
         <source>For better compatibility with DjVu Imager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="217"/>
+        <location filename="../app/ui/ExportDialog.ui" line="220"/>
         <source>Use .sep.tif extension instead of .tif for background subscans</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="235"/>
+        <location filename="../app/ui/ExportDialog.ui" line="238"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This will have effect if only Export Foreground is checked.&lt;/p&gt;&lt;p&gt;Foreground is a b/w image with a black content of resulting&lt;/p&gt;&lt;p&gt;image drown on white. With this mode on every black pixel will&lt;/p&gt;&lt;p&gt;be replaced with pixel on the same position taken from original&lt;/p&gt;&lt;p&gt;image. This may let you get colored or grayscale text instead of&lt;/p&gt;&lt;p&gt;binarized black one. Require image reprocessing so may be&lt;/p&gt;&lt;p&gt;time consuming.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="74"/>
+        <location filename="../app/ui/ExportDialog.ui" line="77"/>
         <source>Background (color and grayscale images)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="71"/>
+        <location filename="../app/ui/ExportDialog.ui" line="74"/>
         <source>Only non black (&gt; #000000) pixels of the image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="84"/>
+        <location filename="../app/ui/ExportDialog.ui" line="87"/>
         <source>Automask could be found in ./out/cache/automask and contains autodetected mask before any zones are applied</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="94"/>
+        <location filename="../app/ui/ExportDialog.ui" line="97"/>
         <source>Binarized and inverted background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="104"/>
+        <location filename="../app/ui/ExportDialog.ui" line="107"/>
         <source>Some pages might have user defined zones to fill with color or indicate some content. Their coordinates may be exported to tsv text file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="224"/>
+        <location filename="../app/ui/ExportDialog.ui" line="227"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This will have effect if only Export Whole image is checked.&lt;/p&gt;&lt;p&gt;The exported image will be drawn with colors of original image.&lt;/p&gt;&lt;p&gt;Only fill zones will be applied. In other words the exported&lt;/p&gt;&lt;p&gt;image will be a part of original image after split, rotation,&lt;/p&gt;&lt;p&gt;deskew, applying margins and fill zones. This require image&lt;/p&gt;&lt;p&gt;reprocessing so it may be time consuming.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="227"/>
+        <location filename="../app/ui/ExportDialog.ui" line="230"/>
         <source>Skip processing at Output stage (except for Fill Zones) 
 for exported image (lengthy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="238"/>
+        <location filename="../app/ui/ExportDialog.ui" line="241"/>
         <source>Skip processing at Output stage (except for Fill Zones) 
 for content in foreground subscans (lengthy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="288"/>
+        <location filename="../app/ui/ExportDialog.ui" line="291"/>
         <source>Reset export settings to default values</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="291"/>
+        <location filename="../app/ui/ExportDialog.ui" line="294"/>
         <source>Restore Defaults</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ExportDialog.ui" line="321"/>
+        <location filename="../app/ui/ExportDialog.ui" line="324"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -513,17 +554,17 @@ for content in foreground subscans (lengthy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/FixDpiDialog.ui" line="70"/>
+        <location filename="../app/ui/FixDpiDialog.ui" line="73"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/FixDpiDialog.ui" line="91"/>
+        <location filename="../app/ui/FixDpiDialog.ui" line="94"/>
         <source>x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/FixDpiDialog.ui" line="114"/>
+        <location filename="../app/ui/FixDpiDialog.ui" line="117"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
@@ -575,17 +616,17 @@ for content in foreground subscans (lengthy)</source>
 <context>
     <name>InteractiveXSpline</name>
     <message>
-        <location filename="../core/interaction/InteractiveXSpline.cpp" line="52"/>
+        <location filename="../core/interaction/InteractiveXSpline.cpp" line="53"/>
         <source>Click to create a new control point.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/interaction/InteractiveXSpline.cpp" line="78"/>
+        <location filename="../core/interaction/InteractiveXSpline.cpp" line="80"/>
         <source>This point can be dragged. Hold %1 or %2 to drag along axes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/interaction/InteractiveXSpline.cpp" line="82"/>
+        <location filename="../core/interaction/InteractiveXSpline.cpp" line="84"/>
         <source>Drag this point or delete it by pressing %1 or %2.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -612,12 +653,12 @@ for content in foreground subscans (lengthy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/LoadFilesStatusDialog.ui" line="27"/>
+        <location filename="../app/ui/LoadFilesStatusDialog.ui" line="30"/>
         <source>Loaded successfully: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/LoadFilesStatusDialog.ui" line="87"/>
+        <location filename="../app/ui/LoadFilesStatusDialog.ui" line="90"/>
         <source>Failed to load: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -625,52 +666,52 @@ for content in foreground subscans (lengthy)</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../app/MainWindow.cpp" line="589"/>
+        <location filename="../app/MainWindow.cpp" line="591"/>
         <source>Stop batch processing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="751"/>
+        <location filename="../app/MainWindow.cpp" line="753"/>
         <source>Save Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="751"/>
+        <location filename="../app/MainWindow.cpp" line="753"/>
         <source>Save this project?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1311"/>
+        <location filename="../app/MainWindow.cpp" line="1313"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1324"/>
+        <location filename="../app/MainWindow.cpp" line="1326"/>
         <source>Insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1357"/>
+        <location filename="../app/MainWindow.cpp" line="1359"/>
         <source>Regenerate result</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3462"/>
+        <location filename="../app/MainWindow.cpp" line="3466"/>
         <source>Go to page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3462"/>
+        <location filename="../app/MainWindow.cpp" line="3466"/>
         <source>Page number:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3475"/>
+        <location filename="../app/MainWindow.cpp" line="3479"/>
         <source>Select pages by number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3476"/>
+        <location filename="../app/MainWindow.cpp" line="3480"/>
         <source>Numbers should start from 1
  Line ends are ignored
 Any non digit symbols are interpreted as number separators
@@ -679,22 +720,22 @@ Number followed by &apos;-&apos; or &apos;:&apos; treated as a start of page seq
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3479"/>
+        <location filename="../app/MainWindow.cpp" line="3483"/>
         <source>Input page numbers:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3485"/>
+        <location filename="../app/MainWindow.cpp" line="3489"/>
         <source>Pages to be selected: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1328"/>
+        <location filename="../app/MainWindow.cpp" line="1330"/>
         <source>Insert before...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1288"/>
+        <location filename="../app/MainWindow.cpp" line="1290"/>
         <source>Open source with...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -709,184 +750,184 @@ Number followed by &apos;-&apos; or &apos;:&apos; treated as a start of page seq
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1331"/>
+        <location filename="../app/MainWindow.cpp" line="1333"/>
         <source>Insert after...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1334"/>
+        <location filename="../app/MainWindow.cpp" line="1336"/>
         <source>Insert empty page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1340"/>
+        <location filename="../app/MainWindow.cpp" line="1342"/>
         <source>Rename result filename...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1346"/>
+        <location filename="../app/MainWindow.cpp" line="1348"/>
         <source>Remove from project...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1384"/>
+        <location filename="../app/MainWindow.cpp" line="1386"/>
         <source>Insert here...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1799"/>
-        <location filename="../app/MainWindow.cpp" line="1874"/>
+        <location filename="../app/MainWindow.cpp" line="1801"/>
+        <location filename="../app/MainWindow.cpp" line="1877"/>
         <source>Scan Tailor Projects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1873"/>
+        <location filename="../app/MainWindow.cpp" line="1876"/>
         <source>Open Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1892"/>
-        <location filename="../app/MainWindow.cpp" line="1902"/>
-        <location filename="../app/MainWindow.cpp" line="1979"/>
-        <location filename="../app/MainWindow.cpp" line="1985"/>
-        <location filename="../app/MainWindow.cpp" line="2451"/>
-        <location filename="../app/MainWindow.cpp" line="2486"/>
+        <location filename="../app/MainWindow.cpp" line="1895"/>
+        <location filename="../app/MainWindow.cpp" line="1905"/>
+        <location filename="../app/MainWindow.cpp" line="1983"/>
+        <location filename="../app/MainWindow.cpp" line="1989"/>
+        <location filename="../app/MainWindow.cpp" line="2455"/>
+        <location filename="../app/MainWindow.cpp" line="2490"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1893"/>
+        <location filename="../app/MainWindow.cpp" line="1896"/>
         <source>Unable to open the project file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1903"/>
+        <location filename="../app/MainWindow.cpp" line="1906"/>
         <source>The project file is broken.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1979"/>
-        <location filename="../app/MainWindow.cpp" line="2171"/>
+        <location filename="../app/MainWindow.cpp" line="1983"/>
+        <location filename="../app/MainWindow.cpp" line="2175"/>
         <source>Batch processing is in the progress.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="1985"/>
-        <location filename="../app/MainWindow.cpp" line="2176"/>
+        <location filename="../app/MainWindow.cpp" line="1989"/>
+        <location filename="../app/MainWindow.cpp" line="2180"/>
         <source>No project is loaded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2191"/>
+        <location filename="../app/MainWindow.cpp" line="2195"/>
         <source>build on </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2336"/>
+        <location filename="../app/MainWindow.cpp" line="2340"/>
         <source>Output is not yet possible, as the final size of pages is not yet known.
 To determine it, run batch processing at &quot;Select Content&quot; or &quot;Page Layout&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2371"/>
+        <location filename="../app/MainWindow.cpp" line="2375"/>
         <source>Unnamed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2378"/>
+        <location filename="../app/MainWindow.cpp" line="2382"/>
         <source>%2 - Scan Tailor &quot;Deviant&quot; %3 [%1bit]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2382"/>
+        <location filename="../app/MainWindow.cpp" line="2386"/>
         <source>%1% - %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2452"/>
-        <location filename="../app/MainWindow.cpp" line="2487"/>
+        <location filename="../app/MainWindow.cpp" line="2456"/>
+        <location filename="../app/MainWindow.cpp" line="2491"/>
         <source>Error saving the project file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2481"/>
+        <location filename="../app/MainWindow.cpp" line="2485"/>
         <source>Saving project...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2539"/>
+        <location filename="../app/MainWindow.cpp" line="2543"/>
         <source>Files to insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2547"/>
+        <location filename="../app/MainWindow.cpp" line="2551"/>
         <source>Images not in project (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2594"/>
+        <location filename="../app/MainWindow.cpp" line="2598"/>
         <source>Skip failed files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2698"/>
+        <location filename="../app/MainWindow.cpp" line="2702"/>
         <source>Overwrite default file name for resulting image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2700"/>
+        <location filename="../app/MainWindow.cpp" line="2704"/>
         <source>Here you may overwrite default resulting image file name
 that will be generated for this page. It may be
 helpful to keep the right alphabetical order of files in out subfolder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2717"/>
+        <location filename="../app/MainWindow.cpp" line="2721"/>
         <source>File %1 already exists in out subfolder.
 Would you like to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2719"/>
+        <location filename="../app/MainWindow.cpp" line="2723"/>
         <source>Can&apos;t remove file %1!
 Cancelling...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2727"/>
+        <location filename="../app/MainWindow.cpp" line="2731"/>
         <source>Can&apos;t rename file %1!
 Cancelling...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2749"/>
+        <location filename="../app/MainWindow.cpp" line="2753"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3211"/>
+        <location filename="../app/MainWindow.cpp" line="3215"/>
         <source>p. %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3287"/>
+        <location filename="../app/MainWindow.cpp" line="3291"/>
         <source>%1, %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../app/ui/MainWindow.ui" line="877"/>
-        <location filename="../app/MainWindow.cpp" line="3327"/>
+        <location filename="../app/MainWindow.cpp" line="3331"/>
         <source>Insert before</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../app/ui/MainWindow.ui" line="892"/>
-        <location filename="../app/MainWindow.cpp" line="3337"/>
+        <location filename="../app/MainWindow.cpp" line="3341"/>
         <source>Insert after</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3354"/>
+        <location filename="../app/MainWindow.cpp" line="3358"/>
         <source>Use %1, %2, %3 (or %4), %5 (or %6) to navigate between pages.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1119,12 +1160,12 @@ Cancelling...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/NewOpenProjectPanel.ui" line="88"/>
+        <location filename="../app/ui/NewOpenProjectPanel.ui" line="85"/>
         <source>Open Project...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/NewOpenProjectPanel.ui" line="113"/>
+        <location filename="../app/ui/NewOpenProjectPanel.ui" line="110"/>
         <source>Recent Projects</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1262,34 +1303,6 @@ Cancelling...</source>
     </message>
 </context>
 <context>
-    <name>OutputChangeDewarpingWidget</name>
-    <message>
-        <location filename="../core/filters/output/ui/OutputChangeDewarpingWidget.ui" line="29"/>
-        <source>Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/ui/OutputChangeDewarpingWidget.ui" line="50"/>
-        <source>Off</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/ui/OutputChangeDewarpingWidget.ui" line="63"/>
-        <source>Auto</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/ui/OutputChangeDewarpingWidget.ui" line="73"/>
-        <source>Manual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/ui/OutputChangeDewarpingWidget.ui" line="83"/>
-        <source>Marginal (experimental)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>OutputOptionsWidget</name>
     <message>
         <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="31"/>
@@ -1297,107 +1310,122 @@ Cancelling...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="120"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="54"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="134"/>
+        <source>value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="114"/>
         <source>Mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="179"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="161"/>
         <source>White margins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="186"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="168"/>
         <source>Equalize illumination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="214"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="196"/>
         <source>Auto layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="224"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="206"/>
         <source>Picture Zones layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="231"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="213"/>
         <source>Foreground layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="277"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="476"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="648"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="793"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1111"/>
-        <source>&lt;a href=&quot;#&quot;&gt;Apply To...&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="368"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="339"/>
         <source>Binarisation threshold:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="540"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="547"/>
         <source>Foreground layer threshold:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="709"/>
-        <source>Depth perception:</source>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="238"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="486"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="647"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="891"/>
+        <source>Apply To...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="843"/>
-        <source>Dewarping:</source>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="423"/>
+        <source>Window size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="917"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="430"/>
+        <source>The dimensions of a pixel neighborhood to consider.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="443"/>
+        <source>Default value is 0.34.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="459"/>
+        <source>Coef:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="705"/>
         <source>Despeckling:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="970"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="758"/>
         <source>No despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="995"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="783"/>
         <source>Cautious despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1021"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="809"/>
         <source>Normal despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1047"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="835"/>
         <source>Aggressive despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1183"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="960"/>
         <source>&amp;Black and White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1188"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="965"/>
         <source>&amp;Color / Grayscale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1193"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="970"/>
         <source>&amp;Mixed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1198"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1203"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="975"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="980"/>
         <source>&amp;Reset to default value</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1658,13 +1686,13 @@ Cancelling...</source>
 <context>
     <name>ProjectFilesDialog</name>
     <message>
-        <location filename="../app/ui/ProjectFilesDialog.ui" line="20"/>
+        <location filename="../app/ui/ProjectFilesDialog.ui" line="23"/>
         <location filename="../app/ProjectFilesDialog.cpp" line="350"/>
         <source>Input Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ProjectFilesDialog.ui" line="43"/>
+        <location filename="../app/ui/ProjectFilesDialog.ui" line="46"/>
         <location filename="../app/ProjectFilesDialog.cpp" line="370"/>
         <source>Output Directory</source>
         <translation type="unfinished"></translation>
@@ -1675,24 +1703,24 @@ Cancelling...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ProjectFilesDialog.ui" line="33"/>
-        <location filename="../app/ui/ProjectFilesDialog.ui" line="52"/>
+        <location filename="../app/ui/ProjectFilesDialog.ui" line="36"/>
+        <location filename="../app/ui/ProjectFilesDialog.ui" line="55"/>
         <source>Browse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ProjectFilesDialog.ui" line="64"/>
+        <location filename="../app/ui/ProjectFilesDialog.ui" line="67"/>
         <source>Files Not In Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ProjectFilesDialog.ui" line="77"/>
-        <location filename="../app/ui/ProjectFilesDialog.ui" line="159"/>
+        <location filename="../app/ui/ProjectFilesDialog.ui" line="80"/>
+        <location filename="../app/ui/ProjectFilesDialog.ui" line="162"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ProjectFilesDialog.ui" line="102"/>
+        <location filename="../app/ui/ProjectFilesDialog.ui" line="105"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -1700,12 +1728,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ProjectFilesDialog.ui" line="108"/>
+        <location filename="../app/ui/ProjectFilesDialog.ui" line="111"/>
         <source>&gt;&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ProjectFilesDialog.ui" line="115"/>
+        <location filename="../app/ui/ProjectFilesDialog.ui" line="118"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -1713,22 +1741,22 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ProjectFilesDialog.ui" line="121"/>
+        <location filename="../app/ui/ProjectFilesDialog.ui" line="124"/>
         <source>&lt;&lt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ProjectFilesDialog.ui" line="143"/>
+        <location filename="../app/ui/ProjectFilesDialog.ui" line="146"/>
         <source>Files In Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ProjectFilesDialog.ui" line="171"/>
+        <location filename="../app/ui/ProjectFilesDialog.ui" line="174"/>
         <source>Right to left layout (for Hebrew and Arabic)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/ProjectFilesDialog.ui" line="178"/>
+        <location filename="../app/ui/ProjectFilesDialog.ui" line="181"/>
         <source>Fix DPIs, even if they look OK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1801,18 +1829,18 @@ You should remove them from the project.</source>
 <context>
     <name>QHotKeyInputDialog</name>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="828"/>
+        <location filename="../app/SettingsDialog.cpp" line="825"/>
         <source>Edit key sequence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="830"/>
+        <location filename="../app/SettingsDialog.cpp" line="827"/>
         <source>Hold the modification keys (Ctrl, Shift, Alt, Meta)
 and press [Enter] to edit the shortcut:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="832"/>
+        <location filename="../app/SettingsDialog.cpp" line="829"/>
         <source>Hold the keys and press [Enter] to edit the shortcut:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1820,14 +1848,14 @@ and press [Enter] to edit the shortcut:</source>
 <context>
     <name>QObject</name>
     <message numerus="yes">
-        <location filename="../app/MainWindow.cpp" line="2746"/>
+        <location filename="../app/MainWindow.cpp" line="2750"/>
         <source>Remove %n page(s) from project?</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3271"/>
+        <location filename="../app/MainWindow.cpp" line="3275"/>
         <source>%1 x %2 %3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1875,53 +1903,16 @@ and press [Enter] to edit the shortcut:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/StatusBarProvider.h" line="119"/>
-        <source>px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/StatusBarProvider.h" line="121"/>
-        <source>in</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/StatusBarProvider.h" line="123"/>
-        <source>mm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/StatusBarProvider.h" line="125"/>
-        <source>cm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="53"/>
         <location filename="../core/filters/fix_orientation/Filter.cpp" line="58"/>
         <source>Natural order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="54"/>
         <location filename="../core/filters/output/Filter.cpp" line="64"/>
         <location filename="../core/filters/page_layout/Filter.cpp" line="70"/>
         <location filename="../core/filters/page_split/Filter.cpp" line="67"/>
         <location filename="../core/filters/select_content/Filter.cpp" line="59"/>
         <source>Processed then unprocessed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="55"/>
-        <source>Order by angle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="56"/>
-        <source>Order by absolute angle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/OrderByAngleProvider.h" line="71"/>
-        <source>angle: %1°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2568,7 +2559,7 @@ and press [Enter] to edit the shortcut:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/RelinkingDialog.ui" line="97"/>
+        <location filename="../app/ui/RelinkingDialog.ui" line="100"/>
         <source>Undo</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2596,12 +2587,12 @@ and press [Enter] to edit the shortcut:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/RemovePagesDialog.ui" line="72"/>
+        <location filename="../app/ui/RemovePagesDialog.ui" line="75"/>
         <source>Corresponding output files will be deleted, while input files will remain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/RemovePagesDialog.ui" line="113"/>
+        <location filename="../app/ui/RemovePagesDialog.ui" line="116"/>
         <source>Additionally remove input files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2689,188 +2680,173 @@ and press [Enter] to edit the shortcut:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="106"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="109"/>
         <source>Features</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="120"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="123"/>
         <source>Enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="151"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="154"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="196"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="538"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="598"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="1005"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="1097"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="1327"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="1390"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="1495"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="1619"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="1777"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="1837"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2010"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2070"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2346"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2442"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2502"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2789"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2982"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="3256"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="3369"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="3475"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="3581"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="3679"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="3826"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="3942"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="4009"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="4125"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="4205"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="4280"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="199"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="584"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="644"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1036"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1128"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1358"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1421"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1526"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1650"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1808"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1868"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2041"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2101"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2377"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2473"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2533"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2820"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3013"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3287"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3400"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3506"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3625"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3723"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3870"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3986"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="4053"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="4154"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="4237"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="4312"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="277"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="675"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="1046"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="1178"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="1535"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2155"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2579"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2872"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="3061"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="3334"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="3448"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="3554"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="3758"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="3907"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="3982"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="4083"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="4165"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="4245"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="280"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="721"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1077"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1209"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1566"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2186"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2610"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2903"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3092"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3365"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3479"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3585"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3802"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3951"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="4026"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="4127"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="4194"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="4277"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="296"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="288"/>
         <source>Application language:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="303"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="377"/>
         <source>Batch processing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="309"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="383"/>
         <source>All pages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="319"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="393"/>
         <source>Start from selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="344"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="418"/>
         <source>Ask every time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="366"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="334"/>
         <source>Application style:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="387"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="348"/>
         <source>Application stylesheet:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="510"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="556"/>
         <source>&amp;Reset to defaults</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1184"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1215"/>
         <source>TIFF compression (b/w):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1231"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1262"/>
         <source>TIFF compression (non b/w):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1702"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1733"/>
         <source>Grid and lines color:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1935"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1966"/>
         <source>Content zone highlight color:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2843"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2874"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alignment setting has no sense if &amp;quot;Match with other pages&amp;quot; is switched off. In this case final size for all pages is calculated separately and equal to content one plus its hard margins.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Alignment&lt;/span&gt; defines how to align content zone with its hard margins by changing soft margins. It could be combination of values of following alignment types: manual, auto-magnet and original proportions (last two are optional features).&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Manual alignment&lt;/span&gt; is always available to user and allows him to choose the page side (top, left etc.), page corner (top-left, bottom-right etc.) where soft margins will be set to 0. In case of hard margins are zero for such side this means content zone will touch page border. It also allows to center content zone on page horizontally, vertically or both.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Auto-Magnet alignment&lt;/span&gt; (just Auto in other version of ST) is very similar to Manual mode. In fact - it automatically chooses one of Manual mode options based on how close original content zone to page borders. I would say content zone is magnetized to the closest side or corner of page or to its center. This type of alignment is optional.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Note&lt;/span&gt;: in case Original Proportions alignment is enabled then Auto-Magnet considers it as one of options and may choose it automatically for vertical/horizontal alignment or both.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Original Proportions alignment&lt;/span&gt; (based on Original alignment in other versions of ST) distributes soft margins proportionally to space around content zone on original page. For example, if your content on left pages of document is closer to right border of page and content on right pages is closer to left border of page and you want to keep this alignment for left/right pages in a result you&apos;ll face some problems. Because due to different dpi, scan size, splits or deskew angle your page most probably will have a slightly different sizes. And thus even if you set auto-margins or manually set unequal hard margins for left/right pages you&apos;ll end up with non-zero soft margins (unless you switch off &amp;quot;Match with other pages&amp;quot; and all your pages final sizes will be different). Or this could happen if you have cover page in your project and want all page sizes be equal - cover pages may be bigger than other pages. Anyway you&apos;ll end up with necessity to distribute non-zero soft margins. Original proportions alignment may do it for you automatically proportionally to your content zone original position on page. This type of alignment is optional.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Note&lt;/span&gt;: Original proportions alignment is done for content zone with its hard margins around, while position proportions are calculated without considering hard margin values.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Note&lt;/span&gt;: Original proportions mode considers page size after its refinement by Page Detection feature (if enabled) on previous processing step.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Note&lt;/span&gt;: Final alignment is a sum of horizontal and vertical alignments (or one may say alignment by height and by width). There is a way to define them separately even for different types of alignment. For example: auto-magnet horizontally and original proportions vertically. Or original proportions horizontally and align to top border vertically.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2935"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2966"/>
         <source>Description of currently selected alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3423"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3454"/>
         <source>In this mode page content is not changed.
 Margins can be filled with white or left as is. If the margins are filled in white, then the option to equalize illumination also becomes available.
 Equalize illumination option normalizes the background color, bringing it to white, and normalizes contrast, increasing it in the shaded areas.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3529"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3560"/>
         <source>Mixed mode is used for projects in which there are scans from half-tone images (grayscale or color). Pictures will be automatically detected and displayed as it is, just as in the &quot;Color / Grayscale&quot; with the included equalized illumination. The rest of the page is displayed in black and white.
 
 Automatic picture zones detection works well enough, but if the picture merges smoothly into the background the result may be unsatisfactory. In this case, you must create and configure the picture zone images. It is important to note that the creation of zones of images is possible only in mixed mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3733"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3777"/>
         <source>Picture zones layer works on top of Auto layer results and could be useful if your pictures are known to be rectangles. Auto layer is build automatically and doesn&apos;t make any assumptions on areas geometry. Picture zones layer tries to improve its mask assuming all picture areas found should be rectangles.
 This layer doesn&apos;t modify auto layer mask but automatically creates rectangle zones on top of it. So usually it covers all auto layer with polygons. User can change these polygons as regular picture zones.
 In case sensitivity parameter is 100% the picture detection algorithm looks for the separate picture areas and adds a minimal bounding rect for each of them as a zone. In this case zone contains pixels from auto layer mask and may contain pixels that are not included in auto layer mask but still inside the rect. If sensitivity is less than 100% the algorithm additionally investigates each side of bounding rect and tries to move it towards the center of rect while the line of pixels behind it contains more than N% of pixels that are not from auto layer mask. Decreasing sensitivity may help to better fit picture zone over picture area by ignoring pixels-outliers incorrectly included in auto layer mask. Usually, the sensitivity is 75-100%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="4060"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dewarping tries to detect and fix distortion of page surface by analyzing lines of text on it. It assumes that the lines should be horizontal.&lt;/p&gt;&lt;p&gt;Automatic, marginal and manual modes are supported.&lt;/p&gt;&lt;p&gt;Try to correct auto distortion model if too skewed - if enabled then some vertical edges of automatically generated distortion model that deviate to more than 2.75 degrees to Y-axis may be treated as invalid and slope is set to sero. That may help in some cases when auto generation of distortion model gives incorrect results.&lt;/p&gt;&lt;p&gt;Try to apply additional deskew after dewarp - we already deskewed our image on one of previous processing stage but sometimes image may get skewed after dewarping. Thus additional attempt to deskew resulting image may be applied. The skew of the image after dewarping is measured and if the angle is more than 2.0 degrees - it&apos;s deskewed. There is no controls to tune this automatic deskew, it takes some CPU time and it&apos;s not working with automatic dewarping. So use it with &lt;a name=&quot;result_box&quot;/&gt;with caution.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="4089"/>
-        <source>Try to correct auto distortion model if too skewed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="4096"/>
-        <source>Try to apply additional deskew after dewarp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="4251"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="4283"/>
         <source>Copy ICC profile from source image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="4334"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="4366"/>
         <source>Most of the processing stages require multiple steps of image transformation, cropping, scaling, changing colors, applying filters etc. to calculate resulting image with specified parameters. These transformations could be displayed to user for debugging purposes.
 If debugging enabled you may find a new tabs on top of page view panel. Each tab contain one debugging image representing processing one step described in its title.
 
@@ -2880,12 +2856,12 @@ Debug images are saved as png in temporary folder with unique filenames. These f
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="652"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="698"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These settings should let you fine tune thumbnails display. By default thumbnails are added one after each other in rows, so if you change width of the thumbnails view you can get &amp;quot;multicolumn&amp;quot;-like style. Still you should remember that this is a list and not a grid alignment. Thus in case of different sizes of thumbnails equal spaces between &amp;quot;columns&amp;quot; are not guaranteed as well as equal number of thumbnails in each row. Disable first check-box to stay with single-column mode even if width of the view allows to display more.&lt;/p&gt;&lt;p&gt;By default you can use Alt+mouse wheel to change max size of thumbnails in the list. The key could be changed in hotkey manager. Mouse cursor should be other the thumbnails view. Thumbnails are automatically scaled to max size keeping their proportions. Switch off this mode and define fixed size (160x250 is recommended) if needed.&lt;/p&gt;&lt;p&gt;Even if you increase max size of thumbnails to some big values you want be able to find small details on them due to pure quality of the image. That&apos;s because they are cached after scaling to size 200x200 pixels. You can change this to 600x600 or 1200x1200 to increase thumbnail quality. Note: this affects only newly created thumbnails. If you already have them cached you&apos;ll need to delete cache subfolder in project folder manually to regenerate them.&lt;/p&gt;&lt;p&gt;All thumbnails have minimal margin between them and left/top borders of the view. It could be changed.&lt;/p&gt;&lt;p&gt;Thumbnail size is defined as a size of thumbnail image with boundary adjustments around it. These adjustments could be tuned here too.&lt;/p&gt;&lt;p&gt;Note: currently final boundary of the thumbnails could be affected by too long filenames displayed below them.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;In case of any problems use reset button which reset thumbnail settings only to their defaults.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="250"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="253"/>
         <source>Application language - allows to switch the language of the interface. If there is no language you need and you can help us with translation please contact the project maintainer.
 
 Batch processing - a simple dialog that appears if you press the launch button and allows you to start page processing from the beginning instead of a current page.
@@ -2894,85 +2870,85 @@ You can add new images (for ex. missing pages) after project is created with Ins
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="356"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="430"/>
         <source>Filter existing files in insert new image dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="681"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="727"/>
         <source>Place as many thumbnails in a row as possible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="691"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="737"/>
         <source>Use fixed max thumbnail size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="722"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="748"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="795"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="818"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="859"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="879"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="899"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="919"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="768"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="794"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="826"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="849"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="890"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="910"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="930"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="950"/>
         <source> px</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="788"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="819"/>
         <source>Scale cached images to this size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="811"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="842"/>
         <source>Minimal space between images:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="834"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="865"/>
         <source>Thumbnail boundary adjustments:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="966"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="997"/>
         <source>&amp;Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="976"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1007"/>
         <source>Display hints under pages if order isn&apos;t natural</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1026"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1057"/>
         <source>Allows to automatically save project file (*.scantailor) with a specified time interval.
 If project was never saved before this will create UnnamedAutoSave.Scantailor file in project&apos;s input directory. Otherwise project file will be backed up to *.bak file in the its folder and then overwritten with current project state.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1052"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1083"/>
         <source>Save project every:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1059"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1090"/>
         <source> min.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1278"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1309"/>
         <source>Hide rare or unsupported methods</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1285"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1316"/>
         <source>Use horizontal differencing predictor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1348"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1379"/>
         <source>At this stage it is possible to turn scans by multiples of 90 degrees. i.e., to correct sideways or upside-down scans.
 
 This is a manual stage because the program does not know how to determine the correct orientation of scans - the user must do this. This also means that using batch processing at this stage is useless. Obviously it behooves the user to make sure all initial scans are of the same orientation, if possible; mixing orientation will make this stage less automatic and more time-consuming.
@@ -2981,7 +2957,7 @@ Use &quot;Apply To...&quot; dialog to apply changes to a specified range of page
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1444"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1475"/>
         <source>This stage determines whether you want to divide the page(s).
 Type of division:
 
@@ -2995,127 +2971,127 @@ The dividing line can also be determined/moved automatically or specified manual
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1516"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1547"/>
         <source>If this feature is enabled the application shows &quot;Apply cut&quot; check box in &quot;Apply to...&quot; dialog at Split pages stage. In case it&apos;s checked the application tries to copy dividing lines position to the specified page range. In case target page size mismatch the original page the dividing line position will be scaled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1549"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1580"/>
         <source>Switched on by default:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1658"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1689"/>
         <source>At this stage one may determine the angle which the page needs to be turned for the text to be properly horizontal. Since compensation is a simple rotation such distortions as keystone or curling can not be corrected at this stage. The rotation angle is determined automatically, but you can also set it manually.
 
 Images can be rotated by dragging the round handles at the edges. You can also explicitly specify the rotation angle in degrees. Positive angles will rotate the image clockwise, negative counter-clockwise. For fine adjustment of the angle it may be convenient to click the mouse on the text portion of the input field corner, then move the mouse wheel to fix it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1798"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1829"/>
         <source>If enabled - marks deviant pages with red asterisks in Thumbnails panel.
 The Deviant page on this stage is defined as a page which absolute deskew angle value is bigger than specified in command line (5 degrees by default) or differs from average angle more than 1.5 standard deviations. Average angle and standard deviation are statistical measurements calculated based on all pages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2161"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2192"/>
         <source>Fine tune page corners:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2170"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2201"/>
         <source>Default value for page: enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2180"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2211"/>
         <source>Target page size in MM:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1728"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="1961"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1759"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1992"/>
         <source>Click to change color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1738"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="1971"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1769"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2002"/>
         <source>Reset color to default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2400"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2431"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;At this stage you may adjust the margins added to the content box. There are &lt;span style=&quot; font-weight:600;&quot;&gt;two types of margins&lt;/span&gt; - hard and soft.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Hard margin&lt;/span&gt; - is that between the solid lines. They are set by the user. You can either move over any solid line, be it an inner or outer edge, or set the margins through numerical values.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Soft margin&lt;/span&gt; - is that between the solid and the dotted line. These margins are &lt;span style=&quot; text-decoration: underline;&quot;&gt;automatically&lt;/span&gt; added to bring the page size to the same size of other pages. If you see a dotted line - this means that somewhere in the project there is a page with that width (usable area of Hard + margin), and (possibly others) with that height. This is one big page causing the soft margins in all the other pages, if only for not leveling them off.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Alignment&lt;/span&gt; defines how to align content zone with its hard margins by changing soft margins. It could be: manual, auto-magnet and original proportions (last two are optional features).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2556"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2587"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can set default &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;quot;hard margins&amp;quot;&lt;/span&gt; values for &lt;span style=&quot; font-weight:600;&quot;&gt;top, left, right&lt;/span&gt; and &lt;span style=&quot; font-weight:600;&quot;&gt;bottom&lt;/span&gt; sides.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Auto margins&lt;/span&gt; let you automatically calculate margin values for content area so their combined size will match page size. Page area is usually equal to image area (after page splitting and deskew) but could be affected with optional page detection feature on content selection stage.&lt;/p&gt;&lt;p&gt;Note: Even if you apply auto margins to all pages in project that doesn&apos;t guarantee that all content rects plus corresponding hard margins will result to the same size. Thus in case of &amp;quot;Match with other pages&amp;quot; enabled you&apos;ll get some &lt;span style=&quot; font-weight:600;&quot;&gt;soft margins&lt;/span&gt; that should be addressed with help of Alignment. There could be many reasons of page size mismatch: different size of original scans, different page splitting, page geometry change after deskew or distinction in page detection results.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2585"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2892"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2616"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2923"/>
         <source>Default values:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3635"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3679"/>
         <source>Auto layer is switched on by default and contains automatically detected areas which are most likely pictures and should be left grayscaled/colored while other converted to b/w.
 The result is binary mask and could be viewed in Layers tab. It&apos;s highlighted by blue and glowing.
 This mask can&apos;t be changed directly but only switched on/off. User could also create zones (polygons) with &quot;subtract from Auto layer&quot; or &quot;Add to Auto layer&quot; flags to modify it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="741"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2192"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="787"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2223"/>
         <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="715"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2206"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="761"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2237"/>
         <source>Height:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2223"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2254"/>
         <source>Default borders in MM:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="872"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2242"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="903"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2273"/>
         <source>Left:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="912"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2281"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="943"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2312"/>
         <source>Right:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="852"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2255"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="883"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2286"/>
         <source>Top:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="559"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="605"/>
         <source>If docking is enabled the Filters and Thumbnails panels could be pop out from their positions (left and right sides of the ain application window) and float over page view one. Once pop out they could be placed back by double clicking panel&apos;s title or pressing an icon on it (icon might be not displayable of your system).
 This option allows to increase page view panel size to almost a whole application window size which may be useful in some cases.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="892"/>
-        <location filename="../app/ui/SettingsDialog.ui" line="2291"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="923"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2322"/>
         <source>Bottom:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1151"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1182"/>
         <source>Once all processing stages are complete the resulting images are saved in &quot;./out&quot; sub-folder of your project input folder in TIFF format. TIFF format supports dozens of image compression methods from None to JPEG. Default is LZW. Stick to it till you are sure you need something different.
 
 Availability of compression methods depends on their support in libtiff and options used to build it. So not all methods are available. Also some could be used with black/white images only.
@@ -3124,20 +3100,20 @@ Horizontal differencing predictor - a preprocessing step applied to image data t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="1891"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="1922"/>
         <source>This stage determines the rectangular region with &quot;useful&quot; or usable content (shaded in color). Why do we need to define this area? Firstly in order to determine the page size to the output. The content will be added to the total margin area, and the outer limit of these margins affects the size of the output file. Secondly so that the final images don&apos;t show the line of fold or other debris from the edges. Strictly speaking whether the debris falls in the margin in the output stage depends on the mode. In most modes the margin is filled in white.
 
 If areas are identified incorrectly, you can tweak individual pages manually by setting the mouse pointer over the edge, clicking &amp; dragging as needed. Check Hotkeys manager for a list of all possible operations. Occasionally Scan Tailor may find non-existent content or conversely not select content where it should. In this case, you can manually create / delete a region by right-clicking on the image, and select the appropriate menu item.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2031"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2062"/>
         <source>If enabled - marks deviant pages with red asterisks in Thumbnails panel.
 The Deviant page on this stage is defined as a page which content zone square differs from average square more than 1.0 standard deviation. Factor 1.0 may be changed via command line. Average square and standard deviation are statistical measurements calculated based on all pages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2124"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2155"/>
         <source>By default application tries to find a content area on whole page. But sometimes user have an scan bigger than page. This could happen if you scan whole possible scanner area even if your pages are smaller than it. In this case you might end up with a big image with huge black borders. If page detection is enabled the application tries to find a real page area in image before content area detection. In case of success the content area is searched inside area found only. Technically it preprocess image to excludes black borders from page area. The following enhancements could be applied (in order they&apos;re listed):
 
 Fine tune page corners - move corners of detected page area towards the center of page while the corner pixel won&apos;t be non black.
@@ -3150,32 +3126,32 @@ Everything outside page area is highlighted with yellow in page view panel.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2592"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2623"/>
         <source>Millimeters (mm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2597"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2628"/>
         <source>Inches (in)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2620"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2651"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2657"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2688"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2677"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2708"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2714"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2745"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3185,91 +3161,91 @@ Everything outside page area is highlighted with yellow in page view panel.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2463"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2494"/>
         <source>If enabled - marks deviant pages with red asterisks in Thumbnails panel.
 The Deviant page on this stage is defined as a page which has no alignment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2748"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2779"/>
         <source>Switched on for page by default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2878"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2909"/>
         <source>Auto-Magnet alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2885"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2916"/>
         <source>Original proportions alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2944"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2975"/>
         <source>Selected alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3036"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3067"/>
         <source>At this stage the output files are created from the images and written to the disk. The resultant images also appear in the central window of the program.
 
 Unlike the other stages, the &quot;Output&quot; stage becomes available only after all page pass the stages of &quot;Select Content&quot; and &quot;Page Layout&quot;. This is because the size of pages in the output depend on each other. Say if it found a big page, then all the other fields are increasing (more is described in the documentation on the Page Layout stage). Therefore it is important to know the final size of pages, and it can only be done through the stages of &quot;Select Content&quot; and &quot;Page Layout&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3069"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3100"/>
         <source>Default DPI:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3136"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3167"/>
         <source>Threshold control diapason:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3145"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3176"/>
         <source>Min.:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3178"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3209"/>
         <source>Max.:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3202"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3233"/>
         <source>Default threshold value:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3227"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3258"/>
         <source>Hold spacebar to display original page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3310"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3341"/>
         <source>Black and White is not suitable for any images and some drawings. There is an option to &quot;despeckle&quot;, and to increase or decrease the line thickness (i.e. of the text). In general it is best to not despeckle if the image is reasonably clean as despeckling can result in the loss of some portions of text. This may be compensated for to a degree by increasing the line thickness but it&apos;s probably important to experiment on a few pages before applying to the entire project.
 Making black and white image from grayscale or color source requires binarization. Binarization contains several steps which could be seen in debug mode. One of these is image smoothing. In few cases better results could be achieved if smoothing is disabled, but it&apos;s enabled by default.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3340"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3371"/>
         <source>Disable smoothing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3764"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3808"/>
         <source>Sensitivity:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3786"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3830"/>
         <source>%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3880"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3924"/>
         <source>Foreground layer allows user to fill page with white while keeping its content grayscaled or colored. Technically, it binarizes image to a b/w mask and uses such mask to separate background from foreground. Then background is filled with white while foreground is kept as is.
 It could be useful if you have some colored text, arrows or other glyphs which could be hardly represented as a rectangle picture.
 Foreground layer could be adjusted with zones. Use zones with &quot;subtract from all layers&quot; property to left a part of image below it in b/w mode. Or &quot;subtract to auto layer&quot; to remove auto layer mask below it. By default auto layer masks (if enabled) and foreground layer masks are combined.
@@ -3278,37 +3254,42 @@ As Foreground layer is using binarization to separate content from background it
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3913"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="3957"/>
         <source>Separate threshold control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="3963"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="4007"/>
         <source>Fill zones tab allows user to specify zones that will be filled with background cover. This is usually used to remove the library stamps, and spots that are too big to be automatically removed with Despeckle function.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="4146"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="4104"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dewarping tries to detect and fix distortion of page surface by analyzing lines of text on it. It assumes that the lines should be horizontal.&lt;/p&gt;&lt;p&gt;Automatic and manual modes are supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../app/ui/SettingsDialog.ui" line="4175"/>
         <source>Despeckling mode tries to automatically clean page content from spots. It analyses only areas of page rendered in b/w. In a nutshell it looks for connected set of black pixels that could be bounded with a rect smaller then Despeckling mode sensitivity rect - in this case these pixels are filled with background color. Currently 3 levels of sensitivity are supported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="4171"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="4200"/>
         <source>Default:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="4226"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="4258"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Various image formats allow to specify additional data in files. &lt;/p&gt;&lt;p&gt;In some cases you may want to copy such information from the source image files to the resulting image files after image processing.&lt;/p&gt;&lt;p&gt;These settings let you control metadata propagation.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Copy ICC profile from source image &lt;/span&gt;- if enabled the embedded Color Profile data will be copied from source to resulting image. Some color profiles are not compatible with all possible color spaces thus this setting turns off some color space optimizations (e.g. RGB image won&apos;t be converted to grayscale color space even if all pixels in it are the shades of gray). The resulting image will keep the color space of the original unless it&apos;s converted to b/w.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="4384"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="4416"/>
         <source>Expand all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="4389"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="4421"/>
         <source>Collapse all</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3324,7 +3305,7 @@ As Foreground layer is using binarization to separate content from background it
     </message>
     <message>
         <location filename="../app/SettingsDialog.cpp" line="152"/>
-        <location filename="../app/SettingsDialog.cpp" line="1090"/>
+        <location filename="../app/SettingsDialog.cpp" line="1087"/>
         <source>Restore defaults</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3448,18 +3429,18 @@ As Foreground layer is using binarization to separate content from background it
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="1091"/>
+        <location filename="../app/SettingsDialog.cpp" line="1088"/>
         <source>Thumbnails view settings will be reseted to their defaults. Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="1144"/>
-        <location filename="../app/SettingsDialog.cpp" line="1163"/>
+        <location filename="../app/SettingsDialog.cpp" line="1131"/>
+        <location filename="../app/SettingsDialog.cpp" line="1150"/>
         <source>Color selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ui/SettingsDialog.ui" line="2739"/>
+        <location filename="../app/ui/SettingsDialog.ui" line="2770"/>
         <source>Auto margins</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3730,20 +3711,20 @@ Continue?</source>
 <context>
     <name>deskew::Filter</name>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="66"/>
-        <source>Deskew</source>
+        <location filename="../core/filters/deskew/Filter.cpp" line="52"/>
+        <source>Geometric Distortions</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>deskew::ImageView</name>
     <message>
-        <location filename="../core/filters/deskew/ImageView.cpp" line="66"/>
-        <source>Use %1+Wheel to rotate or %2+Wheel for finer rotation.</source>
+        <location filename="../core/filters/deskew/ImageView.cpp" line="61"/>
+        <source>Use Ctrl+Wheel to rotate or Ctrl+Shift+Wheel for finer rotation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ImageView.cpp" line="71"/>
+        <location filename="../core/filters/deskew/ImageView.cpp" line="64"/>
         <source>Drag this handle to rotate the image.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3751,8 +3732,13 @@ Continue?</source>
 <context>
     <name>deskew::OptionsWidget</name>
     <message>
-        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="68"/>
-        <source>Apply Deskew</source>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="109"/>
+        <source>Apply Distortion Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="161"/>
+        <source>Apply Depth Perception</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3760,8 +3746,8 @@ Continue?</source>
     <name>exporting::ExportDialog</name>
     <message>
         <location filename="../app/ExportDialog.cpp" line="55"/>
-        <location filename="../app/ExportDialog.cpp" line="293"/>
-        <location filename="../app/ExportDialog.cpp" line="299"/>
+        <location filename="../app/ExportDialog.cpp" line="296"/>
+        <location filename="../app/ExportDialog.cpp" line="302"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3771,78 +3757,78 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ExportDialog.cpp" line="106"/>
-        <location filename="../app/ExportDialog.cpp" line="130"/>
-        <location filename="../app/ExportDialog.cpp" line="140"/>
-        <location filename="../app/ExportDialog.cpp" line="220"/>
-        <location filename="../app/ExportDialog.cpp" line="252"/>
+        <location filename="../app/ExportDialog.cpp" line="109"/>
+        <location filename="../app/ExportDialog.cpp" line="133"/>
+        <location filename="../app/ExportDialog.cpp" line="143"/>
+        <location filename="../app/ExportDialog.cpp" line="223"/>
+        <location filename="../app/ExportDialog.cpp" line="255"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ExportDialog.cpp" line="107"/>
+        <location filename="../app/ExportDialog.cpp" line="110"/>
         <source>The export output directory is empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ExportDialog.cpp" line="119"/>
+        <location filename="../app/ExportDialog.cpp" line="122"/>
         <source>Create Directory?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ExportDialog.cpp" line="120"/>
+        <location filename="../app/ExportDialog.cpp" line="123"/>
         <source>The export output directory doesn&apos;t exist. Create it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ExportDialog.cpp" line="131"/>
+        <location filename="../app/ExportDialog.cpp" line="134"/>
         <source>Unable to create the export output directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ExportDialog.cpp" line="141"/>
+        <location filename="../app/ExportDialog.cpp" line="144"/>
         <source>The export output directory is not set or doesn&apos;t exist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ExportDialog.cpp" line="146"/>
-        <location filename="../app/ExportDialog.cpp" line="310"/>
+        <location filename="../app/ExportDialog.cpp" line="149"/>
+        <location filename="../app/ExportDialog.cpp" line="313"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ExportDialog.cpp" line="163"/>
+        <location filename="../app/ExportDialog.cpp" line="166"/>
         <source>Export output directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ExportDialog.cpp" line="197"/>
+        <location filename="../app/ExportDialog.cpp" line="200"/>
         <source>Processed pages %1 of %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ExportDialog.cpp" line="205"/>
-        <location filename="../app/ExportDialog.cpp" line="213"/>
+        <location filename="../app/ExportDialog.cpp" line="208"/>
+        <location filename="../app/ExportDialog.cpp" line="216"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ExportDialog.cpp" line="205"/>
+        <location filename="../app/ExportDialog.cpp" line="208"/>
         <source>The files export is stopped by the user.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ExportDialog.cpp" line="213"/>
+        <location filename="../app/ExportDialog.cpp" line="216"/>
         <source>The files export is finished.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ExportDialog.cpp" line="252"/>
+        <location filename="../app/ExportDialog.cpp" line="255"/>
         <source>Nothing to export. Please select some data to export.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ExportDialog.cpp" line="309"/>
+        <location filename="../app/ExportDialog.cpp" line="312"/>
         <source>Starting the export...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3907,14 +3893,6 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>output::DewarpingView</name>
-    <message>
-        <location filename="../core/filters/output/DewarpingView.cpp" line="453"/>
-        <source>Reset distortion model</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>output::FillZoneEditor</name>
     <message>
         <location filename="../core/filters/output/FillZoneEditor.cpp" line="262"/>
@@ -3954,103 +3932,122 @@ of a non grey color in the source files</source>
 <context>
     <name>output::OptionsWidget</name>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="471"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="446"/>
         <source>%1 x %2 dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="476"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="451"/>
         <source>%1 dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="505"/>
-        <source>Enforced if dewarping is on</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="526"/>
-        <source>Disabled if dewarping is on</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="614"/>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="640"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="597"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="617"/>
-        <source>Auto</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="620"/>
-        <source>Manual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="625"/>
-        <source>Marginal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="641"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="598"/>
         <source>Cautious</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="642"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="599"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="643"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="600"/>
         <source>Aggressive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="674"/>
-        <source>Apply Depth Perception</source>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="64"/>
+        <source>Otsu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="690"/>
-        <source>Apply Dewarping Mode</source>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="65"/>
+        <source>Mean</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="709"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="66"/>
+        <source>Niblack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="67"/>
+        <source>Gatos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="68"/>
+        <source>Sauvola</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="69"/>
+        <source>Wolf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="70"/>
+        <source>Bradley</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="71"/>
+        <source>EdgePlus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="72"/>
+        <source>BlurDiv</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="73"/>
+        <source>EdgeDiv</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="74"/>
+        <source>MultiScale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="610"/>
         <source>Apply Despeckling Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="725"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="626"/>
         <source>Apply Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="917"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="818"/>
         <source>Apply Output Resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="952"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="853"/>
         <source>Apply Threshold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="1022"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="923"/>
         <source>Apply Foreground layer threshold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="1077"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="978"/>
         <source>Copy zone and its settings to:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="1142"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="1043"/>
         <source>Find and remove this zone from:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4058,37 +4055,32 @@ of a non grey color in the source files</source>
 <context>
     <name>output::Task::UiUpdater</name>
     <message>
-        <location filename="../core/filters/output/Task.cpp" line="690"/>
+        <location filename="../core/filters/output/Task.cpp" line="640"/>
         <source>Picture zones are only available in Mixed mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/Task.cpp" line="762"/>
+        <location filename="../core/filters/output/Task.cpp" line="701"/>
         <source>Despeckling can&apos;t be done in Color / Grayscale mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/Task.cpp" line="787"/>
+        <location filename="../core/filters/output/Task.cpp" line="726"/>
         <source>Output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/Task.cpp" line="788"/>
+        <location filename="../core/filters/output/Task.cpp" line="727"/>
         <source>Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/Task.cpp" line="789"/>
+        <location filename="../core/filters/output/Task.cpp" line="728"/>
         <source>Fill Zones</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/Task.cpp" line="790"/>
-        <source>Dewarping</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/Task.cpp" line="791"/>
+        <location filename="../core/filters/output/Task.cpp" line="729"/>
         <source>Despeckling</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4290,12 +4282,22 @@ and it&apos;s top and bottom hard margins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ImageView.cpp" line="115"/>
+        <location filename="../core/filters/select_content/ImageView.cpp" line="117"/>
+        <source>Hold left mouse button to drag the content box.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/select_content/ImageView.cpp" line="118"/>
+        <source>Release left mouse button to finish dragging.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/select_content/ImageView.cpp" line="135"/>
         <source>Create Content Box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ImageView.cpp" line="116"/>
+        <location filename="../core/filters/select_content/ImageView.cpp" line="136"/>
         <source>Remove Content Box</source>
         <translation type="unfinished"></translation>
     </message>

@@ -28,6 +28,7 @@
 class TaskStatus;
 class FilterData;
 class DebugImages;
+class ThumbnailPixmapCache;
 
 namespace imageproc
 {
@@ -52,6 +53,7 @@ class Task : public RefCountable
 public:
     Task(IntrusivePtr<Filter> const& filter,
         IntrusivePtr<Settings> const& settings,
+        IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
         IntrusivePtr<select_content::Task> const& next_task,
         PageId const& page_id, bool batch_processing, bool debug);
 
@@ -90,6 +92,7 @@ private:
 
     IntrusivePtr<Filter> m_ptrFilter;
     IntrusivePtr<Settings> m_ptrSettings;
+    IntrusivePtr<ThumbnailPixmapCache> m_ptrThumbnailCache;
     IntrusivePtr<select_content::Task> m_ptrNextTask;
     std::unique_ptr<DebugImages> m_ptrDbg;
     PageId m_pageId;
