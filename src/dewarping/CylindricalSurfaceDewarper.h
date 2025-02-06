@@ -19,7 +19,7 @@
 #ifndef DEWARPING_CYLINDRICAL_SURFACE_DEWARPER_H_
 #define DEWARPING_CYLINDRICAL_SURFACE_DEWARPER_H_
 
-#include "STEX_HomographicTransform.h"
+#include "HomographicTransform.h"
 #include "PolylineIntersector.h"
 #include "ArcLengthMapper.h"
 #include <boost/array.hpp>

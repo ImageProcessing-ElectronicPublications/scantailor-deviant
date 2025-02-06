@@ -12,7 +12,7 @@ SET(
         DistortionModel.cpp DistortionModel.h
         DistortionModelBuilder.cpp DistortionModelBuilder.h
         RasterDewarper.cpp RasterDewarper.h
-        STEX_HomographicTransform.h
+        HomographicTransform.h
         STEX_ToPoint.h
         STEX_ToVec.h
         STEX_VecNT.h

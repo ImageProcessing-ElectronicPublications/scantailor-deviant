@@ -18,7 +18,7 @@
 
 #include "RasterDewarper.h"
 #include "CylindricalSurfaceDewarper.h"
-#include "STEX_HomographicTransform.h"
+#include "HomographicTransform.h"
 #include "STEX_VecNT.h"
 #include "imageproc/ColorMixer.h"
 #include "imageproc/GrayImage.h"
