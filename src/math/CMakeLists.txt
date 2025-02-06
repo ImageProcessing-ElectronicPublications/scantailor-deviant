@@ -6,7 +6,6 @@ SET(
         GENERIC_SOURCES
         LinearSolver.cpp LinearSolver.h
         MatrixCalc.h
-        HomographicTransform.h
         SidesOfLine.cpp SidesOfLine.h
         ToLineProjector.cpp ToLineProjector.h
         ArcLengthMapper.cpp ArcLengthMapper.h
