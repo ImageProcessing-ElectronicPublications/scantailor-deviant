@@ -115,12 +115,6 @@ private:
         HomographicTransform<2, double> pln2img,
         HomographicTransform<2, double> img2pln);
 
-    static HomographicTransform<2, double> fourPoint2DHomography(
-        boost::array<std::pair<QPointF, QPointF>, 4> const& pairs);
-
-    static HomographicTransform<1, double> threePoint1DHomography(
-        boost::array<std::pair<double, double>, 3> const& pairs);
-
     void initArcLengthMapper(
         std::vector<QPointF> const& img_directrix1,
         std::vector<QPointF> const& img_directrix2);
