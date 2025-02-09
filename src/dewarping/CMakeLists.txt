@@ -17,6 +17,7 @@ SET(
         RasterDewarper.cpp RasterDewarper.h
         HomographicTransform.cpp HomographicTransform.h
         SizeMode.cpp SizeMode.h
+        SizeParams.cpp SizeParams.h
         STEX_ToPoint.h
         STEX_ToVec.h
         STEX_VecNT.h
