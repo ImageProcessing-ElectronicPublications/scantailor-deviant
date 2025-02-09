@@ -4,6 +4,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/core)
 
 SET(
         sources
+        BendParams.cpp BendParams.h
         Curve.cpp Curve.h
         CylindricalSurfaceDewarper.cpp CylindricalSurfaceDewarper.h
         DepthPerception.cpp DepthPerception.h
