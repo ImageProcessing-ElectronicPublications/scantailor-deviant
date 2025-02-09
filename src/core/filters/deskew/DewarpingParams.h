@@ -21,6 +21,11 @@
 
 #include "AutoManualMode.h"
 #include "dewarping/DistortionModel.h"
+#include "dewarping/FovParams.h"
+#include "dewarping/FrameParams.h"
+#include "dewarping/BendParams.h"
+#include "dewarping/SizeParams.h"
+#include "dewarping/MarginsParams.h"
 #include "dewarping/DepthPerception.h"
 
 class QDomDocument;
@@ -76,9 +81,64 @@ public:
     {
         m_depthPerception = depth_perception;
     }
+
+    dewarping::FovParams const& fovParams() const
+    {
+        return m_fovParams;
+    }
+
+    void setFovParams(dewarping::FovParams const& fov_params)
+    {
+        m_fovParams = fov_params;
+    }
+
+    dewarping::FrameParams const& frameParams() const
+    {
+        return m_frameParams;
+    }
+
+    void setFrameParams(dewarping::FrameParams const& frame_params)
+    {
+        m_frameParams = frame_params;
+    }
+
+    dewarping::BendParams const& bendParams() const
+    {
+        return m_bendParams;
+    }
+
+    void setBendParams(dewarping::BendParams const& bend_params)
+    {
+        m_bendParams = bend_params;
+    }
+
+    dewarping::SizeParams const& sizeParams() const
+    {
+        return m_sizeParams;
+    }
+
+    void setSizeParams(dewarping::SizeParams const& size_params)
+    {
+        m_sizeParams = size_params;
+    }
+
+    dewarping::MarginsParams const& marginsParams() const
+    {
+        return m_marginsParams;
+    }
+
+    void setMarginsParams(dewarping::MarginsParams const& margins_params)
+    {
+        m_marginsParams = margins_params;
+    }
 private:
     dewarping::DistortionModel m_distortionModel;
     dewarping::DepthPerception m_depthPerception;
+    dewarping::FovParams m_fovParams;
+    dewarping::FrameParams m_frameParams;
+    dewarping::BendParams m_bendParams;
+    dewarping::SizeParams m_sizeParams;
+    dewarping::MarginsParams m_marginsParams;
     AutoManualMode m_mode;
 };
 
