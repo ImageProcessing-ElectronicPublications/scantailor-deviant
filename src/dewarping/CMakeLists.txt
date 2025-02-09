@@ -11,6 +11,7 @@ SET(
         DewarpingImageTransform.cpp DewarpingImageTransform.h
         DistortionModel.cpp DistortionModel.h
         DistortionModelBuilder.cpp DistortionModelBuilder.h
+        FrameParams.cpp FrameParams.h
         FovParams.cpp FovParams.h
         RasterDewarper.cpp RasterDewarper.h
         HomographicTransform.cpp HomographicTransform.h
