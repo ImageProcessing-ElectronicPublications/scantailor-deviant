@@ -307,10 +307,6 @@ Do you want to replace it?</source>
 <context>
     <name>DeskewOptionsWidget</name>
     <message>
-        <source>Deskew</source>
-        <translation type="vanished">Компенсация наклона</translation>
-    </message>
-    <message>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="14"/>
         <source>Form</source>
         <translation>Форма</translation>
@@ -322,58 +318,194 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="44"/>
-        <source>No distortion</source>
-        <translation>Без искажений</translation>
+        <source>Scan of straight aligned page.
+No distortion.</source>
+        <translation>Скан выровненной страницы.
+Нет искажений.</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="71"/>
-        <source>Page skew</source>
-        <translation>Перекос страницы</translation>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="72"/>
+        <source>Scan of skewed page.
+Rotation correction.</source>
+        <translation>Скан перекошенной страницы.
+Исправление поворота.</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="98"/>
-        <source>Keystoning</source>
-        <translation>Трапецеидальное искажение</translation>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="100"/>
+        <source>Photo of flat page.
+Perspective correction.</source>
+        <translation>Фото плоской станицы.
+Исправление перспективы.</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="125"/>
-        <source>Curved lines</source>
-        <translation>Кривые</translation>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="128"/>
+        <source>Photo of cylindrical-curved page.
+3D perspective correcton.</source>
+        <translation>Фото цилиндрически изогнутой страницы.
+Исправление 3D-перспективы.</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="182"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="356"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="186"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="360"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="526"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="724"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="905"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1068"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1238"/>
         <source>Apply To ...</source>
         <translation>Применить к ...</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="207"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="211"/>
         <source>Mode</source>
         <translation>Режим</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="226"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="230"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="406"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="572"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="770"/>
         <source>Auto</source>
         <translation>Автоматически</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="242"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="246"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="413"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="579"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="777"/>
         <source>Manual</source>
         <translation>Вручную</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="274"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="278"/>
         <source>Rotation angle</source>
         <translation>Угол поворота</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="319"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="323"/>
         <source>Depth perception</source>
         <translation>Восприятие глубины</translation>
     </message>
     <message>
-        <source>Apply To...</source>
-        <translation type="vanished">Применить к...</translation>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="385"/>
+        <source>FOV</source>
+        <translation>Поле зрения</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="489"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="868"/>
+        <source>min</source>
+        <translation>мин</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="499"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="878"/>
+        <source>max</source>
+        <translation>макс</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="551"/>
+        <source>Frame</source>
+        <translation>Кадр</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="603"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="967"/>
+        <source>Width:</source>
+        <translation>Ширина:</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="629"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="997"/>
+        <source>Height:</source>
+        <translation>Высота:</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="655"/>
+        <source>Center X:</source>
+        <translation>Центр X:</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="681"/>
+        <source>Center Y:</source>
+        <translation>Центр Y:</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="749"/>
+        <source>Bend</source>
+        <translation>Выгиб</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="930"/>
+        <source>Size</source>
+        <translation>Размер</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="937"/>
+        <source>Calc by image area</source>
+        <translation>Вычислить по площади изображения</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="942"/>
+        <source>Fit to width</source>
+        <translation>Вписать по ширине</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="947"/>
+        <source>Fit to height</source>
+        <translation>Вписать по высоте</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="952"/>
+        <source>Stretch to</source>
+        <translation>Растянуть</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="957"/>
+        <source>Calc by camera distance</source>
+        <translation>Вычислить по расстоянию до камеры</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="990"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1017"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1044"/>
+        <source>px</source>
+        <translation>px</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1024"/>
+        <source>Distance:</source>
+        <translation>Расстояние:</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1093"/>
+        <source>Margins</source>
+        <translation>Поля</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1101"/>
+        <source>Left:</source>
+        <translation>Слева:</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1121"/>
+        <source>Right:</source>
+        <translation>Справа:</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1141"/>
+        <source>Top:</source>
+        <translation>Сверху:</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1161"/>
+        <source>Bottom:</source>
+        <translation>Снизу:</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1198"/>
+        <source>Maximum pixel scale:</source>
+        <translation>Максимальный масштаб пикселя:</translation>
     </message>
 </context>
 <context>
@@ -1332,29 +1464,6 @@ To determine it, run batch processing at &quot;Select Content&quot; or &quot;Pag
     </message>
 </context>
 <context>
-    <name>OutputChangeDewarpingWidget</name>
-    <message>
-        <source>Mode</source>
-        <translation type="vanished">Режим</translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation type="vanished">Отключено</translation>
-    </message>
-    <message>
-        <source>Auto</source>
-        <translation type="vanished">Автоматически</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation type="vanished">Вручную</translation>
-    </message>
-    <message>
-        <source>Marginal (experimental)</source>
-        <translation type="vanished">Краевое (экспериментально)</translation>
-    </message>
-</context>
-<context>
     <name>OutputOptionsWidget</name>
     <message>
         <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="758"/>
@@ -1393,10 +1502,6 @@ To determine it, run batch processing at &quot;Select Content&quot; or &quot;Pag
         <translation>Слой всего контента</translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot;&gt;Apply To...&lt;/a&gt;</source>
-        <translation type="vanished">&lt;a href=&quot;#&quot;&gt;Применить к...&lt;/a&gt;</translation>
-    </message>
-    <message>
         <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="238"/>
         <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="486"/>
         <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="647"/>
@@ -1433,14 +1538,6 @@ To determine it, run batch processing at &quot;Select Content&quot; or &quot;Pag
         <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="547"/>
         <source>Foreground layer threshold:</source>
         <translation>Порог слоя всего контента:</translation>
-    </message>
-    <message>
-        <source>Depth perception:</source>
-        <translation type="vanished">Коэф. глубины искривления:</translation>
-    </message>
-    <message>
-        <source>Dewarping:</source>
-        <translation type="vanished">Распрямление строк:</translation>
     </message>
     <message>
         <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="705"/>
@@ -2446,18 +2543,6 @@ and press [Enter] to edit the shortcut:</source>
         <translation>x: вправо</translation>
     </message>
     <message>
-        <source>off</source>
-        <translation type="vanished">Отключено</translation>
-    </message>
-    <message>
-        <source>manual</source>
-        <translation type="vanished">Вручную</translation>
-    </message>
-    <message>
-        <source>marginal</source>
-        <translation type="vanished">Краевое</translation>
-    </message>
-    <message>
         <location filename="../core/filters/page_layout/Alignment.cpp" line="238"/>
         <location filename="../core/filters/page_split/OrderBySplitTypeProvider.cpp" line="89"/>
         <source>auto</source>
@@ -2500,14 +2585,6 @@ and press [Enter] to edit the shortcut:</source>
         <location filename="../core/filters/select_content/Filter.cpp" line="59"/>
         <source>Processed then unprocessed</source>
         <translation>Сначала уже обработанные</translation>
-    </message>
-    <message>
-        <source>Order by angle</source>
-        <translation type="vanished">По величине угла</translation>
-    </message>
-    <message>
-        <source>Order by absolute angle</source>
-        <translation type="vanished">По абсолютной величине угла</translation>
     </message>
     <message>
         <location filename="../core/filters/output/OrderByModeProvider.cpp" line="70"/>
@@ -2598,44 +2675,24 @@ and press [Enter] to edit the shortcut:</source>
         <translation>%1 x %2 %3</translation>
     </message>
     <message>
-        <source>px</source>
-        <translation type="vanished">px</translation>
-    </message>
-    <message>
-        <source>in</source>
-        <translation type="vanished">in</translation>
-    </message>
-    <message>
-        <source>mm</source>
-        <translation type="vanished">мм</translation>
-    </message>
-    <message>
-        <source>cm</source>
-        <translation type="vanished">см</translation>
-    </message>
-    <message>
-        <location filename="../app/ThumbnailSequence.cpp" line="1008"/>
+        <location filename="../app/ThumbnailSequence.cpp" line="1020"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <location filename="../app/ThumbnailSequence.cpp" line="1009"/>
+        <location filename="../app/ThumbnailSequence.cpp" line="1021"/>
         <source>The file &quot;%1&quot; is not ready for output.</source>
         <translation>Файл &quot;%1&quot; еще не обработан.</translation>
     </message>
     <message>
-        <location filename="../app/ThumbnailSequence.cpp" line="1689"/>
+        <location filename="../app/ThumbnailSequence.cpp" line="1701"/>
         <source>Meta</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../app/ThumbnailSequence.cpp" line="1691"/>
+        <location filename="../app/ThumbnailSequence.cpp" line="1703"/>
         <source>Ctrl</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>angle: %1°</source>
-        <translation type="vanished">угол: %1°</translation>
     </message>
     <message>
         <location filename="../core/filters/fix_orientation/Filter.cpp" line="59"/>
@@ -2965,20 +3022,6 @@ In case sensitivity parameter is 100% the picture detection algorithm looks for 
 Автоматически созданные зоны можно не только менять, но даже удалять. Они не будут создаваться заново, пока их не удалят все, а затем выключат и снова включатслой зон иллюстраций
 
 Параметр чувствительности влияет на то, как именно на основе маски создаются зоны изображений. Если он равен 100%, то алгоритм обнаружения изображений просто обводит прямоугольной зоной все области изображений, какой бы формы они ни были. В этом случае в такую зону могут попасть как пиксели маски, так и пиксели, маски не принадлежавшие. Представьте иллюстрацию с круглым мячом без фона. Обведенный вокруг нее прямоугольник захватит фон. Если чувствительность составляет менее 100%, то алгоритм дополнительно исследует каждую сторону описанного прямоугольника и пытается сдвинуть её в центр прямоугольника, если линия пикселей с этой стороны него содержит более N% пикселей, которые не принадлежат маске. В  нашем примере с мячом это означает, что со снижением чувствительности зона изображения перестанет быть описанным вокруг мяча прямоугольником, а начнет стремиться к его центру, пока не превратиться во вписанный в мяч прямоугольник. Подобно тому, как слой зон иллюстраций позволяет бороться с выпадением пикселей по краям иллюстраций сливающихся с фоном страницы из маски из предположений об их геометрии, данный параметр позволяет бороться с небольшими участками незаслуженно включенных в маску пикселей по краям подобных иллюстраций. Обычно значение чувствительности составляет от 75 до 100%.</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dewarping tries to detect and fix distortion of page surface by analyzing lines of text on it. It assumes that the lines should be horizontal.&lt;/p&gt;&lt;p&gt;Automatic, marginal and manual modes are supported.&lt;/p&gt;&lt;p&gt;Try to correct auto distortion model if too skewed - if enabled then some vertical edges of automatically generated distortion model that deviate to more than 2.75 degrees to Y-axis may be treated as invalid and slope is set to sero. That may help in some cases when auto generation of distortion model gives incorrect results.&lt;/p&gt;&lt;p&gt;Try to apply additional deskew after dewarp - we already deskewed our image on one of previous processing stage but sometimes image may get skewed after dewarping. Thus additional attempt to deskew resulting image may be applied. The skew of the image after dewarping is measured and if the angle is more than 2.0 degrees - it&apos;s deskewed. There is no controls to tune this automatic deskew, it takes some CPU time and it&apos;s not working with automatic dewarping. So use it with &lt;a name=&quot;result_box&quot;/&gt;with caution.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Функция &quot;Распрямление строк&quot; пытается обнаружить и исправить искажение поверхности страницы, проанализировав на нем строки текста. Она исходит из того, что линии должны быть строго горизонтальными.&lt;/p&gt;&lt;p&gt;Поддерживаются автоматический, краевой и ручной режимы работы.&lt;/p&gt;&lt;p&gt;Попытаться исправить слишком перекошенную автоматическую модель искажений - после автоматического построения модели искажений её вертикальные границы (левая и правая) могут быть наклоненными к осям координат. Если угол такого наклона превышает 2,75 градусов к оси Y, то он признается неверным и сбрасывается в ноль. Т.о. граница модели станет совпадать с направлением оси. Если обе вертикальных границы модели слишком наклонены, то корректируется самая скошенная. Этот режим может помочь в случае, если автоматическое построение модели искажений стабильно делает ошибки подобного рода.&lt;/p&gt;&lt;p&gt;Дополнительное исправление наклона после распрямления строк, при необходимости - мы уже исправляли угол наклона всего скана на одном из предыдущих этапов обработки, но иногда уже после распрямления строк изображение может снова оказаться перекошенным. Если данная опция включена, то после распрямления строк снова производится оценка наклона всего изображения и, если оно превышает 2,0 градуса, - оно компенсируется. Данный инструмент не имеет дополнительных настроек и выполняется полностью автоматически. Он также тратит некоторое кол-во процессорного времени и не работает с автоматическим режимом распрямления строк. Поэтому, используйте его с осторожностью.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Try to correct auto distortion model if too skewed</source>
-        <translation type="vanished">Попытаться исправить слишком перекошенную
-автоматическую модель искажений</translation>
-    </message>
-    <message>
-        <source>Try to apply additional deskew after dewarp</source>
-        <translation type="vanished">Дополнительное исправление наклона после
-распрямления строк, при необходимости</translation>
     </message>
     <message>
         <location filename="../app/ui/SettingsDialog.ui" line="4283"/>
@@ -3470,10 +3513,6 @@ As Foreground layer is using binarization to separate content from background it
         <translation>Вкладка &quot;Зоны заливки&quot; позволяет пользователю задать зоны, которые будут закрашены цветом фона. Обычно это используется для удаления библиотечных штампов, и пятен, слишком больших, чтобы быть убранными функцией удаления мусора.</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dewarping tries to detect and fix distortion of page surface by analyzing lines of text on it. It assumes that the lines should be horizontal.&lt;/p&gt;&lt;p&gt;Automatic, marginal and manual modes are supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Коррекция искажений пытается определить и исправить искривление страницы, анализируя расположенный на ней текст. Предполагается, что строки текста должны быть горизонтальными.&lt;/p&gt;&lt;p&gt;Поддерживаются ручной и автоматический режимы.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../app/ui/SettingsDialog.ui" line="4175"/>
         <source>Despeckling mode tries to automatically clean page content from spots. It analyses only areas of page rendered in b/w. In a nutshell it looks for connected set of black pixels that could be bounded with a rect smaller then Despeckling mode sensitivity rect - in this case these pixels are filled with background color. Currently 3 levels of sensitivity are supported.</source>
         <translation>Функция &quot;Удаление мусора&quot; пытается автоматически очистить содержимое страницы от мелких точек, появляющихся в результате загрязнения страницы книги. Она анализирует только области страницы, отображаемые чёрно-белыми. Технически, функция ищет связные группы чёрных пикселей, которые могут быть вписаны в прямоугольник достаточно малого размера. Чувствительность функции &quot;Удаление мусора&quot; задает этот размер. В настоящее время поддерживаются 3 уровня чувствительности. Будьте осторожны с агрессивным уровнем - он может принять за мусор знаки препинания (точки, особенно в оглавлении книг). Весь достаточно мелкий мусор удаляется путем заливки площади описанного вокруг него прямоугольника цветом фона.
@@ -3763,7 +3802,7 @@ As Foreground layer is using binarization to separate content from background it
 <context>
     <name>ThumbnailSequence</name>
     <message>
-        <location filename="../app/ThumbnailSequence.cpp" line="1702"/>
+        <location filename="../app/ThumbnailSequence.cpp" line="1714"/>
         <source>You are going to cancel %1 pages selection.
 Sometimes this could happen accidentally due to misclicks.
 Please note that there is a button on top of pages list panel that toggles simulation of the %2 key pressing.You can use it to safely select several pages across the project.
@@ -3775,12 +3814,12 @@ Continue?</source>
 Продолжить и снять выделение?</translation>
     </message>
     <message>
-        <location filename="../app/ThumbnailSequence.cpp" line="1712"/>
+        <location filename="../app/ThumbnailSequence.cpp" line="1724"/>
         <source>Don&apos;t show this again.</source>
         <translation>Больше не показывать.</translation>
     </message>
     <message>
-        <location filename="../app/ThumbnailSequence.cpp" line="1874"/>
+        <location filename="../app/ThumbnailSequence.cpp" line="1886"/>
         <source>%1 (page %2)</source>
         <translation>%1 (стр. %2)</translation>
     </message>
@@ -3921,21 +3960,13 @@ Continue?</source>
 <context>
     <name>deskew::Filter</name>
     <message>
-        <source>Deskew</source>
-        <translation type="vanished">Компенсация наклона</translation>
-    </message>
-    <message>
         <location filename="../core/filters/deskew/Filter.cpp" line="52"/>
-        <source>Geometric Distortions</source>
-        <translation>Геометрические искажения</translation>
+        <source>Distortions correction</source>
+        <translation>Исправление искажений</translation>
     </message>
 </context>
 <context>
     <name>deskew::ImageView</name>
-    <message>
-        <source>Use %1+Wheel to rotate or %2+Wheel for finer rotation.</source>
-        <translation type="vanished">Используйте %1+ колесико мыши для вращения или %2 + колесико для большей точности.</translation>
-    </message>
     <message>
         <location filename="../core/filters/deskew/ImageView.cpp" line="61"/>
         <source>Use Ctrl+Wheel to rotate or Ctrl+Shift+Wheel for finer rotation.</source>
@@ -3949,10 +3980,6 @@ Continue?</source>
 </context>
 <context>
     <name>deskew::OptionsWidget</name>
-    <message>
-        <source>Apply Deskew</source>
-        <translation type="vanished">Применение наклона</translation>
-    </message>
     <message>
         <location filename="../core/filters/deskew/OptionsWidget.cpp" line="109"/>
         <source>Apply Distortion Type</source>
@@ -4115,13 +4142,6 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>output::DewarpingView</name>
-    <message>
-        <source>Reset distortion model</source>
-        <translation type="vanished">Сбросить в состояние по умолчанию</translation>
-    </message>
-</context>
-<context>
     <name>output::FillZoneEditor</name>
     <message>
         <location filename="../core/filters/output/FillZoneEditor.cpp" line="262"/>
@@ -4140,10 +4160,6 @@ Continue?</source>
         <location filename="../core/filters/output/Filter.cpp" line="65"/>
         <source>Order by mode</source>
         <translation>Сортировка по режиму</translation>
-    </message>
-    <message>
-        <source>Order by dewarping mode</source>
-        <translation type="vanished">Сортировка по режиму исправления геометрии</translation>
     </message>
     <message>
         <location filename="../core/filters/output/Filter.cpp" line="66"/>
@@ -4169,10 +4185,6 @@ of a non grey color in the source files</source>
         <location filename="../core/filters/output/OptionsWidget.cpp" line="610"/>
         <source>Apply Despeckling Level</source>
         <translation>Применить уровень удаления мусора</translation>
-    </message>
-    <message>
-        <source>Apply Depth Perception</source>
-        <translation type="vanished">Применить восприятие глубины</translation>
     </message>
     <message>
         <location filename="../core/filters/output/OptionsWidget.cpp" line="64"/>
@@ -4240,29 +4252,9 @@ of a non grey color in the source files</source>
         <translation>%1 dpi</translation>
     </message>
     <message>
-        <source>Enforced if dewarping is on</source>
-        <translation type="vanished">Принудительно включается при использовании исправления геометрии</translation>
-    </message>
-    <message>
-        <source>Disabled if dewarping is on</source>
-        <translation type="vanished">Принудительно отключается при использовании исправления геометрии</translation>
-    </message>
-    <message>
         <location filename="../core/filters/output/OptionsWidget.cpp" line="597"/>
         <source>Off</source>
         <translation>Отключено</translation>
-    </message>
-    <message>
-        <source>Auto</source>
-        <translation type="vanished">Автоматически</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation type="vanished">Вручную</translation>
-    </message>
-    <message>
-        <source>Marginal</source>
-        <translation type="vanished">Краевое</translation>
     </message>
     <message>
         <location filename="../core/filters/output/OptionsWidget.cpp" line="598"/>
@@ -4278,10 +4270,6 @@ of a non grey color in the source files</source>
         <location filename="../core/filters/output/OptionsWidget.cpp" line="600"/>
         <source>Aggressive</source>
         <translation>Агрессивный</translation>
-    </message>
-    <message>
-        <source>Apply Dewarping Mode</source>
-        <translation type="vanished">Режим распрямления строк</translation>
     </message>
     <message>
         <location filename="../core/filters/output/OptionsWidget.cpp" line="626"/>
@@ -4340,10 +4328,6 @@ of a non grey color in the source files</source>
         <location filename="../core/filters/output/Task.cpp" line="728"/>
         <source>Fill Zones</source>
         <translation>Зоны заливки</translation>
-    </message>
-    <message>
-        <source>Dewarping</source>
-        <translation type="vanished">Распрямление строк</translation>
     </message>
     <message>
         <location filename="../core/filters/output/Task.cpp" line="729"/>

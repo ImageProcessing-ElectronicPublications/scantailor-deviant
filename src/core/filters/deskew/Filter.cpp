@@ -49,7 +49,7 @@ Filter::~Filter()
 QString
 Filter::getName() const
 {
-    return QCoreApplication::translate("deskew::Filter", "Geometric Distortions");
+    return QCoreApplication::translate("deskew::Filter", "Distortions correction");
 }
 
 PageView
