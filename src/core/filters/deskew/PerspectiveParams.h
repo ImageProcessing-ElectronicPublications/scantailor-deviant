@@ -20,6 +20,10 @@
 #define DESKEW_PERSPECTIVE_PARAMS_H_
 
 #include "AutoManualMode.h"
+#include "dewarping/FovParams.h"
+#include "dewarping/FrameParams.h"
+#include "dewarping/SizeParams.h"
+#include "dewarping/MarginsParams.h"
 #include <QPointF>
 
 class QDomDocument;
@@ -71,10 +75,54 @@ public:
         m_corners[idx] = corner;
     }
 
+    dewarping::FovParams const& fovParams() const
+    {
+        return m_fovParams;
+    }
+
+    void setFovParams(dewarping::FovParams const& fov_params)
+    {
+        m_fovParams = fov_params;
+    }
+
+    dewarping::FrameParams const& frameParams() const
+    {
+        return m_frameParams;
+    }
+
+    void setFrameParams(dewarping::FrameParams const& frame_params)
+    {
+        m_frameParams = frame_params;
+    }
+
+    dewarping::SizeParams const& sizeParams() const
+    {
+        return m_sizeParams;
+    }
+
+    void setSizeParams(dewarping::SizeParams const& size_params)
+    {
+        m_sizeParams = size_params;
+    }
+
+    dewarping::MarginsParams const& marginsParams() const
+    {
+        return m_marginsParams;
+    }
+
+    void setMarginsParams(dewarping::MarginsParams const& margins_params)
+    {
+        m_marginsParams = margins_params;
+    }
+
     QDomElement toXml(QDomDocument& doc, QString const& name) const;
 private:
     QPointF m_corners[4];
     AutoManualMode m_mode;
+    dewarping::FovParams m_fovParams;
+    dewarping::FrameParams m_frameParams;
+    dewarping::SizeParams m_sizeParams;
+    dewarping::MarginsParams m_marginsParams;
 };
 
 } // namespace deskew
