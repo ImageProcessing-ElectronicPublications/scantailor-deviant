@@ -261,7 +261,7 @@ OptionsWidget::preUpdateUI(PageId const& page_id, DistortionType const& distorti
     m_pageParams.setDistortionType(distortion_type);
 
     setupUiForDistortionType(distortion_type);
-    hideDistortionDependentUiElements();
+    disableDistortionDependentUiElements();
 }
 
 void
@@ -274,7 +274,7 @@ OptionsWidget::postUpdateUI(Params const& page_params)
     ui.manualBtn->setEnabled(true);
     updateModeIndication(page_params.mode());
 
-    setupUiForDistortionType(page_params.distortionType());
+    enableDistortionDependentUiElements();
 
     if (page_params.distortionType() == DistortionType::ROTATION)
     {
@@ -449,11 +449,29 @@ OptionsWidget::setupDistortionTypeButtons()
 }
 
 void
-OptionsWidget::hideDistortionDependentUiElements()
+OptionsWidget::disableDistortionDependentUiElements()
 {
-    ui.autoManualPanel->setVisible(false);
-    ui.rotationPanel->setVisible(false);
-    ui.depthPerceptionPanel->setVisible(false);
+    ui.autoManualPanel->setDisabled(true);
+    ui.rotationPanel->setDisabled(true);
+    ui.depthPerceptionPanel->setDisabled(true);
+    ui.fovPanel->setDisabled(true);
+    ui.framePanel->setDisabled(true);
+    ui.bendPanel->setDisabled(true);
+    ui.sizePanel->setDisabled(true);
+    ui.marginsPanel->setDisabled(true);
+}
+
+void
+OptionsWidget::enableDistortionDependentUiElements()
+{
+    ui.autoManualPanel->setEnabled(true);
+    ui.rotationPanel->setEnabled(true);
+    ui.depthPerceptionPanel->setEnabled(true);
+    ui.fovPanel->setEnabled(true);
+    ui.framePanel->setEnabled(true);
+    ui.bendPanel->setEnabled(true);
+    ui.sizePanel->setEnabled(true);
+    ui.marginsPanel->setEnabled(true);
 }
 
 void

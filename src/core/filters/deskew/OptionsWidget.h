@@ -90,7 +90,9 @@ private slots:
 private:
     void setupDistortionTypeButtons();
 
-    void hideDistortionDependentUiElements();
+    void disableDistortionDependentUiElements();
+
+    void enableDistortionDependentUiElements();
 
     void setupUiForDistortionType(DistortionType::Type type);
 
