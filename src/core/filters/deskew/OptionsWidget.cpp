@@ -46,7 +46,7 @@ OptionsWidget::OptionsWidget(IntrusivePtr<Settings> const& settings,
     setSpinBoxUnknownState();
     connect(
         ui.angleSpinBox, SIGNAL(valueChanged(double)),
-        this, SLOT(spinBoxValueChanged(double))
+        this, SLOT(angleSpinBoxValueChanged(double))
     );
 
     // Depth perception UI.
@@ -92,7 +92,7 @@ OptionsWidget::OptionsWidget(IntrusivePtr<Settings> const& settings,
     );
 
     // Auto / Manual mode.
-    connect(ui.autoBtn, SIGNAL(toggled(bool)), this, SLOT(modeChanged(bool)));
+    connect(ui.autoBtn, SIGNAL(toggled(bool)), this, SLOT(distortionAutoManualModeChanged(bool)));
 }
 
 OptionsWidget::~OptionsWidget()
@@ -345,7 +345,7 @@ OptionsWidget::warpDistortionToggled(bool checked)
 }
 
 void
-OptionsWidget::spinBoxValueChanged(double const value)
+OptionsWidget::angleSpinBoxValueChanged(double const value)
 {
     if (m_ignoreSignalsFromUiControls)
     {
@@ -364,7 +364,7 @@ OptionsWidget::spinBoxValueChanged(double const value)
 }
 
 void
-OptionsWidget::modeChanged(bool const auto_mode)
+OptionsWidget::distortionAutoManualModeChanged(bool const auto_mode)
 {
     if (m_ignoreSignalsFromUiControls)
     {

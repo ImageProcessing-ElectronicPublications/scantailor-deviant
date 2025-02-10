@@ -68,9 +68,9 @@ private slots:
 
     void warpDistortionToggled(bool checked);
 
-    void spinBoxValueChanged(double skew_degrees);
+    void angleSpinBoxValueChanged(double skew_degrees);
 
-    void modeChanged(bool auto_mode);
+    void distortionAutoManualModeChanged(bool auto_mode);
 
     void depthPerceptionSliderMoved(int value);
 
