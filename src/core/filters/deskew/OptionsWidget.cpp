@@ -466,6 +466,11 @@ OptionsWidget::setupUiForDistortionType(DistortionType::Type type)
     ui.autoManualPanel->setVisible(type != DistortionType::NONE);
     ui.rotationPanel->setVisible(type == DistortionType::ROTATION);
     ui.depthPerceptionPanel->setVisible(type == DistortionType::WARP);
+    ui.fovPanel->setVisible(type == DistortionType::PERSPECTIVE || type == DistortionType::WARP);
+    ui.framePanel->setVisible(type == DistortionType::PERSPECTIVE || type == DistortionType::WARP);
+    ui.bendPanel->setVisible(type == DistortionType::WARP);
+    ui.sizePanel->setVisible(type == DistortionType::PERSPECTIVE || type == DistortionType::WARP);
+    ui.marginsPanel->setVisible(type == DistortionType::PERSPECTIVE || type == DistortionType::WARP);
 }
 
 void
