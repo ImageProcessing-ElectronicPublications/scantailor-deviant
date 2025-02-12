@@ -264,9 +264,11 @@ OptionsWidget::preUpdateUI(PageId const& page_id, DistortionType const& distorti
     {
     case DistortionType::PERSPECTIVE:
         updateFovPanel(m_pageParams.perspectiveParams().fovParams());
+        updateFramePanel(m_pageParams.perspectiveParams().frameParams());
         break;
     case DistortionType::WARP:
         updateFovPanel(m_pageParams.dewarpingParams().fovParams());
+        updateFramePanel(m_pageParams.dewarpingParams().frameParams());
         break;
     }
 
@@ -288,9 +290,11 @@ OptionsWidget::postUpdateUI(Params const& page_params)
     {
     case DistortionType::PERSPECTIVE:
         updateFovPanel(page_params.perspectiveParams().fovParams());
+        updateFramePanel(page_params.perspectiveParams().frameParams());
         break;
     case DistortionType::WARP:
         updateFovPanel(page_params.dewarpingParams().fovParams());
+        updateFramePanel(page_params.dewarpingParams().frameParams());
         break;
     }
 
@@ -550,6 +554,32 @@ OptionsWidget::updateFovPanel(dewarping::FovParams const& fov_params)
     ui.fovMinSpinBox->setValue(fov_params.fovMin());
     ui.fovSpinBox->setValue(fov_params.fov());
     ui.fovMaxSpinBox->setValue(fov_params.fovMax());
+}
+
+void
+OptionsWidget::updateFramePanel(dewarping::FrameParams const& frame_params)
+{
+    if (frame_params.mode() == MODE_AUTO)
+    {
+        ui.frameAutoBtn->setChecked(true);
+        ui.frameWidthSpinBox->setDisabled(true);
+        ui.frameHeightSpinBox->setDisabled(true);
+        ui.frameCenterXSpinBox->setDisabled(true);
+        ui.frameCenterYSpinBox->setDisabled(true);
+    }
+    else
+    {
+        ui.frameManualBtn->setChecked(true);
+        ui.frameWidthSpinBox->setEnabled(true);
+        ui.frameHeightSpinBox->setEnabled(true);
+        ui.frameCenterXSpinBox->setEnabled(true);
+        ui.frameCenterYSpinBox->setEnabled(true);
+    }
+
+    ui.frameWidthSpinBox->setValue(frame_params.width());
+    ui.frameHeightSpinBox->setValue(frame_params.height());
+    ui.frameCenterXSpinBox->setValue(frame_params.centerX());
+    ui.frameCenterYSpinBox->setValue(frame_params.centerY());
 }
 
 void

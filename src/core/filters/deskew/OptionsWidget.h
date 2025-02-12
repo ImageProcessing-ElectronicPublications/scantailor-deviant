@@ -100,6 +100,8 @@ private:
 
     void updateFovPanel(dewarping::FovParams const& fov_params);
 
+    void updateFramePanel(dewarping::FrameParams const& frame_params);
+
     void setSpinBoxUnknownState();
 
     void setSpinBoxKnownState(double angle);
