@@ -98,6 +98,8 @@ private:
 
     void updateModeIndication(AutoManualMode mode);
 
+    void updateFovPanel(dewarping::FovParams const& fov_params);
+
     void setSpinBoxUnknownState();
 
     void setSpinBoxKnownState(double angle);
@@ -109,6 +111,10 @@ private:
     static int depthPerceptionToSlider(double depth_perception);
 
     static double sliderToDepthPerception(int slider_value);
+
+    static int fovToSlider(double fov);
+
+    static double sliderToFov(int slider_value);
 
     static double const MAX_ANGLE;
 

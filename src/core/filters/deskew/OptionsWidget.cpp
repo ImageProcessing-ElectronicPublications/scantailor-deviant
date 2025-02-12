@@ -260,6 +260,16 @@ OptionsWidget::preUpdateUI(PageId const& page_id, DistortionType const& distorti
     m_pageId = page_id;
     m_pageParams.setDistortionType(distortion_type);
 
+    switch (distortion_type)
+    {
+    case DistortionType::PERSPECTIVE:
+        updateFovPanel(m_pageParams.perspectiveParams().fovParams());
+        break;
+    case DistortionType::WARP:
+        updateFovPanel(m_pageParams.dewarpingParams().fovParams());
+        break;
+    }
+
     setupUiForDistortionType(distortion_type);
     disableDistortionDependentUiElements();
 }
@@ -273,6 +283,16 @@ OptionsWidget::postUpdateUI(Params const& page_params)
     ui.autoBtn->setEnabled(true);
     ui.manualBtn->setEnabled(true);
     updateModeIndication(page_params.mode());
+
+    switch (page_params.distortionType())
+    {
+    case DistortionType::PERSPECTIVE:
+        updateFovPanel(page_params.perspectiveParams().fovParams());
+        break;
+    case DistortionType::WARP:
+        updateFovPanel(page_params.dewarpingParams().fovParams());
+        break;
+    }
 
     enableDistortionDependentUiElements();
 
@@ -507,6 +527,32 @@ OptionsWidget::updateModeIndication(AutoManualMode const mode)
 }
 
 void
+OptionsWidget::updateFovPanel(dewarping::FovParams const& fov_params)
+{
+    if (fov_params.mode() == MODE_AUTO)
+    {
+        ui.fovAutoBtn->setChecked(true);
+        ui.fovSlider->setDisabled(true);
+        ui.fovSpinBox->setDisabled(true);
+    }
+    else
+    {
+        ui.fovManualBtn->setChecked(true);
+        ui.fovSlider->setEnabled(true);
+        ui.fovSpinBox->setEnabled(true);
+    }
+
+    ui.fovSlider->setRange(
+        fovToSlider(fov_params.fovMin()),
+        fovToSlider(fov_params.fovMax()));
+    ui.fovSlider->setValue(fovToSlider(fov_params.fov()));
+
+    ui.fovMinSpinBox->setValue(fov_params.fovMin());
+    ui.fovSpinBox->setValue(fov_params.fov());
+    ui.fovMaxSpinBox->setValue(fov_params.fovMax());
+}
+
+void
 OptionsWidget::setSpinBoxUnknownState()
 {
     ScopedIncDec<int> guard(m_ignoreSignalsFromUiControls);
@@ -557,6 +603,18 @@ double
 OptionsWidget::sliderToDepthPerception(int slider_value)
 {
     return slider_value / 10.0;
+}
+
+int
+OptionsWidget::fovToSlider(double fov)
+{
+    return qRound(fov * 1000);
+}
+
+double
+OptionsWidget::sliderToFov(int slider_value)
+{
+    return slider_value / 1000.0;
 }
 
 } // namespace deskew
