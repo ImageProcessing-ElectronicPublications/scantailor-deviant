@@ -265,11 +265,13 @@ OptionsWidget::preUpdateUI(PageId const& page_id, DistortionType const& distorti
     case DistortionType::PERSPECTIVE:
         updateFovPanel(m_pageParams.perspectiveParams().fovParams());
         updateFramePanel(m_pageParams.perspectiveParams().frameParams());
+        updateSizePanel(m_pageParams.perspectiveParams().sizeParams());
         break;
     case DistortionType::WARP:
         updateFovPanel(m_pageParams.dewarpingParams().fovParams());
         updateFramePanel(m_pageParams.dewarpingParams().frameParams());
         updateBendPanel(m_pageParams.dewarpingParams().bendParams());
+        updateSizePanel(m_pageParams.dewarpingParams().sizeParams());
         break;
     }
 
@@ -292,11 +294,13 @@ OptionsWidget::postUpdateUI(Params const& page_params)
     case DistortionType::PERSPECTIVE:
         updateFovPanel(page_params.perspectiveParams().fovParams());
         updateFramePanel(page_params.perspectiveParams().frameParams());
+        updateSizePanel(page_params.perspectiveParams().sizeParams());
         break;
     case DistortionType::WARP:
         updateFovPanel(page_params.dewarpingParams().fovParams());
         updateFramePanel(page_params.dewarpingParams().frameParams());
         updateBendPanel(page_params.dewarpingParams().bendParams());
+        updateSizePanel(page_params.dewarpingParams().sizeParams());
         break;
     }
 
@@ -609,6 +613,43 @@ OptionsWidget::updateBendPanel(dewarping::BendParams const& bend_params)
     ui.bendMinSpinBox->setValue(bend_params.bendMin());
     ui.bendSpinBox->setValue(bend_params.bend());
     ui.bendMaxSpinBox->setValue(bend_params.bendMax());
+}
+
+void
+OptionsWidget::updateSizePanel(dewarping::SizeParams const& size_params)
+{
+    switch (ui.sizeModeComboBox->currentIndex())
+    {
+    case dewarping::SizeMode::CALC_BY_AREA:
+        ui.widthSpinBox->setDisabled(true);
+        ui.heightSpinBox->setDisabled(true);
+        ui.distanceSpinBox->setDisabled(true);
+        break;
+    case dewarping::SizeMode::FIT_WIDTH:
+        ui.widthSpinBox->setEnabled(true);
+        ui.heightSpinBox->setDisabled(true);
+        ui.distanceSpinBox->setDisabled(true);
+        break;
+    case dewarping::SizeMode::FIT_HEIGHT:
+        ui.widthSpinBox->setDisabled(true);
+        ui.heightSpinBox->setEnabled(true);
+        ui.distanceSpinBox->setDisabled(true);
+        break;
+    case dewarping::SizeMode::STRETCH_TO:
+        ui.widthSpinBox->setEnabled(true);
+        ui.heightSpinBox->setEnabled(true);
+        ui.distanceSpinBox->setDisabled(true);
+        break;
+    case dewarping::SizeMode::CALC_BY_DISTANCE:
+        ui.widthSpinBox->setDisabled(true);
+        ui.heightSpinBox->setDisabled(true);
+        ui.distanceSpinBox->setEnabled(true);
+        break;
+    }
+
+    ui.widthSpinBox->setValue(size_params.width());
+    ui.heightSpinBox->setValue(size_params.height());
+    ui.distanceSpinBox->setValue(size_params.distance());
 }
 
 void
