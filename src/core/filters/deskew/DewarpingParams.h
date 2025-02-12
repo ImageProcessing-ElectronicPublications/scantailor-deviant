@@ -82,6 +82,11 @@ public:
         m_depthPerception = depth_perception;
     }
 
+    dewarping::FovParams& fovParams()
+    {
+        return m_fovParams;
+    }
+
     dewarping::FovParams const& fovParams() const
     {
         return m_fovParams;
@@ -90,6 +95,11 @@ public:
     void setFovParams(dewarping::FovParams const& fov_params)
     {
         m_fovParams = fov_params;
+    }
+
+    dewarping::FrameParams& frameParams()
+    {
+        return m_frameParams;
     }
 
     dewarping::FrameParams const& frameParams() const
@@ -102,6 +112,11 @@ public:
         m_frameParams = frame_params;
     }
 
+    dewarping::BendParams& bendParams()
+    {
+        return m_bendParams;
+    }
+
     dewarping::BendParams const& bendParams() const
     {
         return m_bendParams;
@@ -112,6 +127,11 @@ public:
         m_bendParams = bend_params;
     }
 
+    dewarping::SizeParams& sizeParams()
+    {
+        return m_sizeParams;
+    }
+
     dewarping::SizeParams const& sizeParams() const
     {
         return m_sizeParams;
@@ -120,6 +140,11 @@ public:
     void setSizeParams(dewarping::SizeParams const& size_params)
     {
         m_sizeParams = size_params;
+    }
+
+    dewarping::MarginsParams& marginsParams()
+    {
+        return m_marginsParams;
     }
 
     dewarping::MarginsParams const& marginsParams() const
