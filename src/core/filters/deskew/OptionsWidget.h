@@ -102,6 +102,8 @@ private:
 
     void updateFramePanel(dewarping::FrameParams const& frame_params);
 
+    void updateBendPanel(dewarping::BendParams const& bend_params);
+
     void setSpinBoxUnknownState();
 
     void setSpinBoxKnownState(double angle);
@@ -117,6 +119,10 @@ private:
     static int fovToSlider(double fov);
 
     static double sliderToFov(int slider_value);
+
+    static int bendToSlider(double bend);
+
+    static double sliderToBend(int slider_value);
 
     static double const MAX_ANGLE;
 

@@ -269,6 +269,7 @@ OptionsWidget::preUpdateUI(PageId const& page_id, DistortionType const& distorti
     case DistortionType::WARP:
         updateFovPanel(m_pageParams.dewarpingParams().fovParams());
         updateFramePanel(m_pageParams.dewarpingParams().frameParams());
+        updateBendPanel(m_pageParams.dewarpingParams().bendParams());
         break;
     }
 
@@ -295,6 +296,7 @@ OptionsWidget::postUpdateUI(Params const& page_params)
     case DistortionType::WARP:
         updateFovPanel(page_params.dewarpingParams().fovParams());
         updateFramePanel(page_params.dewarpingParams().frameParams());
+        updateBendPanel(page_params.dewarpingParams().bendParams());
         break;
     }
 
@@ -583,6 +585,33 @@ OptionsWidget::updateFramePanel(dewarping::FrameParams const& frame_params)
 }
 
 void
+OptionsWidget::updateBendPanel(dewarping::BendParams const& bend_params)
+{
+    if (bend_params.mode() == MODE_AUTO)
+    {
+        ui.bendAutoBtn->setChecked(true);
+        ui.bendHorizontalSlider->setDisabled(true);
+        ui.bendSpinBox->setDisabled(true);
+    }
+    else
+    {
+        ui.bendManualBtn->setChecked(true);
+        ui.bendHorizontalSlider->setEnabled(true);
+        ui.bendSpinBox->setEnabled(true);
+    }
+
+    ui.bendHorizontalSlider->setRange(
+        bendToSlider(bend_params.bendMin()),
+        bendToSlider(bend_params.bendMax())
+    );
+    ui.bendHorizontalSlider->setValue(bendToSlider(bend_params.bend()));
+
+    ui.bendMinSpinBox->setValue(bend_params.bendMin());
+    ui.bendSpinBox->setValue(bend_params.bend());
+    ui.bendMaxSpinBox->setValue(bend_params.bendMax());
+}
+
+void
 OptionsWidget::setSpinBoxUnknownState()
 {
     ScopedIncDec<int> guard(m_ignoreSignalsFromUiControls);
@@ -643,6 +672,18 @@ OptionsWidget::fovToSlider(double fov)
 
 double
 OptionsWidget::sliderToFov(int slider_value)
+{
+    return slider_value / 1000.0;
+}
+
+int
+OptionsWidget::bendToSlider(double bend)
+{
+    return qRound(bend * 1000);
+}
+
+double
+OptionsWidget::sliderToBend(int slider_value)
 {
     return slider_value / 1000.0;
 }
