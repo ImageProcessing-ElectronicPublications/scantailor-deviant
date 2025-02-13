@@ -56,6 +56,8 @@ signals:
     void frameParamsSetByUser(dewarping::FrameParams const& params);
 
     void bendParamsSetByUser(dewarping::BendParams const& params);
+
+    void sizeParamsSetByUser(dewarping::SizeParams const& params);
 public slots:
     void manualDeskewAngleSetExternally(double degrees);
 
@@ -127,6 +129,14 @@ private slots:
     void bendSpinBoxValueChanged(double bend_new);
 
     void bendMaxSpinBoxValueChanged(double bend_max_new);
+
+    void sizeModeComboBoxIndexChanged(int idx);
+
+    void sizeWidthSpinBoxValueChanged(double width_new);
+
+    void sizeHeightSpinBoxValueChanged(double height_new);
+
+    void sizeDistanceSpinBoxValueChanged(double distance_new);
 
 private:
     void setupDistortionTypeButtons();

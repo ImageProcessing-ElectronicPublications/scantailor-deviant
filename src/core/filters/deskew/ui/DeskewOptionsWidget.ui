@@ -1031,14 +1031,14 @@ Perspective correction.</string>
       <item>
        <layout class="QGridLayout" name="sizeGridLayout">
         <item row="0" column="0">
-         <widget class="QLabel" name="widthLabel">
+         <widget class="QLabel" name="sizeWidthLabel">
           <property name="text">
            <string>Width:</string>
           </property>
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QDoubleSpinBox" name="widthSpinBox">
+         <widget class="QDoubleSpinBox" name="sizeWidthSpinBox">
           <property name="decimals">
            <number>0</number>
           </property>
@@ -1046,7 +1046,7 @@ Perspective correction.</string>
            <double>1.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>2048.000000000000000</double>
+           <double>32768.000000000000000</double>
           </property>
           <property name="value">
            <double>1024.000000000000000</double>
@@ -1054,26 +1054,29 @@ Perspective correction.</string>
          </widget>
         </item>
         <item row="0" column="2">
-         <widget class="QLabel" name="widthUnitsLabel">
+         <widget class="QLabel" name="sizeWidthUnitsLabel">
           <property name="text">
            <string>px</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="heightLabel">
+         <widget class="QLabel" name="sizeHeightLabel">
           <property name="text">
            <string>Height:</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QDoubleSpinBox" name="heightSpinBox">
+         <widget class="QDoubleSpinBox" name="sizeHeightSpinBox">
           <property name="decimals">
            <number>0</number>
           </property>
+          <property name="minimum">
+           <double>1.000000000000000</double>
+          </property>
           <property name="maximum">
-           <double>2048.000000000000000</double>
+           <double>32768.000000000000000</double>
           </property>
           <property name="value">
            <double>1024.000000000000000</double>
@@ -1081,26 +1084,29 @@ Perspective correction.</string>
          </widget>
         </item>
         <item row="1" column="2">
-         <widget class="QLabel" name="heightUnitsLabel">
+         <widget class="QLabel" name="sizeHeightUnitsLabel">
           <property name="text">
            <string>px</string>
           </property>
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QLabel" name="distanceLabel">
+         <widget class="QLabel" name="sizeDistanceLabel">
           <property name="text">
            <string>Distance:</string>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QDoubleSpinBox" name="distanceSpinBox">
+         <widget class="QDoubleSpinBox" name="sizeDistanceSpinBox">
           <property name="decimals">
            <number>0</number>
           </property>
+          <property name="minimum">
+           <double>1.000000000000000</double>
+          </property>
           <property name="maximum">
-           <double>2048.000000000000000</double>
+           <double>3276800.000000000000000</double>
           </property>
           <property name="value">
            <double>1024.000000000000000</double>
@@ -1108,7 +1114,7 @@ Perspective correction.</string>
          </widget>
         </item>
         <item row="2" column="2">
-         <widget class="QLabel" name="distanceUnitsLabel">
+         <widget class="QLabel" name="sizeDistanceUnitsLabel">
           <property name="text">
            <string>px</string>
           </property>

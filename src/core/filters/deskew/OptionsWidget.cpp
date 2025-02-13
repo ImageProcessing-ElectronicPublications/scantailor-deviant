@@ -106,6 +106,24 @@ OptionsWidget::OptionsWidget(IntrusivePtr<Settings> const& settings,
         this, SLOT(bendMaxSpinBoxValueChanged(double))
     );
 
+    // Size UI.
+    connect(
+        ui.sizeModeComboBox,SIGNAL(currentIndexChanged(int)),
+        this, SLOT(sizeModeComboBoxIndexChanged(int))
+    );
+    connect(
+        ui.sizeWidthSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(sizeWidthSpinBoxValueChanged(double))
+    );
+    connect(
+        ui.sizeHeightSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(sizeHeightSpinBoxValueChanged(double))
+    );
+    connect(
+        ui.sizeDistanceSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(sizeDistanceSpinBoxValueChanged(double))
+    );
+
     // Rotation angle UI.
     ui.angleSpinBox->setSuffix(QChar(0x00B0)); // the degree symbol
     ui.angleSpinBox->setRange(-MAX_ANGLE, MAX_ANGLE);
@@ -948,6 +966,122 @@ OptionsWidget::bendMaxSpinBoxValueChanged(double bend_max_new)
 }
 
 void
+OptionsWidget::sizeModeComboBoxIndexChanged(int idx)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::SizeParams& size_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().sizeParams() :
+        m_pageParams.dewarpingParams().sizeParams();
+
+    switch (idx)
+    {
+    case dewarping::SizeMode::CALC_BY_AREA:
+        size_params.setMode(dewarping::SizeMode::CALC_BY_AREA);
+        ui.sizeWidthSpinBox->setDisabled(true);
+        ui.sizeHeightSpinBox->setDisabled(true);
+        ui.sizeDistanceSpinBox->setDisabled(true);
+        break;
+    case dewarping::SizeMode::FIT_WIDTH:
+        size_params.setMode(dewarping::SizeMode::FIT_WIDTH);
+        ui.sizeWidthSpinBox->setEnabled(true);
+        ui.sizeHeightSpinBox->setDisabled(true);
+        ui.sizeDistanceSpinBox->setDisabled(true);
+        break;
+    case dewarping::SizeMode::FIT_HEIGHT:
+        size_params.setMode(dewarping::SizeMode::FIT_HEIGHT);
+        ui.sizeWidthSpinBox->setDisabled(true);
+        ui.sizeHeightSpinBox->setEnabled(true);
+        ui.sizeDistanceSpinBox->setDisabled(true);
+        break;
+    case dewarping::SizeMode::STRETCH_TO:
+        size_params.setMode(dewarping::SizeMode::STRETCH_TO);
+        ui.sizeWidthSpinBox->setEnabled(true);
+        ui.sizeHeightSpinBox->setEnabled(true);
+        ui.sizeDistanceSpinBox->setDisabled(true);
+        break;
+    case dewarping::SizeMode::CALC_BY_DISTANCE:
+        size_params.setMode(dewarping::SizeMode::CALC_BY_DISTANCE);
+        ui.sizeWidthSpinBox->setDisabled(true);
+        ui.sizeHeightSpinBox->setDisabled(true);
+        ui.sizeDistanceSpinBox->setEnabled(true);
+        break;
+    }
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    emit sizeParamsSetByUser(size_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::sizeWidthSpinBoxValueChanged(double width_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::SizeParams& size_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().sizeParams() :
+        m_pageParams.dewarpingParams().sizeParams();
+
+    size_params.setWidth(width_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    emit sizeParamsSetByUser(size_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::sizeHeightSpinBoxValueChanged(double height_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::SizeParams& size_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().sizeParams() :
+        m_pageParams.dewarpingParams().sizeParams();
+
+    size_params.setHeight(height_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    emit sizeParamsSetByUser(size_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::sizeDistanceSpinBoxValueChanged(double distance_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::SizeParams& size_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().sizeParams() :
+        m_pageParams.dewarpingParams().sizeParams();
+
+    size_params.setDistance(distance_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    emit sizeParamsSetByUser(size_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
 OptionsWidget::setupDistortionTypeButtons()
 {
     static_assert(
@@ -1109,35 +1243,35 @@ OptionsWidget::updateSizePanel(dewarping::SizeParams const& size_params)
     switch (ui.sizeModeComboBox->currentIndex())
     {
     case dewarping::SizeMode::CALC_BY_AREA:
-        ui.widthSpinBox->setDisabled(true);
-        ui.heightSpinBox->setDisabled(true);
-        ui.distanceSpinBox->setDisabled(true);
+        ui.sizeWidthSpinBox->setDisabled(true);
+        ui.sizeHeightSpinBox->setDisabled(true);
+        ui.sizeDistanceSpinBox->setDisabled(true);
         break;
     case dewarping::SizeMode::FIT_WIDTH:
-        ui.widthSpinBox->setEnabled(true);
-        ui.heightSpinBox->setDisabled(true);
-        ui.distanceSpinBox->setDisabled(true);
+        ui.sizeWidthSpinBox->setEnabled(true);
+        ui.sizeHeightSpinBox->setDisabled(true);
+        ui.sizeDistanceSpinBox->setDisabled(true);
         break;
     case dewarping::SizeMode::FIT_HEIGHT:
-        ui.widthSpinBox->setDisabled(true);
-        ui.heightSpinBox->setEnabled(true);
-        ui.distanceSpinBox->setDisabled(true);
+        ui.sizeWidthSpinBox->setDisabled(true);
+        ui.sizeHeightSpinBox->setEnabled(true);
+        ui.sizeDistanceSpinBox->setDisabled(true);
         break;
     case dewarping::SizeMode::STRETCH_TO:
-        ui.widthSpinBox->setEnabled(true);
-        ui.heightSpinBox->setEnabled(true);
-        ui.distanceSpinBox->setDisabled(true);
+        ui.sizeWidthSpinBox->setEnabled(true);
+        ui.sizeHeightSpinBox->setEnabled(true);
+        ui.sizeDistanceSpinBox->setDisabled(true);
         break;
     case dewarping::SizeMode::CALC_BY_DISTANCE:
-        ui.widthSpinBox->setDisabled(true);
-        ui.heightSpinBox->setDisabled(true);
-        ui.distanceSpinBox->setEnabled(true);
+        ui.sizeWidthSpinBox->setDisabled(true);
+        ui.sizeHeightSpinBox->setDisabled(true);
+        ui.sizeDistanceSpinBox->setEnabled(true);
         break;
     }
 
-    ui.widthSpinBox->setValue(size_params.width());
-    ui.heightSpinBox->setValue(size_params.height());
-    ui.distanceSpinBox->setValue(size_params.distance());
+    ui.sizeWidthSpinBox->setValue(size_params.width());
+    ui.sizeHeightSpinBox->setValue(size_params.height());
+    ui.sizeDistanceSpinBox->setValue(size_params.distance());
 }
 
 void
