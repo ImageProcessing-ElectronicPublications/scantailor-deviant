@@ -35,7 +35,10 @@ DewarpingThumbnail::DewarpingThumbnail(
     QString const& version,	ImageTransformation const& xform,
 	std::vector<QPointF> const& top_curve,
 	std::vector<QPointF> const& bottom_curve,
-	dewarping::DepthPerception const& depth_perception)
+	dewarping::DepthPerception const& depth_perception,
+    dewarping::FovParams const& fov_params,
+    dewarping::FrameParams const& frame_params,
+    dewarping::BendParams const& bend_params)
 	: ThumbnailBase(
         thumbnail_cache, max_size, 
         image_id, version, xform
@@ -43,6 +46,9 @@ DewarpingThumbnail::DewarpingThumbnail(
     , m_topCurve(top_curve)
     , m_bottomCurve(bottom_curve)
     , m_depthPerception(depth_perception)
+    , m_fovParams(fov_params)
+    , m_frameParams(frame_params)
+    , m_bendParams(bend_params)
 {
     dewarping::DistortionModel distortion_model;
     distortion_model.setTopCurve(Curve(m_topCurve));

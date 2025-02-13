@@ -22,6 +22,9 @@
 #include "ThumbnailBase.h"
 #include "IntrusivePtr.h"
 #include "dewarping/DepthPerception.h"
+#include "dewarping/FovParams.h"
+#include "dewarping/FrameParams.h"
+#include "dewarping/BendParams.h"
 #include <vector>
 
 class QString;
@@ -38,7 +41,10 @@ public:
         QString const& version, ImageTransformation const& xform,
         std::vector<QPointF> const& top_curve,
         std::vector<QPointF> const& bottom_curve,
-        dewarping::DepthPerception const& depth_perception);
+        dewarping::DepthPerception const& depth_perception,
+        dewarping::FovParams const& fov_params,
+        dewarping::FrameParams const& frame_params,
+        dewarping::BendParams const& bend_params);
 
     virtual void paintOverImage(
         QPainter& painter,
@@ -48,6 +54,9 @@ private:
     std::vector<QPointF> m_topCurve;
     std::vector<QPointF> m_bottomCurve;
     dewarping::DepthPerception m_depthPerception;
+    dewarping::FovParams m_fovParams;
+    dewarping::FrameParams m_frameParams;
+    dewarping::BendParams m_bendParams;
     bool m_isValidModel;
 };
 

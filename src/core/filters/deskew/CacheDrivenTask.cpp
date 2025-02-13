@@ -215,7 +215,10 @@ CacheDrivenTask::process(
                         thumb_col->maxLogicalThumbSize(),
                         page_info.imageId(), QString(),
                         xform, top_curve, bottom_curve,
-                        dewarping::DepthPerception()
+                        dewarping::DepthPerception(),
+                        params->perspectiveParams().fovParams(),
+                        params->perspectiveParams().frameParams(),
+                        dewarping::BendParams(MODE_MANUAL, 0.0, 0.0, 0.0)
                     )
                 );
                 break;
@@ -229,7 +232,10 @@ CacheDrivenTask::process(
                         page_info.imageId(), QString(), xform,
                         params->dewarpingParams().distortionModel().topCurve().polyline(),
                         params->dewarpingParams().distortionModel().bottomCurve().polyline(),
-                        params->dewarpingParams().depthPerception()
+                        params->dewarpingParams().depthPerception(),
+                        params->dewarpingParams().fovParams(),
+                        params->dewarpingParams().frameParams(),
+                        params->dewarpingParams().bendParams()
                     )
                 );
                 break;
