@@ -658,10 +658,10 @@ Perspective correction.</string>
            <number>0</number>
           </property>
           <property name="minimum">
-           <double>1024.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>2048.000000000000000</double>
+           <double>32768.000000000000000</double>
           </property>
           <property name="singleStep">
            <double>1.000000000000000</double>
@@ -684,10 +684,10 @@ Perspective correction.</string>
            <number>0</number>
           </property>
           <property name="minimum">
-           <double>1024.000000000000000</double>
+           <double>1.000000000000000</double>
           </property>
           <property name="maximum">
-           <double>2048.000000000000000</double>
+           <double>32768.000000000000000</double>
           </property>
           <property name="singleStep">
            <double>1.000000000000000</double>
@@ -710,7 +710,7 @@ Perspective correction.</string>
            <number>4</number>
           </property>
           <property name="minimum">
-           <double>-2.000000000000000</double>
+           <double>-1.000000000000000</double>
           </property>
           <property name="maximum">
            <double>2.000000000000000</double>
@@ -736,7 +736,7 @@ Perspective correction.</string>
            <number>4</number>
           </property>
           <property name="minimum">
-           <double>-2.000000000000000</double>
+           <double>-1.000000000000000</double>
           </property>
           <property name="maximum">
            <double>2.000000000000000</double>

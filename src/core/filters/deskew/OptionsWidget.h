@@ -52,6 +52,8 @@ signals:
     void depthPerceptionSetByUser(double depth_perception);
 
     void fovParamsSetByUser(dewarping::FovParams const& params);
+
+    void frameParamsSetByUser(dewarping::FrameParams const& params);
 public slots:
     void manualDeskewAngleSetExternally(double degrees);
 
@@ -101,6 +103,17 @@ private slots:
     void fovSpinBoxValueChanged(double fov_new);
 
     void fovMaxSpinBoxValueChanged(double fov_max_new);
+
+    void frameAutoManualModeChanged(bool auto_mode);
+
+    void frameWidthSpinBoxValueChanged(double width_new);
+
+    void frameHeightSpinBoxValueChanged(double height_new);
+
+    void frameCenterXSpinBoxValueChanged(double center_x_new);
+
+    void frameCenterYSpinBoxValueChanged(double center_y_new);
+
 private:
     void setupDistortionTypeButtons();
 

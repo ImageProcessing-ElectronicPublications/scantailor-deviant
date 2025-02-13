@@ -64,6 +64,23 @@ OptionsWidget::OptionsWidget(IntrusivePtr<Settings> const& settings,
         this, SLOT(fovMaxSpinBoxValueChanged(double))
     );
 
+    // Frame UI.
+    connect(
+        ui.frameAutoBtn, SIGNAL(toggled(bool)),
+        this, SLOT(frameAutoManualModeChanged(bool)));
+    connect(
+        ui.frameWidthSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(frameWidthSpinBoxValueChanged(double)));
+    connect(
+        ui.frameHeightSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(frameHeightSpinBoxValueChanged(double)));
+    connect(
+        ui.frameCenterXSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(frameCenterXSpinBoxValueChanged(double)));
+    connect(
+        ui.frameCenterYSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(frameCenterYSpinBoxValueChanged(double)));
+
     // Rotation angle UI.
     ui.angleSpinBox->setSuffix(QChar(0x00B0)); // the degree symbol
     ui.angleSpinBox->setRange(-MAX_ANGLE, MAX_ANGLE);
@@ -643,6 +660,128 @@ OptionsWidget::fovMaxSpinBoxValueChanged(double fov_max_new)
     ui.fovMinSpinBox->setMaximum(fov_max_new);
 
     emit fovParamsSetByUser(fov_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::frameAutoManualModeChanged(bool auto_mode)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::FrameParams& frame_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().frameParams() :
+        m_pageParams.dewarpingParams().frameParams();
+
+    if (auto_mode)
+    {
+        frame_params.setMode(MODE_AUTO);
+        ui.frameWidthSpinBox->setDisabled(true);
+        ui.frameHeightSpinBox->setDisabled(true);
+        ui.frameCenterXSpinBox->setDisabled(true);
+        ui.frameCenterYSpinBox->setDisabled(true);
+    }
+    else
+    {
+        frame_params.setMode(MODE_MANUAL);
+        ui.frameWidthSpinBox->setEnabled(true);
+        ui.frameHeightSpinBox->setEnabled(true);
+        ui.frameCenterXSpinBox->setEnabled(true);
+        ui.frameCenterYSpinBox->setEnabled(true);
+    }
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    if (auto_mode)
+    {
+        emit reloadRequested();
+    }
+}
+
+void
+OptionsWidget::frameWidthSpinBoxValueChanged(double width_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::FrameParams& frame_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().frameParams() :
+        m_pageParams.dewarpingParams().frameParams();
+
+    frame_params.setWidth(width_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    emit frameParamsSetByUser(frame_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::frameHeightSpinBoxValueChanged(double height_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::FrameParams& frame_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().frameParams() :
+        m_pageParams.dewarpingParams().frameParams();
+
+    frame_params.setHeight(height_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    emit frameParamsSetByUser(frame_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::frameCenterXSpinBoxValueChanged(double center_x_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::FrameParams& frame_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().frameParams() :
+        m_pageParams.dewarpingParams().frameParams();
+
+    frame_params.setCenterX(center_x_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    emit frameParamsSetByUser(frame_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::frameCenterYSpinBoxValueChanged(double center_y_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::FrameParams& frame_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().frameParams() :
+        m_pageParams.dewarpingParams().frameParams();
+
+    frame_params.setCenterY(center_y_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    emit frameParamsSetByUser(frame_params);
     emit invalidateThumbnail(m_pageId);
 }
 
