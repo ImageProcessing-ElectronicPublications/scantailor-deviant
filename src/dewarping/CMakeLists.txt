@@ -26,6 +26,7 @@ SET(
         TextLineRefiner.cpp TextLineRefiner.h
         TextLineSegmenter.cpp TextLineSegmenter.h
         TextLineTracer.cpp TextLineTracer.h
+        ToDouble.h
         TopBottomEdgeTracer.cpp TopBottomEdgeTracer.h
 )
 SOURCE_GROUP("Sources" FILES ${sources})
