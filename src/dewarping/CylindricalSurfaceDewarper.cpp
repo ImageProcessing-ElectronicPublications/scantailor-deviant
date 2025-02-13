@@ -110,7 +110,8 @@ CylindricalSurfaceDewarper::CylindricalSurfaceDewarper(
 CylindricalSurfaceDewarper::Generatrix
 CylindricalSurfaceDewarper::mapGeneratrix(double crv_x, State& state) const
 {
-    double const pln_x = m_arcLengthMapper.arcLenToX(crv_x, state.m_arcLengthHint);
+    ArcLengthMapper::XSample const sample = m_arcLengthMapper.arcLenToXSample(crv_x, state.m_arcLengthHint);
+    double const& pln_x = sample.x;
 
     Vector2d const pln_top_pt(pln_x, 0);
     Vector2d const pln_bottom_pt(pln_x, 1);
@@ -153,7 +154,8 @@ QPointF
 CylindricalSurfaceDewarper::mapToDewarpedSpace(QPointF const& img_pt, State& state) const
 {
     double const pln_x = m_img2pln(toVec(img_pt))[0];
-    double const crv_x = m_arcLengthMapper.xToArcLen(pln_x, state.m_arcLengthHint);
+    ArcLengthMapper::ArcLenSample const sample = m_arcLengthMapper.xToArcLenSample(pln_x, state.m_arcLengthHint);
+    double const crv_x = sample.arcLen;
 
     Vector2d const pln_top_pt(pln_x, 0);
     Vector2d const pln_bottom_pt(pln_x, 1);
