@@ -857,7 +857,7 @@ Perspective correction.</string>
        </layout>
       </item>
       <item>
-       <widget class="QSlider" name="bendHorizontalSlider">
+       <widget class="QSlider" name="bendSlider">
         <property name="maximum">
          <number>999</number>
         </property>
@@ -897,6 +897,12 @@ Perspective correction.</string>
          <widget class="QDoubleSpinBox" name="bendSpinBox">
           <property name="decimals">
            <number>3</number>
+          </property>
+          <property name="minimum">
+           <double>-1.000000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>1.000000000000000</double>
           </property>
           <property name="singleStep">
            <double>0.010000000000000</double>

@@ -54,6 +54,8 @@ signals:
     void fovParamsSetByUser(dewarping::FovParams const& params);
 
     void frameParamsSetByUser(dewarping::FrameParams const& params);
+
+    void bendParamsSetByUser(dewarping::BendParams const& params);
 public slots:
     void manualDeskewAngleSetExternally(double degrees);
 
@@ -113,6 +115,18 @@ private slots:
     void frameCenterXSpinBoxValueChanged(double center_x_new);
 
     void frameCenterYSpinBoxValueChanged(double center_y_new);
+
+    void bendAutoManualModeChanged(bool auto_mode);
+
+    void bendSliderMoved(int value);
+
+    void bendSliderReleased();
+
+    void bendMinSpinBoxValueChanged(double bend_min_new);
+
+    void bendSpinBoxValueChanged(double bend_new);
+
+    void bendMaxSpinBoxValueChanged(double bend_max_new);
 
 private:
     void setupDistortionTypeButtons();

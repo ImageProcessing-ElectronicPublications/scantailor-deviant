@@ -81,6 +81,31 @@ OptionsWidget::OptionsWidget(IntrusivePtr<Settings> const& settings,
         ui.frameCenterYSpinBox, SIGNAL(valueChanged(double)),
         this, SLOT(frameCenterYSpinBoxValueChanged(double)));
 
+    // Bend UI.
+    connect(
+        ui.bendAutoBtn, SIGNAL(toggled(bool)),
+        this, SLOT(bendAutoManualModeChanged(bool)));
+    connect(
+        ui.bendSlider, SIGNAL(valueChanged(int)),
+        SLOT(bendSliderMoved(int))
+    );
+    connect(
+        ui.bendSlider, SIGNAL(sliderReleased()),
+        SLOT(bendSliderReleased())
+    );
+    connect(
+        ui.bendMinSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(bendMinSpinBoxValueChanged(double))
+    );
+    connect(
+        ui.bendSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(bendSpinBoxValueChanged(double))
+    );
+    connect(
+        ui.bendMaxSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(bendMaxSpinBoxValueChanged(double))
+    );
+
     // Rotation angle UI.
     ui.angleSpinBox->setSuffix(QChar(0x00B0)); // the degree symbol
     ui.angleSpinBox->setRange(-MAX_ANGLE, MAX_ANGLE);
@@ -786,6 +811,143 @@ OptionsWidget::frameCenterYSpinBoxValueChanged(double center_y_new)
 }
 
 void
+OptionsWidget::bendAutoManualModeChanged(bool auto_mode)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::BendParams& bend_params = m_pageParams.dewarpingParams().bendParams();
+
+    if (auto_mode)
+    {
+        bend_params.setMode(MODE_AUTO);
+        ui.bendSlider->setDisabled(true);
+        ui.bendSpinBox->setDisabled(true);
+    }
+    else
+    {
+        bend_params.setMode(MODE_MANUAL);
+        ui.bendSlider->setEnabled(true);
+        ui.bendSpinBox->setEnabled(true);
+    }
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    if (auto_mode)
+    {
+        emit reloadRequested();
+    }
+}
+
+void
+OptionsWidget::bendSliderMoved(int value)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    double const bend = sliderToBend(value);
+
+    dewarping::BendParams& bend_params = m_pageParams.dewarpingParams().bendParams();
+
+    bend_params.setbend(bend);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    ui.bendSpinBox->setValue(bend);
+
+    emit bendParamsSetByUser(bend_params);
+
+    if (!ui.fovSlider->isSliderDown())
+    {
+        emit invalidateThumbnail(m_pageId);
+    }
+}
+
+void
+OptionsWidget::bendSliderReleased()
+{
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::bendMinSpinBoxValueChanged(double bend_min_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::BendParams& bend_params = m_pageParams.dewarpingParams().bendParams();
+
+    if (bend_params.bend() < bend_min_new)
+    {
+        bend_params.setbend(bend_min_new);
+    }
+
+    bend_params.setbendMin(bend_min_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    ui.bendSlider->setMinimum(bendToSlider(bend_min_new));
+    ui.bendSpinBox->setMinimum(bend_min_new);
+    ui.bendMaxSpinBox->setMinimum(bend_min_new);
+
+    emit bendParamsSetByUser(bend_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::bendSpinBoxValueChanged(double bend_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::BendParams& bend_params = m_pageParams.dewarpingParams().bendParams();
+
+    bend_params.setbend(bend_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    ui.bendSlider->setValue(bendToSlider(bend_new));
+
+    emit bendParamsSetByUser(bend_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::bendMaxSpinBoxValueChanged(double bend_max_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::BendParams& bend_params = m_pageParams.dewarpingParams().bendParams();
+
+    if (bend_params.bend() > bend_max_new)
+    {
+        bend_params.setbend(bend_max_new);
+    }
+
+    bend_params.setbendMax(bend_max_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    ui.bendSlider->setMaximum(bendToSlider(bend_max_new));
+    ui.bendSpinBox->setMaximum(bend_max_new);
+    ui.bendMinSpinBox->setMaximum(bend_max_new);
+
+    emit bendParamsSetByUser(bend_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
 OptionsWidget::setupDistortionTypeButtons()
 {
     static_assert(
@@ -920,21 +1082,21 @@ OptionsWidget::updateBendPanel(dewarping::BendParams const& bend_params)
     if (bend_params.mode() == MODE_AUTO)
     {
         ui.bendAutoBtn->setChecked(true);
-        ui.bendHorizontalSlider->setDisabled(true);
+        ui.bendSlider->setDisabled(true);
         ui.bendSpinBox->setDisabled(true);
     }
     else
     {
         ui.bendManualBtn->setChecked(true);
-        ui.bendHorizontalSlider->setEnabled(true);
+        ui.bendSlider->setEnabled(true);
         ui.bendSpinBox->setEnabled(true);
     }
 
-    ui.bendHorizontalSlider->setRange(
+    ui.bendSlider->setRange(
         bendToSlider(bend_params.bendMin()),
         bendToSlider(bend_params.bendMax())
     );
-    ui.bendHorizontalSlider->setValue(bendToSlider(bend_params.bend()));
+    ui.bendSlider->setValue(bendToSlider(bend_params.bend()));
 
     ui.bendMinSpinBox->setValue(bend_params.bendMin());
     ui.bendSpinBox->setValue(bend_params.bend());
