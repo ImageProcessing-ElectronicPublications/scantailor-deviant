@@ -124,6 +124,28 @@ OptionsWidget::OptionsWidget(IntrusivePtr<Settings> const& settings,
         this, SLOT(sizeDistanceSpinBoxValueChanged(double))
     );
 
+    // Margins UI.
+    connect(
+        ui.marginsLeftSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(marginsLeftSpinBoxValueChanged(double))
+    );
+    connect(
+        ui.marginsRightSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(marginsRightSpinBoxValueChanged(double))
+    );
+    connect(
+        ui.marginsTopSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(marginsTopSpinBoxValueChanged(double))
+    );
+    connect(
+        ui.marginsBottomSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(marginsBottomSpinBoxValueChanged(double))
+    );
+    connect(
+        ui.marginsMaxPixelScaleSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(marginsMaxPixelScaleSpinBoxValueChanged(double))
+    );
+
     // Rotation angle UI.
     ui.angleSpinBox->setSuffix(QChar(0x00B0)); // the degree symbol
     ui.angleSpinBox->setRange(-MAX_ANGLE, MAX_ANGLE);
@@ -1082,6 +1104,111 @@ OptionsWidget::sizeDistanceSpinBoxValueChanged(double distance_new)
 }
 
 void
+OptionsWidget::marginsLeftSpinBoxValueChanged(double left_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::MarginsParams& margins_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().marginsParams() :
+        m_pageParams.dewarpingParams().marginsParams();
+
+    margins_params.setLeft(left_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    emit marginsParamsSetByUser(margins_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::marginsRightSpinBoxValueChanged(double right_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::MarginsParams& margins_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().marginsParams() :
+        m_pageParams.dewarpingParams().marginsParams();
+
+    margins_params.setRight(right_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    emit marginsParamsSetByUser(margins_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::marginsTopSpinBoxValueChanged(double top_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::MarginsParams& margins_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().marginsParams() :
+        m_pageParams.dewarpingParams().marginsParams();
+
+    margins_params.setTop(top_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    emit marginsParamsSetByUser(margins_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::marginsBottomSpinBoxValueChanged(double bottom_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::MarginsParams& margins_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().marginsParams() :
+        m_pageParams.dewarpingParams().marginsParams();
+
+    margins_params.setBottom(bottom_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    emit marginsParamsSetByUser(margins_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::marginsMaxPixelScaleSpinBoxValueChanged(double max_pixel_scale_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::MarginsParams& margins_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().marginsParams() :
+        m_pageParams.dewarpingParams().marginsParams();
+
+    margins_params.setMaxPixelScale(max_pixel_scale_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    emit marginsParamsSetByUser(margins_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
 OptionsWidget::setupDistortionTypeButtons()
 {
     static_assert(
@@ -1281,7 +1408,7 @@ OptionsWidget::updateMarginsPanel(dewarping::MarginsParams const& margins_params
     ui.marginsRightSpinBox->setValue(margins_params.right());
     ui.marginsTopSpinBox->setValue(margins_params.top());
     ui.marginsBottomSpinBox->setValue(margins_params.bottom());
-    ui.marginsPixelScaleSpinBox->setValue(margins_params.maxPixelScale());
+    ui.marginsMaxPixelScaleSpinBox->setValue(margins_params.maxPixelScale());
 }
 
 void

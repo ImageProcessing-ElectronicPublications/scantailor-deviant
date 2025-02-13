@@ -1255,7 +1255,7 @@ Perspective correction.</string>
       <item>
        <layout class="QHBoxLayout" name="marginsMaxPixelScaleHorizontalLayout">
         <item>
-         <spacer name="marginsPixelScaleHorizontalSpacer">
+         <spacer name="marginsMaxPixelScaleHorizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -1268,14 +1268,14 @@ Perspective correction.</string>
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="marginsPixelScaleLabel">
+         <widget class="QLabel" name="marginsMaxPixelScaleLabel">
           <property name="text">
            <string>Maximum pixel scale:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QDoubleSpinBox" name="marginsPixelScaleSpinBox">
+         <widget class="QDoubleSpinBox" name="marginsMaxPixelScaleSpinBox">
           <property name="minimum">
            <double>1.000000000000000</double>
           </property>
