@@ -42,6 +42,14 @@ BendParams::BendParams()
 {
 }
 
+BendParams::BendParams(AutoManualMode mode, double bend_min, double bend, double bend_max)
+    : m_mode(mode)
+    , m_bendMin(bend_min)
+    , m_bend(bend)
+    , m_bendMax(bend_max)
+{
+}
+
 BendParams::BendParams(QDomElement const& el)
     : m_mode(el.attribute(str::MODE) == QLatin1String("manual") ? MODE_MANUAL : MODE_AUTO)
     , m_bendMin(el.attribute(str::BEND_MIN).toDouble())

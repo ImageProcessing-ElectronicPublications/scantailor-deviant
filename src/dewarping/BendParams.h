@@ -33,6 +33,8 @@ class BendParams
 public:
     BendParams();
 
+    BendParams(AutoManualMode mode, double bend_min, double bend, double bend_max);
+
     BendParams(QDomElement const& el);
 
     QDomElement toXml(QDomDocument& doc, QString const& name) const;
