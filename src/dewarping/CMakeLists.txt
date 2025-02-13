@@ -17,6 +17,7 @@ SET(
         MarginsParams.cpp MarginsParams.h
         RasterDewarper.cpp RasterDewarper.h
         HomographicTransform.cpp HomographicTransform.h
+        PerspectiveTransform.cpp PerspectiveTransform.h
         SizeMode.cpp SizeMode.h
         SizeParams.cpp SizeParams.h
         STEX_ToPoint.h
