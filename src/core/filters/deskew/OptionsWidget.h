@@ -50,6 +50,8 @@ signals:
     void manualDeskewAngleSet(double degrees);
 
     void depthPerceptionSetByUser(double depth_perception);
+
+    void fovParamsSetByUser(dewarping::FovParams const& params);
 public slots:
     void manualDeskewAngleSetExternally(double degrees);
 
@@ -87,6 +89,18 @@ private slots:
     void depthPerceptionAppliedTo(std::set<PageId> const& pages);
 
     void depthPerceptionAppliedToAllPages(std::set<PageId> const& pages);
+
+    void fovAutoManualModeChanged(bool auto_mode);
+
+    void fovSliderMoved(int value);
+
+    void fovSliderReleased();
+
+    void fovMinSpinBoxValueChanged(double fov_min_new);
+
+    void fovSpinBoxValueChanged(double fov_new);
+
+    void fovMaxSpinBoxValueChanged(double fov_max_new);
 private:
     void setupDistortionTypeButtons();
 

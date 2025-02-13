@@ -39,6 +39,31 @@ OptionsWidget::OptionsWidget(IntrusivePtr<Settings> const& settings,
     ui.setupUi(this);
     setupDistortionTypeButtons();
 
+    // Fov UI.
+    connect(
+        ui.fovAutoBtn, SIGNAL(toggled(bool)),
+        this, SLOT(fovAutoManualModeChanged(bool)));
+    connect(
+        ui.fovSlider, SIGNAL(valueChanged(int)),
+        SLOT(fovSliderMoved(int))
+    );
+    connect(
+        ui.fovSlider, SIGNAL(sliderReleased()),
+        SLOT(fovSliderReleased())
+    );
+    connect(
+        ui.fovMinSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(fovMinSpinBoxValueChanged(double))
+    );
+    connect(
+        ui.fovSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(fovSpinBoxValueChanged(double))
+    );
+    connect(
+        ui.fovMaxSpinBox, SIGNAL(valueChanged(double)),
+        this, SLOT(fovMaxSpinBoxValueChanged(double))
+    );
+
     // Rotation angle UI.
     ui.angleSpinBox->setSuffix(QChar(0x00B0)); // the degree symbol
     ui.angleSpinBox->setRange(-MAX_ANGLE, MAX_ANGLE);
@@ -470,6 +495,158 @@ OptionsWidget::depthPerceptionSliderReleased()
 }
 
 void
+OptionsWidget::fovAutoManualModeChanged(bool auto_mode)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::FovParams& fov_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().fovParams() :
+        m_pageParams.dewarpingParams().fovParams();
+
+    if (auto_mode)
+    {
+        fov_params.setMode(MODE_AUTO);
+        ui.fovSlider->setDisabled(true);
+        ui.fovSpinBox->setDisabled(true);
+    }
+    else
+    {
+        fov_params.setMode(MODE_MANUAL);
+        ui.fovSlider->setEnabled(true);
+        ui.fovSpinBox->setEnabled(true);
+    }
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    if (auto_mode)
+    {
+        emit reloadRequested();
+    }
+}
+
+void
+OptionsWidget::fovSliderMoved(int value)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    double const fov = sliderToFov(value);
+
+    dewarping::FovParams& fov_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().fovParams() :
+        m_pageParams.dewarpingParams().fovParams();
+
+    fov_params.setFov(fov);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+    
+    ui.fovSpinBox->setValue(fov);
+
+    emit fovParamsSetByUser(fov_params);
+
+    if (!ui.fovSlider->isSliderDown())
+    {
+        emit invalidateThumbnail(m_pageId);
+    }
+}
+
+void
+OptionsWidget::fovSliderReleased()
+{
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::fovMinSpinBoxValueChanged(double fov_min_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::FovParams& fov_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().fovParams() :
+        m_pageParams.dewarpingParams().fovParams();
+
+    if (fov_params.fov() < fov_min_new)
+    {
+        fov_params.setFov(fov_min_new);
+    }
+
+    fov_params.setFovMin(fov_min_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    ui.fovSlider->setMinimum(fovToSlider(fov_min_new));
+    ui.fovSpinBox->setMinimum(fov_min_new);
+    ui.fovMaxSpinBox->setMinimum(fov_min_new);
+
+    emit fovParamsSetByUser(fov_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::fovSpinBoxValueChanged(double fov_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::FovParams& fov_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().fovParams() :
+        m_pageParams.dewarpingParams().fovParams();
+
+    fov_params.setFov(fov_new);
+    
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    ui.fovSlider->setValue(fovToSlider(fov_new));
+
+    emit fovParamsSetByUser(fov_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
+OptionsWidget::fovMaxSpinBoxValueChanged(double fov_max_new)
+{
+    if (m_ignoreSignalsFromUiControls)
+    {
+        return;
+    }
+
+    dewarping::FovParams& fov_params =
+        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
+        m_pageParams.perspectiveParams().fovParams() :
+        m_pageParams.dewarpingParams().fovParams();
+
+    if (fov_params.fov() > fov_max_new)
+    {
+        fov_params.setFov(fov_max_new);
+    }
+
+    fov_params.setFovMax(fov_max_new);
+
+    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    ui.fovSlider->setMaximum(fovToSlider(fov_max_new));
+    ui.fovSpinBox->setMaximum(fov_max_new);
+    ui.fovMinSpinBox->setMaximum(fov_max_new);
+
+    emit fovParamsSetByUser(fov_params);
+    emit invalidateThumbnail(m_pageId);
+}
+
+void
 OptionsWidget::setupDistortionTypeButtons()
 {
     static_assert(
@@ -564,6 +741,12 @@ OptionsWidget::updateFovPanel(dewarping::FovParams const& fov_params)
     ui.fovMinSpinBox->setValue(fov_params.fovMin());
     ui.fovSpinBox->setValue(fov_params.fov());
     ui.fovMaxSpinBox->setValue(fov_params.fovMax());
+
+    ui.fovMinSpinBox->setMaximum(fov_params.fovMax());
+    ui.fovMaxSpinBox->setMinimum(fov_params.fovMin());
+    ui.fovSpinBox->setRange(
+        fov_params.fovMin(), 
+        fov_params.fovMax());
 }
 
 void
