@@ -840,6 +840,10 @@ Task::PerspectiveUiUpdater::updateUI(FilterUiInterface* ui)
         // Doesn't matter when curves are flat.
         DepthPerception(),
 
+        m_pageParams.perspectiveParams().fovParams(),
+        m_pageParams.perspectiveParams().frameParams(),
+        dewarping::BendParams(MODE_MANUAL, 0.0, 0.0, 0.0),
+
         // Prevent the user from introducing curvature.
         /*fixed_number_of_control_points*/true
     );
@@ -848,6 +852,14 @@ Task::PerspectiveUiUpdater::updateUI(FilterUiInterface* ui)
     QObject::connect(
         view, SIGNAL(distortionModelChanged(dewarping::DistortionModel const&)),
         opt_widget, SLOT(manualDistortionModelSetExternally(dewarping::DistortionModel const&))
+    );
+    QObject::connect(
+        opt_widget, SIGNAL(fovParamsSetByUser(dewarping::FovParams const&)),
+        view, SLOT(fovParamsChanged(dewarping::FovParams const&))
+    );
+    QObject::connect(
+        opt_widget, SIGNAL(frameParamsSetByUser(dewarping::FrameParams const&)),
+        view, SLOT(frameParamsChanged(dewarping::FrameParams const&))
     );
 }
 
@@ -893,6 +905,9 @@ Task::DewarpingUiUpdater::updateUI(FilterUiInterface* ui)
         m_image, m_downscaledImage, m_xform,
         m_pageParams.dewarpingParams().distortionModel(),
         m_pageParams.dewarpingParams().depthPerception(),
+        m_pageParams.dewarpingParams().fovParams(),
+        m_pageParams.dewarpingParams().frameParams(),
+        m_pageParams.dewarpingParams().bendParams(),
         /*fixed_number_of_control_points*/false
     );
     ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP, m_ptrDbg.get());
@@ -904,6 +919,18 @@ Task::DewarpingUiUpdater::updateUI(FilterUiInterface* ui)
     QObject::connect(
         opt_widget, SIGNAL(depthPerceptionSetByUser(double)),
         view, SLOT(depthPerceptionChanged(double))
+    );
+    QObject::connect(
+        opt_widget, SIGNAL(fovParamsSetByUser(dewarping::FovParams const&)),
+        view, SLOT(fovParamsChanged(dewarping::FovParams const&))
+    );
+    QObject::connect(
+        opt_widget, SIGNAL(frameParamsSetByUser(dewarping::FrameParams const&)),
+        view, SLOT(frameParamsChanged(dewarping::FrameParams const&))
+    );
+    QObject::connect(
+        opt_widget, SIGNAL(bendParamsSetByUser(dewarping::BendParams const&)),
+        view, SLOT(bendParamsChanged(dewarping::BendParams const&))
     );
 }
 

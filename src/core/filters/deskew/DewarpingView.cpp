@@ -36,6 +36,9 @@ DewarpingView::DewarpingView(
     ImageTransformation const& xform,
     dewarping::DistortionModel const& distortion_model,
     dewarping::DepthPerception const& depth_perception,
+    dewarping::FovParams const& fov_params,
+    dewarping::FrameParams const& frame_params,
+    dewarping::BendParams const& bend_params,
     bool fixed_number_of_control_points)
     : ImageViewBase(
         image, downscaled_image,
@@ -47,6 +50,9 @@ DewarpingView::DewarpingView(
       )
     , m_distortionModel(distortion_model)
     , m_depthPerception(depth_perception)
+    , m_fovParams(fov_params)
+    , m_frameParams(frame_params)
+    , m_bendParams(bend_params)
     , m_dragHandler(*this)
     , m_zoomHandler(*this)
 {
@@ -229,6 +235,27 @@ void
 DewarpingView::depthPerceptionChanged(double val)
 {
     m_depthPerception.setValue(val);
+    update();
+}
+
+void
+DewarpingView::fovParamsChanged(dewarping::FovParams const& fov_params)
+{
+    m_fovParams = fov_params;
+    update();
+}
+
+void
+DewarpingView::frameParamsChanged(dewarping::FrameParams const& frame_params)
+{
+    m_frameParams = frame_params;
+    update();
+}
+
+void
+DewarpingView::bendParamsChanged(dewarping::BendParams const& bend_params)
+{
+    m_bendParams = bend_params;
     update();
 }
 

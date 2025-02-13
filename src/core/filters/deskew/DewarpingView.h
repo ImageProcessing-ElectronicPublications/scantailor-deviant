@@ -27,6 +27,9 @@
 #include "ZoomHandler.h"
 #include "dewarping/DistortionModel.h"
 #include "dewarping/DepthPerception.h"
+#include "dewarping/FovParams.h"
+#include "dewarping/FrameParams.h"
+#include "dewarping/BendParams.h"
 
 namespace spfit
 {
@@ -45,6 +48,9 @@ public:
         ImageTransformation const& xform,
         dewarping::DistortionModel const& distortion_model,
         dewarping::DepthPerception const& depth_perception,
+        dewarping::FovParams const& fov_params,
+        dewarping::FrameParams const& frame_params,
+        dewarping::BendParams const& bend_params,
         bool fixed_number_of_control_points);
 
     virtual ~DewarpingView();
@@ -52,6 +58,12 @@ signals:
     void distortionModelChanged(dewarping::DistortionModel const& model);
 public slots:
     void depthPerceptionChanged(double val);
+
+    void fovParamsChanged(dewarping::FovParams const& fov_params);
+
+    void frameParamsChanged(dewarping::FrameParams const& frame_params);
+
+    void bendParamsChanged(dewarping::BendParams const& bend_params);
 protected:
     virtual void onPaint(QPainter& painter, InteractionState const& interaction);
 private:
@@ -76,6 +88,9 @@ private:
 
     dewarping::DistortionModel m_distortionModel;
     dewarping::DepthPerception m_depthPerception;
+    dewarping::FovParams m_fovParams;
+    dewarping::FrameParams m_frameParams;
+    dewarping::BendParams m_bendParams;
     InteractiveXSpline m_topSpline;
     InteractiveXSpline m_bottomSpline;
     DragHandler m_dragHandler;
