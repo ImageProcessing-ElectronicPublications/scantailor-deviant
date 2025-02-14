@@ -39,8 +39,8 @@ FrameParams::FrameParams()
     : m_mode(MODE_AUTO)
     , m_width(1024)
     , m_height(1024)
-    , m_centerX(0.5)
-    , m_centerY(0.5)
+    , m_centerX(512)
+    , m_centerY(512)
 {
 }
 
