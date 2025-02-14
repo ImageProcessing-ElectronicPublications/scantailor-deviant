@@ -37,20 +37,40 @@ static char const CENTER_Y[] = "center_y";
 
 FrameParams::FrameParams()
     : m_mode(MODE_AUTO)
-    , m_width(1024)
-    , m_height(1024)
-    , m_centerX(512)
-    , m_centerY(512)
+    , m_width(defaultSizeValue())
+    , m_height(defaultSizeValue())
+    , m_centerX(defaultCenterValue())
+    , m_centerY(defaultCenterValue())
 {
 }
 
 FrameParams::FrameParams(QDomElement const& el)
     : m_mode(el.attribute(str::MODE) == QLatin1String("manual") ? MODE_MANUAL : MODE_AUTO)
-    , m_width(el.attribute(str::WIDTH).toDouble())
-    , m_height(el.attribute(str::HEIGHT).toDouble())
-    , m_centerX(el.attribute(str::CENTER_X).toDouble())
-    , m_centerY(el.attribute(str::CENTER_Y).toDouble())
+    , m_width(
+        el.hasAttribute(str::WIDTH) ?
+        el.attribute(str::WIDTH).toDouble() :
+        defaultSizeValue()
+      )
+    , m_height(
+        el.hasAttribute(str::HEIGHT) ?
+        el.attribute(str::HEIGHT).toDouble() :
+        defaultSizeValue()
+       )
+    , m_centerX(
+        el.hasAttribute(str::CENTER_X) ?
+        el.attribute(str::CENTER_X).toDouble() :
+        defaultCenterValue()
+      )
+    , m_centerY(
+        el.hasAttribute(str::CENTER_Y) ?
+        el.attribute(str::CENTER_Y).toDouble() :
+        defaultCenterValue()
+      )
 {
+    m_width = qBound(minSizeValue(), m_width, maxSizeValue());
+    m_height = qBound(minSizeValue(), m_height, maxSizeValue());
+    m_centerX = qBound(minCenterValue(), m_centerX, maxCenterValue());
+    m_centerY = qBound(minCenterValue(), m_centerY, maxCenterValue());
 }
 
 QDomElement

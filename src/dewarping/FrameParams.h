@@ -86,6 +86,36 @@ public:
     {
         m_centerY = center_y;
     }
+
+    static double minSizeValue()
+    {
+        return 1;
+    }
+
+    static double maxSizeValue()
+    {
+        return 32768;
+    }
+
+    static double defaultSizeValue()
+    {
+        return 1024;
+    }
+
+    static double minCenterValue()
+    {
+        return -32768;
+    }
+
+    static double maxCenterValue()
+    {
+        return 32768;
+    }
+
+    static double defaultCenterValue()
+    {
+        return 512;
+    }
 private:
     AutoManualMode m_mode;
     double m_width;
