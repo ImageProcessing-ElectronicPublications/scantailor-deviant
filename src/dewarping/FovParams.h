@@ -76,6 +76,31 @@ public:
     {
         m_fovMax = fov_max;
     }
+
+    static double minValue()
+    {
+        return 0.001;
+    }
+
+    static double maxValue()
+    {
+        return 1000.0;
+    }
+
+    static double defaultMinValue()
+    {
+        return 0.2;
+    }
+
+    static double defaultValue()
+    {
+        return 1.5;
+    }
+
+    static double defaultMaxValue()
+    {
+        return 2.0;
+    }
 private:
     AutoManualMode m_mode;
     double m_fovMin;

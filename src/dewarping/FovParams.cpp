@@ -22,6 +22,7 @@
 #include <QDomDocument>
 #include <QDomElement>
 #include <QString>
+#include <algorithm>
 
 namespace dewarping
 {
@@ -36,18 +37,37 @@ static char const FOV_MAX[] = "fov_max";
 
 FovParams::FovParams()
     : m_mode(MODE_AUTO)
-    , m_fovMin(0.2)
-    , m_fov(1.5)
-    , m_fovMax(2.0)
+    , m_fovMin(defaultMinValue())
+    , m_fov(defaultValue())
+    , m_fovMax(defaultMaxValue())
 {
 }
 
 FovParams::FovParams(QDomElement const& el)
     : m_mode(el.attribute(str::MODE) == QLatin1String("manual") ? MODE_MANUAL : MODE_AUTO)
-    , m_fovMin(el.attribute(str::FOV_MIN).toDouble())
-    , m_fov(el.attribute(str::FOV).toDouble())
-    , m_fovMax(el.attribute(str::FOV_MAX).toDouble())
+    , m_fovMin(
+        el.hasAttribute(str::FOV_MIN) ?
+        el.attribute(str::FOV_MIN).toDouble() :
+        defaultMinValue()
+      )
+    , m_fov(
+        el.hasAttribute(str::FOV) ?
+        el.attribute(str::FOV).toDouble() :
+        defaultValue()
+      )
+    , m_fovMax(
+        el.hasAttribute(str::FOV_MAX) ?
+        el.attribute(str::FOV_MAX).toDouble() :
+        defaultMaxValue()
+      )
 {
+    m_fovMin = std::max(m_fovMin, minValue());
+    m_fovMax = std::min(m_fovMax, maxValue());
+
+    if (m_fovMin > m_fovMax)
+        std::swap(m_fovMin, m_fovMax);
+
+    m_fov = qBound(m_fovMin, m_fov, m_fovMax);
 }
 
 QDomElement
