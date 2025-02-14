@@ -31,6 +31,10 @@
 namespace dewarping
 {
 
+class FovParams;
+class FrameParams;
+class BendParams;
+
 /**
  * @brief A model for mapping a curved quadrilateral into a rectangle.
  *
@@ -68,7 +72,10 @@ public:
     CylindricalSurfaceDewarper(
         std::vector<QPointF> const& img_directrix1,
         std::vector<QPointF> const& img_directrix2,
-        double depth_perception);
+        double depth_perception,
+        FovParams const& fov_params,
+        FrameParams const& frame_params,
+        BendParams const& bend_params);
 
     /**
      * \brief Returns the arc length of a directrix, assuming its

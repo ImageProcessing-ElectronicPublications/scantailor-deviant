@@ -289,6 +289,7 @@ DewarpingView::onPaint(QPainter& painter, InteractionState const& interaction)
                 m_distortionModel.topCurve().polyline(),
                 m_distortionModel.bottomCurve().polyline(),
                 m_depthPerception,
+                m_fovParams, m_frameParams, m_bendParams,
                 num_horizontal_curves, num_vertical_lines,
                 horizontal_curves, vertical_lines
             );

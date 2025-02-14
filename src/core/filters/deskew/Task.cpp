@@ -390,7 +390,12 @@ Task::processPerspectiveDistortion(
         );
 
         DistortionModel distortion_model(
-            model_builder.tryBuildModel(m_ptrDbg.get(), &data.origImage())
+            model_builder.tryBuildModel(
+                params.perspectiveParams().fovParams(),
+                params.perspectiveParams().frameParams(),
+                BendParams(MODE_MANUAL, 0.0, 0.0, 0.0),
+                m_ptrDbg.get(), &data.origImage()
+            )
         );
 
         if (distortion_model.isValid())
@@ -453,7 +458,10 @@ Task::processPerspectiveDistortion(
             orig_image_transform.origSize(),
             orig_image_transform.origCropArea(),
             top_curve, bottom_curve,
-            dewarping::DepthPerception() // Doesn't matter when curves are flat.
+            dewarping::DepthPerception(), // Doesn't matter when curves are flat.
+            params.perspectiveParams().fovParams(),
+            params.perspectiveParams().frameParams(),
+            BendParams(MODE_MANUAL, 0.0, 0.0, 0.0)
         );
 
         QRectF const transformed_rectF = perspective_transform.transformedCropArea().boundingRect();
@@ -541,7 +549,11 @@ Task::processWarpDistortion(
         );
 
         DistortionModel distortion_model(
-            model_builder.tryBuildModel(m_ptrDbg.get(), &data.origImage())
+            model_builder.tryBuildModel(
+                params.dewarpingParams().fovParams(),
+                params.dewarpingParams().frameParams(),
+                params.dewarpingParams().bendParams(),
+                m_ptrDbg.get(), &data.origImage())
         );
 
         if (!distortion_model.isValid())
@@ -587,7 +599,10 @@ Task::processWarpDistortion(
             orig_image_transform.origCropArea(),
             params.dewarpingParams().distortionModel().topCurve().polyline(),
             params.dewarpingParams().distortionModel().bottomCurve().polyline(),
-            params.dewarpingParams().depthPerception()
+            params.dewarpingParams().depthPerception(),
+            params.dewarpingParams().fovParams(),
+            params.dewarpingParams().frameParams(),
+            params.dewarpingParams().bendParams()
         );
 
         QRectF const transformed_rectF = perspective_transform.transformedCropArea().boundingRect();

@@ -84,6 +84,7 @@ DewarpingThumbnail::paintOverImage(
     {
         Utils::buildWarpVisualization(
             m_topCurve, m_bottomCurve, m_depthPerception,
+            m_fovParams, m_frameParams, m_bendParams,
             num_horizontal_curves, num_vertical_lines,
             horizontal_curves, vertical_lines
         );

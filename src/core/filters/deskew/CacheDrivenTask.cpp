@@ -113,7 +113,10 @@ CacheDrivenTask::process(
                     ),
                     xform.preCropArea(),
                     top_curve, bottom_curve,
-                    dewarping::DepthPerception()
+                    dewarping::DepthPerception(),
+                    params->perspectiveParams().fovParams(),
+                    params->perspectiveParams().frameParams(),
+                    BendParams(MODE_MANUAL, 0.0, 0.0, 0.0)
                 );
 
                 new_transform = std::make_shared<ImageTransformation>(
@@ -140,7 +143,10 @@ CacheDrivenTask::process(
                     xform.preCropArea(),
                     params->dewarpingParams().distortionModel().topCurve().polyline(),
                     params->dewarpingParams().distortionModel().bottomCurve().polyline(),
-                    params->dewarpingParams().depthPerception()
+                    params->dewarpingParams().depthPerception(),
+                    params->dewarpingParams().fovParams(),
+                    params->dewarpingParams().frameParams(),
+                    params->dewarpingParams().bendParams()
                 );
 
                 new_transform = std::make_shared<ImageTransformation>(

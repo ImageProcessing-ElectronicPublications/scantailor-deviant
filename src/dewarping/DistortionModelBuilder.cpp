@@ -88,7 +88,11 @@ public:
         : m_rAllCurves(all_curves) {}
 
     void buildAndAssessModel(
-        TracedCurve const* top_curve, TracedCurve const* bottom_curve);
+        TracedCurve const* top_curve,
+        TracedCurve const* bottom_curve,
+        FovParams const& fov_params,
+        FrameParams const& frame_params,
+        BendParams const& bend_params);
 
     RansacModel& bestModel()
     {
@@ -176,7 +180,12 @@ DistortionModelBuilder::transform(QTransform const& xform)
 }
 
 DistortionModel
-DistortionModelBuilder::tryBuildModel(DebugImages* dbg, QImage const* dbg_background) const
+DistortionModelBuilder::tryBuildModel(
+    FovParams const& fov_params,
+    FrameParams const& frame_params,
+    BendParams const& bend_params,
+    DebugImages* dbg,
+    QImage const* dbg_background) const
 {
     int num_curves = m_ltrPolylines.size();
 
@@ -210,7 +219,9 @@ DistortionModelBuilder::tryBuildModel(DebugImages* dbg, QImage const* dbg_backgr
     // Select the best pair using RANSAC.
     RansacAlgo ransac(ordered_curves);
 
-    ransac.buildAndAssessModel(&ordered_curves.front(), &ordered_curves.back());
+    ransac.buildAndAssessModel(
+        &ordered_curves.front(), &ordered_curves.back(),
+        fov_params, frame_params, bend_params);
 
     // First let's try to combine each of the 5 top-most lines
     // with each of the 3 bottom-most ones.
@@ -221,7 +232,9 @@ DistortionModelBuilder::tryBuildModel(DebugImages* dbg, QImage const* dbg_backgr
         {
             if (i < j)
             {
-                ransac.buildAndAssessModel(&ordered_curves[i], &ordered_curves[j]);
+                ransac.buildAndAssessModel(
+                    &ordered_curves[i], &ordered_curves[j],
+                    fov_params, frame_params, bend_params);
             }
         }
     }
@@ -243,7 +256,9 @@ DistortionModelBuilder::tryBuildModel(DebugImages* dbg, QImage const* dbg_backgr
         }
         if (i < j)
         {
-            ransac.buildAndAssessModel(&ordered_curves[i], &ordered_curves[j]);
+            ransac.buildAndAssessModel(
+                &ordered_curves[i], &ordered_curves[j],
+                fov_params, frame_params, bend_params);
         }
     }
 
@@ -457,7 +472,11 @@ DistortionModelBuilder::fitExtendedSpline(
 
 void
 DistortionModelBuilder::RansacAlgo::buildAndAssessModel(
-    TracedCurve const* top_curve, TracedCurve const* bottom_curve)
+    TracedCurve const* top_curve,
+    TracedCurve const* bottom_curve,
+    FovParams const& fov_params,
+    FrameParams const& frame_params,
+    BendParams const& bend_params)
 try
 {
     DistortionModel model;
@@ -470,7 +489,9 @@ try
 
     double const depth_perception = 2.0; // Doesn't matter much here.
     CylindricalSurfaceDewarper const dewarper(
-        top_curve->extendedPolyline, bottom_curve->extendedPolyline, depth_perception
+        top_curve->extendedPolyline, bottom_curve->extendedPolyline,
+        depth_perception,
+        fov_params, frame_params, bend_params
     );
 
     // CylindricalSurfaceDewarper maps the curved quadrilateral to a unit

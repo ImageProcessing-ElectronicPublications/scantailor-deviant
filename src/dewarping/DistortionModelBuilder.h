@@ -35,6 +35,9 @@ namespace dewarping
 {
 
 class DistortionModel;
+class FovParams;
+class FrameParams;
+class BendParams;
 
 class DistortionModelBuilder
 {
@@ -85,7 +88,12 @@ public:
      * \return A DistortionModel that may be invalid.
      * \see DistortionModel::isValid()
      */
-    DistortionModel tryBuildModel(DebugImages* dbg = 0, QImage const* dbg_background = 0) const;
+    DistortionModel tryBuildModel(
+        FovParams const& fov_params,
+        FrameParams const& frame_params,
+        BendParams const& bend_params,
+        DebugImages* dbg = 0,
+        QImage const* dbg_background = 0) const;
 private:
     struct TracedCurve;
     struct RansacModel;

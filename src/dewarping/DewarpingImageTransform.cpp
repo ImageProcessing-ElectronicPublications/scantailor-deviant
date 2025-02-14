@@ -97,12 +97,17 @@ DewarpingImageTransform::DewarpingImageTransform(
     QPolygonF const& orig_crop_area,
     std::vector<QPointF> const& top_curve,
     std::vector<QPointF> const& bottom_curve,
-    DepthPerception const& depth_perception)
+    DepthPerception const& depth_perception,
+    FovParams const& fov_params,
+    FrameParams const& frame_params,
+    BendParams const& bend_params)
     :	m_origSize(orig_size)
     ,	m_topPolyline(top_curve)
     ,	m_bottomPolyline(bottom_curve)
     ,	m_depthPerception(depth_perception)
-    ,	m_dewarper(top_curve, bottom_curve, depth_perception.value())
+    ,	m_dewarper(top_curve, bottom_curve,
+                   depth_perception.value(),
+                   fov_params, frame_params, bend_params)
     ,	m_intrinsicScaleX(1.0)
     ,	m_intrinsicScaleY(1.0)
     ,	m_userScaleX(1.0)

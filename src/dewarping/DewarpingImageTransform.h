@@ -39,6 +39,10 @@ class AffineTransformedImage;
 namespace dewarping
 {
 
+class FovParams;
+class FrameParams;
+class BendParams;
+
 class DewarpingImageTransform : public imageproc::AbstractImageTransform
 {
     // Member-wise copying is OK.
@@ -52,7 +56,10 @@ public:
         QPolygonF const& orig_crop_area,
         std::vector<QPointF> const& top_curve,
         std::vector<QPointF> const& bottom_curve,
-        DepthPerception const& depth_perception);
+        DepthPerception const& depth_perception,
+        FovParams const& fov_params,
+        FrameParams const& frame_params,
+        BendParams const& bend_params);
 
     virtual ~DewarpingImageTransform();
 

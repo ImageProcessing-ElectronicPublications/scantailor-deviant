@@ -93,7 +93,11 @@ private:
 
 CylindricalSurfaceDewarper::CylindricalSurfaceDewarper(
     std::vector<QPointF> const& img_directrix1,
-    std::vector<QPointF> const& img_directrix2, double depth_perception)
+    std::vector<QPointF> const& img_directrix2,
+    double depth_perception,
+    FovParams const& fov_params,
+    FrameParams const& frame_params,
+    BendParams const& bend_params)
     :   m_pln2img(calcPlnToImgHomography(img_directrix1, img_directrix2)),
       m_img2pln(m_pln2img.inv()),
       m_depthPerception(depth_perception),
