@@ -76,6 +76,36 @@ public:
     {
         m_distance = distance;
     }
+
+    static double minSizeValue()
+    {
+        return 1;
+    }
+
+    static double maxSizeValue()
+    {
+        return 32768;
+    }
+
+    static double defaultSizeValue()
+    {
+        return 1024;
+    }
+
+    static double minDistanceValue()
+    {
+        return 1;
+    }
+
+    static double maxDistanceValue()
+    {
+        return 3276800;
+    }
+
+    static double defaultDistanceValue()
+    {
+        return 1024;
+    }
 private:
     SizeMode m_mode;
     double m_width;

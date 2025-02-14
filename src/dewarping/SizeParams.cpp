@@ -36,17 +36,29 @@ namespace str
 
 SizeParams::SizeParams()
     : m_mode(SizeMode::CALC_BY_AREA)
-    , m_width(1024)
-    , m_height(1024)
-    , m_distance(1024)
+    , m_width(defaultSizeValue())
+    , m_height(defaultSizeValue())
+    , m_distance(defaultDistanceValue())
 {
 }
 
 SizeParams::SizeParams(QDomElement const& el)
     : m_mode(el.attribute(str::MODE))
-    , m_width(el.attribute(str::WIDTH).toDouble())
-    , m_height(el.attribute(str::HEIGHT).toDouble())
-    , m_distance(el.attribute(str::DISTANCE).toDouble())
+    , m_width(
+        el.hasAttribute(str::WIDTH) ?
+        el.attribute(str::WIDTH).toDouble() :
+        defaultSizeValue()
+      )
+    , m_height(
+        el.hasAttribute(str::HEIGHT) ?
+        el.attribute(str::HEIGHT).toDouble() :
+        defaultSizeValue()
+      )
+    , m_distance(
+        el.hasAttribute(str::DISTANCE) ?
+        el.attribute(str::DISTANCE).toDouble() :
+        defaultDistanceValue()
+      )
 {
 }
 
