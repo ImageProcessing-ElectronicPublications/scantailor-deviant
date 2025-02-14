@@ -1300,15 +1300,15 @@ OptionsWidget::updateFovPanel(dewarping::FovParams const& fov_params)
         fovToSlider(fov_params.fovMax()));
     ui.fovSlider->setValue(fovToSlider(fov_params.fov()));
 
-    ui.fovMinSpinBox->setValue(fov_params.fovMin());
-    ui.fovSpinBox->setValue(fov_params.fov());
-    ui.fovMaxSpinBox->setValue(fov_params.fovMax());
-
     ui.fovMinSpinBox->setMaximum(fov_params.fovMax());
     ui.fovMaxSpinBox->setMinimum(fov_params.fovMin());
     ui.fovSpinBox->setRange(
         fov_params.fovMin(), 
         fov_params.fovMax());
+
+    ui.fovMinSpinBox->setValue(fov_params.fovMin());
+    ui.fovSpinBox->setValue(fov_params.fov());
+    ui.fovMaxSpinBox->setValue(fov_params.fovMax());
 }
 
 void
