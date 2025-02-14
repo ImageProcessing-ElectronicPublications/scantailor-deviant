@@ -1359,6 +1359,13 @@ OptionsWidget::updateBendPanel(dewarping::BendParams const& bend_params)
     );
     ui.bendSlider->setValue(bendToSlider(bend_params.bend()));
 
+    ui.bendMinSpinBox->setMaximum(bend_params.bendMax());
+    ui.bendMaxSpinBox->setMinimum(bend_params.bendMin());
+    ui.bendSpinBox->setRange(
+        bend_params.bendMin(),
+        bend_params.bendMax()
+    );
+
     ui.bendMinSpinBox->setValue(bend_params.bendMin());
     ui.bendSpinBox->setValue(bend_params.bend());
     ui.bendMaxSpinBox->setValue(bend_params.bendMax());
