@@ -22,6 +22,7 @@
 #include <QDomDocument>
 #include <QDomElement>
 #include <QString>
+#include <algorithm>
 
 namespace dewarping
 {
@@ -36,21 +37,46 @@ static char const MAX_PIXEL_SCALE[] = "max-pixel-scale";
 }
 
 MarginsParams::MarginsParams()
-    : m_left(0.1)
-    , m_right(0.1)
-    , m_top(5.0)
-    , m_bottom(5.0)
-    , m_maxPixelScale(5.0)
+    : m_left(defaultHMarginValue())
+    , m_right(defaultHMarginValue())
+    , m_top(defaultVMarginValue())
+    , m_bottom(defaultVMarginValue())
+    , m_maxPixelScale(defaultPixelScaleValue())
 {
 }
 
 MarginsParams::MarginsParams(QDomElement const& el)
-    : m_left(el.attribute(str::LEFT).toDouble())
-    , m_right(el.attribute(str::RIGHT).toDouble())
-    , m_top(el.attribute(str::TOP).toDouble())
-    , m_bottom(el.attribute(str::BOTTOM).toDouble())
-    , m_maxPixelScale(el.attribute(str::MAX_PIXEL_SCALE).toDouble())
+    : m_left(
+        el.hasAttribute(str::LEFT) ?
+        el.attribute(str::LEFT).toDouble() :
+        defaultHMarginValue()
+      )
+    , m_right(
+        el.hasAttribute(str::RIGHT) ?
+        el.attribute(str::RIGHT).toDouble() :
+        defaultHMarginValue()
+      )
+    , m_top(
+        el.hasAttribute(str::TOP) ?
+        el.attribute(str::TOP).toDouble() :
+        defaultVMarginValue()
+      )
+    , m_bottom(
+        el.hasAttribute(str::BOTTOM) ?
+        el.attribute(str::BOTTOM).toDouble() :
+        defaultVMarginValue()
+      )
+    , m_maxPixelScale(
+        el.hasAttribute(str::MAX_PIXEL_SCALE) ?
+        el.attribute(str::MAX_PIXEL_SCALE).toDouble() :
+        defaultPixelScaleValue()
+      )
 {
+    m_left = qBound(minHMarginValue(), m_left, maxHMarginValue());
+    m_right = qBound(minHMarginValue(), m_right, maxHMarginValue());
+    m_top = qBound(minVMarginValue(), m_top, maxVMarginValue());
+    m_bottom = qBound(minVMarginValue(), m_bottom, maxVMarginValue());
+    m_maxPixelScale = qBound(minPixelScaleValue(), m_maxPixelScale, maxPixelScaleValue());
 }
 
 QDomElement

@@ -85,6 +85,50 @@ public:
         m_maxPixelScale = max_pixel_scale;
     }
 
+    static double minHMarginValue()
+    {
+        return 0.0;
+    }
+
+    static double maxHMarginValue()
+    {
+        return 10.0;
+    }
+
+    static double defaultHMarginValue()
+    {
+        return 0.1;
+    }
+
+    static double minVMarginValue()
+    {
+        return 0.0;
+    }
+
+    static double maxVMarginValue()
+    {
+        return 10.0;
+    }
+
+    static double defaultVMarginValue()
+    {
+        return 5.0;
+    }
+
+    static double minPixelScaleValue()
+    {
+        return 1.0;
+    }
+
+    static double maxPixelScaleValue()
+    {
+        return 5.0;
+    }
+
+    static double defaultPixelScaleValue()
+    {
+        return 10.0;
+    }
 private:
     double m_left;
     double m_right;
