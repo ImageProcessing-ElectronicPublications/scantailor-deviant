@@ -22,6 +22,7 @@
 #include <QDomDocument>
 #include <QDomElement>
 #include <QString>
+#include <algorithm>
 
 namespace dewarping
 {
@@ -36,9 +37,9 @@ static char const BEND_MAX[] = "bend_max";
 
 BendParams::BendParams()
     : m_mode(MODE_AUTO)
-    , m_bendMin(-0.5)
-    , m_bend(0.15)
-    , m_bendMax(0.5)
+    , m_bendMin(defaultMinValue())
+    , m_bend(defaultValue())
+    , m_bendMax(defaultMaxValue())
 {
 }
 
@@ -52,10 +53,29 @@ BendParams::BendParams(AutoManualMode mode, double bend_min, double bend, double
 
 BendParams::BendParams(QDomElement const& el)
     : m_mode(el.attribute(str::MODE) == QLatin1String("manual") ? MODE_MANUAL : MODE_AUTO)
-    , m_bendMin(el.attribute(str::BEND_MIN).toDouble())
-    , m_bend(el.attribute(str::BEND).toDouble())
-    , m_bendMax(el.attribute(str::BEND_MAX).toDouble())
+    , m_bendMin(
+        el.hasAttribute(str::BEND_MIN) ?
+        el.attribute(str::BEND_MIN).toDouble() :
+        defaultMinValue()
+      )
+    , m_bend(
+        el.hasAttribute(str::BEND) ?
+        el.attribute(str::BEND).toDouble() :
+        defaultValue()
+      )
+    , m_bendMax(
+        el.hasAttribute(str::BEND_MAX) ?
+        el.attribute(str::BEND_MAX).toDouble() :
+        defaultMaxValue()
+      )
 {
+    m_bendMin = std::max(m_bendMin, minValue());
+    m_bendMax = std::min(m_bendMax, maxValue());
+
+    if (m_bendMin > m_bendMax)
+        std::swap(m_bendMin, m_bendMax);
+
+    m_bend = qBound(m_bendMin, m_bend, m_bendMax);
 }
 
 QDomElement

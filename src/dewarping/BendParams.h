@@ -78,6 +78,31 @@ public:
     {
         m_bendMax = bend_max;
     }
+
+    static double minValue()
+    {
+        return -1.0;
+    }
+
+    static double maxValue()
+    {
+        return 1.0;
+    }
+
+    static double defaultMinValue()
+    {
+        return -0.5;
+    }
+
+    static double defaultValue()
+    {
+        return 0.15;
+    }
+
+    static double defaultMaxValue()
+    {
+        return 0.5;
+    }
 private:
     AutoManualMode m_mode;
     double m_bendMin;
