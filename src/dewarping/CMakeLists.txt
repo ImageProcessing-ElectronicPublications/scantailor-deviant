@@ -10,6 +10,7 @@ SET(
         DepthPerception.cpp DepthPerception.h
         DetectVerticalBounds.cpp DetectVerticalBounds.h
         DewarpingImageTransform.cpp DewarpingImageTransform.h
+        Directrix.cpp Directrix.h
         DistortionModel.cpp DistortionModel.h
         DistortionModelBuilder.cpp DistortionModelBuilder.h
         FrameParams.cpp FrameParams.h
