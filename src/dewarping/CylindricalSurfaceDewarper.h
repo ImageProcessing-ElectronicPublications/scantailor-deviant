@@ -111,8 +111,6 @@ public:
      */
     QPointF mapToWarpedSpace(QPointF const& crv_pt) const;
 private:
-    class CoupledPolylinesIterator;
-
     static HomographicTransform<2, double> calcPlnToImgHomography(
         std::vector<QPointF> const& img_directrix1,
         std::vector<QPointF> const& img_directrix2);
