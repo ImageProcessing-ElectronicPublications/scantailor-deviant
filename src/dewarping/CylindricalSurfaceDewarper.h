@@ -20,6 +20,7 @@
 #define DEWARPING_CYLINDRICAL_SURFACE_DEWARPER_H_
 
 #include "HomographicTransform.h"
+#include "PerspectiveTransform.h"
 #include "PolylineIntersector.h"
 #include "ArcLengthMapper.h"
 #include <boost/array.hpp>
@@ -116,6 +117,11 @@ private:
         std::vector<QPointF> const& img_directrix1,
         std::vector<QPointF> const& img_directrix2);
 
+    PerspectiveTransform calcMdlToImgTransform(
+        HomographicTransform<2, double> const& pln2img,
+        FovParams const& fov_params,
+        FrameParams const& frame_params);
+
     static double calcPlnStraightLineY(
         std::vector<QPointF> const& img_directrix1,
         std::vector<QPointF> const& img_directrix2,
@@ -128,6 +134,10 @@ private:
 
     HomographicTransform<2, double> m_pln2img;
     HomographicTransform<2, double> m_img2pln;
+    PerspectiveTransform m_mdl2img;
+    double m_fov;
+    double m_Sx;
+    double m_Sy;
     double m_depthPerception;
     double m_plnStraightLineY;
     double m_directrixArcLength;

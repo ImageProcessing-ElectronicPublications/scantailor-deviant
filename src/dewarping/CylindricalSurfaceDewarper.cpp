@@ -22,6 +22,9 @@
 #include "STEX_ToVec.h"
 #include "STEX_ToPoint.h"
 #include "foundation/MultipleTargetsSupport.h"
+#include "dewarping/FovParams.h"
+#include "dewarping/FrameParams.h"
+#include "dewarping/BendParams.h"
 #include <Eigen/Core>
 #include <Eigen/QR>
 #include <QLineF>
@@ -100,6 +103,7 @@ CylindricalSurfaceDewarper::CylindricalSurfaceDewarper(
     BendParams const& bend_params)
     :   m_pln2img(calcPlnToImgHomography(img_directrix1, img_directrix2)),
       m_img2pln(m_pln2img.inv()),
+      m_mdl2img(calcMdlToImgTransform(m_pln2img, fov_params, frame_params)),
       m_depthPerception(depth_perception),
       m_plnStraightLineY(
           calcPlnStraightLineY(img_directrix1, img_directrix2, m_pln2img, m_img2pln)
@@ -214,6 +218,83 @@ CylindricalSurfaceDewarper::calcPlnToImgHomography(
     pairs[3] = std::make_pair(QPointF(1, 1), img_directrix2.back());
 
     return fourPoint2DHomography(pairs);
+}
+
+PerspectiveTransform
+CylindricalSurfaceDewarper::calcMdlToImgTransform(
+    HomographicTransform<2, double> const& pln2img,
+    FovParams const& fov_params,
+    FrameParams const& frame_params)
+{
+    Matrix<double, 3, 3> const& hmat = pln2img.mat();
+
+    double const dx = frame_params.centerX();
+    double const dy = frame_params.centerY();
+
+    double const  h00 = hmat(0, 0) - hmat(2, 0) * dx;
+    double const  h10 = hmat(1, 0) - hmat(2, 0) * dy;;
+    double const& h20 = hmat(2, 0);
+
+    double const  h01 = hmat(0, 1) - hmat(2, 1) * dx;
+    double const  h11 = hmat(1, 1) - hmat(2, 1) * dy;;
+    double const& h21 = hmat(2, 1);
+
+    double const frame_size = std::max(
+        frame_params.width(),
+        frame_params.height()
+    );
+
+    double const F_inv_square = [h00, h10, h20, h01, h11, h21, &fov_params, frame_size]()
+    {
+        if (fov_params.mode() == MODE_AUTO)
+        {
+            double const F_inv_min = fov_params.fovMin() / frame_size;
+            double const F_inv_max = fov_params.fovMax() / frame_size;
+
+            double const F_inv_square_min = F_inv_min * F_inv_min;
+            double const F_inv_square_max = F_inv_max * F_inv_max;
+
+            double const F_inv_square = qBound(
+                F_inv_square_min,
+                -(h20 * h21) / (h00 * h01 + h10 * h11),
+                F_inv_square_max
+            );
+
+            return F_inv_square;
+        }
+        else
+        {
+            double const F_inv = fov_params.fov() / frame_size;
+            double const F_inv_square = F_inv * F_inv;
+
+            return F_inv_square;
+        }
+    }();
+
+    if (fov_params.mode() == MODE_AUTO)
+        m_fov = frame_size * std::sqrt(F_inv_square);
+    else
+        m_fov = fov_params.fov();
+
+    double const Sx_square = (h20 * h20) + (h00 * h00 + h10 * h10) * F_inv_square;
+    double const Sy_square = (h21 * h21) + (h01 * h01 + h11 * h11) * F_inv_square;
+
+    m_Sx = std::sqrt(Sx_square);
+    m_Sy = std::sqrt(Sy_square);
+
+    double const k = 1.0 / m_Sy;
+
+    double const h02 = (h11 * h20 - h10 * h21) * k;
+    double const h12 = (h00 * h21 - h01 * h20) * k;
+    double const h22 = (h01 * h10 - h00 * h11) * k * F_inv_square;
+
+    Matrix<double, 3, 1> const hvec(
+        h02 + h22 * dx,
+        h12 + h22 * dy,
+        h22
+    );
+
+    return PerspectiveTransform(hmat, hvec);
 }
 
 double
