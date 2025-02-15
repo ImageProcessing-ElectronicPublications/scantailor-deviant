@@ -17,6 +17,7 @@
 */
 
 #include "CylindricalSurfaceDewarper.h"
+#include "Directrix.h"
 #include "ToLineProjector.h"
 #include "NumericTraits.h"
 #include "STEX_ToVec.h"
@@ -343,36 +344,33 @@ CylindricalSurfaceDewarper::initArcLengthMapper(
     std::vector<QPointF> const& img_directrix1,
     std::vector<QPointF> const& img_directrix2)
 {
-    double prev_elevation = 0;
-    CoupledPolylinesIterator it(img_directrix1, img_directrix2, m_pln2img, m_img2pln);
-    QPointF img_curve1_pt;
-    QPointF img_curve2_pt;
-    double prev_pln_x = NumericTraits<double>::min();
-    double pln_x;
-    while (it.next(img_curve1_pt, img_curve2_pt, pln_x))
+    // TODO use bend params
+    Directrix::Place const place1(m_mdl2img, img_directrix1, 0.0);
+    Directrix::Place const place2(m_mdl2img, img_directrix2, 1.0);
+    Directrix::Place const& best_place =
+        place1.quality() > place2.quality()
+        ? place1
+        : place2;
+
+    double const min_quality = 1e-3;
+    Directrix::Plane const plane =
+        best_place.quality() < min_quality
+        ? best_place.createRotatedPlane(min_quality)
+        : best_place.createPlane();
+
+    Directrix::Profile profile(plane);
+
+    double prev_x = NumericTraits<double>::min();
+    for (QPointF const& point : profile.points())
     {
-        if (pln_x <= prev_pln_x)
+        if (point.x() <= prev_x)
         {
-            // This means our surface has an S-like shape.
-            // We don't support that, and to make ReverseArcLength happy,
-            // we have to skip such points.
             continue;
         }
 
-        QLineF const img_generatrix(img_curve1_pt, img_curve2_pt);
-        QPointF const img_line1_pt(toPoint(m_pln2img(Vector2d(pln_x, 0))));
-        QPointF const img_line2_pt(toPoint(m_pln2img(Vector2d(pln_x, 1))));
+        m_arcLengthMapper.addSample(point.x(), point.y());
 
-        ToLineProjector const projector(img_generatrix);
-        double const y1 = projector.projectionScalar(img_line1_pt);
-        double const y2 = projector.projectionScalar(img_line2_pt);
-
-        double elevation = m_depthPerception * (1.0 - (y2 - y1));
-        elevation = qBound(-0.5, elevation, 0.5);
-
-        m_arcLengthMapper.addSample(pln_x, elevation);
-        prev_elevation = elevation;
-        prev_pln_x = pln_x;
+        prev_x = point.x();
     }
 
     // Needs to go before normalizeRange().
