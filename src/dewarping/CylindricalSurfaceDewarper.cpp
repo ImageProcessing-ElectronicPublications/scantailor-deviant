@@ -107,9 +107,6 @@ CylindricalSurfaceDewarper::CylindricalSurfaceDewarper(
       m_img2pln(m_pln2img.inv()),
       m_mdl2img(calcMdlToImgTransform(m_pln2img, fov_params, frame_params)),
       m_depthPerception(depth_perception),
-      m_plnStraightLineY(
-          calcPlnStraightLineY(img_directrix1, img_directrix2, m_pln2img, m_img2pln)
-      ),
       m_directrixArcLength(1.0),
       m_imgDirectrix1Intersector(img_directrix1),
       m_imgDirectrix2Intersector(img_directrix2)
@@ -333,47 +330,6 @@ CylindricalSurfaceDewarper::calcMdlToImgTransform(
     );
 
     return PerspectiveTransform(hmat, hvec);
-}
-
-double
-CylindricalSurfaceDewarper::calcPlnStraightLineY(
-    std::vector<QPointF> const& img_directrix1,
-    std::vector<QPointF> const& img_directrix2,
-    HomographicTransform<2, double> const pln2img,
-    HomographicTransform<2, double> const img2pln)
-{
-    double pln_y_accum = 0;
-    double weight_accum = 0;
-
-    CoupledPolylinesIterator it(img_directrix1, img_directrix2, pln2img, img2pln);
-    QPointF img_curve1_pt;
-    QPointF img_curve2_pt;
-    double pln_x;
-    while (it.next(img_curve1_pt, img_curve2_pt, pln_x))
-    {
-        QLineF const img_generatrix(img_curve1_pt, img_curve2_pt);
-        QPointF const img_line1_pt(toPoint(pln2img(Vector2d(pln_x, 0))));
-        QPointF const img_line2_pt(toPoint(pln2img(Vector2d(pln_x, 1))));
-        ToLineProjector const projector(img_generatrix);
-        double const p1 = 0;
-        double const p2 = projector.projectionScalar(img_line1_pt);
-        double const p3 = projector.projectionScalar(img_line2_pt);
-        double const p4 = 1;
-        double const dp1 = p2 - p1;
-        double const dp2 = p4 - p3;
-        double const weight = fabs(dp1 + dp2);
-        if (weight < 0.01)
-        {
-            continue;
-        }
-
-        double const p0 = (p3 * dp1 + p2 * dp2) / (dp1 + dp2);
-        Vector2d const img_pt(toVec(img_generatrix.pointAt(p0)));
-        pln_y_accum += img2pln(img_pt)[1] * weight;
-        weight_accum += weight;
-    }
-
-    return ((weight_accum == 0) ? 0.5 : (pln_y_accum / weight_accum));
 }
 
 void

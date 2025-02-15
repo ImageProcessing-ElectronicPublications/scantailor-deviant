@@ -122,12 +122,6 @@ private:
         FovParams const& fov_params,
         FrameParams const& frame_params);
 
-    static double calcPlnStraightLineY(
-        std::vector<QPointF> const& img_directrix1,
-        std::vector<QPointF> const& img_directrix2,
-        HomographicTransform<2, double> pln2img,
-        HomographicTransform<2, double> img2pln);
-
     void initArcLengthMapper(
         std::vector<QPointF> const& img_directrix1,
         std::vector<QPointF> const& img_directrix2);
@@ -139,7 +133,6 @@ private:
     double m_Sx;
     double m_Sy;
     double m_depthPerception;
-    double m_plnStraightLineY;
     double m_directrixArcLength;
     ArcLengthMapper m_arcLengthMapper;
     PolylineIntersector m_imgDirectrix1Intersector;
