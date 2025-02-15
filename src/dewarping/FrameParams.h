@@ -24,6 +24,7 @@
 class QDomDocument;
 class QDomElement;
 class QString;
+class QRectF;
 
 namespace dewarping
 {
@@ -86,6 +87,8 @@ public:
     {
         m_centerY = center_y;
     }
+
+    void update(QRectF const& image_rect);
 
     static double minSizeValue()
     {

@@ -234,6 +234,9 @@ Task::process(
         }
     }
 
+    params->perspectiveParams().frameParams().update(data.xform().origRect());
+    params->dewarpingParams().frameParams().update(data.xform().origRect());
+
     switch (params->distortionType().get())
     {
     case DistortionType::NONE:

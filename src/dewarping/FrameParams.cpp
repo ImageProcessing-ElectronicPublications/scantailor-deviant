@@ -22,6 +22,7 @@
 #include <QDomDocument>
 #include <QDomElement>
 #include <QString>
+#include <QRectF>
 
 namespace dewarping
 {
@@ -85,6 +86,18 @@ FrameParams::toXml(QDomDocument& doc, QString const& name) const
    el.setAttribute(str::CENTER_X, m_centerX);
    el.setAttribute(str::CENTER_Y, m_centerY);
    return el;
+}
+
+void
+FrameParams::update(QRectF const& image_rect)
+{
+    if (m_mode == MODE_AUTO)
+    {
+        m_width = image_rect.width();
+        m_height = image_rect.height();
+        m_centerX = image_rect.center().x();
+        m_centerY = image_rect.center().y();
+    }
 }
 
 } // namespace dewarping
