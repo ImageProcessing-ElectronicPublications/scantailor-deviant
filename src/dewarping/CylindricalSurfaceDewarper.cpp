@@ -20,6 +20,7 @@
 #include "Directrix.h"
 #include "ToLineProjector.h"
 #include "NumericTraits.h"
+#include "ToDouble.h"
 #include "STEX_ToVec.h"
 #include "STEX_ToPoint.h"
 #include "foundation/MultipleTargetsSupport.h"
@@ -120,36 +121,54 @@ CylindricalSurfaceDewarper::Generatrix
 CylindricalSurfaceDewarper::mapGeneratrix(double crv_x, State& state) const
 {
     ArcLengthMapper::XSample const sample = m_arcLengthMapper.arcLenToXSample(crv_x, state.m_arcLengthHint);
-    double const& pln_x = sample.x;
 
-    Vector2d const pln_top_pt(pln_x, 0);
-    Vector2d const pln_bottom_pt(pln_x, 1);
-    QPointF const img_top_pt(toPoint(m_pln2img(pln_top_pt)));
-    QPointF const img_bottom_pt(toPoint(m_pln2img(pln_bottom_pt)));
+    Vector3d const mdl_top_pt(sample.x, 0.0, sample.fx);
+    Vector3d const mdl_middle_pt(sample.x, 0.5, sample.fx);
+    Vector3d const mdl_bottom_pt(sample.x, 1.0, sample.fx);
+
+    QPointF const img_top_pt = toPoint(m_mdl2img(mdl_top_pt));
+    QPointF const img_middle_pt = toPoint(m_mdl2img(mdl_middle_pt));
+    QPointF const img_bottom_pt = toPoint(m_mdl2img(mdl_bottom_pt));
+
     QLineF const img_generatrix(img_top_pt, img_bottom_pt);
-    ToLineProjector const projector(img_generatrix);
+
     QPointF const img_directrix1_pt(
         m_imgDirectrix1Intersector.intersect(img_generatrix, state.m_intersectionHint1)
     );
     QPointF const img_directrix2_pt(
         m_imgDirectrix2Intersector.intersect(img_generatrix, state.m_intersectionHint2)
     );
-    double const pln_straight_line_y = (fabs(m_plnStraightLineY - 0.5) > 0.45) ? 0.5 : m_plnStraightLineY;
-    double const img_directrix1_proj(projector.projectionScalar(img_directrix1_pt));
-    double const img_directrix2_proj(projector.projectionScalar(img_directrix2_pt));
-    double const img_directrix12f_proj = (1.0 - pln_straight_line_y) * img_directrix1_proj
-                                       + pln_straight_line_y * img_directrix2_proj;
-    QPointF const img_straight_line_pt(toPoint(m_pln2img(Vector2d(pln_x, img_directrix12f_proj))));
-    double const img_straight_line_proj(projector.projectionScalar(img_straight_line_pt));
 
-    boost::array<std::pair<double, double>, 3> pairs;
-    pairs[0] = std::make_pair(0.0, img_directrix1_proj);
-    pairs[1] = std::make_pair(1.0, img_directrix2_proj);
-    pairs[2] = std::make_pair(pln_straight_line_y, img_straight_line_proj);
+    ToLineProjector const projector(img_generatrix);
 
-    HomographicTransform<1, double> H(threePoint1DHomography(pairs));
+    double const img_middle_proj = projector.projectionScalar(img_middle_pt);
 
-    return Generatrix(img_generatrix, H);
+    boost::array<std::pair<double, double>, 3> img2pln_pairs = {
+        std::make_pair(0.0, 0.0),
+        std::make_pair(img_middle_proj, 0.5),
+        std::make_pair(1.0, 1.0)
+    };
+    HomographicTransform<1, double> img2pln = threePoint1DHomography(img2pln_pairs);
+
+    double const img_directrix1_proj = projector.projectionScalar(img_directrix1_pt);
+    double const img_directrix2_proj = projector.projectionScalar(img_directrix2_pt);
+
+    double const pln_directrix1_proj = toDouble(img2pln(toVec(img_directrix1_proj)));
+    double const pln_directrix2_proj = toDouble(img2pln(toVec(img_directrix2_proj)));
+
+    double const pln_middle_corrected_proj = 0.5 * (pln_directrix1_proj + pln_directrix2_proj);
+    Vector3d const mdl_middle_corrected_pt(sample.x, pln_middle_corrected_proj, sample.fx);
+    QPointF const img_middle_corrected_pt = toPoint(m_mdl2img(mdl_middle_corrected_pt));
+    double const img_middle_corrected_proj = projector.projectionScalar(img_middle_corrected_pt);
+
+    boost::array<std::pair<double, double>, 3> pln2img_pairs = {
+        std::make_pair(0.0, img_directrix1_proj),
+        std::make_pair(pln_middle_corrected_proj, img_middle_corrected_proj),
+        std::make_pair(1.0, img_directrix2_proj)
+    };
+    HomographicTransform<1, double> pln2img = threePoint1DHomography(pln2img_pairs);
+
+    return Generatrix(img_generatrix, pln2img);
 }
 
 QPointF
@@ -164,39 +183,57 @@ CylindricalSurfaceDewarper::mapToDewarpedSpace(QPointF const& img_pt, State& sta
 {
     double const pln_x = m_img2pln(toVec(img_pt))[0];
     ArcLengthMapper::ArcLenSample const sample = m_arcLengthMapper.xToArcLenSample(pln_x, state.m_arcLengthHint);
-    double const crv_x = sample.arcLen;
 
-    Vector2d const pln_top_pt(pln_x, 0);
-    Vector2d const pln_bottom_pt(pln_x, 1);
-    QPointF const img_top_pt(toPoint(m_pln2img(pln_top_pt)));
-    QPointF const img_bottom_pt(toPoint(m_pln2img(pln_bottom_pt)));
+    Vector3d const mdl_top_pt(pln_x, 0.0, sample.fx);
+    Vector3d const mdl_middle_pt(pln_x, 0.5, sample.fx);
+    Vector3d const mdl_bottom_pt(pln_x, 1.0, sample.fx);
+
+    QPointF const img_top_pt = toPoint(m_mdl2img(mdl_top_pt));
+    QPointF const img_middle_pt = toPoint(m_mdl2img(mdl_middle_pt));
+    QPointF const img_bottom_pt = toPoint(m_mdl2img(mdl_bottom_pt));
+
     QLineF const img_generatrix(img_top_pt, img_bottom_pt);
-    ToLineProjector const projector(img_generatrix);
+
     QPointF const img_directrix1_pt(
         m_imgDirectrix1Intersector.intersect(img_generatrix, state.m_intersectionHint1)
     );
     QPointF const img_directrix2_pt(
         m_imgDirectrix2Intersector.intersect(img_generatrix, state.m_intersectionHint2)
     );
-    double const pln_straight_line_y = (fabs(m_plnStraightLineY - 0.5) > 0.45) ? 0.5 : m_plnStraightLineY;
-    double const img_directrix1_proj(projector.projectionScalar(img_directrix1_pt));
-    double const img_directrix2_proj(projector.projectionScalar(img_directrix2_pt));
-    double const img_directrix12f_proj = (1.0 - pln_straight_line_y) * img_directrix1_proj
-                                       + pln_straight_line_y * img_directrix2_proj;
-    QPointF const img_straight_line_pt(toPoint(m_pln2img(Vector2d(pln_x, img_directrix12f_proj))));
-    double const img_straight_line_proj(projector.projectionScalar(img_straight_line_pt));
 
-    boost::array<std::pair<double, double>, 3> pairs;
-    pairs[0] = std::make_pair(img_directrix1_proj, 0.0);
-    pairs[1] = std::make_pair(img_directrix2_proj, 1.0);
-    pairs[2] = std::make_pair(img_straight_line_proj, pln_straight_line_y);
+    ToLineProjector const projector(img_generatrix);
 
-    HomographicTransform<1, double> const H(threePoint1DHomography(pairs));
+    double const img_middle_proj = projector.projectionScalar(img_middle_pt);
+
+    boost::array<std::pair<double, double>, 3> img2pln_pairs = {
+        std::make_pair(0.0, 0.0),
+        std::make_pair(img_middle_proj, 0.5),
+        std::make_pair(1.0, 1.0)
+    };
+    HomographicTransform<1, double> img2pln = threePoint1DHomography(img2pln_pairs);
+
+    double const img_directrix1_proj = projector.projectionScalar(img_directrix1_pt);
+    double const img_directrix2_proj = projector.projectionScalar(img_directrix2_pt);
+
+    double const pln_directrix1_proj = toDouble(img2pln(toVec(img_directrix1_proj)));
+    double const pln_directrix2_proj = toDouble(img2pln(toVec(img_directrix2_proj)));
+
+    double const pln_middle_corrected_proj = 0.5 * (pln_directrix1_proj + pln_directrix2_proj);
+    Vector3d const mdl_middle_corrected_pt(pln_x, pln_middle_corrected_proj, sample.fx);
+    QPointF const img_middle_corrected_pt = toPoint(m_mdl2img(mdl_middle_corrected_pt));
+    double const img_middle_corrected_proj = projector.projectionScalar(img_middle_corrected_pt);
+
+    boost::array<std::pair<double, double>, 3> img2pln_pairs_corrected = {
+        std::make_pair(img_directrix1_proj, 0.0),
+        std::make_pair(img_middle_corrected_proj, pln_middle_corrected_proj),
+        std::make_pair(img_directrix2_proj, 1.0)
+    };
+    HomographicTransform<1, double> img2pln_corrected = threePoint1DHomography(img2pln_pairs_corrected);
 
     double const img_pt_proj(projector.projectionScalar(img_pt));
-    double const crv_y = H(img_pt_proj);
+    double const crv_y = img2pln_corrected(img_pt_proj);
 
-    return QPointF(crv_x, crv_y);
+    return QPointF(sample.arcLen, crv_y);
 }
 
 QPointF
