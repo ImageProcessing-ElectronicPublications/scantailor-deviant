@@ -26,7 +26,6 @@
 #include "dewarping/BendParams.h"
 #include "dewarping/SizeParams.h"
 #include "dewarping/MarginsParams.h"
-#include "dewarping/DepthPerception.h"
 
 class QDomDocument;
 class QDomElement;
@@ -70,16 +69,6 @@ public:
     void setDistortionModel(dewarping::DistortionModel const& distortion_model)
     {
         m_distortionModel = distortion_model;
-    }
-
-    dewarping::DepthPerception const& depthPerception() const
-    {
-        return m_depthPerception;
-    }
-
-    void setDepthPerception(dewarping::DepthPerception const& depth_perception)
-    {
-        m_depthPerception = depth_perception;
     }
 
     dewarping::FovParams& fovParams()
@@ -158,7 +147,6 @@ public:
     }
 private:
     dewarping::DistortionModel m_distortionModel;
-    dewarping::DepthPerception m_depthPerception;
     dewarping::FovParams m_fovParams;
     dewarping::FrameParams m_frameParams;
     dewarping::BendParams m_bendParams;

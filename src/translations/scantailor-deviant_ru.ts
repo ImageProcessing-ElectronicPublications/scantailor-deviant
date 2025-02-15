@@ -382,11 +382,6 @@ Perspective correction.</source>
         <translation>Угол поворота</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="323"/>
-        <source>Depth perception</source>
-        <translation>Восприятие глубины</translation>
-    </message>
-    <message>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="385"/>
         <source>FOV</source>
         <translation>Поле зрения</translation>
@@ -3984,11 +3979,6 @@ Continue?</source>
         <location filename="../core/filters/deskew/OptionsWidget.cpp" line="109"/>
         <source>Apply Distortion Type</source>
         <translation>Применить тип искажения</translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="161"/>
-        <source>Apply Depth Perception</source>
-        <translation>Применить восприятие глубины</translation>
     </message>
 </context>
 <context>

@@ -35,7 +35,6 @@ DewarpingView::DewarpingView(
     QImage const& image, QImage const& downscaled_image,
     ImageTransformation const& xform,
     dewarping::DistortionModel const& distortion_model,
-    dewarping::DepthPerception const& depth_perception,
     dewarping::FovParams const& fov_params,
     dewarping::FrameParams const& frame_params,
     dewarping::BendParams const& bend_params,
@@ -49,7 +48,6 @@ DewarpingView::DewarpingView(
         Margins(5.0, 5.0, 5.0, 5.0)
       )
     , m_distortionModel(distortion_model)
-    , m_depthPerception(depth_perception)
     , m_fovParams(fov_params)
     , m_frameParams(frame_params)
     , m_bendParams(bend_params)
@@ -232,13 +230,6 @@ DewarpingView::curvatureAwareControlPointPositioning(
 }
 
 void
-DewarpingView::depthPerceptionChanged(double val)
-{
-    m_depthPerception.setValue(val);
-    update();
-}
-
-void
 DewarpingView::fovParamsChanged(dewarping::FovParams const& fov_params)
 {
     m_fovParams = fov_params;
@@ -288,7 +279,6 @@ DewarpingView::onPaint(QPainter& painter, InteractionState const& interaction)
             Utils::buildWarpVisualization(
                 m_distortionModel.topCurve().polyline(),
                 m_distortionModel.bottomCurve().polyline(),
-                m_depthPerception,
                 m_fovParams, m_frameParams, m_bendParams,
                 num_horizontal_curves, num_vertical_lines,
                 horizontal_curves, vertical_lines

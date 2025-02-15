@@ -31,11 +31,6 @@
 
 class AbstractRelinker;
 
-namespace dewarping
-{
-    class DepthPerception;
-}
-
 namespace deskew
 {
 
@@ -62,8 +57,6 @@ public:
     void setDistortionType(
         std::set<PageId> const& pages, DistortionType const& distortion_type);
 
-    void setDepthPerception(
-        std::set<PageId> const& pages, dewarping::DepthPerception const& depth_perception);
 private:
     typedef std::map<PageId, Params> PerPageParams;
 

@@ -7,7 +7,6 @@ SET(
         BendParams.cpp BendParams.h
         Curve.cpp Curve.h
         CylindricalSurfaceDewarper.cpp CylindricalSurfaceDewarper.h
-        DepthPerception.cpp DepthPerception.h
         DetectVerticalBounds.cpp DetectVerticalBounds.h
         DewarpingImageTransform.cpp DewarpingImageTransform.h
         Directrix.cpp Directrix.h

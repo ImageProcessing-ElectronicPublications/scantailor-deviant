@@ -117,26 +117,4 @@ Settings::setDistortionType(
     }
 }
 
-void
-Settings::setDepthPerception(
-    std::set<PageId> const& pages, dewarping::DepthPerception const& depth_perception)
-{
-    QMutexLocker const locker(&m_mutex);
-
-    for (PageId const& page_id : pages)
-    {
-        PerPageParams::iterator it = m_perPageParams.find(page_id);
-        if (it != m_perPageParams.end())
-        {
-            it->second.dewarpingParams().setDepthPerception(depth_perception);
-        }
-        else
-        {
-            Params params((Dependencies()));
-            params.dewarpingParams().setDepthPerception(depth_perception);
-            Utils::mapSetValue(m_perPageParams, page_id, params);
-        }
-    }
-}
-
 } // namespace deskew

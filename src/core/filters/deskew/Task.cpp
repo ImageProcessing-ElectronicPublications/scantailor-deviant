@@ -461,7 +461,6 @@ Task::processPerspectiveDistortion(
             orig_image_transform.origSize(),
             orig_image_transform.origCropArea(),
             top_curve, bottom_curve,
-            dewarping::DepthPerception(), // Doesn't matter when curves are flat.
             params.perspectiveParams().fovParams(),
             params.perspectiveParams().frameParams(),
             BendParams(MODE_MANUAL, 0.0, 0.0, 0.0)
@@ -587,9 +586,6 @@ Task::processWarpDistortion(
 
         params.dewarpingParams().setDistortionModel(distortion_model);
 
-        // Note that we don't reset depth perception, as it's a manual parameter
-        // that's usually the same for all pictures in a project.
-
         params.dewarpingParams().setMode(MODE_AUTO);
 
         m_ptrSettings->setPageParams(m_pageId, params);
@@ -602,7 +598,6 @@ Task::processWarpDistortion(
             orig_image_transform.origCropArea(),
             params.dewarpingParams().distortionModel().topCurve().polyline(),
             params.dewarpingParams().distortionModel().bottomCurve().polyline(),
-            params.dewarpingParams().depthPerception(),
             params.dewarpingParams().fovParams(),
             params.dewarpingParams().frameParams(),
             params.dewarpingParams().bendParams()
@@ -854,10 +849,6 @@ Task::PerspectiveUiUpdater::updateUI(FilterUiInterface* ui)
 
     DewarpingView* view = new DewarpingView(
         m_image, m_downscaledImage, m_xform, distortion_model,
-
-        // Doesn't matter when curves are flat.
-        DepthPerception(),
-
         m_pageParams.perspectiveParams().fovParams(),
         m_pageParams.perspectiveParams().frameParams(),
         dewarping::BendParams(MODE_MANUAL, 0.0, 0.0, 0.0),
@@ -922,7 +913,6 @@ Task::DewarpingUiUpdater::updateUI(FilterUiInterface* ui)
     DewarpingView* view = new DewarpingView(
         m_image, m_downscaledImage, m_xform,
         m_pageParams.dewarpingParams().distortionModel(),
-        m_pageParams.dewarpingParams().depthPerception(),
         m_pageParams.dewarpingParams().fovParams(),
         m_pageParams.dewarpingParams().frameParams(),
         m_pageParams.dewarpingParams().bendParams(),
@@ -933,10 +923,6 @@ Task::DewarpingUiUpdater::updateUI(FilterUiInterface* ui)
     QObject::connect(
         view, SIGNAL(distortionModelChanged(dewarping::DistortionModel const&)),
         opt_widget, SLOT(manualDistortionModelSetExternally(dewarping::DistortionModel const&))
-    );
-    QObject::connect(
-        opt_widget, SIGNAL(depthPerceptionSetByUser(double)),
-        view, SLOT(depthPerceptionChanged(double))
     );
     QObject::connect(
         opt_widget, SIGNAL(fovParamsSetByUser(dewarping::FovParams const&)),

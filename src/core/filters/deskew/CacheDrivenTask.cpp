@@ -113,7 +113,6 @@ CacheDrivenTask::process(
                     ),
                     xform.preCropArea(),
                     top_curve, bottom_curve,
-                    dewarping::DepthPerception(),
                     params->perspectiveParams().fovParams(),
                     params->perspectiveParams().frameParams(),
                     BendParams(MODE_MANUAL, 0.0, 0.0, 0.0)
@@ -143,7 +142,6 @@ CacheDrivenTask::process(
                     xform.preCropArea(),
                     params->dewarpingParams().distortionModel().topCurve().polyline(),
                     params->dewarpingParams().distortionModel().bottomCurve().polyline(),
-                    params->dewarpingParams().depthPerception(),
                     params->dewarpingParams().fovParams(),
                     params->dewarpingParams().frameParams(),
                     params->dewarpingParams().bendParams()
@@ -221,7 +219,6 @@ CacheDrivenTask::process(
                         thumb_col->maxLogicalThumbSize(),
                         page_info.imageId(), QString(),
                         xform, top_curve, bottom_curve,
-                        dewarping::DepthPerception(),
                         params->perspectiveParams().fovParams(),
                         params->perspectiveParams().frameParams(),
                         dewarping::BendParams(MODE_MANUAL, 0.0, 0.0, 0.0)
@@ -238,7 +235,6 @@ CacheDrivenTask::process(
                         page_info.imageId(), QString(), xform,
                         params->dewarpingParams().distortionModel().topCurve().polyline(),
                         params->dewarpingParams().distortionModel().bottomCurve().polyline(),
-                        params->dewarpingParams().depthPerception(),
                         params->dewarpingParams().fovParams(),
                         params->dewarpingParams().frameParams(),
                         params->dewarpingParams().bendParams()

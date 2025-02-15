@@ -156,26 +156,6 @@ OptionsWidget::OptionsWidget(IntrusivePtr<Settings> const& settings,
         this, SLOT(angleSpinBoxValueChanged(double))
     );
 
-    // Depth perception UI.
-    ui.depthPerceptionSlider->setMinimum(
-        depthPerceptionToSlider(DepthPerception::minValue())
-    );
-    ui.depthPerceptionSlider->setMaximum(
-        depthPerceptionToSlider(DepthPerception::maxValue())
-    );
-    connect(
-        ui.depthPerceptionSlider, SIGNAL(valueChanged(int)),
-        SLOT(depthPerceptionSliderMoved(int))
-    );
-    connect(
-        ui.depthPerceptionSlider, SIGNAL(sliderReleased()),
-        SLOT(depthPerceptionSliderReleased())
-    );
-    connect(
-        ui.applyDepthPerceptionBtn, SIGNAL(clicked()),
-        SLOT(showApplyDepthPerceptionDialog())
-    );
-
     // Distortion type UI.
     connect(
         ui.noDistortionButton, SIGNAL(toggled(bool)),
@@ -255,57 +235,6 @@ OptionsWidget::distortionTypeAppliedToAllPages(std::set<PageId> const& pages)
 
     m_ptrSettings->setDistortionType(pages, m_pageParams.distortionType());
 
-    emit invalidateAllThumbnails();
-}
-
-void
-OptionsWidget::showApplyDepthPerceptionDialog()
-{
-    ApplyToDialog* dialog = new ApplyToDialog(
-        this, m_pageId, m_pageSelectionAccessor, PageView::IMAGE_VIEW
-    );
-
-    dialog->setWindowTitle(tr("Apply Depth Perception"));
-
-    connect(dialog, &ApplyToDialog::accepted, this, [=]() {
-        std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
-        std::set<PageId> pages(vec.begin(), vec.end());
-        if (!dialog->getPageRangeSelectorWidget().allPagesSelected()) {
-            depthPerceptionAppliedTo(pages);
-        }
-        else {
-            depthPerceptionAppliedToAllPages(pages);
-        }
-        });
-
-    dialog->show();
-}
-
-void
-OptionsWidget::depthPerceptionAppliedTo(std::set<PageId> const& pages)
-{
-    if (pages.empty())
-    {
-        return;
-    }
-
-    m_ptrSettings->setDepthPerception(pages, m_pageParams.dewarpingParams().depthPerception());
-
-    for (PageId const& page_id : pages)
-    {
-        emit invalidateThumbnail(page_id);
-    }
-}
-
-void
-OptionsWidget::depthPerceptionAppliedToAllPages(std::set<PageId> const& pages)
-{
-    if (pages.empty())
-    {
-        return;
-    }
-
-    m_ptrSettings->setDepthPerception(pages, m_pageParams.dewarpingParams().depthPerception());
     emit invalidateAllThumbnails();
 }
 
@@ -421,11 +350,6 @@ OptionsWidget::postUpdateUI(Params const& page_params)
     {
         double const angle = page_params.rotationParams().compensationAngleDeg();
         setSpinBoxKnownState(degreesToSpinBox(angle));
-    }
-    else if (page_params.distortionType() == DistortionType::WARP)
-    {
-        double const depth_perception = page_params.dewarpingParams().depthPerception().value();
-        ui.depthPerceptionSlider->setValue(depthPerceptionToSlider(depth_perception));
     }
 }
 
@@ -553,27 +477,6 @@ OptionsWidget::distortionAutoManualModeChanged(bool const auto_mode)
     {
         emit reloadRequested();
     }
-}
-
-void
-OptionsWidget::depthPerceptionSliderMoved(int value)
-{
-    double const depth_perception = sliderToDepthPerception(value);
-    m_pageParams.dewarpingParams().setDepthPerception(depth_perception);
-    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
-
-    emit depthPerceptionSetByUser(depth_perception);
-
-    if (!ui.depthPerceptionSlider->isSliderDown())
-    {
-        emit invalidateThumbnail(m_pageId);
-    }
-}
-
-void
-OptionsWidget::depthPerceptionSliderReleased()
-{
-    emit invalidateThumbnail(m_pageId);
 }
 
 void
@@ -1226,7 +1129,6 @@ OptionsWidget::disableDistortionDependentUiElements()
 {
     ui.autoManualPanel->setDisabled(true);
     ui.rotationPanel->setDisabled(true);
-    ui.depthPerceptionPanel->setDisabled(true);
     ui.fovPanel->setDisabled(true);
     ui.framePanel->setDisabled(true);
     ui.bendPanel->setDisabled(true);
@@ -1239,7 +1141,6 @@ OptionsWidget::enableDistortionDependentUiElements()
 {
     ui.autoManualPanel->setEnabled(true);
     ui.rotationPanel->setEnabled(true);
-    ui.depthPerceptionPanel->setEnabled(true);
     ui.fovPanel->setEnabled(true);
     ui.framePanel->setEnabled(true);
     ui.bendPanel->setEnabled(true);
@@ -1256,7 +1157,6 @@ OptionsWidget::setupUiForDistortionType(DistortionType::Type type)
 
     ui.autoManualPanel->setVisible(type != DistortionType::NONE);
     ui.rotationPanel->setVisible(type == DistortionType::ROTATION);
-    ui.depthPerceptionPanel->setVisible(type == DistortionType::WARP);
     ui.fovPanel->setVisible(type == DistortionType::PERSPECTIVE || type == DistortionType::WARP);
     ui.framePanel->setVisible(type == DistortionType::PERSPECTIVE || type == DistortionType::WARP);
     ui.bendPanel->setVisible(type == DistortionType::WARP);
@@ -1457,18 +1357,6 @@ OptionsWidget::degreesToSpinBox(double const degrees)
 {
     // See above.
     return -degrees;
-}
-
-int
-OptionsWidget::depthPerceptionToSlider(double depth_perception)
-{
-    return qRound(depth_perception * 10);
-}
-
-double
-OptionsWidget::sliderToDepthPerception(int slider_value)
-{
-    return slider_value / 10.0;
 }
 
 int

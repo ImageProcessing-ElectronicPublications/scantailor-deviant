@@ -105,7 +105,6 @@ Params::takeManualSettingsFrom(Params const& other)
     // These settings are specified manually even in automatic mode,
     // so we want to preserve them after a dependency mismatch.
     m_distortionType = other.distortionType();
-    m_dewarpingParams.setDepthPerception(other.dewarpingParams().depthPerception());
 }
 
 } // namespace deskew

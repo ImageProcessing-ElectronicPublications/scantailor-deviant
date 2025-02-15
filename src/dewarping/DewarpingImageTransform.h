@@ -20,7 +20,6 @@
 #define DEWARPING_DEWARPING_IMAGE_TRANSFORM_H_
 
 #include "CylindricalSurfaceDewarper.h"
-#include "DepthPerception.h"
 #include "imageproc/AbstractImageTransform.h"
 #include <QSize>
 #include <QPolygonF>
@@ -56,7 +55,6 @@ public:
         QPolygonF const& orig_crop_area,
         std::vector<QPointF> const& top_curve,
         std::vector<QPointF> const& bottom_curve,
-        DepthPerception const& depth_perception,
         FovParams const& fov_params,
         FrameParams const& frame_params,
         BendParams const& bend_params);
@@ -114,7 +112,6 @@ private:
     QPolygonF m_origCropArea;
     std::vector<QPointF> m_topPolyline;
     std::vector<QPointF> m_bottomPolyline;
-    DepthPerception m_depthPerception;
     CylindricalSurfaceDewarper m_dewarper;
 
     /**

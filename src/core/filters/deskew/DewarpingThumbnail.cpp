@@ -35,7 +35,6 @@ DewarpingThumbnail::DewarpingThumbnail(
     QString const& version,	ImageTransformation const& xform,
 	std::vector<QPointF> const& top_curve,
 	std::vector<QPointF> const& bottom_curve,
-	dewarping::DepthPerception const& depth_perception,
     dewarping::FovParams const& fov_params,
     dewarping::FrameParams const& frame_params,
     dewarping::BendParams const& bend_params)
@@ -45,7 +44,6 @@ DewarpingThumbnail::DewarpingThumbnail(
       )
     , m_topCurve(top_curve)
     , m_bottomCurve(bottom_curve)
-    , m_depthPerception(depth_perception)
     , m_fovParams(fov_params)
     , m_frameParams(frame_params)
     , m_bendParams(bend_params)
@@ -83,7 +81,7 @@ DewarpingThumbnail::paintOverImage(
     try
     {
         Utils::buildWarpVisualization(
-            m_topCurve, m_bottomCurve, m_depthPerception,
+            m_topCurve, m_bottomCurve,
             m_fovParams, m_frameParams, m_bendParams,
             num_horizontal_curves, num_vertical_lines,
             horizontal_curves, vertical_lines

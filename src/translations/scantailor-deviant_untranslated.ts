@@ -374,11 +374,6 @@ Perspective correction.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="323"/>
-        <source>Depth perception</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="385"/>
         <source>FOV</source>
         <translation type="unfinished"></translation>
@@ -3870,11 +3865,6 @@ Continue?</source>
     <message>
         <location filename="../core/filters/deskew/OptionsWidget.cpp" line="109"/>
         <source>Apply Distortion Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="161"/>
-        <source>Apply Depth Perception</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

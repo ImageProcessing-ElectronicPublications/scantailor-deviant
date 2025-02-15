@@ -236,10 +236,6 @@ public:
     {
         return contains("match-layout-tolerance") && !m_options["match-layout-tolerance"].isEmpty();
     }
-    bool hasDepthPerception() const
-    {
-        return contains("depth-perception") && !m_options["depth-perception"].isEmpty();
-    }
     bool hasTiffCompressionBW() const {
         return contains("tiff-compression") && !m_options["tiff-compression"].isEmpty();
     }

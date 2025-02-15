@@ -64,16 +64,9 @@ public:
             : imgLine(img_line), pln2img(H) {}
     };
 
-    /**
-     * \param depth_perception The distance from the camera to the plane formed
-     *        by two outer generatrixes, in some unknown units :)
-     *        This model assumes that plane is perpendicular to the camera direction.
-     *        In practice, just use values between 1 and 3.
-     */
     CylindricalSurfaceDewarper(
         std::vector<QPointF> const& img_directrix1,
         std::vector<QPointF> const& img_directrix2,
-        double depth_perception,
         FovParams const& fov_params,
         FrameParams const& frame_params,
         BendParams const& bend_params);
@@ -130,7 +123,6 @@ private:
     double m_fov;
     double m_Sx;
     double m_Sy;
-    double m_depthPerception;
     double m_directrixArcLength;
     ArcLengthMapper m_arcLengthMapper;
     PolylineIntersector m_imgDirectrix1Intersector;

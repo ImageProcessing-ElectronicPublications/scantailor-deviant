@@ -26,7 +26,6 @@
 #include "DragHandler.h"
 #include "ZoomHandler.h"
 #include "dewarping/DistortionModel.h"
-#include "dewarping/DepthPerception.h"
 #include "dewarping/FovParams.h"
 #include "dewarping/FrameParams.h"
 #include "dewarping/BendParams.h"
@@ -47,7 +46,6 @@ public:
         QImage const& image, QImage const& downscaled_image,
         ImageTransformation const& xform,
         dewarping::DistortionModel const& distortion_model,
-        dewarping::DepthPerception const& depth_perception,
         dewarping::FovParams const& fov_params,
         dewarping::FrameParams const& frame_params,
         dewarping::BendParams const& bend_params,
@@ -57,8 +55,6 @@ public:
 signals:
     void distortionModelChanged(dewarping::DistortionModel const& model);
 public slots:
-    void depthPerceptionChanged(double val);
-
     void fovParamsChanged(dewarping::FovParams const& fov_params);
 
     void frameParamsChanged(dewarping::FrameParams const& frame_params);
@@ -87,7 +83,6 @@ private:
     QPointF widgetToSource(QPointF const& pt) const;
 
     dewarping::DistortionModel m_distortionModel;
-    dewarping::DepthPerception m_depthPerception;
     dewarping::FovParams m_fovParams;
     dewarping::FrameParams m_frameParams;
     dewarping::BendParams m_bendParams;

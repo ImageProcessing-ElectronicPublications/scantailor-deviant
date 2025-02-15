@@ -487,10 +487,8 @@ try
         return;
     }
 
-    double const depth_perception = 2.0; // Doesn't matter much here.
     CylindricalSurfaceDewarper const dewarper(
         top_curve->extendedPolyline, bottom_curve->extendedPolyline,
-        depth_perception,
         fov_params, frame_params, bend_params
     );
 
