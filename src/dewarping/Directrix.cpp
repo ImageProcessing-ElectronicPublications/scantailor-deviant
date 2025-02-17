@@ -83,7 +83,7 @@ Place::calcQuality(QPointF const& img_pt_00, QPointF const& img_pt_01,
         img_line2.dx() * img_normal.dx() +
         img_line2.dy() * img_normal.dy();
 
-    return std::min(projection1, projection2);
+    return std::abs(std::min(projection1, projection2) / img_line.length());
 }
 
 Plane
