@@ -20,6 +20,7 @@
 #define DEWARPING_DIRECTRIX_H_
 
 #include <QPointF>
+#include <QLineF>
 #include <vector>
 
 class PerspectiveTransform;
@@ -70,6 +71,9 @@ private:
     double m_mdl_y;
     QPointF m_img_pt_01;
     QPointF m_img_pt_11;
+    QLineF m_img_line;
+    QLineF m_img_normal;
+    double m_img_line_length;
     double m_quality;
 };
 
