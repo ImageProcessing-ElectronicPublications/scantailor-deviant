@@ -85,6 +85,11 @@ public:
         return m_fov;
     }
 
+    double bend() const
+    {
+        return m_bend;
+    }
+
     Generatrix mapGeneratrix(double crv_x, State& state) const;
 
     /**

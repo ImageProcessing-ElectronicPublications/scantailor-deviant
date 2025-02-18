@@ -606,6 +606,8 @@ OptionsWidget::fovSpinBoxValueChanged(double fov_new)
 
     ui.fovSlider->setValue(fovToSlider(fov_new));
 
+    updateAutoValuesOnPanels();
+
     emit fovParamsSetByUser(fov_params);
     emit invalidateThumbnail(m_pageId);
 }
@@ -789,6 +791,8 @@ OptionsWidget::bendAutoManualModeChanged(bool auto_mode)
 
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
 
+    updateAutoValuesOnPanels();
+
     if (auto_mode)
     {
         emit reloadRequested();
@@ -850,6 +854,8 @@ OptionsWidget::bendMinSpinBoxValueChanged(double bend_min_new)
     ui.bendSpinBox->setMinimum(bend_min_new);
     ui.bendMaxSpinBox->setMinimum(bend_min_new);
 
+    updateAutoValuesOnPanels();
+
     emit bendParamsSetByUser(bend_params);
     emit invalidateThumbnail(m_pageId);
 }
@@ -869,6 +875,8 @@ OptionsWidget::bendSpinBoxValueChanged(double bend_new)
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
 
     ui.bendSlider->setValue(bendToSlider(bend_new));
+
+    updateAutoValuesOnPanels();
 
     emit bendParamsSetByUser(bend_params);
     emit invalidateThumbnail(m_pageId);
@@ -896,6 +904,8 @@ OptionsWidget::bendMaxSpinBoxValueChanged(double bend_max_new)
     ui.bendSlider->setMaximum(bendToSlider(bend_max_new));
     ui.bendSpinBox->setMaximum(bend_max_new);
     ui.bendMinSpinBox->setMaximum(bend_max_new);
+
+    updateAutoValuesOnPanels();
 
     emit bendParamsSetByUser(bend_params);
     emit invalidateThumbnail(m_pageId);
@@ -1336,7 +1346,10 @@ try
     switch (m_pageParams.distortionType())
     {
     case DistortionType::PERSPECTIVE:
-        if (m_pageParams.perspectiveParams().fovParams().mode() == MODE_AUTO)
+    {
+        bool updateFov = m_pageParams.perspectiveParams().fovParams().mode() == MODE_AUTO;
+
+        if (updateFov)
         {
             std::vector<QPointF> top_curve = {
                 m_pageParams.perspectiveParams().corner(PerspectiveParams::TOP_LEFT),
@@ -1357,8 +1370,13 @@ try
             ui.fovSlider->setValue(fovToSlider(dewarper.fov()));
         }
         break;
+    }
     case DistortionType::WARP:
-        if (m_pageParams.dewarpingParams().fovParams().mode() == MODE_AUTO)
+    {
+        bool updateFov = m_pageParams.dewarpingParams().fovParams().mode() == MODE_AUTO;
+        bool updateBend = m_pageParams.dewarpingParams().bendParams().mode() == MODE_AUTO;
+
+        if (updateFov || updateBend)
         {
             dewarping::CylindricalSurfaceDewarper dewarper(
                 m_pageParams.dewarpingParams().distortionModel().topCurve().polyline(),
@@ -1368,16 +1386,59 @@ try
                 m_pageParams.dewarpingParams().bendParams()
             );
 
-            ui.fovSpinBox->setValue(dewarper.fov());
-            ui.fovSlider->setValue(fovToSlider(dewarper.fov()));
+            if (updateFov)
+            {
+                ui.fovSpinBox->setValue(dewarper.fov());
+                ui.fovSlider->setValue(fovToSlider(dewarper.fov()));
+            }
+
+            if (updateBend)
+            {
+                ui.bendSpinBox->setValue(dewarper.bend());
+                ui.bendSlider->setValue(bendToSlider(dewarper.bend()));
+
+            }
         }
         break;
+    }
     }
 }
 catch (std::runtime_error const&)
 {
-    ui.fovSpinBox->setSpecialValueText("?");
-    ui.fovSpinBox->setValue(ui.fovSpinBox->minimum());
+    switch (m_pageParams.distortionType())
+    {
+    case DistortionType::PERSPECTIVE:
+    {
+        bool updateFov = m_pageParams.perspectiveParams().fovParams().mode() == MODE_AUTO;
+
+        if (updateFov)
+        {
+            ui.fovSpinBox->setSpecialValueText("?");
+            ui.fovSpinBox->setValue(ui.fovSpinBox->minimum());
+        }
+
+        break;
+    }
+    case DistortionType::WARP:
+    {
+        bool updateFov = m_pageParams.dewarpingParams().fovParams().mode() == MODE_AUTO;
+        bool updateBend = m_pageParams.dewarpingParams().bendParams().mode() == MODE_AUTO;
+
+        if (updateFov)
+        {
+            ui.fovSpinBox->setSpecialValueText("?");
+            ui.fovSpinBox->setValue(ui.fovSpinBox->minimum());
+        }
+
+        if (updateBend)
+        {
+            ui.bendSpinBox->setSpecialValueText("?");
+            ui.bendSpinBox->setValue(ui.bendSpinBox->minimum());
+        }
+
+        break;
+    }
+    }
 }
 
 void
