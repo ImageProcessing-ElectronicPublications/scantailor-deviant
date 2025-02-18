@@ -676,6 +676,8 @@ OptionsWidget::frameAutoManualModeChanged(bool auto_mode)
 
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
 
+    updateAutoValuesOnPanels();
+
     if (auto_mode)
     {
         emit reloadRequested();
@@ -699,6 +701,8 @@ OptionsWidget::frameWidthSpinBoxValueChanged(double width_new)
 
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
 
+    updateAutoValuesOnPanels();
+
     emit frameParamsSetByUser(frame_params);
     emit invalidateThumbnail(m_pageId);
 }
@@ -719,6 +723,8 @@ OptionsWidget::frameHeightSpinBoxValueChanged(double height_new)
     frame_params.setHeight(height_new);
 
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    updateAutoValuesOnPanels();
 
     emit frameParamsSetByUser(frame_params);
     emit invalidateThumbnail(m_pageId);
@@ -741,6 +747,8 @@ OptionsWidget::frameCenterXSpinBoxValueChanged(double center_x_new)
 
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
 
+    updateAutoValuesOnPanels();
+
     emit frameParamsSetByUser(frame_params);
     emit invalidateThumbnail(m_pageId);
 }
@@ -761,6 +769,8 @@ OptionsWidget::frameCenterYSpinBoxValueChanged(double center_y_new)
     frame_params.setCenterY(center_y_new);
 
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    updateAutoValuesOnPanels();
 
     emit frameParamsSetByUser(frame_params);
     emit invalidateThumbnail(m_pageId);
