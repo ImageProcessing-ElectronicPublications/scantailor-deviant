@@ -76,7 +76,7 @@ CylindricalSurfaceDewarper::CylindricalSurfaceDewarper(
       m_imgDirectrix1Intersector(img_directrix1),
       m_imgDirectrix2Intersector(img_directrix2)
 {
-    initArcLengthMapper(img_directrix1, img_directrix2);
+    initArcLengthMapper(img_directrix1, img_directrix2, bend_params);
 }
 
 CylindricalSurfaceDewarper::Generatrix
@@ -300,9 +300,9 @@ CylindricalSurfaceDewarper::calcMdlToImgTransform(
 void
 CylindricalSurfaceDewarper::initArcLengthMapper(
     std::vector<QPointF> const& img_directrix1,
-    std::vector<QPointF> const& img_directrix2)
+    std::vector<QPointF> const& img_directrix2,
+    BendParams const& bend_params)
 {
-    // TODO use bend params
     Directrix::Place const place1(m_mdl2img, img_directrix1, 0.0);
     Directrix::Place const place2(m_mdl2img, img_directrix2, 1.0);
     Directrix::Place const& best_place =
@@ -318,17 +318,58 @@ CylindricalSurfaceDewarper::initArcLengthMapper(
 
     Directrix::Profile profile(plane);
 
+    std::vector<QPointF> points;
+    points.reserve(profile.points().size());
+    
+    double y_min = NumericTraits<double>::max();
+    double y_max = NumericTraits<double>::min();
     double prev_x = NumericTraits<double>::min();
     for (QPointF const& point : profile.points())
     {
-        if (point.x() <= prev_x)
+        if (point.x() > prev_x)
         {
-            continue;
+            y_min = std::min(y_min, point.y());
+            y_max = std::max(y_max, point.y());
+
+            points.push_back(point);
+
+            prev_x = point.x();
         }
+    }
 
-        m_arcLengthMapper.addSample(point.x(), point.y());
+    double const src_bend =
+        std::abs(y_min) > std::abs(y_max)
+        ? y_min
+        : y_max;
+    
+    double const dst_bend = 
+        bend_params.mode() == MODE_AUTO
+        ? qBound(bend_params.bendMin(), src_bend, bend_params.bendMax())
+        : bend_params.bend();
 
-        prev_x = point.x();
+    double const k = dst_bend / src_bend;
+
+    if (std::isinf(k) || std::isnan(k) || k == 0.0)
+    {
+        m_arcLengthMapper.addSample(0.0, 0.0);
+        m_arcLengthMapper.addSample(1.0, 0.0);
+        m_bend = 0.0;
+    }
+    else if (k == 1.0)
+    {
+        for (QPointF const& point : points)
+        {
+            m_arcLengthMapper.addSample(point.x(), point.y());
+        }
+        m_bend = src_bend;
+    }
+    else
+    {
+        for (QPointF const& point : points)
+        {
+            m_arcLengthMapper.addSample(point.x(), k * point.y());
+        }
+        m_bend = dst_bend;
     }
 
     // Needs to go before normalizeRange().

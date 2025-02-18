@@ -120,12 +120,14 @@ private:
 
     void initArcLengthMapper(
         std::vector<QPointF> const& img_directrix1,
-        std::vector<QPointF> const& img_directrix2);
+        std::vector<QPointF> const& img_directrix2,
+        BendParams const& bend_params);
 
     HomographicTransform<2, double> m_pln2img;
     HomographicTransform<2, double> m_img2pln;
     PerspectiveTransform m_mdl2img;
     double m_fov;
+    double m_bend;
     double m_Sx;
     double m_Sy;
     double m_directrixArcLength;
