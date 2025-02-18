@@ -80,6 +80,11 @@ public:
         return m_directrixArcLength;
     }
 
+    double fov() const
+    {
+        return m_fov;
+    }
+
     Generatrix mapGeneratrix(double crv_x, State& state) const;
 
     /**

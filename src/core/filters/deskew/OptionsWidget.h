@@ -159,6 +159,8 @@ private:
 
     void updateMarginsPanel(dewarping::MarginsParams const& margins_params);
 
+    void updateAutoValuesOnPanels();
+
     void setSpinBoxUnknownState();
 
     void setSpinBoxKnownState(double angle);

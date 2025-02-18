@@ -21,6 +21,7 @@
 #include "Settings.h"
 #include "DistortionType.h"
 #include "ScopedIncDec.h"
+#include "dewarping/CylindricalSurfaceDewarper.h"
 
 namespace deskew
 {
@@ -271,6 +272,8 @@ OptionsWidget::manualDistortionModelSetExternally(
     }
 
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    updateAutoValuesOnPanels();
     updateModeIndication(MODE_MANUAL);
     emit invalidateThumbnail(m_pageId);
 }
@@ -334,6 +337,7 @@ OptionsWidget::postUpdateUI(Params const& page_params)
         updateFramePanel(page_params.perspectiveParams().frameParams());
         updateSizePanel(page_params.perspectiveParams().sizeParams());
         updateMarginsPanel(page_params.perspectiveParams().marginsParams());
+        updateAutoValuesOnPanels();
         break;
     case DistortionType::WARP:
         updateFovPanel(page_params.dewarpingParams().fovParams());
@@ -341,6 +345,7 @@ OptionsWidget::postUpdateUI(Params const& page_params)
         updateBendPanel(page_params.dewarpingParams().bendParams());
         updateSizePanel(page_params.dewarpingParams().sizeParams());
         updateMarginsPanel(page_params.dewarpingParams().marginsParams());
+        updateAutoValuesOnPanels();
         break;
     }
 
@@ -507,6 +512,8 @@ OptionsWidget::fovAutoManualModeChanged(bool auto_mode)
 
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
 
+    updateAutoValuesOnPanels();
+
     if (auto_mode)
     {
         emit reloadRequested();
@@ -574,6 +581,8 @@ OptionsWidget::fovMinSpinBoxValueChanged(double fov_min_new)
     ui.fovSpinBox->setMinimum(fov_min_new);
     ui.fovMaxSpinBox->setMinimum(fov_min_new);
 
+    updateAutoValuesOnPanels();
+
     emit fovParamsSetByUser(fov_params);
     emit invalidateThumbnail(m_pageId);
 }
@@ -626,6 +635,8 @@ OptionsWidget::fovMaxSpinBoxValueChanged(double fov_max_new)
     ui.fovSlider->setMaximum(fovToSlider(fov_max_new));
     ui.fovSpinBox->setMaximum(fov_max_new);
     ui.fovMinSpinBox->setMaximum(fov_max_new);
+
+    updateAutoValuesOnPanels();
 
     emit fovParamsSetByUser(fov_params);
     emit invalidateThumbnail(m_pageId);
@@ -1316,6 +1327,57 @@ OptionsWidget::updateMarginsPanel(dewarping::MarginsParams const& margins_params
     ui.marginsTopSpinBox->setValue(margins_params.top());
     ui.marginsBottomSpinBox->setValue(margins_params.bottom());
     ui.marginsMaxPixelScaleSpinBox->setValue(margins_params.maxPixelScale());
+}
+
+void
+OptionsWidget::updateAutoValuesOnPanels()
+try
+{
+    switch (m_pageParams.distortionType())
+    {
+    case DistortionType::PERSPECTIVE:
+        if (m_pageParams.perspectiveParams().fovParams().mode() == MODE_AUTO)
+        {
+            std::vector<QPointF> top_curve = {
+                m_pageParams.perspectiveParams().corner(PerspectiveParams::TOP_LEFT),
+                m_pageParams.perspectiveParams().corner(PerspectiveParams::TOP_RIGHT)
+            };
+            std::vector<QPointF> bottom_curve = {
+                m_pageParams.perspectiveParams().corner(PerspectiveParams::BOTTOM_LEFT),
+                m_pageParams.perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT)
+            };
+            dewarping::CylindricalSurfaceDewarper dewarper(
+                top_curve, bottom_curve,
+                m_pageParams.perspectiveParams().fovParams(),
+                m_pageParams.perspectiveParams().frameParams(),
+                dewarping::BendParams(MODE_MANUAL, 0.0, 0.0, 0.0)
+            );
+
+            ui.fovSpinBox->setValue(dewarper.fov());
+            ui.fovSlider->setValue(fovToSlider(dewarper.fov()));
+        }
+        break;
+    case DistortionType::WARP:
+        if (m_pageParams.dewarpingParams().fovParams().mode() == MODE_AUTO)
+        {
+            dewarping::CylindricalSurfaceDewarper dewarper(
+                m_pageParams.dewarpingParams().distortionModel().topCurve().polyline(),
+                m_pageParams.dewarpingParams().distortionModel().bottomCurve().polyline(),
+                m_pageParams.dewarpingParams().fovParams(),
+                m_pageParams.dewarpingParams().frameParams(),
+                m_pageParams.dewarpingParams().bendParams()
+            );
+
+            ui.fovSpinBox->setValue(dewarper.fov());
+            ui.fovSlider->setValue(fovToSlider(dewarper.fov()));
+        }
+        break;
+    }
+}
+catch (std::runtime_error const&)
+{
+    ui.fovSpinBox->setSpecialValueText("?");
+    ui.fovSpinBox->setValue(ui.fovSpinBox->minimum());
 }
 
 void
