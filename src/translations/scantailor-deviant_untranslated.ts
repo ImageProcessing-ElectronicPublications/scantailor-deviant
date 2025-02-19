@@ -3877,6 +3877,11 @@ Continue?</source>
         <source>Apply Frame Parameters</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="278"/>
+        <source>Apply Bend Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>exporting::ExportDialog</name>

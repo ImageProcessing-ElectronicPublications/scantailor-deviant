@@ -3990,6 +3990,11 @@ Continue?</source>
         <source>Apply Frame Parameters</source>
         <translation>Применить параметры кадра</translation>
     </message>
+    <message>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="278"/>
+        <source>Apply Bend Parameters</source>
+        <translation>Применить параметры выгиба</translation>
+    </message>
 </context>
 <context>
     <name>exporting::ExportDialog</name>

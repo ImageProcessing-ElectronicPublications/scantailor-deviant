@@ -114,6 +114,10 @@ OptionsWidget::OptionsWidget(IntrusivePtr<Settings> const& settings,
         ui.bendMaxSpinBox, SIGNAL(valueChanged(double)),
         this, SLOT(bendMaxSpinBoxValueChanged(double))
     );
+    connect(
+        ui.bendApplyBtn, SIGNAL(clicked()),
+        this, SLOT(showApplyBendParamsDialog())
+    );
 
     // Size UI.
     connect(
@@ -265,6 +269,29 @@ OptionsWidget::showApplyFrameParamsDialog()
 }
 
 void
+OptionsWidget::showApplyBendParamsDialog()
+{
+    ApplyToDialog* dialog = new ApplyToDialog(
+        this, m_pageId, m_pageSelectionAccessor, PageView::IMAGE_VIEW
+    );
+
+    dialog->setWindowTitle(tr("Apply Bend Parameters"));
+
+    connect(dialog, &ApplyToDialog::accepted, this, [=]() {
+        std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
+        std::set<PageId> pages(vec.begin(), vec.end());
+        if (!dialog->getPageRangeSelectorWidget().allPagesSelected()) {
+            bendParamsAppliedTo(pages);
+        }
+        else {
+            bendParamsAppliedToAllPages(pages);
+        }
+        });
+
+    dialog->show();
+}
+
+void
 OptionsWidget::distortionTypeAppliedTo(std::set<PageId> const& pages)
 {
     if (pages.empty())
@@ -379,6 +406,35 @@ OptionsWidget::frameParamsAppliedToAllPages(std::set<PageId> const& pages)
         m_ptrSettings->setDewarpingFrameParams(pages, m_pageParams.dewarpingParams().frameParams());
         break;
     }
+
+    emit invalidateAllThumbnails();
+}
+
+void
+OptionsWidget::bendParamsAppliedTo(std::set<PageId> const& pages)
+{
+    if (pages.empty())
+    {
+        return;
+    }
+
+    m_ptrSettings->setDewarpingBendParams(pages, m_pageParams.dewarpingParams().bendParams());
+
+    for (PageId const& page_id : pages)
+    {
+        emit invalidateThumbnail(page_id);
+    }
+}
+
+void
+OptionsWidget::bendParamsAppliedToAllPages(std::set<PageId> const& pages)
+{
+    if (pages.empty())
+    {
+        return;
+    }
+
+    m_ptrSettings->setDewarpingBendParams(pages, m_pageParams.dewarpingParams().bendParams());
 
     emit invalidateAllThumbnails();
 }

@@ -72,6 +72,10 @@ public:
     void setDewarpingFrameParams(
         std::set<PageId> const& pages,
         dewarping::FrameParams const& frame_params);
+
+    void setDewarpingBendParams(
+        std::set<PageId> const& pages,
+        dewarping::BendParams const& bend_params);
 private:
     typedef std::map<PageId, Params> PerPageParams;
 
