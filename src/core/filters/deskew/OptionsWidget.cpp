@@ -85,6 +85,10 @@ OptionsWidget::OptionsWidget(IntrusivePtr<Settings> const& settings,
     connect(
         ui.frameCenterYSpinBox, SIGNAL(valueChanged(double)),
         this, SLOT(frameCenterYSpinBoxValueChanged(double)));
+    connect(
+        ui.frameApplyBtn, SIGNAL(clicked()),
+        this, SLOT(showApplyFrameParamsDialog())
+    );
 
     // Bend UI.
     connect(
@@ -238,6 +242,29 @@ OptionsWidget::showApplyFovParamsDialog()
 }
 
 void
+OptionsWidget::showApplyFrameParamsDialog()
+{
+    ApplyToDialog* dialog = new ApplyToDialog(
+        this, m_pageId, m_pageSelectionAccessor, PageView::IMAGE_VIEW
+    );
+
+    dialog->setWindowTitle(tr("Apply Frame Parameters"));
+
+    connect(dialog, &ApplyToDialog::accepted, this, [=]() {
+        std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
+        std::set<PageId> pages(vec.begin(), vec.end());
+        if (!dialog->getPageRangeSelectorWidget().allPagesSelected()) {
+            frameParamsAppliedTo(pages);
+        }
+        else {
+            frameParamsAppliedToAllPages(pages);
+        }
+        });
+
+    dialog->show();
+}
+
+void
 OptionsWidget::distortionTypeAppliedTo(std::set<PageId> const& pages)
 {
     if (pages.empty())
@@ -305,6 +332,51 @@ OptionsWidget::fovParamsAppliedToAllPages(std::set<PageId> const& pages)
         break;
     case DistortionType::WARP:
         m_ptrSettings->setDewarpingFovParams(pages, m_pageParams.dewarpingParams().fovParams());
+        break;
+    }
+
+    emit invalidateAllThumbnails();
+}
+
+void
+OptionsWidget::frameParamsAppliedTo(std::set<PageId> const& pages)
+{
+    if (pages.empty())
+    {
+        return;
+    }
+
+    switch (m_pageParams.distortionType())
+    {
+    case DistortionType::PERSPECTIVE:
+        m_ptrSettings->setPerspectiveFrameParams(pages, m_pageParams.perspectiveParams().frameParams());
+        break;
+    case DistortionType::WARP:
+        m_ptrSettings->setDewarpingFrameParams(pages, m_pageParams.dewarpingParams().frameParams());
+        break;
+    }
+
+    for (PageId const& page_id : pages)
+    {
+        emit invalidateThumbnail(page_id);
+    }
+}
+
+void
+OptionsWidget::frameParamsAppliedToAllPages(std::set<PageId> const& pages)
+{
+    if (pages.empty())
+    {
+        return;
+    }
+
+    switch (m_pageParams.distortionType())
+    {
+    case DistortionType::PERSPECTIVE:
+        m_ptrSettings->setPerspectiveFrameParams(pages, m_pageParams.perspectiveParams().frameParams());
+        break;
+    case DistortionType::WARP:
+        m_ptrSettings->setDewarpingFrameParams(pages, m_pageParams.dewarpingParams().frameParams());
         break;
     }
 

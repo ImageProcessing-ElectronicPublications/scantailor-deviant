@@ -61,9 +61,17 @@ public:
         std::set<PageId> const& pages,
         dewarping::FovParams const& fov_params);
 
+    void setPerspectiveFrameParams(
+        std::set<PageId> const& pages,
+        dewarping::FrameParams const& frame_params);
+
     void setDewarpingFovParams(
         std::set<PageId> const& pages,
         dewarping::FovParams const& fov_params);
+
+    void setDewarpingFrameParams(
+        std::set<PageId> const& pages,
+        dewarping::FrameParams const& frame_params);
 private:
     typedef std::map<PageId, Params> PerPageParams;
 

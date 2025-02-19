@@ -3985,6 +3985,11 @@ Continue?</source>
         <source>Apply Fov Parameters</source>
         <translation>Применить параметры поля зрения</translation>
     </message>
+    <message>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="251"/>
+        <source>Apply Frame Parameters</source>
+        <translation>Применить параметры кадра</translation>
+    </message>
 </context>
 <context>
     <name>exporting::ExportDialog</name>

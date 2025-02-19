@@ -141,6 +141,29 @@ Settings::setPerspectiveFovParams(
 }
 
 void
+Settings::setPerspectiveFrameParams(
+    std::set<PageId> const& pages,
+    dewarping::FrameParams const& frame_params)
+{
+    QMutexLocker const locker(&m_mutex);
+
+    for (PageId const& page_id : pages)
+    {
+        PerPageParams::iterator it = m_perPageParams.find(page_id);
+        if (it != m_perPageParams.end())
+        {
+            it->second.perspectiveParams().setFrameParams(frame_params);
+        }
+        else
+        {
+            Params params((Dependencies()));
+            params.perspectiveParams().setFrameParams(frame_params);
+            Utils::mapSetValue(m_perPageParams, page_id, params);
+        }
+    }
+}
+
+void
 Settings::setDewarpingFovParams(
     std::set<PageId> const& pages,
     dewarping::FovParams const& fov_params)
@@ -158,6 +181,29 @@ Settings::setDewarpingFovParams(
         {
             Params params((Dependencies()));
             params.dewarpingParams().setFovParams(fov_params);
+            Utils::mapSetValue(m_perPageParams, page_id, params);
+        }
+    }
+}
+
+void
+Settings::setDewarpingFrameParams(
+    std::set<PageId> const& pages,
+    dewarping::FrameParams const& frame_params)
+{
+    QMutexLocker const locker(&m_mutex);
+
+    for (PageId const& page_id : pages)
+    {
+        PerPageParams::iterator it = m_perPageParams.find(page_id);
+        if (it != m_perPageParams.end())
+        {
+            it->second.dewarpingParams().setFrameParams(frame_params);
+        }
+        else
+        {
+            Params params((Dependencies()));
+            params.dewarpingParams().setFrameParams(frame_params);
             Utils::mapSetValue(m_perPageParams, page_id, params);
         }
     }
