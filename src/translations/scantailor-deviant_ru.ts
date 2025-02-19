@@ -3980,6 +3980,11 @@ Continue?</source>
         <source>Apply Distortion Type</source>
         <translation>Применить тип искажения</translation>
     </message>
+    <message>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="224"/>
+        <source>Apply Fov Parameters</source>
+        <translation>Применить параметры поля зрения</translation>
+    </message>
 </context>
 <context>
     <name>exporting::ExportDialog</name>

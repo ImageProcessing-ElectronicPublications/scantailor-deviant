@@ -57,6 +57,13 @@ public:
     void setDistortionType(
         std::set<PageId> const& pages, DistortionType const& distortion_type);
 
+    void setPerspectiveFovParams(
+        std::set<PageId> const& pages,
+        dewarping::FovParams const& fov_params);
+
+    void setDewarpingFovParams(
+        std::set<PageId> const& pages,
+        dewarping::FovParams const& fov_params);
 private:
     typedef std::map<PageId, Params> PerPageParams;
 

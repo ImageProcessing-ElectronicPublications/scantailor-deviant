@@ -64,6 +64,10 @@ OptionsWidget::OptionsWidget(IntrusivePtr<Settings> const& settings,
         ui.fovMaxSpinBox, SIGNAL(valueChanged(double)),
         this, SLOT(fovMaxSpinBoxValueChanged(double))
     );
+    connect(
+        ui.fovApplyBtn, SIGNAL(clicked()),
+        this, SLOT(showApplyFovParamsDialog())
+    );
 
     // Frame UI.
     connect(
@@ -211,6 +215,29 @@ OptionsWidget::showApplyDistortionTypeDialog()
 }
 
 void
+OptionsWidget::showApplyFovParamsDialog()
+{
+    ApplyToDialog* dialog = new ApplyToDialog(
+        this, m_pageId, m_pageSelectionAccessor, PageView::IMAGE_VIEW
+    );
+
+    dialog->setWindowTitle(tr("Apply Fov Parameters"));
+
+    connect(dialog, &ApplyToDialog::accepted, this, [=]() {
+        std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
+        std::set<PageId> pages(vec.begin(), vec.end());
+        if (!dialog->getPageRangeSelectorWidget().allPagesSelected()) {
+            fovParamsAppliedTo(pages);
+        }
+        else {
+            fovParamsAppliedToAllPages(pages);
+        }
+        });
+
+    dialog->show();
+}
+
+void
 OptionsWidget::distortionTypeAppliedTo(std::set<PageId> const& pages)
 {
     if (pages.empty())
@@ -235,6 +262,51 @@ OptionsWidget::distortionTypeAppliedToAllPages(std::set<PageId> const& pages)
     }
 
     m_ptrSettings->setDistortionType(pages, m_pageParams.distortionType());
+
+    emit invalidateAllThumbnails();
+}
+
+void
+OptionsWidget::fovParamsAppliedTo(std::set<PageId> const& pages)
+{
+    if (pages.empty())
+    {
+        return;
+    }
+
+    switch (m_pageParams.distortionType())
+    {
+    case DistortionType::PERSPECTIVE:
+        m_ptrSettings->setPerspectiveFovParams(pages, m_pageParams.perspectiveParams().fovParams());
+        break;
+    case DistortionType::WARP:
+        m_ptrSettings->setDewarpingFovParams(pages, m_pageParams.dewarpingParams().fovParams());
+        break;
+    }
+
+    for (PageId const& page_id : pages)
+    {
+        emit invalidateThumbnail(page_id);
+    }
+}
+
+void
+OptionsWidget::fovParamsAppliedToAllPages(std::set<PageId> const& pages)
+{
+    if (pages.empty())
+    {
+        return;
+    }
+
+    switch (m_pageParams.distortionType())
+    {
+    case DistortionType::PERSPECTIVE:
+        m_ptrSettings->setPerspectiveFovParams(pages, m_pageParams.perspectiveParams().fovParams());
+        break;
+    case DistortionType::WARP:
+        m_ptrSettings->setDewarpingFovParams(pages, m_pageParams.dewarpingParams().fovParams());
+        break;
+    }
 
     emit invalidateAllThumbnails();
 }

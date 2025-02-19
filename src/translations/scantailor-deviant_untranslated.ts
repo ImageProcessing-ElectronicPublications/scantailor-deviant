@@ -3867,6 +3867,11 @@ Continue?</source>
         <source>Apply Distortion Type</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="224"/>
+        <source>Apply Fov Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>exporting::ExportDialog</name>

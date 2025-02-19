@@ -82,9 +82,15 @@ private slots:
 
     void showApplyDistortionTypeDialog();
 
+    void showApplyFovParamsDialog();
+
     void distortionTypeAppliedTo(std::set<PageId> const& pages);
 
     void distortionTypeAppliedToAllPages(std::set<PageId> const& pages);
+
+    void fovParamsAppliedTo(std::set<PageId> const& pages);
+
+    void fovParamsAppliedToAllPages(std::set<PageId> const& pages);
 
     void fovAutoManualModeChanged(bool auto_mode);
 

@@ -117,4 +117,50 @@ Settings::setDistortionType(
     }
 }
 
+void
+Settings::setPerspectiveFovParams(
+    std::set<PageId> const& pages,
+    dewarping::FovParams const& fov_params)
+{
+    QMutexLocker const locker(&m_mutex);
+
+    for (PageId const& page_id : pages)
+    {
+        PerPageParams::iterator it = m_perPageParams.find(page_id);
+        if (it != m_perPageParams.end())
+        {
+            it->second.perspectiveParams().setFovParams(fov_params);
+        }
+        else
+        {
+            Params params((Dependencies()));
+            params.perspectiveParams().setFovParams(fov_params);
+            Utils::mapSetValue(m_perPageParams, page_id, params);
+        }
+    }
+}
+
+void
+Settings::setDewarpingFovParams(
+    std::set<PageId> const& pages,
+    dewarping::FovParams const& fov_params)
+{
+    QMutexLocker const locker(&m_mutex);
+
+    for (PageId const& page_id : pages)
+    {
+        PerPageParams::iterator it = m_perPageParams.find(page_id);
+        if (it != m_perPageParams.end())
+        {
+            it->second.dewarpingParams().setFovParams(fov_params);
+        }
+        else
+        {
+            Params params((Dependencies()));
+            params.dewarpingParams().setFovParams(fov_params);
+            Utils::mapSetValue(m_perPageParams, page_id, params);
+        }
+    }
+}
+
 } // namespace deskew
