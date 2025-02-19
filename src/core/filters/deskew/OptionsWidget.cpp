@@ -192,7 +192,13 @@ OptionsWidget::OptionsWidget(IntrusivePtr<Settings> const& settings,
     );
 
     // Auto / Manual mode.
-    connect(ui.autoBtn, SIGNAL(toggled(bool)), this, SLOT(distortionAutoManualModeChanged(bool)));
+    connect(
+        ui.modeAutoBtn, SIGNAL(toggled(bool)),
+        this, SLOT(modeChanged(bool)));
+    connect(
+        ui.modeApplyBtn, SIGNAL(clicked()),
+        this, SLOT(showApplyModeDialog())
+    );
 }
 
 OptionsWidget::~OptionsWidget()
@@ -216,6 +222,29 @@ OptionsWidget::showApplyDistortionTypeDialog()
         }
         else {
             distortionTypeAppliedToAllPages(pages);
+        }
+        });
+
+    dialog->show();
+}
+
+void
+OptionsWidget::showApplyModeDialog()
+{
+    ApplyToDialog* dialog = new ApplyToDialog(
+        this, m_pageId, m_pageSelectionAccessor, PageView::IMAGE_VIEW
+    );
+
+    dialog->setWindowTitle(tr("Apply Auto/Manual mode"));
+
+    connect(dialog, &ApplyToDialog::accepted, this, [=]() {
+        std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
+        std::set<PageId> pages(vec.begin(), vec.end());
+        if (!dialog->getPageRangeSelectorWidget().allPagesSelected()) {
+            modeAppliedTo(pages);
+        }
+        else {
+            modeAppliedToAllPages(pages);
         }
         });
 
@@ -316,6 +345,57 @@ OptionsWidget::distortionTypeAppliedToAllPages(std::set<PageId> const& pages)
     }
 
     m_ptrSettings->setDistortionType(pages, m_pageParams.distortionType());
+
+    emit invalidateAllThumbnails();
+}
+
+void
+OptionsWidget::modeAppliedTo(std::set<PageId> const& pages)
+{
+    if (pages.empty())
+    {
+        return;
+    }
+
+    switch (m_pageParams.distortionType())
+    {
+    case DistortionType::ROTATION:
+        m_ptrSettings->setRotationMode(pages, m_pageParams.rotationParams().mode());
+        break;
+    case DistortionType::PERSPECTIVE:
+        m_ptrSettings->setPerspectiveMode(pages, m_pageParams.perspectiveParams().mode());
+        break;
+    case DistortionType::WARP:
+        m_ptrSettings->setDewarpingMode(pages, m_pageParams.dewarpingParams().mode());
+        break;
+    }
+
+    for (PageId const& page_id : pages)
+    {
+        emit invalidateThumbnail(page_id);
+    }
+}
+
+void
+OptionsWidget::modeAppliedToAllPages(std::set<PageId> const& pages)
+{
+    if (pages.empty())
+    {
+        return;
+    }
+
+    switch (m_pageParams.distortionType())
+    {
+    case DistortionType::ROTATION:
+        m_ptrSettings->setRotationMode(pages, m_pageParams.rotationParams().mode());
+        break;
+    case DistortionType::PERSPECTIVE:
+        m_ptrSettings->setPerspectiveMode(pages, m_pageParams.perspectiveParams().mode());
+        break;
+    case DistortionType::WARP:
+        m_ptrSettings->setDewarpingMode(pages, m_pageParams.dewarpingParams().mode());
+        break;
+    }
 
     emit invalidateAllThumbnails();
 }
@@ -526,8 +606,8 @@ OptionsWidget::postUpdateUI(Params const& page_params)
     ScopedIncDec<int> guard(m_ignoreSignalsFromUiControls);
 
     m_pageParams = page_params;
-    ui.autoBtn->setEnabled(true);
-    ui.manualBtn->setEnabled(true);
+    ui.modeAutoBtn->setEnabled(true);
+    ui.modeManualBtn->setEnabled(true);
     updateModeIndication(page_params.mode());
 
     switch (page_params.distortionType())
@@ -634,7 +714,7 @@ OptionsWidget::angleSpinBoxValueChanged(double const value)
 }
 
 void
-OptionsWidget::distortionAutoManualModeChanged(bool const auto_mode)
+OptionsWidget::modeChanged(bool const auto_mode)
 {
     if (m_ignoreSignalsFromUiControls)
     {
@@ -1358,7 +1438,7 @@ OptionsWidget::setupDistortionTypeButtons()
 void
 OptionsWidget::disableDistortionDependentUiElements()
 {
-    ui.autoManualPanel->setDisabled(true);
+    ui.modePanel->setDisabled(true);
     ui.rotationPanel->setDisabled(true);
     ui.fovPanel->setDisabled(true);
     ui.framePanel->setDisabled(true);
@@ -1370,7 +1450,7 @@ OptionsWidget::disableDistortionDependentUiElements()
 void
 OptionsWidget::enableDistortionDependentUiElements()
 {
-    ui.autoManualPanel->setEnabled(true);
+    ui.modePanel->setEnabled(true);
     ui.rotationPanel->setEnabled(true);
     ui.fovPanel->setEnabled(true);
     ui.framePanel->setEnabled(true);
@@ -1386,7 +1466,7 @@ OptionsWidget::setupUiForDistortionType(DistortionType::Type type)
 
     m_distortionTypeButtons[type]->setChecked(true);
 
-    ui.autoManualPanel->setVisible(type != DistortionType::NONE);
+    ui.modePanel->setVisible(type != DistortionType::NONE);
     ui.rotationPanel->setVisible(type == DistortionType::ROTATION);
     ui.fovPanel->setVisible(type == DistortionType::PERSPECTIVE || type == DistortionType::WARP);
     ui.framePanel->setVisible(type == DistortionType::PERSPECTIVE || type == DistortionType::WARP);
@@ -1402,11 +1482,11 @@ OptionsWidget::updateModeIndication(AutoManualMode const mode)
 
     if (mode == MODE_AUTO)
     {
-        ui.autoBtn->setChecked(true);
+        ui.modeAutoBtn->setChecked(true);
     }
     else
     {
-        ui.manualBtn->setChecked(true);
+        ui.modeManualBtn->setChecked(true);
     }
 }
 

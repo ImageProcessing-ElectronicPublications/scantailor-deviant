@@ -78,9 +78,11 @@ private slots:
 
     void angleSpinBoxValueChanged(double skew_degrees);
 
-    void distortionAutoManualModeChanged(bool auto_mode);
+    void modeChanged(bool auto_mode);
 
     void showApplyDistortionTypeDialog();
+
+    void showApplyModeDialog();
 
     void showApplyFovParamsDialog();
 
@@ -91,6 +93,10 @@ private slots:
     void distortionTypeAppliedTo(std::set<PageId> const& pages);
 
     void distortionTypeAppliedToAllPages(std::set<PageId> const& pages);
+
+    void modeAppliedTo(std::set<PageId> const& pages);
+
+    void modeAppliedToAllPages(std::set<PageId> const& pages);
 
     void fovParamsAppliedTo(std::set<PageId> const& pages);
 

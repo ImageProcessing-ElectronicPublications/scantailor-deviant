@@ -57,6 +57,14 @@ public:
     void setDistortionType(
         std::set<PageId> const& pages, DistortionType const& distortion_type);
 
+    void setRotationMode(
+        std::set<PageId> const& pages,
+        AutoManualMode const& mode);
+
+    void setPerspectiveMode(
+        std::set<PageId> const& pages,
+        AutoManualMode const& mode);
+
     void setPerspectiveFovParams(
         std::set<PageId> const& pages,
         dewarping::FovParams const& fov_params);
@@ -64,6 +72,10 @@ public:
     void setPerspectiveFrameParams(
         std::set<PageId> const& pages,
         dewarping::FrameParams const& frame_params);
+
+    void setDewarpingMode(
+        std::set<PageId> const& pages,
+        AutoManualMode const& mode);
 
     void setDewarpingFovParams(
         std::set<PageId> const& pages,

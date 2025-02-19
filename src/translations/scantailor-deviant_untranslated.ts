@@ -338,12 +338,12 @@ Perspective correction.</source>
     </message>
     <message>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="186"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="360"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="526"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="724"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="905"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1068"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1238"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="294"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="538"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="751"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="953"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1122"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1292"/>
         <source>Apply To ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -353,144 +353,144 @@ Perspective correction.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="230"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="406"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="572"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="770"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="232"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="385"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="584"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="797"/>
         <source>Auto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="246"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="413"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="579"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="777"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="248"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="401"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="600"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="813"/>
         <source>Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="278"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="319"/>
         <source>Rotation angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="385"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="364"/>
         <source>FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="489"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="868"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="501"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="916"/>
         <source>min</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="499"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="878"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="511"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="926"/>
         <source>max</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="551"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="563"/>
         <source>Frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="603"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="967"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="630"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1015"/>
         <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="629"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="997"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="656"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1045"/>
         <source>Height:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="655"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="682"/>
         <source>Center X:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="681"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="708"/>
         <source>Center Y:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="749"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="776"/>
         <source>Bend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="930"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="978"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="937"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="985"/>
         <source>Calc by image area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="942"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="990"/>
         <source>Fit to width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="947"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="995"/>
         <source>Fit to height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="952"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1000"/>
         <source>Stretch to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="957"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1005"/>
         <source>Calc by camera distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="990"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1017"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1044"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1038"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1068"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1098"/>
         <source>px</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1024"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1075"/>
         <source>Distance:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1093"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1147"/>
         <source>Margins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1101"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1155"/>
         <source>Left:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1121"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1175"/>
         <source>Right:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1141"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1195"/>
         <source>Top:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1161"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1215"/>
         <source>Bottom:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1198"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1252"/>
         <source>Maximum pixel scale:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3863,22 +3863,27 @@ Continue?</source>
 <context>
     <name>deskew::OptionsWidget</name>
     <message>
-        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="109"/>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="215"/>
         <source>Apply Distortion Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="224"/>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="238"/>
+        <source>Apply Auto/Manual mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="261"/>
         <source>Apply Fov Parameters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="251"/>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="284"/>
         <source>Apply Frame Parameters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="278"/>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="307"/>
         <source>Apply Bend Parameters</source>
         <translation type="unfinished"></translation>
     </message>

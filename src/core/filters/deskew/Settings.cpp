@@ -118,6 +118,52 @@ Settings::setDistortionType(
 }
 
 void
+Settings::setRotationMode(
+    std::set<PageId> const& pages,
+    AutoManualMode const& mode)
+{
+    QMutexLocker const locker(&m_mutex);
+
+    for (PageId const& page_id : pages)
+    {
+        PerPageParams::iterator it = m_perPageParams.find(page_id);
+        if (it != m_perPageParams.end())
+        {
+            it->second.rotationParams().setMode(mode);
+        }
+        else
+        {
+            Params params((Dependencies()));
+            params.rotationParams().setMode(mode);
+            Utils::mapSetValue(m_perPageParams, page_id, params);
+        }
+    }
+}
+
+void
+Settings::setPerspectiveMode(
+    std::set<PageId> const& pages,
+    AutoManualMode const& mode)
+{
+    QMutexLocker const locker(&m_mutex);
+
+    for (PageId const& page_id : pages)
+    {
+        PerPageParams::iterator it = m_perPageParams.find(page_id);
+        if (it != m_perPageParams.end())
+        {
+            it->second.perspectiveParams().setMode(mode);
+        }
+        else
+        {
+            Params params((Dependencies()));
+            params.perspectiveParams().setMode(mode);
+            Utils::mapSetValue(m_perPageParams, page_id, params);
+        }
+    }
+}
+
+void
 Settings::setPerspectiveFovParams(
     std::set<PageId> const& pages,
     dewarping::FovParams const& fov_params)
@@ -158,6 +204,29 @@ Settings::setPerspectiveFrameParams(
         {
             Params params((Dependencies()));
             params.perspectiveParams().setFrameParams(frame_params);
+            Utils::mapSetValue(m_perPageParams, page_id, params);
+        }
+    }
+}
+
+void
+Settings::setDewarpingMode(
+    std::set<PageId> const& pages,
+    AutoManualMode const& mode)
+{
+    QMutexLocker const locker(&m_mutex);
+
+    for (PageId const& page_id : pages)
+    {
+        PerPageParams::iterator it = m_perPageParams.find(page_id);
+        if (it != m_perPageParams.end())
+        {
+            it->second.dewarpingParams().setMode(mode);
+        }
+        else
+        {
+            Params params((Dependencies()));
+            params.dewarpingParams().setMode(mode);
             Utils::mapSetValue(m_perPageParams, page_id, params);
         }
     }
