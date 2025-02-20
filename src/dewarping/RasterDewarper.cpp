@@ -408,25 +408,25 @@ void dewarpGeneric(
             (double model_y, bool upper_threshold)
         {
 
-            if (!generatrix.pln2img.mirrorSide(model_y))
-            {
-                double const dst_y = model_domain_top + model_y * model_domain_height;
-                double const second_deriv = generatrix.pln2img.secondDerivativeAt(model_y);
-                if (std::signbit(second_deriv) == upper_threshold)
-                {
-                    if (dst_y > dst_y_range.first)
-                    {
-                        dst_y_range.first = std::min((int)std::ceil(dst_y), dst_y_range.second);
-                    }
-                }
-                else
-                {
-                    if (dst_y < dst_y_range.second)
-                    {
-                        dst_y_range.second = std::max((int)std::floor(dst_y), dst_y_range.first);
-                    }
-                }
-            }
+            //if (!generatrix.pln2img.mirrorSide(model_y))
+            //{
+            //    double const dst_y = model_domain_top + model_y * model_domain_height;
+            //    double const second_deriv = generatrix.pln2img.secondDerivativeAt(model_y);
+            //    if (std::signbit(second_deriv) == upper_threshold)
+            //    {
+            //        if (dst_y > dst_y_range.first)
+            //        {
+            //            dst_y_range.first = std::min((int)std::ceil(dst_y), dst_y_range.second);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (dst_y < dst_y_range.second)
+            //        {
+            //            dst_y_range.second = std::max((int)std::floor(dst_y), dst_y_range.first);
+            //        }
+            //    }
+            //}
         };
 
         double const recip_len = 1.0 / generatrix.imgLine.length();
