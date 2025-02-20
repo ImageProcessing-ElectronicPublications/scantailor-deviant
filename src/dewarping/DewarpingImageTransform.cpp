@@ -310,86 +310,90 @@ int const DewarpingImageTransform::INTRINSIC_SCALE_ALGO_VERSION = 1;
 void
 DewarpingImageTransform::setupIntrinsicScale()
 {
-    // Fraction of width or height of dewarping quardilateral.
-    double const epsilon = 0.01;
+    double const F = std::max(m_origSize.width(), m_origSize.height()) / m_dewarper.fov();
+    m_intrinsicScaleX = m_dewarper.Sx() * F;
+    m_intrinsicScaleY = m_dewarper.Sy() * F;
 
-    Vector2d const top_left_p1(toVec(m_topPolyline.front()));
-    Vector2d const top_left_p2(toVec(m_dewarper.mapToWarpedSpace(QPointF(epsilon, 0))));
-    Vector2d const top_left_p3(toVec(m_dewarper.mapToWarpedSpace(QPointF(0, epsilon))));
+    //// Fraction of width or height of dewarping quardilateral.
+    //double const epsilon = 0.01;
 
-    Vector2d const top_right_p1(toVec(m_topPolyline.back()));
-    Vector2d const top_right_p2(toVec(m_dewarper.mapToWarpedSpace(QPointF(1 - epsilon, 0))));
-    Vector2d const top_right_p3(toVec(m_dewarper.mapToWarpedSpace(QPointF(1, epsilon))));
+    //Vector2d const top_left_p1(toVec(m_topPolyline.front()));
+    //Vector2d const top_left_p2(toVec(m_dewarper.mapToWarpedSpace(QPointF(epsilon, 0))));
+    //Vector2d const top_left_p3(toVec(m_dewarper.mapToWarpedSpace(QPointF(0, epsilon))));
 
-    Vector2d const bottom_left_p1(toVec(m_bottomPolyline.front()));
-    Vector2d const bottom_left_p2(toVec(m_dewarper.mapToWarpedSpace(QPointF(epsilon, 1))));
-    Vector2d const bottom_left_p3(toVec(m_dewarper.mapToWarpedSpace(QPointF(0, 1 - epsilon))));
+    //Vector2d const top_right_p1(toVec(m_topPolyline.back()));
+    //Vector2d const top_right_p2(toVec(m_dewarper.mapToWarpedSpace(QPointF(1 - epsilon, 0))));
+    //Vector2d const top_right_p3(toVec(m_dewarper.mapToWarpedSpace(QPointF(1, epsilon))));
 
-    Vector2d const bottom_right_p1(toVec(m_bottomPolyline.back()));
-    Vector2d const bottom_right_p2(toVec(m_dewarper.mapToWarpedSpace(QPointF(1 - epsilon, 1))));
-    Vector2d const bottom_right_p3(toVec(m_dewarper.mapToWarpedSpace(QPointF(1, 1 - epsilon))));
+    //Vector2d const bottom_left_p1(toVec(m_bottomPolyline.front()));
+    //Vector2d const bottom_left_p2(toVec(m_dewarper.mapToWarpedSpace(QPointF(epsilon, 1))));
+    //Vector2d const bottom_left_p3(toVec(m_dewarper.mapToWarpedSpace(QPointF(0, 1 - epsilon))));
 
-    Matrix2d corners[4];
-    corners[0] << top_left_p2 - top_left_p1, top_left_p3 - top_left_p1;
-    corners[1] << top_right_p2 - top_right_p1, top_right_p3 - top_right_p1;
-    corners[2] << bottom_left_p2 - bottom_left_p1, bottom_left_p3 - bottom_left_p1;
-    corners[3] << bottom_right_p2 - bottom_right_p1, bottom_right_p3 - bottom_right_p1;
+    //Vector2d const bottom_right_p1(toVec(m_bottomPolyline.back()));
+    //Vector2d const bottom_right_p2(toVec(m_dewarper.mapToWarpedSpace(QPointF(1 - epsilon, 1))));
+    //Vector2d const bottom_right_p3(toVec(m_dewarper.mapToWarpedSpace(QPointF(1, 1 - epsilon))));
 
-    // We assume a small square at a corner of a dewarped image maps
-    // to a lozenge-shaped area in warped coordinates. That's not necessarily
-    // the case, but let's assume it is. First of all, let's select a corner
-    // with the highest lozenge area.
-    int best_corner = 0;
-    double largest_area = -1;
-    for (int i = 0; i < 4; ++i)
-    {
-        double const area = fabs(corners[i].determinant());
-        if (area > largest_area)
-        {
-            largest_area = area;
-            best_corner = i;
-        }
-    }
+    //Matrix2d corners[4];
+    //corners[0] << top_left_p2 - top_left_p1, top_left_p3 - top_left_p1;
+    //corners[1] << top_right_p2 - top_right_p1, top_right_p3 - top_right_p1;
+    //corners[2] << bottom_left_p2 - bottom_left_p1, bottom_left_p3 - bottom_left_p1;
+    //corners[3] << bottom_right_p2 - bottom_right_p1, bottom_right_p3 - bottom_right_p1;
 
-    // See the comments in the beginning of the function on how
-    // we define pixel densities.
-    double const warped_h_density = corners[best_corner].col(0).norm();
-    double const warped_v_density = corners[best_corner].col(1).norm();
+    //// We assume a small square at a corner of a dewarped image maps
+    //// to a lozenge-shaped area in warped coordinates. That's not necessarily
+    //// the case, but let's assume it is. First of all, let's select a corner
+    //// with the highest lozenge area.
+    //int best_corner = 0;
+    //double largest_area = -1;
+    //for (int i = 0; i < 4; ++i)
+    //{
+    //    double const area = fabs(corners[i].determinant());
+    //    if (area > largest_area)
+    //    {
+    //        largest_area = area;
+    //        best_corner = i;
+    //    }
+    //}
 
-    // CylindricalSurfaceDewarper maps a curved quadrilateral into a unit square.
-    // Therefore, without post scaling, dewarped pixel density is exactly
-    // epsilon x epsilon.
-    double const dewarped_h_density = epsilon;
-    double const dewarped_v_density = epsilon;
+    //// See the comments in the beginning of the function on how
+    //// we define pixel densities.
+    //double const warped_h_density = corners[best_corner].col(0).norm();
+    //double const warped_v_density = corners[best_corner].col(1).norm();
 
-    // Now we are ready to calculate the initial scale.
-    // We still need to normalize the area though.
-    m_intrinsicScaleX = warped_h_density / dewarped_h_density;
-    m_intrinsicScaleY = warped_v_density / dewarped_v_density;
+    //// CylindricalSurfaceDewarper maps a curved quadrilateral into a unit square.
+    //// Therefore, without post scaling, dewarped pixel density is exactly
+    //// epsilon x epsilon.
+    //double const dewarped_h_density = epsilon;
+    //double const dewarped_v_density = epsilon;
 
-    // Area of convex polygon formula taken from:
-    // http://mathworld.wolfram.com/PolygonArea.html
-    double area = 0.0;
-    QPointF prev_pt = m_bottomPolyline.front();
+    //// Now we are ready to calculate the initial scale.
+    //// We still need to normalize the area though.
+    //m_intrinsicScaleX = warped_h_density / dewarped_h_density;
+    //m_intrinsicScaleY = warped_v_density / dewarped_v_density;
 
-    for (QPointF const pt : m_topPolyline)
-    {
-        area += prev_pt.x() * pt.y() - pt.x() * prev_pt.y();
-        prev_pt = pt;
-    }
+    //// Area of convex polygon formula taken from:
+    //// http://mathworld.wolfram.com/PolygonArea.html
+    //double area = 0.0;
+    //QPointF prev_pt = m_bottomPolyline.front();
 
-    for (QPointF const pt : boost::adaptors::reverse(m_bottomPolyline))
-    {
-        area += prev_pt.x() * pt.y() - pt.x() * prev_pt.y();
-        prev_pt = pt;
-    }
+    //for (QPointF const pt : m_topPolyline)
+    //{
+    //    area += prev_pt.x() * pt.y() - pt.x() * prev_pt.y();
+    //    prev_pt = pt;
+    //}
 
-    area = 0.5 * std::abs(area);
+    //for (QPointF const pt : boost::adaptors::reverse(m_bottomPolyline))
+    //{
+    //    area += prev_pt.x() * pt.y() - pt.x() * prev_pt.y();
+    //    prev_pt = pt;
+    //}
 
-    // m_intrinsicScaleX * s * m_intrinsicScaleY * s = area
-    double const s = std::sqrt(area / (m_intrinsicScaleX * m_intrinsicScaleY));
-    m_intrinsicScaleX *= s;
-    m_intrinsicScaleY *= s;
+    //area = 0.5 * std::abs(area);
+
+    //// m_intrinsicScaleX * s * m_intrinsicScaleY * s = area
+    //double const s = std::sqrt(area / (m_intrinsicScaleX * m_intrinsicScaleY));
+    //m_intrinsicScaleX *= s;
+    //m_intrinsicScaleY *= s;
 }
 
 QPolygonF

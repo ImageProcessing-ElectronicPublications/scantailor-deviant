@@ -90,6 +90,16 @@ public:
         return m_bend;
     }
 
+    double Sx() const
+    {
+        return m_Sx;
+    }
+
+    double Sy() const
+    {
+        return m_Sy;
+    }
+
     Generatrix mapGeneratrix(double crv_x, State& state) const;
 
     /**
