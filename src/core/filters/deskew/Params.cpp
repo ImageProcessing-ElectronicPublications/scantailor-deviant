@@ -105,6 +105,46 @@ Params::takeManualSettingsFrom(Params const& other)
     // These settings are specified manually even in automatic mode,
     // so we want to preserve them after a dependency mismatch.
     m_distortionType = other.distortionType();
+
+    if (other.rotationParams().mode() == MODE_MANUAL)
+    {
+        m_rotationParams.setMode(MODE_MANUAL);
+    }
+
+    if (other.perspectiveParams().mode() == MODE_MANUAL)
+    {
+        m_perspectiveParams.setMode(MODE_MANUAL);
+    }
+
+    if (other.perspectiveParams().fovParams().mode() == MODE_MANUAL)
+    {
+        m_perspectiveParams.setFovParams(other.perspectiveParams().fovParams());
+    }
+
+    if (other.perspectiveParams().frameParams().mode() == MODE_MANUAL)
+    {
+        m_perspectiveParams.setFrameParams(other.perspectiveParams().frameParams());
+    }
+
+    if (other.dewarpingParams().mode() == MODE_MANUAL)
+    {
+        m_dewarpingParams.setMode(MODE_MANUAL);
+    }
+
+    if (other.dewarpingParams().fovParams().mode() == MODE_MANUAL)
+    {
+        m_dewarpingParams.setFovParams(other.dewarpingParams().fovParams());
+    }
+
+    if (other.dewarpingParams().frameParams().mode() == MODE_MANUAL)
+    {
+        m_dewarpingParams.setFrameParams(other.dewarpingParams().frameParams());
+    }
+
+    if (other.dewarpingParams().bendParams().mode() == MODE_MANUAL)
+    {
+        m_dewarpingParams.setBendParams(other.dewarpingParams().bendParams());
+    }
 }
 
 } // namespace deskew
