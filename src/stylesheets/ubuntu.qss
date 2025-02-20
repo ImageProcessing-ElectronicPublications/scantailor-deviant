@@ -85,6 +85,10 @@ QPushButton:pressed{
 	padding: 2px;
 	background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(220, 220, 220, 255), stop:1 rgba(255, 255, 255, 255));
 }
+QPushButton:checked
+{
+    background: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(255,150,60, 255), stop:1 rgba(255, 225, 210, 255));
+}
 QPushButton:disabled{
 	color:rgb(174,167,159);
 	border-width: 1px;
