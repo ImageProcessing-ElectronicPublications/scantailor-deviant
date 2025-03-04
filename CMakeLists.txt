@@ -25,6 +25,9 @@ SET(
 
 PROJECT("Scan Tailor Deviant")
 
+SET(CMAKE_CXX_STANDARD 11)
+SET(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 IF(MSVC)
         # Disable checked iterators for extra performance.
         ADD_DEFINITIONS(-D_SECURE_SCL=0)
