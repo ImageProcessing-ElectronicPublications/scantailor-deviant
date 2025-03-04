@@ -284,35 +284,35 @@ IF(WIN32)
         CMAKE_PATH(APPEND Qt5_DIR "plugins" OUTPUT_VARIABLE PLUGINS_DIR)
 
         # Install system plugin
-        install(FILES "${PLUGINS_DIR}/platforms/qwindows.dll"  DESTINATION ./platforms CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
-        install(FILES "${PLUGINS_DIR}/platforms/qwindowsd.dll" DESTINATION ./platforms CONFIGURATIONS Debug)
+        install(FILES "${PLUGINS_DIR}/platforms/qwindows.dll"  DESTINATION platforms CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/platforms/qwindowsd.dll" DESTINATION platforms CONFIGURATIONS Debug)
 
         # Install style plugin
-        install(FILES "${PLUGINS_DIR}/styles/qwindowsvistastyle.dll"  DESTINATION ./styles CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
-        install(FILES "${PLUGINS_DIR}/styles/qwindowsvistastyled.dll" DESTINATION ./styles CONFIGURATIONS Debug)
+        install(FILES "${PLUGINS_DIR}/styles/qwindowsvistastyle.dll"  DESTINATION styles CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/styles/qwindowsvistastyled.dll" DESTINATION styles CONFIGURATIONS Debug)
         
         # Install accessibility plugin
         IF (Qt5Widgets_VERSION VERSION_LESS 5.4.0)
-                install(FILES "${PLUGINS_DIR}/accessible/qtaccessiblewidgets.dll"  DESTINATION ./accessible CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
-                install(FILES "${PLUGINS_DIR}/accessible/qtaccessiblewidgetsd.dll" DESTINATION ./accessible CONFIGURATIONS Debug)
+                install(FILES "${PLUGINS_DIR}/accessible/qtaccessiblewidgets.dll"  DESTINATION accessible CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+                install(FILES "${PLUGINS_DIR}/accessible/qtaccessiblewidgetsd.dll" DESTINATION accessible CONFIGURATIONS Debug)
         ENDIF()
 
         # Install image format plugins
-        install(FILES "${PLUGINS_DIR}/imageformats/qjpeg.dll"  DESTINATION ./imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
-        install(FILES "${PLUGINS_DIR}/imageformats/qjpegd.dll" DESTINATION ./imageformats CONFIGURATIONS Debug)
+        install(FILES "${PLUGINS_DIR}/imageformats/qjpeg.dll"  DESTINATION imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/imageformats/qjpegd.dll" DESTINATION imageformats CONFIGURATIONS Debug)
 
-        install(FILES "${PLUGINS_DIR}/imageformats/qtiff.dll"  DESTINATION ./imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
-        install(FILES "${PLUGINS_DIR}/imageformats/qtiffd.dll" DESTINATION ./imageformats CONFIGURATIONS Debug)
+        install(FILES "${PLUGINS_DIR}/imageformats/qtiff.dll"  DESTINATION imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/imageformats/qtiffd.dll" DESTINATION imageformats CONFIGURATIONS Debug)
 
         # Install image format plugins required to display images in stylesheets
-        install(FILES "${PLUGINS_DIR}/imageformats/qico.dll"   DESTINATION ./imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
-        install(FILES "${PLUGINS_DIR}/imageformats/qicod.dll"  DESTINATION ./imageformats CONFIGURATIONS Debug)
+        install(FILES "${PLUGINS_DIR}/imageformats/qico.dll"   DESTINATION imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/imageformats/qicod.dll"  DESTINATION imageformats CONFIGURATIONS Debug)
 
-        install(FILES "${PLUGINS_DIR}/imageformats/qsvg.dll"   DESTINATION ./imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
-        install(FILES "${PLUGINS_DIR}/imageformats/qsvgd.dll"  DESTINATION ./imageformats CONFIGURATIONS Debug)
+        install(FILES "${PLUGINS_DIR}/imageformats/qsvg.dll"   DESTINATION imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/imageformats/qsvgd.dll"  DESTINATION imageformats CONFIGURATIONS Debug)
 
-        install(FILES "${PLUGINS_DIR}/iconengines/qsvgicon.dll"  DESTINATION ./iconengines CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
-        install(FILES "${PLUGINS_DIR}/iconengines/qsvgicond.dll" DESTINATION ./iconengines CONFIGURATIONS Debug)
+        install(FILES "${PLUGINS_DIR}/iconengines/qsvgicon.dll"  DESTINATION iconengines CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/iconengines/qsvgicond.dll" DESTINATION iconengines CONFIGURATIONS Debug)
 
         # Install stylesheets
         install(DIRECTORY "${CMAKE_SOURCE_DIR}/src/stylesheets"
