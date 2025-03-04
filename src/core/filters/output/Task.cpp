@@ -625,7 +625,7 @@ Task::UiUpdater::updateUI(FilterUiInterface* ui)
     if (QSettings().value(_key_output_show_orig_on_space, _key_output_show_orig_on_space_def).toBool()) {
         alt_image_ptr.reset(getAlternativeImage());
         if (alt_image_ptr) {
-            image_view->setAlternativeImage(alt_image_ptr, shared_ptr<QPixmap>());
+            image_view->setAlternativeImage(alt_image_ptr, std::shared_ptr<QPixmap>());
             alt_downscaled_pixmap_ptr = image_view->getAlternativePixmap();
         }
     }
