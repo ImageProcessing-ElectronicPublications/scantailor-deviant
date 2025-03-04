@@ -41,13 +41,15 @@
 #include <assert.h>
 
 ProjectPages::ProjectPages(Qt::LayoutDirection const layout_direction)
+    : m_refCounter(0)
 {
     initSubPagesInOrder(layout_direction);
 }
 
 ProjectPages::ProjectPages(
-    std::vector<ImageInfo> const& info,
+    std::vector<ImageInfo> const &info,
     Qt::LayoutDirection const layout_direction)
+    : m_refCounter(0)
 {
     initSubPagesInOrder(layout_direction);
 
@@ -70,8 +72,9 @@ ProjectPages::ProjectPages(
 }
 
 ProjectPages::ProjectPages(
-    std::vector<ImageFileInfo> const& files,
+    std::vector<ImageFileInfo> const &files,
     Pages const pages, Qt::LayoutDirection const layout_direction)
+    : m_refCounter(0)
 {
     initSubPagesInOrder(layout_direction);
 
