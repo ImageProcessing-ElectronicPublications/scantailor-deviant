@@ -334,7 +334,7 @@ IF(WIN32)
 
         # Install libjpeg
         FIND_FILE(LIBJPEG_DLL
-                NAMES libjpeg.dll jpeg.dll jpeg62.dll
+                NAMES libjpeg.dll jpeg.dll jpeg62.dll libjpeg-62.dll
                 PATHS ${CMAKE_PREFIX_PATH}
                 PATH_SUFFIXES bin lib
                 NO_DEFAULT_PATH)
@@ -356,7 +356,7 @@ IF(WIN32)
 
         # Install zlib
         FIND_FILE(ZLIB_DLL
-                NAMES zdll.dll zlib.dll zlib1.dll z.dll
+                NAMES zdll.dll zlib.dll zlib1.dll z.dll libzlib.dll
                 PATHS ${CMAKE_PREFIX_PATH}
                 PATH_SUFFIXES bin lib
                 NO_DEFAULT_PATH)
@@ -368,7 +368,7 @@ IF(WIN32)
         # Install openjpeg
         IF(ENABLE_OPENJPEG)
                 FIND_FILE(OPENJPEG_DLL
-                        NAMES openjp2.dll
+                        NAMES openjp2.dll libopenjp2.dll
                         PATHS ${CMAKE_PREFIX_PATH}
                         PATH_SUFFIXES bin lib
                         NO_DEFAULT_PATH)
@@ -381,7 +381,7 @@ IF(WIN32)
         # Install exiv
         IF(ENABLE_EXIV2)
                 FIND_FILE(EXIV2_DLL
-                        NAMES exiv2.dll
+                        NAMES exiv2.dll libexiv2.dll
                         PATHS ${CMAKE_PREFIX_PATH}
                         PATH_SUFFIXES bin lib
                         NO_DEFAULT_PATH)
