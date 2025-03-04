@@ -211,8 +211,8 @@ TiffWriter::writeImage(QIODevice& device, QImage const& image, bool multipage, i
         TIFFSetField(tif.handle(), TIFFTAG_SUBFILETYPE, FILETYPE_PAGE);
     }
 
-    TIFFSetField(tif.handle(), TIFFTAG_IMAGEWIDTH, uint32(image.width()));
-    TIFFSetField(tif.handle(), TIFFTAG_IMAGELENGTH, uint32(image.height()));
+    TIFFSetField(tif.handle(), TIFFTAG_IMAGEWIDTH, uint32_t(image.width()));
+    TIFFSetField(tif.handle(), TIFFTAG_IMAGELENGTH, uint32_t(image.height()));
     TIFFSetField(tif.handle(), TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_UINT);
     TIFFSetField(tif.handle(), TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
     TIFFSetField(tif.handle(), TIFFTAG_SOFTWARE, "Scan Tailor \"Deviant\" " VERSION);
