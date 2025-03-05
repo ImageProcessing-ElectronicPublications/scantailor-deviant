@@ -1,9 +1,5 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
 
-IF (POLICY CMP0071)
-        CMAKE_POLICY(SET CMP0071 OLD)
-ENDIF()
-
 IF (POLICY CMP0072)
         CMAKE_POLICY(SET CMP0072 OLD)
 ENDIF()
@@ -103,6 +99,8 @@ ENDIF()
 OPTION(ENABLE_OPENGL "OpenGL may be used for UI acceleration" ${use_opengl})
 
 SET(CMAKE_AUTOMOC ON)
+SET(CMAKE_AUTOUIC ON)
+
 SET(Qt_MIN_VERSION 5.7.0)
 IF(APPLE)
    # hardcoded path to Qt5CoreConfig.cmake etc. [truf]

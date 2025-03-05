@@ -19,7 +19,7 @@
 #ifndef SETTINGS_DIALOG_H_
 #define SETTINGS_DIALOG_H_
 
-#include "ui_SettingsDialog.h"
+#include "ui/ui_SettingsDialog.h"
 #include "settings/hotkeysmanager.h"
 #include "filters/page_layout/Alignment.h"
 #include "settings/ini_keys.h"

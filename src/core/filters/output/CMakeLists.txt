@@ -54,8 +54,6 @@ SOURCE_GROUP("Sources" FILES ${sources})
 FILE(GLOB ui_files "ui/*.ui")
 SOURCE_GROUP("UI Files" FILES ${ui_files})
 
-QT5_WRAP_UI(ui_sources ${ui_files})
-
 SET(output_filter_resource_files resources/output_filter_resources.qrc)
 SOURCE_GROUP("OutputFilterResources" FILES ${resource_files})
 
