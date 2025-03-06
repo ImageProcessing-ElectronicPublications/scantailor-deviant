@@ -53,9 +53,12 @@ SizeMode::SizeMode(QString const& string)
 QString
 SizeMode::toString() const
 {
-    char const* s = str::CALC_BY_AREA;
+    char const* s = str::CALC_BY_AREA;;
     switch (m_mode)
     {
+    case CALC_BY_AREA:
+        s = str::CALC_BY_AREA;
+        break;
     case FIT_WIDTH:
         s = str::FIT_WIDTH;
         break;

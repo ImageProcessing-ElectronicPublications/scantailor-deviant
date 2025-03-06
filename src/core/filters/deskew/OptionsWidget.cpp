@@ -368,6 +368,8 @@ OptionsWidget::modeAppliedTo(std::set<PageId> const& pages)
     case DistortionType::WARP:
         m_ptrSettings->setDewarpingMode(pages, m_pageParams.dewarpingParams().mode());
         break;
+    default:
+        break;
     }
 
     for (PageId const& page_id : pages)
@@ -395,6 +397,8 @@ OptionsWidget::modeAppliedToAllPages(std::set<PageId> const& pages)
     case DistortionType::WARP:
         m_ptrSettings->setDewarpingMode(pages, m_pageParams.dewarpingParams().mode());
         break;
+    default:
+        break;
     }
 
     emit invalidateAllThumbnails();
@@ -415,6 +419,8 @@ OptionsWidget::fovParamsAppliedTo(std::set<PageId> const& pages)
         break;
     case DistortionType::WARP:
         m_ptrSettings->setDewarpingFovParams(pages, m_pageParams.dewarpingParams().fovParams());
+        break;
+    default:
         break;
     }
 
@@ -440,6 +446,8 @@ OptionsWidget::fovParamsAppliedToAllPages(std::set<PageId> const& pages)
     case DistortionType::WARP:
         m_ptrSettings->setDewarpingFovParams(pages, m_pageParams.dewarpingParams().fovParams());
         break;
+    default:
+        break;
     }
 
     emit invalidateAllThumbnails();
@@ -460,6 +468,8 @@ OptionsWidget::frameParamsAppliedTo(std::set<PageId> const& pages)
         break;
     case DistortionType::WARP:
         m_ptrSettings->setDewarpingFrameParams(pages, m_pageParams.dewarpingParams().frameParams());
+        break;
+    default:
         break;
     }
 
@@ -484,6 +494,8 @@ OptionsWidget::frameParamsAppliedToAllPages(std::set<PageId> const& pages)
         break;
     case DistortionType::WARP:
         m_ptrSettings->setDewarpingFrameParams(pages, m_pageParams.dewarpingParams().frameParams());
+        break;
+    default:
         break;
     }
 
@@ -594,6 +606,8 @@ OptionsWidget::preUpdateUI(PageId const& page_id, DistortionType const& distorti
         updateSizePanel(m_pageParams.dewarpingParams().sizeParams());
         updateMarginsPanel(m_pageParams.dewarpingParams().marginsParams());
         break;
+    default:
+        break;
     }
 
     setupUiForDistortionType(distortion_type);
@@ -626,6 +640,8 @@ OptionsWidget::postUpdateUI(Params const& page_params)
         updateSizePanel(page_params.dewarpingParams().sizeParams());
         updateMarginsPanel(page_params.dewarpingParams().marginsParams());
         updateAutoValuesOnPanels();
+        break;
+    default:
         break;
     }
 
@@ -1691,6 +1707,8 @@ try
         }
         break;
     }
+    default:
+        break;
     }
 }
 catch (std::runtime_error const&)
@@ -1728,7 +1746,9 @@ catch (std::runtime_error const&)
 
         break;
     }
-    }
+    default:
+        break;
+   }
 }
 
 void

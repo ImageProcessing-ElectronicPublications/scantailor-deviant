@@ -45,8 +45,9 @@ ThumbnailVersionGenerator::generate()
         case PageId::RIGHT_PAGE:
             return QString('R');
         }
+    default:
+        return QString();
     }
-    return QString();
 }
 
 } // namespace deskew
