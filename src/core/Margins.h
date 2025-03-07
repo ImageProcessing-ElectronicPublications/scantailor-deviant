@@ -134,7 +134,7 @@ public:
         }
     }
 
-    Margins* const backup() const
+    Margins const* backup() const
     {
         return m_backuppedData.get();
     }
