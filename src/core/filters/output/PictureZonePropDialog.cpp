@@ -55,6 +55,8 @@ PictureZonePropDialog::PictureZonePropDialog(
 void
 PictureZonePropDialog::itemToggled(bool selected)
 {
+    Q_UNUSED(selected);
+
     PictureLayerProperty::Layer layer = PictureLayerProperty::NO_OP;
 
     QObject* const obj = sender();

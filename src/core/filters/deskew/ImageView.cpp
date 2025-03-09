@@ -124,6 +124,8 @@ ImageView::setRotationAngle(double const degrees, bool preserve_scale)
 void
 ImageView::onPaint(QPainter& painter, InteractionState const& interaction)
 {
+    Q_UNUSED(interaction);
+
     painter.setWorldMatrixEnabled(false);
     painter.setRenderHints(QPainter::Antialiasing, false);
 

@@ -187,6 +187,8 @@ Task::process(
     TaskStatus const& status, FilterData const& data,
     QPolygonF const& content_rect_phys, QString const& thumb_version)
 {
+    Q_UNUSED(thumb_version);
+
     status.throwIfCancelled();
 
     Params params(m_ptrSettings->getParams(m_pageId));

@@ -147,5 +147,8 @@ IncompleteThumbnail::paintOverImage(
     QPainter& painter, QTransform const& image_to_display,
     QTransform const& thumb_to_display)
 {
+    Q_UNUSED(image_to_display);
+    Q_UNUSED(thumb_to_display);
+
     drawQuestionMark(painter, boundingRect());
 }

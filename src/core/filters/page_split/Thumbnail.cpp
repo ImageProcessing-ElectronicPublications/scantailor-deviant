@@ -50,6 +50,8 @@ Thumbnail::paintOverImage(
     QPainter& painter, QTransform const& image_to_display,
     QTransform const& thumb_to_display)
 {
+    Q_UNUSED(thumb_to_display);
+
     QRectF const canvas_rect(imageXform().resultingRect());
 
     painter.setRenderHint(QPainter::Antialiasing, false);

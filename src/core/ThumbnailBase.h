@@ -70,7 +70,12 @@ protected:
      */
     virtual void paintOverImage(
         QPainter& painter, QTransform const& image_to_display,
-        QTransform const& thumb_to_display) {}
+        QTransform const& thumb_to_display)
+    {
+        Q_UNUSED(painter);
+        Q_UNUSED(image_to_display);
+        Q_UNUSED(thumb_to_display);
+    }
 
     virtual void paintDeviant(QPainter& painter);
 

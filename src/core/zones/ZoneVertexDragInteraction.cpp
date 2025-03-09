@@ -50,6 +50,8 @@ ZoneVertexDragInteraction::ZoneVertexDragInteraction(
 void
 ZoneVertexDragInteraction::onPaint(QPainter& painter, InteractionState const& interaction)
 {
+    Q_UNUSED(interaction);
+
     painter.setWorldMatrixEnabled(false);
     painter.setRenderHint(QPainter::Antialiasing);
 

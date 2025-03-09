@@ -88,6 +88,9 @@ void
 ThumbnailBase::paint(QPainter* painter,
                      QStyleOptionGraphicsItem const* option, QWidget* widget)
 {
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+
     QPixmap pixmap;
 
     if (!m_ptrCompletionHandler.get()) {

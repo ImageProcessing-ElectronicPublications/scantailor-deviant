@@ -560,6 +560,8 @@ OutputGenerator::processAsIs(
     ZoneSet const& fill_zones,
     DebugImages* const dbg) const
 {
+    Q_UNUSED(dbg);
+
     uint8_t const dominant_gray = reserveBlackAndWhite<uint8_t>(
                                       calcDominantBackgroundGrayLevel(input.grayImage())
                                   );

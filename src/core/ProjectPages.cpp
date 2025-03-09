@@ -663,6 +663,8 @@ ProjectPages::removePagesImpl(std::set<PageId> const& to_remove, bool& modified)
 PageInfo
 ProjectPages::unremovePageImpl(PageId const& page_id, bool& modified)
 {
+    Q_UNUSED(modified);
+
     if (page_id.subPage() == PageId::SINGLE_PAGE) {
         // These can't be unremoved.
         return PageInfo();

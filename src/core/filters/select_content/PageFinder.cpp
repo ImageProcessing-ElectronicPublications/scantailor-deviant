@@ -49,6 +49,8 @@ QRectF
 PageFinder::findPageBox(
     TaskStatus const& status, FilterData const& data, bool fine_tune, QSizeF const& box, double tolerance, Margins borders, DebugImages* dbg)
 {
+    Q_UNUSED(status);
+
     ImageTransformation xform_150dpi(data.xform());
     xform_150dpi.preScaleToDpi(Dpi(150, 150));
 

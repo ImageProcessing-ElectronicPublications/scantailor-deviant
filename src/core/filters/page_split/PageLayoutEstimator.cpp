@@ -109,6 +109,10 @@ std::unique_ptr<PageLayout> autoDetectSinglePageLayout(
     GrayImage const& gray_downscaled,
     QTransform const& out_to_downscaled, DebugImages* dbg)
 {
+    Q_UNUSED(gray_downscaled);
+    Q_UNUSED(out_to_downscaled);
+    Q_UNUSED(dbg);
+
     double const image_center = virtual_image_rect.center().x();
 
     // A loop just to be able to break from it.
@@ -785,6 +789,7 @@ PageLayoutEstimator::processContentSpansTwoPages(
     LayoutType const layout_type,
     std::deque<Span> const& spans, int const width, int const height)
 {
+    Q_UNUSED(layout_type);
     assert(layout_type == AUTO_LAYOUT_TYPE || layout_type == TWO_PAGES);
 
     QRectF const virtual_image_rect(0, 0, width, height);

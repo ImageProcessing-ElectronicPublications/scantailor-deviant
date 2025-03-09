@@ -274,6 +274,8 @@ void
 OptionsWidget::layoutTypeSet(
     std::set<PageId> const& pages, bool all_pages, LayoutType const layout_type, bool apply_cut)
 {
+    Q_UNUSED(all_pages);
+
     if (pages.empty()) {
         return;
     }

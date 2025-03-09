@@ -177,7 +177,8 @@ SettingsDialog::commitChanges()
 void
 SettingsDialog::on_treeWidget_itemActivated(QTreeWidgetItem* item, int column)
 {
-
+    Q_UNUSED(item);
+    Q_UNUSED(column);
 }
 
 void
