@@ -117,7 +117,7 @@ SET(
         settings/globalstaticsettings.cpp settings/globalstaticsettings.h
         settings/hotkeysmanager.cpp settings/hotkeysmanager.h
         settings/TiffCompressionInfo.cpp settings/TiffCompressionInfo.h
-        settings/ini_keys.h
+        settings/ini_keys.cpp settings/ini_keys.h
 )
 
 IF (ENABLE_OPENJPEG)
