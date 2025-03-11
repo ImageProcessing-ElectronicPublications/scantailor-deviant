@@ -503,8 +503,7 @@ try
     double total_error = 0;
     for (TracedCurve const& curve : m_rAllCurves)
     {
-        size_t const polyline_size = curve.trimmedPolyline.size();
-        assert(polyline_size > 0); // Guaranteed by addHorizontalCurve().
+        assert(curve.trimmedPolyline.size() > 0); // Guaranteed by addHorizontalCurve().
 
         // We want to penalize the line both for being not straight and also
         // for being non-horizontal. The penalty metric we use is:
@@ -720,7 +719,6 @@ DistortionModelBuilder::visualizeModel(
             }
         }
 
-        int const num_control_points = curve.extendedSpline.numControlPoints();
         QRectF rect(0, 0, stroke_width, stroke_width);
 
         // Draw original polyline knots.

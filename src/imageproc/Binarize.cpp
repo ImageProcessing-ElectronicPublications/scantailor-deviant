@@ -506,9 +506,6 @@ BinaryImage binarizeGatos(
         return BinaryImage();
     }
 
-    int const w = src.width();
-    int const h = src.height();
-
     GrayImage wiener(wienerFilter(gray, QSize(5, 5), noise_sigma));
     BinaryImage niblack(binarizeNiblack(wiener, window_size, k, delta));
     BinaryImage bw_img(binarizeGatosCleaner(wiener, niblack, window_size));
@@ -537,8 +534,6 @@ GrayImage binarizeSauvolaMap(
 
     int const w = src.width();
     int const h = src.height();
-    uint8_t const* src_line = src.data();
-    int const src_stride = src.stride();
     uint8_t* gray_line = gray.data();
     int const gray_stride = gray.stride();
 
@@ -641,8 +636,6 @@ GrayImage binarizeWolfMap(
 
     int const w = src.width();
     int const h = src.height();
-    uint8_t const* src_line = src.data();
-    int const src_stride = src.stride();
     uint8_t* gray_line = gray.data();
     int const gray_stride = gray.stride();
 
@@ -766,8 +759,6 @@ GrayImage binarizeBradleyMap(
 
     int const w = src.width();
     int const h = src.height();
-    uint8_t const* src_line = src.data();
-    int const src_stride = src.stride();
     uint8_t* gray_line = gray.data();
     int const gray_stride = gray.stride();
 
@@ -963,7 +954,7 @@ GrayImage binarizeMScaleMap(
     unsigned int whcp, l, i, j, blsz, rsz, radius;
     double immean, kover, sensitivity, sensdiv, senspos, sensinv;
     unsigned int pim, immin, immax, imt, cnth, cntw, level = 0;
-    unsigned int maskbl, maskover, tim, threshold = 0;
+    unsigned int maskbl, maskover, tim;
     unsigned long int idx;
 
     radius = (window_size.height() + window_size.width()) >> 1;

@@ -208,7 +208,6 @@ void knnDenoiserFilterInPlace(
     {
         float const threshold_weight = 0.02f;
         float const threshold_lerp = 0.66f;
-        float const noise_eps = 0.0000001f;
         float const noise_lerpc = 0.16f;
 
         int const w = image.width();
@@ -516,7 +515,6 @@ void colorCurveFilterInPlace(
     if (coef != 0.0f)
     {
         int icoef = (int) (coef * 256.0f + 0.5f);
-        unsigned int const w = image.width();
         unsigned int const h = image.height();
         uint8_t* image_line = (uint8_t*) image.bits();
         int const image_bpl = image.bytesPerLine();
@@ -567,7 +565,6 @@ void colorSqrFilterInPlace(
     if (coef != 0.0f)
     {
         int icoef = (int) (coef * 256.0f + 0.5f);
-        unsigned int const w = image.width();
         unsigned int const h = image.height();
         uint8_t* image_line = (uint8_t*) image.bits();
         int const image_bpl = image.bytesPerLine();
@@ -619,9 +616,6 @@ void coloredSignificanceFilterInPlace(
     unsigned int const h = image.height();
     unsigned int const wg = gray.width();
     unsigned int const hg = gray.height();
-    uint8_t const* image_line = (uint8_t const*) image.bits();
-    int const image_bpl = image.bytesPerLine();
-    unsigned int const cnum = image_bpl / w;
     uint8_t* gray_line = gray.data();
     int const gray_bpl = gray.stride();
 
@@ -785,19 +779,10 @@ void hsvKMeansInPlace(
             return;
         }
 
-        uint8_t* dst_line = (uint8_t*) dst.bits();
-        int const dst_bpl = dst.bytesPerLine();
-        unsigned int const dnum = dst_bpl / w;
-        uint8_t const* image_line = (uint8_t*) image.bits();
-        int const image_bpl = image.bytesPerLine();
-        unsigned int const inum = image_bpl / w;
         uint32_t const* mask_line = mask.data();
         int const mask_wpl = mask.wordsPerLine();
 
         QImage hsv_img(w, h, QImage::Format_RGB32);
-        uint8_t* hsv_line = (uint8_t*) hsv_img.bits();
-        int const hsv_bpl = hsv_img.bytesPerLine();
-        unsigned int const hnum = hsv_bpl / w;
 
         unsigned long mean_len[256] = {0};
         double mean_h0[256] = {0.0};
@@ -1053,9 +1038,7 @@ void hsvKMeansInPlace(
         {
             float const hsv_hsc = (mean_h[k] - 128.0f) * 2.0f;
             float const hsv_hss = (mean_s[k] - 128.0f) * 2.0f;
-            float const hsv_v = mean_v[k];
             float hsv_h = atan2(hsv_hss, hsv_hsc) / ctorad;
-            hsv_h = (hsv_h < 0.0f) ? (hsv_h + 256.0f) : hsv_h;
             float const hsv_s = sqrt(hsv_hsc * hsv_hsc + hsv_hss * hsv_hss);
             mean_h[k] = hsv_h;
             mean_s[k] = hsv_s;

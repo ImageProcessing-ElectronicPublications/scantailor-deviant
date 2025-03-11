@@ -644,8 +644,6 @@ struct Path
 std::vector<QPoint>
 TopBottomEdgeTracer::locateBestPathEndpoints(Grid<GridNode> const& grid, QLineF const& line)
 {
-    int const width = grid.width();
-    int const height = grid.height();
     int const stride = grid.stride();
     GridNode const* const data = grid.data();
 
@@ -659,7 +657,7 @@ TopBottomEdgeTracer::locateBestPathEndpoints(Grid<GridNode> const& grid, QLineF 
         QPoint const pt(traverser.next());
 
         // intersectWithRect() ensures that.
-        assert(pt.x() >= 0 && pt.y() >= 0 && pt.x() < width && pt.y() < height);
+        assert(pt.x() >= 0 && pt.y() >= 0 && pt.x() < grid.width() && pt.y() < grid.height());
 
         uint32_t const offset = pt.y() * stride + pt.x();
         GridNode const* node = data + offset;
@@ -1083,12 +1081,6 @@ TopBottomEdgeTracer::upTheHillSnake(
         for (size_t node_idx = 0; node_idx < num_nodes; ++node_idx)
         {
             Vec2f const pt(snake[node_idx]);
-            float const cur_external_energy = -interpolatedGridValue(
-                                                  grid, [](GridNode const& node)
-            {
-                return node.absDirDeriv();
-            }, pt, 1000
-                                              );
 
             for (int displacement_idx = 0; displacement_idx < num_displacements; ++displacement_idx)
             {
@@ -1380,8 +1372,6 @@ TopBottomEdgeTracer::visualizePaths(
     uint32_t* const canvas_data = (uint32_t*)canvas.bits();
     int const canvas_stride = canvas.bytesPerLine() / 4;
 
-    int const width = grid.width();
-    int const height = grid.height();
     int const grid_stride = grid.stride();
     GridNode const* const grid_data = grid.data();
 
