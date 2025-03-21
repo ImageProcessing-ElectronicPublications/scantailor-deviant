@@ -15,6 +15,10 @@ TARGET_LINK_LIBRARIES(
 	dewarping zones interaction imageproc math foundation exporting
 )
 
+IF(OPENMP_FOUND)
+        TARGET_LINK_LIBRARIES(scantailor-deviant-cli OpenMP::OpenMP_CXX)
+ENDIF()
+
 # Widgets module is used statically but not at runtime.
 TARGET_LINK_LIBRARIES(scantailor-deviant-cli Qt5::Widgets Qt5::Xml)
 

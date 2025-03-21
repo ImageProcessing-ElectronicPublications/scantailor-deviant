@@ -106,6 +106,10 @@ TARGET_LINK_LIBRARIES(
         dewarping zones interaction imageproc math foundation exporting
 )
 
+IF(OPENMP_FOUND)
+        TARGET_LINK_LIBRARIES(scantailor-deviant OpenMP::OpenMP_CXX)
+ENDIF()
+
 ADD_DEPENDENCIES(scantailor-deviant fix_orientation page_split deskew select_content page_layout output stcore
         dewarping zones interaction imageproc math foundation)
 
