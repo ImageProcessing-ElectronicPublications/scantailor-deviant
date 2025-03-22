@@ -9,6 +9,12 @@ SET(
 
 ADD_EXECUTABLE(scantailor-deviant-cli ${cli_only_sources} )
 
+IF(APPLE)
+        SET_TARGET_PROPERTIES(scantailor-deviant-cli PROPERTIES
+                INSTALL_RPATH "@executable_path/../Frameworks"
+        )
+ENDIF()
+
 TARGET_LINK_LIBRARIES(
         scantailor-deviant-cli
         fix_orientation page_split deskew select_content page_layout output stcore
@@ -27,7 +33,7 @@ IF(EXTRA_LIBS)
 ENDIF()
 
 IF(APPLE)
-        INSTALL(TARGETS scantailor-deviant-cli BUNDLE DESTINATION . RUNTIME DESTINATION bin)
+        INSTALL(TARGETS scantailor-deviant-cli RUNTIME DESTINATION scantailor-deviant.app/Contents/Library)
 ELSEIF(WIN32)
         INSTALL(TARGETS scantailor-deviant-cli RUNTIME DESTINATION .)
 ELSE()

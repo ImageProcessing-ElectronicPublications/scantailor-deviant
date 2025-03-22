@@ -7,7 +7,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleExecutable</key>
-	<string>ScanTailorDeviant</string>
+	<string>scantailor-deviant</string>
 	<key>CFBundleName</key>
 	<string>ScanTailorDeviant</string>
 	<key>CFBundlePackageType</key>

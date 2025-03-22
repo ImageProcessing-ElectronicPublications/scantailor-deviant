@@ -103,8 +103,8 @@ SET(CMAKE_AUTOUIC ON)
 
 SET(Qt_MIN_VERSION 5.7.0)
 IF(APPLE)
-   # hardcoded path to Qt5CoreConfig.cmake etc. [truf]
-   SET(CMAKE_PREFIX_PATH "/Users/robert/build/Qt/5.8/clang_64/")
+   # Not used but required for loading cocoa plugin
+   FIND_PACKAGE(Qt5PrintSupport ${Qt_MIN_VERSION} REQUIRED)
 ENDIF(APPLE)
 FIND_PACKAGE(Qt5Core ${Qt_MIN_VERSION} REQUIRED)
 FIND_PACKAGE(Qt5Gui ${Qt_MIN_VERSION} REQUIRED)
@@ -395,6 +395,31 @@ IF(WIN32)
                 install(FILES "${EXIV2_DLL}"  DESTINATION .)
         ENDIF()
 ELSEIF(APPLE)
+        INSTALL(IMPORTED_RUNTIME_ARTIFACTS scantailor-deviant
+                RUNTIME_DEPENDENCY_SET runtime
+                BUNDLE DESTINATION .
+        )
+
+        INSTALL(RUNTIME_DEPENDENCY_SET runtime
+                DESTINATION scantailor-deviant.app/Contents/Frameworks
+                PRE_EXCLUDE_REGEXES "^/System" "^/Library" "^/usr/lib"
+                POST_EXCLUDE_REGEXES ""
+        )
+
+        install(DIRECTORY "${CMAKE_SOURCE_DIR}/src/stylesheets"
+                DESTINATION scantailor-deviant.app/Contents/Resources)
+
+        CMAKE_PATH(SET QT5_PLUGINS_DIR NORMALIZE ${Qt5Core_DIR}/../../../plugins)
+        set(PLUGINS_DESTINATION scantailor-deviant.app/Contents/PlugIns)
+
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/platforms/libqcocoa.dylib    DESTINATION ${PLUGINS_DESTINATION}/platforms)
+
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/styles/libqmacstyle.dylib    DESTINATION ${PLUGINS_DESTINATION}/styles)
+
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/imageformats/libqico.dylib   DESTINATION ${PLUGINS_DESTINATION}/imageformats)
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/imageformats/libqjpeg.dylib  DESTINATION ${PLUGINS_DESTINATION}/imageformats)
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/imageformats/libqsvg.dylib   DESTINATION ${PLUGINS_DESTINATION}/imageformats)
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/imageformats/libqtiff.dylib  DESTINATION ${PLUGINS_DESTINATION}/imageformats)
 ELSE()
         INSTALL(DIRECTORY "${CMAKE_SOURCE_DIR}/src/stylesheets" DESTINATION "share/scantailor-deviant")
 
@@ -442,6 +467,8 @@ IF(WIN32)
         SET(CPACK_NSIS_INSTALLED_ICON_NAME "scantailor-deviant.exe")
         SET(CPACK_NSIS_EXECUTABLES_DIRECTORY .)
 ELSEIF(APPLE)
+        SET(CPACK_SOURCE_GENERATOR TGZ)
+        SET(CPACK_GENERATOR DragNDrop)
 ELSE()
         SET(CPACK_DEBIAN_PACKAGE_DESCRIPTION 
                 "Scan Tailor is an interactive post-processing tool for scanned pages.\n"
