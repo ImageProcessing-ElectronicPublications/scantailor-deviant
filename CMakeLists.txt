@@ -1,4 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.21)
 
 PROJECT("Scan Tailor Deviant")
 
@@ -72,7 +72,6 @@ INCLUDE_DIRECTORIES("${CMAKE_CURRENT_BINARY_DIR}")
 INCLUDE(CheckIncludeFile)
 INCLUDE(CheckIncludeFileCXX)
 INCLUDE(TestCXXAcceptsFlag)
-INCLUDE(cmake/FindPthreads.cmake)
 IF(UNIX AND NOT APPLE)
 INCLUDE(cmake/FindCanberra.cmake)
 ENDIF(UNIX AND NOT APPLE)
@@ -193,17 +192,8 @@ IF (ENABLE_EXIV2)
 ENDIF()
 
 IF(UNIX)
-        FindPthreads()
-	IF(PTHREADS_FOUND)
-	        ADD_DEFINITIONS(${PTHREADS_CFLAGS})
-		LINK_LIBRARIES(${PTHREADS_LIBS})
-		ELSE(PTHREADS_FOUND)
-		MESSAGE(
-		        FATAL_ERROR
-			"Could not detect threading flags.\n"
-			"Try specifying them manually in PTHREADS_CFLAGS and PTHREADS_LIBS."
-			)
-	ENDIF(PTHREADS_FOUND)
+        find_package(Threads REQUIRED)
+        LINK_LIBRARIES(Threads::Threads)
 ELSEIF(WIN32)
         ADD_DEFINITIONS(-DNOMINMAX)
 ENDIF(UNIX)
