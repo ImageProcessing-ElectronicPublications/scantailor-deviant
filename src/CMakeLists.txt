@@ -37,7 +37,11 @@ ENDIF(WIN32 OR APPLE)
 
 ADD_CUSTOM_TARGET(compile_translations ALL DEPENDS ${QM_FILES})
 
-INSTALL(FILES ${QM_FILES} DESTINATION "${TRANSLATIONS_DIR_REL}/")
+IF(APPLE)
+        INSTALL(FILES ${QM_FILES} DESTINATION "scantailor-deviant.app/Contents/Resources/translations")
+ELSE()
+        INSTALL(FILES ${QM_FILES} DESTINATION "${TRANSLATIONS_DIR_REL}/")
+ENDIF()
 
 # Let QM_FILES be accessable in packaging/windows/
 SET (QM_FILES ${QM_FILES} PARENT_SCOPE)

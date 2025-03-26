@@ -1,4 +1,6 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.21)
+
+PROJECT("Scan Tailor Deviant")
 
 IF (POLICY CMP0072)
         CMAKE_POLICY(SET CMP0072 NEW)
@@ -12,8 +14,6 @@ SET(
         CMAKE_USER_MAKE_RULES_OVERRIDE_CXX
         "${CMAKE_SOURCE_DIR}/cmake/default_cxxflags.cmake"
 )
-
-PROJECT("Scan Tailor Deviant")
 
 SET(CMAKE_CXX_STANDARD 11)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -72,7 +72,6 @@ INCLUDE_DIRECTORIES("${CMAKE_CURRENT_BINARY_DIR}")
 INCLUDE(CheckIncludeFile)
 INCLUDE(CheckIncludeFileCXX)
 INCLUDE(TestCXXAcceptsFlag)
-INCLUDE(cmake/FindPthreads.cmake)
 IF(UNIX AND NOT APPLE)
 INCLUDE(cmake/FindCanberra.cmake)
 ENDIF(UNIX AND NOT APPLE)
@@ -103,8 +102,8 @@ SET(CMAKE_AUTOUIC ON)
 
 SET(Qt_MIN_VERSION 5.7.0)
 IF(APPLE)
-   # hardcoded path to Qt5CoreConfig.cmake etc. [truf]
-   SET(CMAKE_PREFIX_PATH "/Users/robert/build/Qt/5.8/clang_64/")
+   # Not used but required for loading cocoa plugin
+   FIND_PACKAGE(Qt5PrintSupport ${Qt_MIN_VERSION} REQUIRED)
 ENDIF(APPLE)
 FIND_PACKAGE(Qt5Core ${Qt_MIN_VERSION} REQUIRED)
 FIND_PACKAGE(Qt5Gui ${Qt_MIN_VERSION} REQUIRED)
@@ -181,6 +180,7 @@ if (OPENMP_FOUND)
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
     set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
+    include_directories(${OpenMP_CXX_INCLUDE_DIRS})
 endif()
 
 OPTION(ENABLE_EXIV2 "Exiv2 library may be used to manage image metadata." ON)
@@ -192,17 +192,8 @@ IF (ENABLE_EXIV2)
 ENDIF()
 
 IF(UNIX)
-        FindPthreads()
-	IF(PTHREADS_FOUND)
-	        ADD_DEFINITIONS(${PTHREADS_CFLAGS})
-		LINK_LIBRARIES(${PTHREADS_LIBS})
-		ELSE(PTHREADS_FOUND)
-		MESSAGE(
-		        FATAL_ERROR
-			"Could not detect threading flags.\n"
-			"Try specifying them manually in PTHREADS_CFLAGS and PTHREADS_LIBS."
-			)
-	ENDIF(PTHREADS_FOUND)
+        find_package(Threads REQUIRED)
+        LINK_LIBRARIES(Threads::Threads)
 ELSEIF(WIN32)
         ADD_DEFINITIONS(-DNOMINMAX)
 ENDIF(UNIX)
@@ -394,6 +385,31 @@ IF(WIN32)
                 install(FILES "${EXIV2_DLL}"  DESTINATION .)
         ENDIF()
 ELSEIF(APPLE)
+        INSTALL(IMPORTED_RUNTIME_ARTIFACTS scantailor-deviant
+                RUNTIME_DEPENDENCY_SET runtime
+                BUNDLE DESTINATION .
+        )
+
+        INSTALL(RUNTIME_DEPENDENCY_SET runtime
+                DESTINATION scantailor-deviant.app/Contents/Frameworks
+                PRE_EXCLUDE_REGEXES "^/System" "^/Library" "^/usr/lib"
+                POST_EXCLUDE_REGEXES ""
+        )
+
+        install(DIRECTORY "${CMAKE_SOURCE_DIR}/src/stylesheets"
+                DESTINATION scantailor-deviant.app/Contents/Resources)
+
+        CMAKE_PATH(SET QT5_PLUGINS_DIR NORMALIZE ${Qt5Core_DIR}/../../../plugins)
+        set(PLUGINS_DESTINATION scantailor-deviant.app/Contents/PlugIns)
+
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/platforms/libqcocoa.dylib    DESTINATION ${PLUGINS_DESTINATION}/platforms)
+
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/styles/libqmacstyle.dylib    DESTINATION ${PLUGINS_DESTINATION}/styles)
+
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/imageformats/libqico.dylib   DESTINATION ${PLUGINS_DESTINATION}/imageformats)
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/imageformats/libqjpeg.dylib  DESTINATION ${PLUGINS_DESTINATION}/imageformats)
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/imageformats/libqsvg.dylib   DESTINATION ${PLUGINS_DESTINATION}/imageformats)
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/imageformats/libqtiff.dylib  DESTINATION ${PLUGINS_DESTINATION}/imageformats)
 ELSE()
         INSTALL(DIRECTORY "${CMAKE_SOURCE_DIR}/src/stylesheets" DESTINATION "share/scantailor-deviant")
 
@@ -441,6 +457,8 @@ IF(WIN32)
         SET(CPACK_NSIS_INSTALLED_ICON_NAME "scantailor-deviant.exe")
         SET(CPACK_NSIS_EXECUTABLES_DIRECTORY .)
 ELSEIF(APPLE)
+        SET(CPACK_SOURCE_GENERATOR TGZ)
+        SET(CPACK_GENERATOR DragNDrop)
 ELSE()
         SET(CPACK_DEBIAN_PACKAGE_DESCRIPTION 
                 "Scan Tailor is an interactive post-processing tool for scanned pages.\n"
