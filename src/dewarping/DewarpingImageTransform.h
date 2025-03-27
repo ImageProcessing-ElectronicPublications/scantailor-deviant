@@ -21,6 +21,7 @@
 
 #include "CylindricalSurfaceDewarper.h"
 #include "imageproc/AbstractImageTransform.h"
+#include "SizeParams.h"
 #include <QSize>
 #include <QPolygonF>
 #include <vector>
@@ -57,7 +58,8 @@ public:
         std::vector<QPointF> const& bottom_curve,
         FovParams const& fov_params,
         FrameParams const& frame_params,
-        BendParams const& bend_params);
+        BendParams const& bend_params,
+        SizeParams const& size_params);
 
     virtual ~DewarpingImageTransform();
 
@@ -112,6 +114,7 @@ private:
     QPolygonF m_origCropArea;
     std::vector<QPointF> m_topPolyline;
     std::vector<QPointF> m_bottomPolyline;
+    SizeParams m_sizeParams;
     CylindricalSurfaceDewarper m_dewarper;
 
     /**

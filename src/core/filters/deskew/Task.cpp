@@ -463,7 +463,8 @@ Task::processPerspectiveDistortion(
             top_curve, bottom_curve,
             params.perspectiveParams().fovParams(),
             params.perspectiveParams().frameParams(),
-            BendParams(MODE_MANUAL, 0.0, 0.0, 0.0)
+            BendParams(MODE_MANUAL, 0.0, 0.0, 0.0),
+            params.perspectiveParams().sizeParams()
         );
 
         QRectF const transformed_rectF = perspective_transform.transformedCropArea().boundingRect();
@@ -593,17 +594,18 @@ Task::processWarpDistortion(
 
     if (m_ptrNextTask)
     {
-        DewarpingImageTransform perspective_transform(
+        DewarpingImageTransform dewarping_transform(
             orig_image_transform.origSize(),
             orig_image_transform.origCropArea(),
             params.dewarpingParams().distortionModel().topCurve().polyline(),
             params.dewarpingParams().distortionModel().bottomCurve().polyline(),
             params.dewarpingParams().fovParams(),
             params.dewarpingParams().frameParams(),
-            params.dewarpingParams().bendParams()
+            params.dewarpingParams().bendParams(),
+            params.dewarpingParams().sizeParams()
         );
 
-        QRectF const transformed_rectF = perspective_transform.transformedCropArea().boundingRect();
+        QRectF const transformed_rectF = dewarping_transform.transformedCropArea().boundingRect();
         QRect const transformed_rect(
             transformed_rectF.left(),
             transformed_rectF.top(),
@@ -611,7 +613,7 @@ Task::processWarpDistortion(
             transformed_rectF.height()
         );
 
-        QImage transformed_image = perspective_transform.materialize(
+        QImage transformed_image = dewarping_transform.materialize(
             data.origImage(),
             transformed_rect,
             QColor(255, 255, 255)
@@ -636,7 +638,7 @@ Task::processWarpDistortion(
         );
 
         QPolygonF const crop_area = crop_area_transform.map(
-            perspective_transform.transformedCropArea()
+            dewarping_transform.transformedCropArea()
         );
 
         QString const thumb_version = ThumbnailVersionGenerator(

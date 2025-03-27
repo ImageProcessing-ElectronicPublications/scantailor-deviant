@@ -115,7 +115,8 @@ CacheDrivenTask::process(
                     top_curve, bottom_curve,
                     params->perspectiveParams().fovParams(),
                     params->perspectiveParams().frameParams(),
-                    BendParams(MODE_MANUAL, 0.0, 0.0, 0.0)
+                    BendParams(MODE_MANUAL, 0.0, 0.0, 0.0),
+                    params->perspectiveParams().sizeParams()
                 );
 
                 new_transform = std::make_shared<ImageTransformation>(
@@ -144,7 +145,8 @@ CacheDrivenTask::process(
                     params->dewarpingParams().distortionModel().bottomCurve().polyline(),
                     params->dewarpingParams().fovParams(),
                     params->dewarpingParams().frameParams(),
-                    params->dewarpingParams().bendParams()
+                    params->dewarpingParams().bendParams(),
+                    params->dewarpingParams().sizeParams()
                 );
 
                 new_transform = std::make_shared<ImageTransformation>(

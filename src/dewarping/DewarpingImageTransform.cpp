@@ -99,10 +99,12 @@ DewarpingImageTransform::DewarpingImageTransform(
     std::vector<QPointF> const& bottom_curve,
     FovParams const& fov_params,
     FrameParams const& frame_params,
-    BendParams const& bend_params)
+    BendParams const& bend_params,
+    SizeParams const& size_params)
     :	m_origSize(orig_size)
     ,	m_topPolyline(top_curve)
     ,	m_bottomPolyline(bottom_curve)
+    ,   m_sizeParams(size_params)
     ,	m_dewarper(top_curve, bottom_curve,
                    fov_params, frame_params, bend_params)
     ,	m_intrinsicScaleX(1.0)
@@ -310,86 +312,75 @@ int const DewarpingImageTransform::INTRINSIC_SCALE_ALGO_VERSION = 1;
 void
 DewarpingImageTransform::setupIntrinsicScale()
 {
-    // Fraction of width or height of dewarping quardilateral.
-    double const epsilon = 0.01;
-
-    Vector2d const top_left_p1(toVec(m_topPolyline.front()));
-    Vector2d const top_left_p2(toVec(m_dewarper.mapToWarpedSpace(QPointF(epsilon, 0))));
-    Vector2d const top_left_p3(toVec(m_dewarper.mapToWarpedSpace(QPointF(0, epsilon))));
-
-    Vector2d const top_right_p1(toVec(m_topPolyline.back()));
-    Vector2d const top_right_p2(toVec(m_dewarper.mapToWarpedSpace(QPointF(1 - epsilon, 0))));
-    Vector2d const top_right_p3(toVec(m_dewarper.mapToWarpedSpace(QPointF(1, epsilon))));
-
-    Vector2d const bottom_left_p1(toVec(m_bottomPolyline.front()));
-    Vector2d const bottom_left_p2(toVec(m_dewarper.mapToWarpedSpace(QPointF(epsilon, 1))));
-    Vector2d const bottom_left_p3(toVec(m_dewarper.mapToWarpedSpace(QPointF(0, 1 - epsilon))));
-
-    Vector2d const bottom_right_p1(toVec(m_bottomPolyline.back()));
-    Vector2d const bottom_right_p2(toVec(m_dewarper.mapToWarpedSpace(QPointF(1 - epsilon, 1))));
-    Vector2d const bottom_right_p3(toVec(m_dewarper.mapToWarpedSpace(QPointF(1, 1 - epsilon))));
-
-    Matrix2d corners[4];
-    corners[0] << top_left_p2 - top_left_p1, top_left_p3 - top_left_p1;
-    corners[1] << top_right_p2 - top_right_p1, top_right_p3 - top_right_p1;
-    corners[2] << bottom_left_p2 - bottom_left_p1, bottom_left_p3 - bottom_left_p1;
-    corners[3] << bottom_right_p2 - bottom_right_p1, bottom_right_p3 - bottom_right_p1;
-
-    // We assume a small square at a corner of a dewarped image maps
-    // to a lozenge-shaped area in warped coordinates. That's not necessarily
-    // the case, but let's assume it is. First of all, let's select a corner
-    // with the highest lozenge area.
-    int best_corner = 0;
-    double largest_area = -1;
-    for (int i = 0; i < 4; ++i)
+    switch (m_sizeParams.mode())
     {
-        double const area = fabs(corners[i].determinant());
-        if (area > largest_area)
+    case SizeMode::BY_AREA:
+    {
+        double const model_area = m_dewarper.Sx() * m_dewarper.Sy();
+
+        QPointF const image_bounds[] = {
+            m_topPolyline.front(),
+            m_topPolyline.back(),
+            m_bottomPolyline.back(),
+            m_bottomPolyline.front(),
+            m_topPolyline.front()
+        };
+
+        double image_area = 0.0;
+        for (int i = 0; i < 4; ++i)
         {
-            largest_area = area;
-            best_corner = i;
+            image_area += image_bounds[i    ].x() * image_bounds[i + 1].y()
+                        - image_bounds[i + 1].x() * image_bounds[i    ].y();
         }
+        image_area = 0.5 * std::abs(image_area);
+
+        double const scale_factor = std::sqrt(image_area / model_area);
+
+        m_intrinsicScaleX = scale_factor * m_dewarper.Sx();
+        m_intrinsicScaleY = scale_factor * m_dewarper.Sy();
+
+        break;
     }
-
-    // See the comments in the beginning of the function on how
-    // we define pixel densities.
-    double const warped_h_density = corners[best_corner].col(0).norm();
-    double const warped_v_density = corners[best_corner].col(1).norm();
-
-    // CylindricalSurfaceDewarper maps a curved quadrilateral into a unit square.
-    // Therefore, without post scaling, dewarped pixel density is exactly
-    // epsilon x epsilon.
-    double const dewarped_h_density = epsilon;
-    double const dewarped_v_density = epsilon;
-
-    // Now we are ready to calculate the initial scale.
-    // We still need to normalize the area though.
-    m_intrinsicScaleX = warped_h_density / dewarped_h_density;
-    m_intrinsicScaleY = warped_v_density / dewarped_v_density;
-
-    // Area of convex polygon formula taken from:
-    // http://mathworld.wolfram.com/PolygonArea.html
-    double area = 0.0;
-    QPointF prev_pt = m_bottomPolyline.front();
-
-    for (QPointF const pt : m_topPolyline)
+    case SizeMode::FIT:
     {
-        area += prev_pt.x() * pt.y() - pt.x() * prev_pt.y();
-        prev_pt = pt;
-    }
+        double const scale_factor_x = m_sizeParams.width() / m_dewarper.Sx();
+        double const scale_factor_y = m_sizeParams.height() / m_dewarper.Sy();
 
-    for (QPointF const pt : boost::adaptors::reverse(m_bottomPolyline))
+        double const scale_factor = std::min(scale_factor_x, scale_factor_y);
+
+        m_intrinsicScaleX = scale_factor * m_dewarper.Sx();
+        m_intrinsicScaleY = scale_factor * m_dewarper.Sy();
+
+        break;
+    }
+    case SizeMode::STRETCH:
     {
-        area += prev_pt.x() * pt.y() - pt.x() * prev_pt.y();
-        prev_pt = pt;
+        m_intrinsicScaleX = m_sizeParams.width();  //  / m_dewarper.Sx();
+        m_intrinsicScaleY = m_sizeParams.height(); //  / m_dewarper.Sy();
+
+        break;
     }
+    case SizeMode::BY_DISTANCE:
+    {
+        double const distance = m_sizeParams.distance();
 
-    area = 0.5 * std::abs(area);
+        m_intrinsicScaleX = m_dewarper.Sx() * distance;
+        m_intrinsicScaleY = m_dewarper.Sy() * distance;
 
-    // m_intrinsicScaleX * s * m_intrinsicScaleY * s = area
-    double const s = std::sqrt(area / (m_intrinsicScaleX * m_intrinsicScaleY));
-    m_intrinsicScaleX *= s;
-    m_intrinsicScaleY *= s;
+        break;
+    }
+    default:
+    {
+        assert(!"Unreachable");
+
+        double const focus = std::max(m_origSize.width(), m_origSize.height()) / m_dewarper.fov();
+
+        m_intrinsicScaleX = m_dewarper.Sx() * focus;
+        m_intrinsicScaleY = m_dewarper.Sy() * focus;
+
+        break;
+    }
+    }
 }
 
 QPolygonF
