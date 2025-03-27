@@ -402,50 +402,7 @@ void dewarpGeneric(
 
         std::pair<int, int> dst_y_range(0, dst_height - 1); // Inclusive.
 
-        // Called for points where pixel density reaches the lower or upper threshold.
-        auto const processCriticalPoint =
-            [&generatrix, &dst_y_range, model_domain_top, model_domain_height]
-            (double model_y, bool upper_threshold)
-        {
-
-            if (!generatrix.pln2img.mirrorSide(model_y))
-            {
-                double const dst_y = model_domain_top + model_y * model_domain_height;
-                double const second_deriv = generatrix.pln2img.secondDerivativeAt(model_y);
-                if (std::signbit(second_deriv) == upper_threshold)
-                {
-                    if (dst_y > dst_y_range.first)
-                    {
-                        dst_y_range.first = std::min((int)std::ceil(dst_y), dst_y_range.second);
-                    }
-                }
-                else
-                {
-                    if (dst_y < dst_y_range.second)
-                    {
-                        dst_y_range.second = std::max((int)std::floor(dst_y), dst_y_range.first);
-                    }
-                }
-            }
-        };
-
         double const recip_len = 1.0 / generatrix.imgLine.length();
-
-        generatrix.pln2img.solveForDeriv(
-            min_density * recip_len,
-            [processCriticalPoint](double model_y)
-        {
-            processCriticalPoint(model_y, /*upper_threshold=*/false);
-        }
-        );
-
-        generatrix.pln2img.solveForDeriv(
-            max_density * recip_len,
-            [processCriticalPoint](double model_y)
-        {
-            processCriticalPoint(model_y, /*upper_threshold=*/true);
-        }
-        );
 
         int const dst_y_first = std::max(prev_dst_y_range.first, dst_y_range.first);
         int const dst_y_last = std::min(prev_dst_y_range.second, dst_y_range.second);
