@@ -35,7 +35,7 @@ namespace str
 }
 
 SizeParams::SizeParams()
-    : m_mode(SizeMode::CALC_BY_AREA)
+    : m_mode(SizeMode::BY_AREA)
     , m_width(defaultSizeValue())
     , m_height(defaultSizeValue())
     , m_distance(defaultDistanceValue())

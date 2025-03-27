@@ -24,11 +24,10 @@ namespace dewarping
 
 namespace str
 {
-static char const CALC_BY_AREA[] = "calc-by-area";
-static char const FIT_WIDTH[] = "fit-width";
-static char const FIT_HEIGHT[] = "fit-height";
-static char const STRETCH_TO[] = "stretch-to";
-static char const CALC_BY_DISTANCE[] = "calc-by-distance";
+static char const BY_AREA[] = "by-area";
+static char const FIT[] = "fit";
+static char const STRETCH[] = "stretch";
+static char const BY_DISTANCE[] = "by-distance";
 }
 
 SizeMode::SizeMode(Mode mode)
@@ -38,38 +37,33 @@ SizeMode::SizeMode(Mode mode)
 
 SizeMode::SizeMode(QString const& string)
 {
-    if (string == QLatin1String(str::CALC_BY_DISTANCE))
-        m_mode = CALC_BY_DISTANCE;
-    else if (string == QLatin1String(str::STRETCH_TO))
-        m_mode = STRETCH_TO;
-    else if (string == QLatin1String(str::FIT_HEIGHT))
-        m_mode = FIT_HEIGHT;
-    else if (string == QLatin1String(str::FIT_WIDTH))
-        m_mode = FIT_WIDTH;
+    if (string == QLatin1String(str::BY_DISTANCE))
+        m_mode = BY_DISTANCE;
+    else if (string == QLatin1String(str::STRETCH))
+        m_mode = STRETCH;
+    else if (string == QLatin1String(str::FIT))
+        m_mode = FIT;
     else
-        m_mode = CALC_BY_AREA;
+        m_mode = BY_AREA;
 }
 
 QString
 SizeMode::toString() const
 {
-    char const* s = str::CALC_BY_AREA;;
+    char const* s = str::BY_AREA;;
     switch (m_mode)
     {
-    case CALC_BY_AREA:
-        s = str::CALC_BY_AREA;
+    case BY_AREA:
+        s = str::BY_AREA;
         break;
-    case FIT_WIDTH:
-        s = str::FIT_WIDTH;
+    case FIT:
+        s = str::FIT;
         break;
-    case FIT_HEIGHT:
-        s = str::FIT_HEIGHT;
+    case STRETCH:
+        s = str::STRETCH;
         break;
-    case STRETCH_TO:
-        s = str::STRETCH_TO;
-        break;
-    case CALC_BY_DISTANCE:
-        s = str::CALC_BY_DISTANCE;
+    case BY_DISTANCE:
+        s = str::BY_DISTANCE;
         break;
     }
     return QLatin1String(s);

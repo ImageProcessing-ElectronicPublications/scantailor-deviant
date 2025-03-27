@@ -982,27 +982,22 @@ Perspective correction.</string>
        <widget class="QComboBox" name="sizeModeComboBox">
         <item>
          <property name="text">
-          <string>Calc by image area</string>
+          <string>By image area</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Fit to width</string>
+          <string>Fit</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Fit to height</string>
+          <string>Stretch</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Stretch to</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Calc by camera distance</string>
+          <string>By camera distance</string>
          </property>
         </item>
        </widget>

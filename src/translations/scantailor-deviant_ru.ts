@@ -437,28 +437,23 @@ Perspective correction.</source>
     </message>
     <message>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="985"/>
-        <source>Calc by image area</source>
-        <translation>Вычислить по площади изображения</translation>
+        <source>By image area</source>
+        <translation>По площади изображения</translation>
     </message>
     <message>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="990"/>
-        <source>Fit to width</source>
-        <translation>Вписать по ширине</translation>
+        <source>Fit</source>
+        <translation>Вписать</translation>
     </message>
     <message>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="995"/>
-        <source>Fit to height</source>
-        <translation>Вписать по высоте</translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1000"/>
-        <source>Stretch to</source>
+        <source>Stretch</source>
         <translation>Растянуть</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1005"/>
-        <source>Calc by camera distance</source>
-        <translation>Вычислить по расстоянию до камеры</translation>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1000"/>
+        <source>By camera distance</source>
+        <translation>По расстоянию до камеры</translation>
     </message>
     <message>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1038"/>

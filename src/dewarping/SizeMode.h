@@ -29,14 +29,13 @@ class SizeMode
 public:
     enum Mode
     {
-        CALC_BY_AREA,
-        FIT_WIDTH,
-        FIT_HEIGHT,
-        STRETCH_TO,
-        CALC_BY_DISTANCE
+        BY_AREA,
+        FIT,
+        STRETCH,
+        BY_DISTANCE
     };
 
-    SizeMode(Mode mode = CALC_BY_AREA);
+    SizeMode(Mode mode = BY_AREA);
 
     explicit SizeMode(QString const& string);
 

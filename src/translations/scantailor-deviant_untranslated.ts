@@ -429,27 +429,22 @@ Perspective correction.</source>
     </message>
     <message>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="985"/>
-        <source>Calc by image area</source>
+        <source>By image area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="990"/>
-        <source>Fit to width</source>
+        <source>Fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="995"/>
-        <source>Fit to height</source>
+        <source>Stretch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1000"/>
-        <source>Stretch to</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1005"/>
-        <source>Calc by camera distance</source>
+        <source>By camera distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -1232,32 +1232,26 @@ OptionsWidget::sizeModeComboBoxIndexChanged(int idx)
 
     switch (idx)
     {
-    case dewarping::SizeMode::CALC_BY_AREA:
-        size_params.setMode(dewarping::SizeMode::CALC_BY_AREA);
+    case dewarping::SizeMode::BY_AREA:
+        size_params.setMode(dewarping::SizeMode::BY_AREA);
         ui.sizeWidthSpinBox->setDisabled(true);
         ui.sizeHeightSpinBox->setDisabled(true);
         ui.sizeDistanceSpinBox->setDisabled(true);
         break;
-    case dewarping::SizeMode::FIT_WIDTH:
-        size_params.setMode(dewarping::SizeMode::FIT_WIDTH);
-        ui.sizeWidthSpinBox->setEnabled(true);
-        ui.sizeHeightSpinBox->setDisabled(true);
-        ui.sizeDistanceSpinBox->setDisabled(true);
-        break;
-    case dewarping::SizeMode::FIT_HEIGHT:
-        size_params.setMode(dewarping::SizeMode::FIT_HEIGHT);
-        ui.sizeWidthSpinBox->setDisabled(true);
-        ui.sizeHeightSpinBox->setEnabled(true);
-        ui.sizeDistanceSpinBox->setDisabled(true);
-        break;
-    case dewarping::SizeMode::STRETCH_TO:
-        size_params.setMode(dewarping::SizeMode::STRETCH_TO);
+    case dewarping::SizeMode::FIT:
+        size_params.setMode(dewarping::SizeMode::FIT);
         ui.sizeWidthSpinBox->setEnabled(true);
         ui.sizeHeightSpinBox->setEnabled(true);
         ui.sizeDistanceSpinBox->setDisabled(true);
         break;
-    case dewarping::SizeMode::CALC_BY_DISTANCE:
-        size_params.setMode(dewarping::SizeMode::CALC_BY_DISTANCE);
+    case dewarping::SizeMode::STRETCH:
+        size_params.setMode(dewarping::SizeMode::STRETCH);
+        ui.sizeWidthSpinBox->setEnabled(true);
+        ui.sizeHeightSpinBox->setEnabled(true);
+        ui.sizeDistanceSpinBox->setDisabled(true);
+        break;
+    case dewarping::SizeMode::BY_DISTANCE:
+        size_params.setMode(dewarping::SizeMode::BY_DISTANCE);
         ui.sizeWidthSpinBox->setDisabled(true);
         ui.sizeHeightSpinBox->setDisabled(true);
         ui.sizeDistanceSpinBox->setEnabled(true);
@@ -1601,35 +1595,31 @@ OptionsWidget::updateBendPanel(dewarping::BendParams const& bend_params)
 void
 OptionsWidget::updateSizePanel(dewarping::SizeParams const& size_params)
 {
-    switch (ui.sizeModeComboBox->currentIndex())
+    switch (size_params.mode())
     {
-    case dewarping::SizeMode::CALC_BY_AREA:
+    case dewarping::SizeMode::BY_AREA:
         ui.sizeWidthSpinBox->setDisabled(true);
         ui.sizeHeightSpinBox->setDisabled(true);
         ui.sizeDistanceSpinBox->setDisabled(true);
         break;
-    case dewarping::SizeMode::FIT_WIDTH:
-        ui.sizeWidthSpinBox->setEnabled(true);
-        ui.sizeHeightSpinBox->setDisabled(true);
-        ui.sizeDistanceSpinBox->setDisabled(true);
-        break;
-    case dewarping::SizeMode::FIT_HEIGHT:
-        ui.sizeWidthSpinBox->setDisabled(true);
-        ui.sizeHeightSpinBox->setEnabled(true);
-        ui.sizeDistanceSpinBox->setDisabled(true);
-        break;
-    case dewarping::SizeMode::STRETCH_TO:
+    case dewarping::SizeMode::FIT:
         ui.sizeWidthSpinBox->setEnabled(true);
         ui.sizeHeightSpinBox->setEnabled(true);
         ui.sizeDistanceSpinBox->setDisabled(true);
         break;
-    case dewarping::SizeMode::CALC_BY_DISTANCE:
+    case dewarping::SizeMode::STRETCH:
+        ui.sizeWidthSpinBox->setEnabled(true);
+        ui.sizeHeightSpinBox->setEnabled(true);
+        ui.sizeDistanceSpinBox->setDisabled(true);
+        break;
+    case dewarping::SizeMode::BY_DISTANCE:
         ui.sizeWidthSpinBox->setDisabled(true);
         ui.sizeHeightSpinBox->setDisabled(true);
         ui.sizeDistanceSpinBox->setEnabled(true);
         break;
     }
 
+    ui.sizeModeComboBox->setCurrentIndex(size_params.mode());
     ui.sizeWidthSpinBox->setValue(size_params.width());
     ui.sizeHeightSpinBox->setValue(size_params.height());
     ui.sizeDistanceSpinBox->setValue(size_params.distance());
