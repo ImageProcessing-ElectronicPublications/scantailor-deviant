@@ -210,6 +210,29 @@ Settings::setPerspectiveFrameParams(
 }
 
 void
+Settings::setPerspectiveSizeParams(
+    std::set<PageId> const& pages,
+    dewarping::SizeParams const& size_params)
+{
+    QMutexLocker const locker(&m_mutex);
+
+    for (PageId const& page_id : pages)
+    {
+        PerPageParams::iterator it = m_perPageParams.find(page_id);
+        if (it != m_perPageParams.end())
+        {
+            it->second.perspectiveParams().setSizeParams(size_params);
+        }
+        else
+        {
+            Params params((Dependencies()));
+            params.perspectiveParams().setSizeParams(size_params);
+            Utils::mapSetValue(m_perPageParams, page_id, params);
+        }
+    }
+}
+
+void
 Settings::setDewarpingMode(
     std::set<PageId> const& pages,
     AutoManualMode const& mode)
@@ -296,6 +319,29 @@ Settings::setDewarpingBendParams(
         {
             Params params((Dependencies()));
             params.dewarpingParams().setBendParams(bend_params);
+            Utils::mapSetValue(m_perPageParams, page_id, params);
+        }
+    }
+}
+
+void
+Settings::setDewarpingSizeParams(
+    std::set<PageId> const& pages,
+    dewarping::SizeParams const& size_params)
+{
+    QMutexLocker const locker(&m_mutex);
+
+    for (PageId const& page_id : pages)
+    {
+        PerPageParams::iterator it = m_perPageParams.find(page_id);
+        if (it != m_perPageParams.end())
+        {
+            it->second.dewarpingParams().setSizeParams(size_params);
+        }
+        else
+        {
+            Params params((Dependencies()));
+            params.dewarpingParams().setSizeParams(size_params);
             Utils::mapSetValue(m_perPageParams, page_id, params);
         }
     }

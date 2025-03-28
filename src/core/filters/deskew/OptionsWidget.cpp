@@ -136,6 +136,10 @@ OptionsWidget::OptionsWidget(IntrusivePtr<Settings> const& settings,
         ui.sizeDistanceSpinBox, SIGNAL(valueChanged(double)),
         this, SLOT(sizeDistanceSpinBoxValueChanged(double))
     );
+    connect(
+        ui.sizeApplyBtn, SIGNAL(clicked()),
+        this, SLOT(showApplySizeParamsDialog())
+    );
 
     // Margins UI.
     connect(
@@ -314,6 +318,29 @@ OptionsWidget::showApplyBendParamsDialog()
         }
         else {
             bendParamsAppliedToAllPages(pages);
+        }
+        });
+
+    dialog->show();
+}
+
+void
+OptionsWidget::showApplySizeParamsDialog()
+{
+    ApplyToDialog* dialog = new ApplyToDialog(
+        this, m_pageId, m_pageSelectionAccessor, PageView::IMAGE_VIEW
+    );
+
+    dialog->setWindowTitle(tr("Apply Size Parameters"));
+
+    connect(dialog, &ApplyToDialog::accepted, this, [=]() {
+        std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
+        std::set<PageId> pages(vec.begin(), vec.end());
+        if (!dialog->getPageRangeSelectorWidget().allPagesSelected()) {
+            sizeParamsAppliedTo(pages);
+        }
+        else {
+            sizeParamsAppliedToAllPages(pages);
         }
         });
 
@@ -527,6 +554,57 @@ OptionsWidget::bendParamsAppliedToAllPages(std::set<PageId> const& pages)
     }
 
     m_ptrSettings->setDewarpingBendParams(pages, m_pageParams.dewarpingParams().bendParams());
+
+    emit invalidateAllThumbnails();
+}
+
+void
+OptionsWidget::sizeParamsAppliedTo(std::set<PageId> const& pages)
+{
+    if (pages.empty())
+    {
+        return;
+    }
+
+    switch (m_pageParams.distortionType())
+    {
+    case DistortionType::PERSPECTIVE:
+        m_ptrSettings->setPerspectiveSizeParams(pages, m_pageParams.perspectiveParams().sizeParams());
+        break;
+    case DistortionType::WARP:
+        m_ptrSettings->setDewarpingSizeParams(pages, m_pageParams.dewarpingParams().sizeParams());
+        break;
+    default:
+        assert(!"Unreachable");
+        break;
+    }
+
+    for (PageId const& page_id : pages)
+    {
+        emit invalidateThumbnail(page_id);
+    }
+}
+
+void
+OptionsWidget::sizeParamsAppliedToAllPages(std::set<PageId> const& pages)
+{
+    if (pages.empty())
+    {
+        return;
+    }
+
+    switch (m_pageParams.distortionType())
+    {
+    case DistortionType::PERSPECTIVE:
+        m_ptrSettings->setPerspectiveSizeParams(pages, m_pageParams.perspectiveParams().sizeParams());
+        break;
+    case DistortionType::WARP:
+        m_ptrSettings->setDewarpingSizeParams(pages, m_pageParams.dewarpingParams().sizeParams());
+        break;
+    default:
+        assert(!"Unreachable");
+        break;
+    }
 
     emit invalidateAllThumbnails();
 }

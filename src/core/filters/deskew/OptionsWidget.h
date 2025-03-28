@@ -90,6 +90,8 @@ private slots:
 
     void showApplyBendParamsDialog();
 
+    void showApplySizeParamsDialog();
+
     void distortionTypeAppliedTo(std::set<PageId> const& pages);
 
     void distortionTypeAppliedToAllPages(std::set<PageId> const& pages);
@@ -109,6 +111,10 @@ private slots:
     void bendParamsAppliedTo(std::set<PageId> const& pages);
 
     void bendParamsAppliedToAllPages(std::set<PageId> const& pages);
+
+    void sizeParamsAppliedTo(std::set<PageId> const& pages);
+
+    void sizeParamsAppliedToAllPages(std::set<PageId> const& pages);
 
     void fovAutoManualModeChanged(bool auto_mode);
 

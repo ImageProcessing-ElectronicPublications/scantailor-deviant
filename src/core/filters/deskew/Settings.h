@@ -73,6 +73,10 @@ public:
         std::set<PageId> const& pages,
         dewarping::FrameParams const& frame_params);
 
+    void setPerspectiveSizeParams(
+        std::set<PageId> const& pages,
+        dewarping::SizeParams const& size_params);
+
     void setDewarpingMode(
         std::set<PageId> const& pages,
         AutoManualMode const& mode);
@@ -88,6 +92,10 @@ public:
     void setDewarpingBendParams(
         std::set<PageId> const& pages,
         dewarping::BendParams const& bend_params);
+
+    void setDewarpingSizeParams(
+        std::set<PageId> const& pages,
+        dewarping::SizeParams const& size_params);
 private:
     typedef std::map<PageId, Params> PerPageParams;
 

@@ -126,6 +126,29 @@ Params::takeManualSettingsFrom(Params const& other)
         m_perspectiveParams.setFrameParams(other.perspectiveParams().frameParams());
     }
 
+    switch (other.perspectiveParams().sizeParams().mode())
+    {
+    case dewarping::SizeMode::BY_AREA:
+        break;
+    case dewarping::SizeMode::FIT:
+        m_perspectiveParams.sizeParams().setMode(dewarping::SizeMode::FIT);
+        m_perspectiveParams.sizeParams().setWidth(other.perspectiveParams().sizeParams().width());
+        m_perspectiveParams.sizeParams().setHeight(other.perspectiveParams().sizeParams().height());
+        break;
+    case dewarping::SizeMode::STRETCH:
+        m_perspectiveParams.sizeParams().setMode(dewarping::SizeMode::STRETCH);
+        m_perspectiveParams.sizeParams().setWidth(other.perspectiveParams().sizeParams().width());
+        m_perspectiveParams.sizeParams().setHeight(other.perspectiveParams().sizeParams().height());
+        break;
+    case dewarping::SizeMode::BY_DISTANCE:
+        m_perspectiveParams.sizeParams().setMode(dewarping::SizeMode::BY_DISTANCE);
+        m_perspectiveParams.sizeParams().setDistance(other.perspectiveParams().sizeParams().distance());
+        break;
+    default:
+        assert(!"Unreachable");
+        break;
+    }
+
     if (other.dewarpingParams().mode() == MODE_MANUAL)
     {
         m_dewarpingParams.setMode(MODE_MANUAL);
@@ -144,6 +167,29 @@ Params::takeManualSettingsFrom(Params const& other)
     if (other.dewarpingParams().bendParams().mode() == MODE_MANUAL)
     {
         m_dewarpingParams.setBendParams(other.dewarpingParams().bendParams());
+    }
+
+    switch (other.dewarpingParams().sizeParams().mode())
+    {
+    case dewarping::SizeMode::BY_AREA:
+        break;
+    case dewarping::SizeMode::FIT:
+        m_dewarpingParams.sizeParams().setMode(dewarping::SizeMode::FIT);
+        m_dewarpingParams.sizeParams().setWidth(other.dewarpingParams().sizeParams().width());
+        m_dewarpingParams.sizeParams().setHeight(other.dewarpingParams().sizeParams().height());
+        break;
+    case dewarping::SizeMode::STRETCH:
+        m_dewarpingParams.sizeParams().setMode(dewarping::SizeMode::STRETCH);
+        m_dewarpingParams.sizeParams().setWidth(other.dewarpingParams().sizeParams().width());
+        m_dewarpingParams.sizeParams().setHeight(other.dewarpingParams().sizeParams().height());
+        break;
+    case dewarping::SizeMode::BY_DISTANCE:
+        m_dewarpingParams.sizeParams().setMode(dewarping::SizeMode::BY_DISTANCE);
+        m_dewarpingParams.sizeParams().setDistance(other.dewarpingParams().sizeParams().distance());
+        break;
+    default:
+        assert(!"Unreachable");
+        break;
     }
 }
 
