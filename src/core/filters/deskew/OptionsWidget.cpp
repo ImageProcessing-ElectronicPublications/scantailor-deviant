@@ -141,28 +141,6 @@ OptionsWidget::OptionsWidget(IntrusivePtr<Settings> const& settings,
         this, SLOT(showApplySizeParamsDialog())
     );
 
-    // Margins UI.
-    connect(
-        ui.marginsLeftSpinBox, SIGNAL(valueChanged(double)),
-        this, SLOT(marginsLeftSpinBoxValueChanged(double))
-    );
-    connect(
-        ui.marginsRightSpinBox, SIGNAL(valueChanged(double)),
-        this, SLOT(marginsRightSpinBoxValueChanged(double))
-    );
-    connect(
-        ui.marginsTopSpinBox, SIGNAL(valueChanged(double)),
-        this, SLOT(marginsTopSpinBoxValueChanged(double))
-    );
-    connect(
-        ui.marginsBottomSpinBox, SIGNAL(valueChanged(double)),
-        this, SLOT(marginsBottomSpinBoxValueChanged(double))
-    );
-    connect(
-        ui.marginsMaxPixelScaleSpinBox, SIGNAL(valueChanged(double)),
-        this, SLOT(marginsMaxPixelScaleSpinBoxValueChanged(double))
-    );
-
     // Rotation angle UI.
     ui.angleSpinBox->setSuffix(QChar(0x00B0)); // the degree symbol
     ui.angleSpinBox->setRange(-MAX_ANGLE, MAX_ANGLE);
@@ -675,14 +653,12 @@ OptionsWidget::preUpdateUI(PageId const& page_id, DistortionType const& distorti
         updateFovPanel(m_pageParams.perspectiveParams().fovParams());
         updateFramePanel(m_pageParams.perspectiveParams().frameParams());
         updateSizePanel(m_pageParams.perspectiveParams().sizeParams());
-        updateMarginsPanel(m_pageParams.perspectiveParams().marginsParams());
         break;
     case DistortionType::WARP:
         updateFovPanel(m_pageParams.dewarpingParams().fovParams());
         updateFramePanel(m_pageParams.dewarpingParams().frameParams());
         updateBendPanel(m_pageParams.dewarpingParams().bendParams());
         updateSizePanel(m_pageParams.dewarpingParams().sizeParams());
-        updateMarginsPanel(m_pageParams.dewarpingParams().marginsParams());
         break;
     default:
         break;
@@ -708,7 +684,6 @@ OptionsWidget::postUpdateUI(Params const& page_params)
         updateFovPanel(page_params.perspectiveParams().fovParams());
         updateFramePanel(page_params.perspectiveParams().frameParams());
         updateSizePanel(page_params.perspectiveParams().sizeParams());
-        updateMarginsPanel(page_params.perspectiveParams().marginsParams());
         updateAutoValuesOnPanels();
         break;
     case DistortionType::WARP:
@@ -716,7 +691,6 @@ OptionsWidget::postUpdateUI(Params const& page_params)
         updateFramePanel(page_params.dewarpingParams().frameParams());
         updateBendPanel(page_params.dewarpingParams().bendParams());
         updateSizePanel(page_params.dewarpingParams().sizeParams());
-        updateMarginsPanel(page_params.dewarpingParams().marginsParams());
         updateAutoValuesOnPanels();
         break;
     default:
@@ -1406,111 +1380,6 @@ OptionsWidget::sizeDistanceSpinBoxValueChanged(double distance_new)
 }
 
 void
-OptionsWidget::marginsLeftSpinBoxValueChanged(double left_new)
-{
-    if (m_ignoreSignalsFromUiControls)
-    {
-        return;
-    }
-
-    dewarping::MarginsParams& margins_params =
-        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
-        m_pageParams.perspectiveParams().marginsParams() :
-        m_pageParams.dewarpingParams().marginsParams();
-
-    margins_params.setLeft(left_new);
-
-    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
-
-    emit marginsParamsSetByUser(margins_params);
-    emit invalidateThumbnail(m_pageId);
-}
-
-void
-OptionsWidget::marginsRightSpinBoxValueChanged(double right_new)
-{
-    if (m_ignoreSignalsFromUiControls)
-    {
-        return;
-    }
-
-    dewarping::MarginsParams& margins_params =
-        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
-        m_pageParams.perspectiveParams().marginsParams() :
-        m_pageParams.dewarpingParams().marginsParams();
-
-    margins_params.setRight(right_new);
-
-    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
-
-    emit marginsParamsSetByUser(margins_params);
-    emit invalidateThumbnail(m_pageId);
-}
-
-void
-OptionsWidget::marginsTopSpinBoxValueChanged(double top_new)
-{
-    if (m_ignoreSignalsFromUiControls)
-    {
-        return;
-    }
-
-    dewarping::MarginsParams& margins_params =
-        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
-        m_pageParams.perspectiveParams().marginsParams() :
-        m_pageParams.dewarpingParams().marginsParams();
-
-    margins_params.setTop(top_new);
-
-    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
-
-    emit marginsParamsSetByUser(margins_params);
-    emit invalidateThumbnail(m_pageId);
-}
-
-void
-OptionsWidget::marginsBottomSpinBoxValueChanged(double bottom_new)
-{
-    if (m_ignoreSignalsFromUiControls)
-    {
-        return;
-    }
-
-    dewarping::MarginsParams& margins_params =
-        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
-        m_pageParams.perspectiveParams().marginsParams() :
-        m_pageParams.dewarpingParams().marginsParams();
-
-    margins_params.setBottom(bottom_new);
-
-    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
-
-    emit marginsParamsSetByUser(margins_params);
-    emit invalidateThumbnail(m_pageId);
-}
-
-void
-OptionsWidget::marginsMaxPixelScaleSpinBoxValueChanged(double max_pixel_scale_new)
-{
-    if (m_ignoreSignalsFromUiControls)
-    {
-        return;
-    }
-
-    dewarping::MarginsParams& margins_params =
-        (m_pageParams.distortionType() == DistortionType::PERSPECTIVE) ?
-        m_pageParams.perspectiveParams().marginsParams() :
-        m_pageParams.dewarpingParams().marginsParams();
-
-    margins_params.setMaxPixelScale(max_pixel_scale_new);
-
-    m_ptrSettings->setPageParams(m_pageId, m_pageParams);
-
-    emit marginsParamsSetByUser(margins_params);
-    emit invalidateThumbnail(m_pageId);
-}
-
-void
 OptionsWidget::setupDistortionTypeButtons()
 {
     static_assert(
@@ -1532,7 +1401,6 @@ OptionsWidget::disableDistortionDependentUiElements()
     ui.framePanel->setDisabled(true);
     ui.bendPanel->setDisabled(true);
     ui.sizePanel->setDisabled(true);
-    ui.marginsPanel->setDisabled(true);
 }
 
 void
@@ -1544,7 +1412,6 @@ OptionsWidget::enableDistortionDependentUiElements()
     ui.framePanel->setEnabled(true);
     ui.bendPanel->setEnabled(true);
     ui.sizePanel->setEnabled(true);
-    ui.marginsPanel->setEnabled(true);
 }
 
 void
@@ -1560,7 +1427,6 @@ OptionsWidget::setupUiForDistortionType(DistortionType::Type type)
     ui.framePanel->setVisible(type == DistortionType::PERSPECTIVE || type == DistortionType::WARP);
     ui.bendPanel->setVisible(type == DistortionType::WARP);
     ui.sizePanel->setVisible(type == DistortionType::PERSPECTIVE || type == DistortionType::WARP);
-    ui.marginsPanel->setVisible(type == DistortionType::PERSPECTIVE || type == DistortionType::WARP);
 }
 
 void
@@ -1701,16 +1567,6 @@ OptionsWidget::updateSizePanel(dewarping::SizeParams const& size_params)
     ui.sizeWidthSpinBox->setValue(size_params.width());
     ui.sizeHeightSpinBox->setValue(size_params.height());
     ui.sizeDistanceSpinBox->setValue(size_params.distance());
-}
-
-void
-OptionsWidget::updateMarginsPanel(dewarping::MarginsParams const& margins_params)
-{
-    ui.marginsLeftSpinBox->setValue(margins_params.left());
-    ui.marginsRightSpinBox->setValue(margins_params.right());
-    ui.marginsTopSpinBox->setValue(margins_params.top());
-    ui.marginsBottomSpinBox->setValue(margins_params.bottom());
-    ui.marginsMaxPixelScaleSpinBox->setValue(margins_params.maxPixelScale());
 }
 
 void

@@ -14,7 +14,6 @@ SET(
         DistortionModelBuilder.cpp DistortionModelBuilder.h
         FrameParams.cpp FrameParams.h
         FovParams.cpp FovParams.h
-        MarginsParams.cpp MarginsParams.h
         RasterDewarper.cpp RasterDewarper.h
         HomographicTransform.cpp HomographicTransform.h
         PerspectiveTransform.cpp PerspectiveTransform.h

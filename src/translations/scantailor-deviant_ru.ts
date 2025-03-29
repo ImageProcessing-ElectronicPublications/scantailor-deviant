@@ -467,36 +467,6 @@ Perspective correction.</source>
         <source>Distance:</source>
         <translation>Расстояние:</translation>
     </message>
-    <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1147"/>
-        <source>Margins</source>
-        <translation>Поля</translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1155"/>
-        <source>Left:</source>
-        <translation>Слева:</translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1175"/>
-        <source>Right:</source>
-        <translation>Справа:</translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1195"/>
-        <source>Top:</source>
-        <translation>Сверху:</translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1215"/>
-        <source>Bottom:</source>
-        <translation>Снизу:</translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1252"/>
-        <source>Maximum pixel scale:</source>
-        <translation>Максимальный масштаб пикселя:</translation>
-    </message>
 </context>
 <context>
     <name>DragHandler</name>
@@ -694,7 +664,7 @@ for content in foreground subscans (lengthy)</source>
     </message>
     <message>
         <location filename="../app/FixDpiDialog.cpp" line="266"/>
-        <location filename="../app/FixDpiDialog.cpp" line="727"/>
+        <location filename="../app/FixDpiDialog.cpp" line="729"/>
         <source>All Pages</source>
         <translation>Все страницы</translation>
     </message>
@@ -714,7 +684,7 @@ for content in foreground subscans (lengthy)</source>
         <translation>Значение DPI слишком маленькое для данного размера пикселя. Такая комбинация скорее всего приведет к нехватке памяти.</translation>
     </message>
     <message>
-        <location filename="../app/FixDpiDialog.cpp" line="753"/>
+        <location filename="../app/FixDpiDialog.cpp" line="755"/>
         <source>%1 (page %2)</source>
         <translation>%1 (страниц %2)</translation>
     </message>
@@ -1984,19 +1954,19 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QHotKeyInputDialog</name>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="825"/>
+        <location filename="../app/SettingsDialog.cpp" line="826"/>
         <source>Edit key sequence</source>
         <translation>Редактирование комбинации клавиш</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="827"/>
+        <location filename="../app/SettingsDialog.cpp" line="828"/>
         <source>Hold the modification keys (Ctrl, Shift, Alt, Meta)
 and press [Enter] to edit the shortcut:</source>
         <translation>Удерживая клавиши-модификаторы (Ctrl, Shift, Alt, Meta) или ничего,
 нажмите Enter для изменения комбинации клавиш:</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="829"/>
+        <location filename="../app/SettingsDialog.cpp" line="830"/>
         <source>Hold the keys and press [Enter] to edit the shortcut:</source>
         <translation>Удерживая клавиши нажмите Enter для изменения комбинации:</translation>
     </message>
@@ -2728,17 +2698,17 @@ and press [Enter] to edit the shortcut:</source>
         <translation>Откатить действие</translation>
     </message>
     <message>
-        <location filename="../app/RelinkingDialog.cpp" line="94"/>
+        <location filename="../app/RelinkingDialog.cpp" line="96"/>
         <source>Substitution File for %1</source>
         <translation>Файл вместо %1</translation>
     </message>
     <message>
-        <location filename="../app/RelinkingDialog.cpp" line="101"/>
+        <location filename="../app/RelinkingDialog.cpp" line="103"/>
         <source>Substitution Directory for %1</source>
         <translation>Директория вместо %1</translation>
     </message>
     <message>
-        <location filename="../app/RelinkingDialog.cpp" line="129"/>
+        <location filename="../app/RelinkingDialog.cpp" line="131"/>
         <source>This change would merge several files into one.</source>
         <translation>Эти изменения сольют несколько файлов в один.</translation>
     </message>
@@ -3383,7 +3353,7 @@ Everything outside page area is highlighted with yellow in page view panel.</sou
         <translation>Снизу</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="535"/>
+        <location filename="../app/SettingsDialog.cpp" line="536"/>
         <source>None</source>
         <translation>Не удалять пятна</translation>
     </message>
@@ -3540,7 +3510,7 @@ As Foreground layer is using binarization to separate content from background it
     </message>
     <message>
         <location filename="../app/SettingsDialog.cpp" line="152"/>
-        <location filename="../app/SettingsDialog.cpp" line="1087"/>
+        <location filename="../app/SettingsDialog.cpp" line="1088"/>
         <source>Restore defaults</source>
         <translation>Сброс настроек</translation>
     </message>
@@ -3550,127 +3520,127 @@ As Foreground layer is using binarization to separate content from background it
         <translation>Все настройки будут сброшены на значения по умолчанию. Хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="233"/>
+        <location filename="../app/SettingsDialog.cpp" line="234"/>
         <source>General</source>
         <translation>Общее</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="234"/>
+        <location filename="../app/SettingsDialog.cpp" line="235"/>
         <source>Hotkey management</source>
         <translation>Менеджер горячих клавиш</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="235"/>
+        <location filename="../app/SettingsDialog.cpp" line="236"/>
         <source>Docking</source>
         <translation>Плавающие панели</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="236"/>
+        <location filename="../app/SettingsDialog.cpp" line="237"/>
         <source>Thumbnails panel</source>
         <translation>Лента предпросмотра страниц</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="237"/>
+        <location filename="../app/SettingsDialog.cpp" line="238"/>
         <source>Auto-save project</source>
         <translation>Автосохранение проекта</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="238"/>
+        <location filename="../app/SettingsDialog.cpp" line="239"/>
         <source>Tiff compression</source>
         <translation>Методы сжатия Tiff</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="239"/>
+        <location filename="../app/SettingsDialog.cpp" line="240"/>
         <source>Debug mode</source>
         <translation>Режим отладки</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="240"/>
+        <location filename="../app/SettingsDialog.cpp" line="241"/>
         <source>Fix Orientation</source>
         <translation>Исправление ориентации</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="241"/>
+        <location filename="../app/SettingsDialog.cpp" line="242"/>
         <source>Split pages</source>
         <translation>Разрезание страниц</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="242"/>
+        <location filename="../app/SettingsDialog.cpp" line="243"/>
         <source>Apply cut</source>
         <translation>Копирование координат разреза</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="243"/>
+        <location filename="../app/SettingsDialog.cpp" line="244"/>
         <source>Deskew</source>
         <translation>Компенсация наклона</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="244"/>
-        <location filename="../app/SettingsDialog.cpp" line="247"/>
-        <location filename="../app/SettingsDialog.cpp" line="251"/>
+        <location filename="../app/SettingsDialog.cpp" line="245"/>
+        <location filename="../app/SettingsDialog.cpp" line="248"/>
+        <location filename="../app/SettingsDialog.cpp" line="252"/>
         <source>Mark deviant pages</source>
         <translation>Пометить аномальные страницы</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="245"/>
+        <location filename="../app/SettingsDialog.cpp" line="246"/>
         <source>Select Content</source>
         <translation>Область контента</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="246"/>
+        <location filename="../app/SettingsDialog.cpp" line="247"/>
         <source>Page detection</source>
         <translation>Определение области страницы</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="248"/>
+        <location filename="../app/SettingsDialog.cpp" line="249"/>
         <source>Page layout</source>
         <translation>Макетирование страницы</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="249"/>
+        <location filename="../app/SettingsDialog.cpp" line="250"/>
         <source>Margins</source>
         <translation>Поля</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="250"/>
+        <location filename="../app/SettingsDialog.cpp" line="251"/>
         <source>Alignment</source>
         <translation>Выравнивание</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="262"/>
+        <location filename="../app/SettingsDialog.cpp" line="263"/>
         <source>Image metadata</source>
         <translation>Метаданные изображения</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="536"/>
+        <location filename="../app/SettingsDialog.cpp" line="537"/>
         <source>Cautious</source>
         <translation>Осторожное</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="538"/>
+        <location filename="../app/SettingsDialog.cpp" line="539"/>
         <source>Aggressive</source>
         <translation>Агрессивный</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="574"/>
+        <location filename="../app/SettingsDialog.cpp" line="575"/>
         <source>Standard</source>
         <comment>stylesheet</comment>
         <translation>Стандартная</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="575"/>
+        <location filename="../app/SettingsDialog.cpp" line="576"/>
         <source>None</source>
         <comment>stylesheet</comment>
         <translation>Нет</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="1088"/>
+        <location filename="../app/SettingsDialog.cpp" line="1089"/>
         <source>Thumbnails view settings will be reseted to their defaults. Continue?</source>
         <translation>Настройки ленты предпросмотра страниц будут сброшены на значения по умолчанию. Продолжить?</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="1131"/>
-        <location filename="../app/SettingsDialog.cpp" line="1150"/>
+        <location filename="../app/SettingsDialog.cpp" line="1132"/>
+        <location filename="../app/SettingsDialog.cpp" line="1151"/>
         <source>Color selection</source>
         <translation>Выбор цвета</translation>
     </message>
@@ -3680,57 +3650,57 @@ As Foreground layer is using binarization to separate content from background it
         <translation>Авто-поля</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="252"/>
+        <location filename="../app/SettingsDialog.cpp" line="253"/>
         <source>Output</source>
         <translation>Вывод результатов</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="253"/>
+        <location filename="../app/SettingsDialog.cpp" line="254"/>
         <source>Black &amp; White mode</source>
         <translation>Чёрно-белый режим</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="254"/>
+        <location filename="../app/SettingsDialog.cpp" line="255"/>
         <source>Color/Grayscale mode</source>
         <translation>Цветной/Оттенки серого</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="255"/>
+        <location filename="../app/SettingsDialog.cpp" line="256"/>
         <source>Mixed mode</source>
         <translation>Смешанный режим</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="256"/>
+        <location filename="../app/SettingsDialog.cpp" line="257"/>
         <source>Auto layer</source>
         <translation>Слой поиска иллюстраций</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="257"/>
+        <location filename="../app/SettingsDialog.cpp" line="258"/>
         <source>Picture zones layer</source>
         <translation>Слой зон иллюстраций</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="258"/>
+        <location filename="../app/SettingsDialog.cpp" line="259"/>
         <source>Foreground layer</source>
         <translation>Слой всего контента</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="259"/>
+        <location filename="../app/SettingsDialog.cpp" line="260"/>
         <source>Fill zones</source>
         <translation>Зоны заливки</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="260"/>
+        <location filename="../app/SettingsDialog.cpp" line="261"/>
         <source>Dewarping</source>
         <translation>Распрямление строк</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="261"/>
+        <location filename="../app/SettingsDialog.cpp" line="262"/>
         <source>Despeckling</source>
         <translation>Удаление мусора</translation>
     </message>
     <message>
-        <location filename="../app/SettingsDialog.cpp" line="537"/>
+        <location filename="../app/SettingsDialog.cpp" line="538"/>
         <source>Normal</source>
         <translation>Обычный</translation>
     </message>
@@ -3937,12 +3907,12 @@ Continue?</source>
 <context>
     <name>ZoneVertexDragInteraction</name>
     <message>
-        <location filename="../core/zones/ZoneVertexDragInteraction.cpp" line="186"/>
+        <location filename="../core/zones/ZoneVertexDragInteraction.cpp" line="188"/>
         <source>Merge these two vertices.</source>
         <translation>Объединить эти две вершины.</translation>
     </message>
     <message>
-        <location filename="../core/zones/ZoneVertexDragInteraction.cpp" line="188"/>
+        <location filename="../core/zones/ZoneVertexDragInteraction.cpp" line="190"/>
         <source>Move the vertex to one of its neighbors to merge them.</source>
         <translation>Придвиньте вершину к одной из соседних вершин, чтобы объединить их.</translation>
     </message>
@@ -3971,29 +3941,34 @@ Continue?</source>
 <context>
     <name>deskew::OptionsWidget</name>
     <message>
-        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="215"/>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="197"/>
         <source>Apply Distortion Type</source>
         <translation>Применить тип искажения</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="238"/>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="220"/>
         <source>Apply Auto/Manual mode</source>
         <translation>Применить режим Автоматически/Вручную</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="261"/>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="243"/>
         <source>Apply Fov Parameters</source>
         <translation>Применить параметры поля зрения</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="284"/>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="266"/>
         <source>Apply Frame Parameters</source>
         <translation>Применить параметры кадра</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="307"/>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="289"/>
         <source>Apply Bend Parameters</source>
         <translation>Применить параметры выгиба</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/OptionsWidget.cpp" line="312"/>
+        <source>Apply Size Parameters</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4310,32 +4285,32 @@ of a non grey color in the source files</source>
 <context>
     <name>output::Task::UiUpdater</name>
     <message>
-        <location filename="../core/filters/output/Task.cpp" line="640"/>
+        <location filename="../core/filters/output/Task.cpp" line="642"/>
         <source>Picture zones are only available in Mixed mode.</source>
         <translation>Зоны картинок доступны только в режиме &quot;Смешанный&quot;.</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/Task.cpp" line="701"/>
+        <location filename="../core/filters/output/Task.cpp" line="703"/>
         <source>Despeckling can&apos;t be done in Color / Grayscale mode.</source>
         <translation>Удаление мусора не роизводится в режиме &quot;Цветной / Оттенки серого&quot;.</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/Task.cpp" line="726"/>
+        <location filename="../core/filters/output/Task.cpp" line="728"/>
         <source>Output</source>
         <translation>Вывод</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/Task.cpp" line="727"/>
+        <location filename="../core/filters/output/Task.cpp" line="729"/>
         <source>Layers</source>
         <translation>Слои</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/Task.cpp" line="728"/>
+        <location filename="../core/filters/output/Task.cpp" line="730"/>
         <source>Fill Zones</source>
         <translation>Зоны заливки</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/Task.cpp" line="729"/>
+        <location filename="../core/filters/output/Task.cpp" line="731"/>
         <source>Despeckling</source>
         <translation>Удаление мусора</translation>
     </message>
@@ -4449,13 +4424,13 @@ and it&apos;s top and bottom hard margins</source>
     <message>
         <location filename="../core/filters/page_split/OptionsWidget.cpp" line="117"/>
         <location filename="../core/filters/page_split/OptionsWidget.cpp" line="209"/>
-        <location filename="../core/filters/page_split/OptionsWidget.cpp" line="310"/>
+        <location filename="../core/filters/page_split/OptionsWidget.cpp" line="312"/>
         <source>Set manually</source>
         <translation>Установлено вручную</translation>
     </message>
     <message>
         <location filename="../core/filters/page_split/OptionsWidget.cpp" line="166"/>
-        <location filename="../core/filters/page_split/OptionsWidget.cpp" line="307"/>
+        <location filename="../core/filters/page_split/OptionsWidget.cpp" line="309"/>
         <source>Auto detected</source>
         <translation>Определено автоматически</translation>
     </message>

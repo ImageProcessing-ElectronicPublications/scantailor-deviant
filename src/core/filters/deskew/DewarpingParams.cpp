@@ -36,7 +36,6 @@ DewarpingParams::DewarpingParams(QDomElement const& el)
     , m_frameParams(el.namedItem("frame-params").toElement())
     , m_bendParams(el.namedItem("bend-params").toElement())
     , m_sizeParams(el.namedItem("size-params").toElement())
-    , m_marginsParams(el.namedItem("margins-params").toElement())
     , m_mode(el.attribute("mode") == QLatin1String("manual") ? MODE_MANUAL : MODE_AUTO)
 {
 }
@@ -71,7 +70,6 @@ DewarpingParams::toXml(QDomDocument& doc, QString const& name) const
     el.appendChild(m_frameParams.toXml(doc, "frame-params"));
     el.appendChild(m_bendParams.toXml(doc, "bend-params"));
     el.appendChild(m_sizeParams.toXml(doc, "size-params"));
-    el.appendChild(m_marginsParams.toXml(doc, "margins-params"));
     el.setAttribute("mode", m_mode == MODE_MANUAL ? "manual" : "auto");
     return el;
 }

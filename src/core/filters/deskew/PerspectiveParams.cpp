@@ -40,7 +40,6 @@ PerspectiveParams::PerspectiveParams(QDomElement const& el)
     , m_fovParams(el.namedItem("fov-params").toElement())
     , m_frameParams(el.namedItem("frame-params").toElement())
     , m_sizeParams(el.namedItem("size-params").toElement())
-    , m_marginsParams(el.namedItem("margins-params").toElement())
 {
     m_corners[TOP_LEFT] = XmlUnmarshaller::pointF(el.namedItem("tl").toElement());
     m_corners[TOP_RIGHT] = XmlUnmarshaller::pointF(el.namedItem("tr").toElement());
@@ -86,7 +85,6 @@ PerspectiveParams::toXml(QDomDocument& doc, QString const& name) const
     el.appendChild(m_fovParams.toXml(doc, "fov-params"));
     el.appendChild(m_frameParams.toXml(doc, "frame-params"));
     el.appendChild(m_sizeParams.toXml(doc, "size-params"));
-    el.appendChild(m_marginsParams.toXml(doc, "margins-params"));
     return el;
 }
 

@@ -23,7 +23,6 @@
 #include "dewarping/FovParams.h"
 #include "dewarping/FrameParams.h"
 #include "dewarping/SizeParams.h"
-#include "dewarping/MarginsParams.h"
 #include <QPointF>
 
 class QDomDocument;
@@ -120,21 +119,6 @@ public:
         m_sizeParams = size_params;
     }
 
-    dewarping::MarginsParams& marginsParams()
-    {
-        return m_marginsParams;
-    }
-
-    dewarping::MarginsParams const& marginsParams() const
-    {
-        return m_marginsParams;
-    }
-
-    void setMarginsParams(dewarping::MarginsParams const& margins_params)
-    {
-        m_marginsParams = margins_params;
-    }
-
     QDomElement toXml(QDomDocument& doc, QString const& name) const;
 private:
     QPointF m_corners[4];
@@ -142,7 +126,6 @@ private:
     dewarping::FovParams m_fovParams;
     dewarping::FrameParams m_frameParams;
     dewarping::SizeParams m_sizeParams;
-    dewarping::MarginsParams m_marginsParams;
 };
 
 } // namespace deskew

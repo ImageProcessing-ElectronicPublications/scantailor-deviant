@@ -342,8 +342,7 @@ Perspective correction.</source>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="538"/>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="751"/>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="953"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1122"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1292"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1117"/>
         <source>Apply To ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -397,13 +396,13 @@ Perspective correction.</source>
     </message>
     <message>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="630"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1015"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1010"/>
         <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="656"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1045"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1040"/>
         <source>Height:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -448,45 +447,15 @@ Perspective correction.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1038"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1068"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1098"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1033"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1063"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1093"/>
         <source>px</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1075"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1070"/>
         <source>Distance:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1147"/>
-        <source>Margins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1155"/>
-        <source>Left:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1175"/>
-        <source>Right:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1195"/>
-        <source>Top:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1215"/>
-        <source>Bottom:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1252"/>
-        <source>Maximum pixel scale:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

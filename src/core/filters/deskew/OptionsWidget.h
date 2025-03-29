@@ -57,7 +57,6 @@ signals:
 
     void sizeParamsSetByUser(dewarping::SizeParams const& params);
 
-    void marginsParamsSetByUser(dewarping::MarginsParams const& params);
 public slots:
     void manualDeskewAngleSetExternally(double degrees);
 
@@ -158,16 +157,6 @@ private slots:
 
     void sizeDistanceSpinBoxValueChanged(double distance_new);
 
-    void marginsLeftSpinBoxValueChanged(double left_new);
-
-    void marginsRightSpinBoxValueChanged(double right_new);
-
-    void marginsTopSpinBoxValueChanged(double top_new);
-
-    void marginsBottomSpinBoxValueChanged(double bottom_new);
-
-    void marginsMaxPixelScaleSpinBoxValueChanged(double max_pixel_scale_new);
-
 private:
     void setupDistortionTypeButtons();
 
@@ -186,8 +175,6 @@ private:
     void updateBendPanel(dewarping::BendParams const& bend_params);
 
     void updateSizePanel(dewarping::SizeParams const& size_params);
-
-    void updateMarginsPanel(dewarping::MarginsParams const& margins_params);
 
     void updateAutoValuesOnPanels();
 
