@@ -294,6 +294,14 @@ IF(WIN32)
         install(FILES "${PLUGINS_DIR}/iconengines/qsvgicon.dll"  DESTINATION iconengines CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
         install(FILES "${PLUGINS_DIR}/iconengines/qsvgicond.dll" DESTINATION iconengines CONFIGURATIONS Debug)
 
+        # Install Qt's translations
+        FOREACH(qm_file ${QM_FILES})
+                STRING(REGEX REPLACE "^.*scantailor-deviant_" "${Qt5_DIR}translations/qtbase_" qtbase_qm_file "${qm_file}")
+                IF(EXISTS "${qtbase_qm_file}")
+                        INSTALL(FILES "${qtbase_qm_file}" DESTINATION translations)
+                ENDIF()
+        ENDFOREACH()
+
         # Install stylesheets
         install(DIRECTORY "${CMAKE_SOURCE_DIR}/src/stylesheets"
                 DESTINATION . 
@@ -396,6 +404,17 @@ ELSEIF(APPLE)
         INSTALL(FILES ${QT5_PLUGINS_DIR}/imageformats/libqjpeg.dylib  DESTINATION ${PLUGINS_DESTINATION}/imageformats)
         INSTALL(FILES ${QT5_PLUGINS_DIR}/imageformats/libqsvg.dylib   DESTINATION ${PLUGINS_DESTINATION}/imageformats)
         INSTALL(FILES ${QT5_PLUGINS_DIR}/imageformats/libqtiff.dylib  DESTINATION ${PLUGINS_DESTINATION}/imageformats)
+
+        CMAKE_PATH(SET Qt5_DIR NORMALIZE "${Qt5Core_DIR}/../../..")
+
+        FOREACH(qm_file ${QM_FILES})
+                STRING(REGEX REPLACE "^.*scantailor-deviant_" "${Qt5_DIR}translations/qtbase_" qtbase_qm_file "${qm_file}")
+                IF(EXISTS "${qtbase_qm_file}")
+                        INSTALL(FILES "${qtbase_qm_file}" DESTINATION "scantailor-deviant.app/Contents/Resources/translations")
+                ENDIF()
+                STRING(REGEX REPLACE "^.*scantailor-deviant_(.*)\.qm" "\\1" qtbase_qm_name "${qm_file}")
+                INSTALL(DIRECTORY DESTINATION "scantailor-deviant.app/Contents/Resources/${qtbase_qm_name}.lproj")
+        ENDFOREACH()
 ELSE()
         INSTALL(DIRECTORY "${CMAKE_SOURCE_DIR}/src/stylesheets" DESTINATION "share/scantailor-deviant")
 
