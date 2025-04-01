@@ -241,8 +241,10 @@ SettingsDialog::populateTreeWidget(QTreeWidget* treeWidget)
                                            << tr("Fix Orientation")
                                            << tr("Split pages")
                                            <<        tr("Apply cut")
-                                           << tr("Deskew")
+                                           << tr("Distortions correction")
                                            <<        tr("Mark deviant pages")
+                                           <<        tr("Deskew")
+                                           <<        tr("Dewarping")
                                            << tr("Select Content")
                                            <<        tr("Page detection")
                                            <<        tr("Mark deviant pages")
@@ -258,7 +260,6 @@ SettingsDialog::populateTreeWidget(QTreeWidget* treeWidget)
                                            <<               tr("Picture zones layer")
                                            <<               tr("Foreground layer")
                                            <<        tr("Fill zones")
-                                           <<        tr("Dewarping")
                                            <<        tr("Despeckling")
                                            <<        tr("Image metadata");
     const QResource tree_metadata(":/SettingsTreeData.tsv");
@@ -622,6 +623,8 @@ void SettingsDialog::on_stackedWidget_currentChanged(int /*arg1*/)
     } else if (currentPage == ui.pageDeskew) {
         QString s("QToolButton {background: %1};");
         ui.btnColorDeskew->setStyleSheet(s.arg(m_settings.value(_key_deskew_controls_color, _key_deskew_controls_color_def).toString()));
+    } else if (currentPage == ui.pageDewarping) {
+        ui.sbDewarpingSplinePoints->setValue(m_settings.value(_key_dewarping_spline_points, _key_dewarping_spline_points_def).toInt());
     } else if (currentPage == ui.pageSelectContent) {
         QString s("QToolButton {background: %1};");
         ui.btnColorSelectedContent->setStyleSheet(s.arg(m_settings.value(_key_content_sel_content_color, _key_content_sel_content_color_def).toString()));
@@ -1161,6 +1164,11 @@ void SettingsDialog::on_btnColorDeskewReset_released()
     m_settings.setValue(_key_deskew_controls_color, _key_deskew_controls_color_def);
     QString s("QToolButton {background: %1};");
     ui.btnColorDeskew->setStyleSheet(s.arg(_key_deskew_controls_color_def));
+}
+
+void SettingsDialog::on_sbDewarpingSplinePoints_valueChanged(int arg1)
+{
+    m_settings.setValue(_key_dewarping_spline_points, arg1);
 }
 
 void SettingsDialog::on_cbStyle_currentIndexChanged(const QString &arg1)

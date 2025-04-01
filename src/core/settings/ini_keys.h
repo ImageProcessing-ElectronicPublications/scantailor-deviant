@@ -249,6 +249,8 @@ extern const char* _key_deskew_controls_color;
 extern const char* _key_deskew_controls_color_def;
 extern const char* _key_deskew_deviant_enabled;
 extern const bool _key_deskew_deviant_enabled_def;
+extern const char* _key_dewarping_spline_points;
+extern const int _key_dewarping_spline_points_def;
 extern const char* _key_select_content_deviant_enabled;
 extern const bool _key_select_content_deviant_enabled_def;
 extern const char* _key_margins_deviant_enabled;

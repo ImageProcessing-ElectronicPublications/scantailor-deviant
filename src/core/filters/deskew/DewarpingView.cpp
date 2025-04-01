@@ -130,7 +130,7 @@ DewarpingView::~DewarpingView()
 void
 DewarpingView::initNewSpline(XSpline& spline, QPointF const& p1, QPointF const& p2)
 {
-    int const num_points = 4;
+    int const num_points = QSettings().value(_key_dewarping_spline_points, _key_dewarping_spline_points_def).toInt();
     QLineF const line(p1, p2);
     spline.appendControlPoint(line.p1(), 0);
     if (num_points > 2)

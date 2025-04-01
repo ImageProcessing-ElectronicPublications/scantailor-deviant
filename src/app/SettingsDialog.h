@@ -155,6 +155,8 @@ private slots:
 
     void on_btnColorDeskewReset_released();
 
+    void on_sbDewarpingSplinePoints_valueChanged(int arg1);
+
     void on_cbStyle_currentIndexChanged(const QString &arg1);
 
     void on_cbStyleSheet_currentIndexChanged(int index);

@@ -8,8 +8,10 @@ pageGeneral
 pageFixOrientation
 pageSplitPages
 	pageApplyCut	apply_cut/enabled
-pageDeskew
+pageDistortionsCorrection
 	pageDeviantDeskew	deskew_deviant/enabled	0
+	pageDeskew
+	pageDewarping
 pageSelectContent
 	pagePageDetecton	page_detection/enabled	0
 	pageDeviantContent	select_content_deviant/enabled	0
@@ -25,6 +27,5 @@ pageOutput
 		pagePictureZonesLayer	picture_zones_layer/enabled
 		pageForegroundLayer	foreground_layer/enabled
 	pageFillZones
-	pageDewarping
 	pageDespeckling
 	pageOutputMetadata
