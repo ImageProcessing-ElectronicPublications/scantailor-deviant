@@ -90,7 +90,7 @@ CylindricalSurfaceDewarper::imageSize(
     {
     case SizeMode::BY_AREA:
     {
-        double const model_area = m_Sx * m_Sy;
+        double const model_area = m_Sx * m_directrixArcLength * m_Sy ;
 
         QPointF const image_bounds[] = {
             img_directrix1.front(),
@@ -103,35 +103,35 @@ CylindricalSurfaceDewarper::imageSize(
         double image_area = 0.0;
         for (int i = 0; i < 4; ++i)
         {
-            image_area += image_bounds[i].x() * image_bounds[i + 1].y()
-                        - image_bounds[i + 1].x() * image_bounds[i].y();
+            image_area += image_bounds[i    ].x() * image_bounds[i + 1].y()
+                        - image_bounds[i + 1].x() * image_bounds[i    ].y();
         }
         image_area = 0.5 * std::abs(image_area);
 
         double const scale_factor = std::sqrt(image_area / model_area);
 
         return {
-            scale_factor* m_Sx,
+            scale_factor* m_Sx * m_directrixArcLength,
             scale_factor* m_Sy,
             scale_factor
         };
     }
     case SizeMode::FIT:
     {
-        double const scale_factor_x = size_params.width() / m_Sx;
+        double const scale_factor_x = size_params.width() / (m_Sx * m_directrixArcLength);
         double const scale_factor_y = size_params.height() / m_Sy;
 
         double const scale_factor = std::min(scale_factor_x, scale_factor_y);
 
         return {
-            scale_factor * m_Sx,
+            scale_factor * m_Sx * m_directrixArcLength,
             scale_factor * m_Sy,
             scale_factor
         };
     }
     case SizeMode::STRETCH:
     {
-        double const scale_factor_x = size_params.width() / m_Sx;
+        double const scale_factor_x = size_params.width() / (m_Sx * m_directrixArcLength);
         double const scale_factor_y = size_params.height() / m_Sy;
 
         double const scale_factor = 0.5 * (scale_factor_x + scale_factor_y);
@@ -147,7 +147,7 @@ CylindricalSurfaceDewarper::imageSize(
         double const scale_factor = size_params.distance();
 
         return {
-            scale_factor * m_Sx,
+            scale_factor * m_Sx * m_directrixArcLength,
             scale_factor * m_Sy,
             scale_factor
         };
