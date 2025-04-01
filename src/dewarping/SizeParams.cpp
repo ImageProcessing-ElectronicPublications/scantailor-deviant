@@ -17,6 +17,7 @@
 */
 
 #include "SizeParams.h"
+#include "ImageSize.h"
 #include "XmlMarshaller.h"
 #include "XmlUnmarshaller.h"
 #include <QDomDocument>
@@ -73,6 +74,32 @@ SizeParams::toXml(QDomDocument& doc, QString const& name) const
     el.setAttribute(str::HEIGHT, m_height);
     el.setAttribute(str::DISTANCE, m_distance);
     return el;
+}
+
+void
+SizeParams::update(ImageSize const& image_size)
+{
+    switch (m_mode)
+    {
+    case SizeMode::BY_AREA:
+        m_width = image_size.width;
+        m_height = image_size.height;
+        m_distance = image_size.distance;
+        break;
+    case SizeMode::FIT:
+        m_distance = image_size.distance;
+        break;
+    case SizeMode::STRETCH:
+        m_distance = image_size.distance;
+        break;
+    case SizeMode::BY_DISTANCE:
+        m_width = image_size.width;
+        m_height = image_size.height;
+        break;
+    default:
+        assert(!"Unreachable");
+        break;
+    }
 }
 
 } // namespace dewarping

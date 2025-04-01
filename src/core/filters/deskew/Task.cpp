@@ -442,30 +442,31 @@ Task::processPerspectiveDistortion(
         }
 
         params.perspectiveParams().setMode(MODE_AUTO);
-
-        m_ptrSettings->setPageParams(m_pageId, params);
     } // if (!params.isValid())
+
+    std::vector<QPointF> top_curve;
+    std::vector<QPointF> bottom_curve;
+    top_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::TOP_LEFT));
+    top_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::TOP_RIGHT));
+    bottom_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::BOTTOM_LEFT));
+    bottom_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT));
+
+    DewarpingImageTransform perspective_transform(
+        orig_image_transform.origSize(),
+        orig_image_transform.origCropArea(),
+        top_curve, bottom_curve,
+        params.perspectiveParams().fovParams(),
+        params.perspectiveParams().frameParams(),
+        BendParams(MODE_MANUAL, 0.0, 0.0, 0.0),
+        params.perspectiveParams().sizeParams()
+    );
+
+    params.perspectiveParams().sizeParams().update(perspective_transform.imageSize());
+
+    m_ptrSettings->setPageParams(m_pageId, params);
 
     if (m_ptrNextTask)
     {
-        // DewarpingImageTransform can handle perspective distortion
-        // as well, so we just use that.
-        std::vector<QPointF> top_curve;
-        std::vector<QPointF> bottom_curve;
-        top_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::TOP_LEFT));
-        top_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::TOP_RIGHT));
-        bottom_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::BOTTOM_LEFT));
-        bottom_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT));
-
-        DewarpingImageTransform perspective_transform(
-            orig_image_transform.origSize(),
-            orig_image_transform.origCropArea(),
-            top_curve, bottom_curve,
-            params.perspectiveParams().fovParams(),
-            params.perspectiveParams().frameParams(),
-            BendParams(MODE_MANUAL, 0.0, 0.0, 0.0),
-            params.perspectiveParams().sizeParams()
-        );
 
         QRectF const transformed_rectF = perspective_transform.transformedCropArea().boundingRect();
         QRect const transformed_rect(
@@ -586,24 +587,26 @@ Task::processWarpDistortion(
         }
 
         params.dewarpingParams().setDistortionModel(distortion_model);
-
         params.dewarpingParams().setMode(MODE_AUTO);
-
-        m_ptrSettings->setPageParams(m_pageId, params);
     } // if (!params.isValid())
+
+    DewarpingImageTransform dewarping_transform(
+        orig_image_transform.origSize(),
+        orig_image_transform.origCropArea(),
+        params.dewarpingParams().distortionModel().topCurve().polyline(),
+        params.dewarpingParams().distortionModel().bottomCurve().polyline(),
+        params.dewarpingParams().fovParams(),
+        params.dewarpingParams().frameParams(),
+        params.dewarpingParams().bendParams(),
+        params.dewarpingParams().sizeParams()
+    );
+
+    params.dewarpingParams().sizeParams().update(dewarping_transform.imageSize());
+
+    m_ptrSettings->setPageParams(m_pageId, params);
 
     if (m_ptrNextTask)
     {
-        DewarpingImageTransform dewarping_transform(
-            orig_image_transform.origSize(),
-            orig_image_transform.origCropArea(),
-            params.dewarpingParams().distortionModel().topCurve().polyline(),
-            params.dewarpingParams().distortionModel().bottomCurve().polyline(),
-            params.dewarpingParams().fovParams(),
-            params.dewarpingParams().frameParams(),
-            params.dewarpingParams().bendParams(),
-            params.dewarpingParams().sizeParams()
-        );
 
         QRectF const transformed_rectF = dewarping_transform.transformedCropArea().boundingRect();
         QRect const transformed_rect(

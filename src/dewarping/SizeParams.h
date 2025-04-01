@@ -28,6 +28,8 @@ class QString;
 namespace dewarping
 {
 
+struct ImageSize;
+
 class SizeParams
 {
 public:
@@ -76,6 +78,8 @@ public:
     {
         m_distance = distance;
     }
+
+    void update(ImageSize const& image_size);
 
     static double minSizeValue()
     {
