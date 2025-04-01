@@ -1312,6 +1312,8 @@ OptionsWidget::sizeModeComboBoxIndexChanged(int idx)
 
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
 
+    updateAutoValuesOnPanels();
+
     emit sizeParamsSetByUser(size_params);
     emit invalidateThumbnail(m_pageId);
 }
@@ -1332,6 +1334,8 @@ OptionsWidget::sizeWidthSpinBoxValueChanged(double width_new)
     size_params.setWidth(width_new);
 
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    updateAutoValuesOnPanels();
 
     emit sizeParamsSetByUser(size_params);
     emit invalidateThumbnail(m_pageId);
@@ -1354,6 +1358,8 @@ OptionsWidget::sizeHeightSpinBoxValueChanged(double height_new)
 
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
 
+    updateAutoValuesOnPanels();
+
     emit sizeParamsSetByUser(size_params);
     emit invalidateThumbnail(m_pageId);
 }
@@ -1374,6 +1380,8 @@ OptionsWidget::sizeDistanceSpinBoxValueChanged(double distance_new)
     size_params.setDistance(distance_new);
 
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
+
+    updateAutoValuesOnPanels();
 
     emit sizeParamsSetByUser(size_params);
     emit invalidateThumbnail(m_pageId);
@@ -1577,9 +1585,10 @@ try
     {
     case DistortionType::PERSPECTIVE:
     {
+        bool updateSize = true;
         bool updateFov = m_pageParams.perspectiveParams().fovParams().mode() == MODE_AUTO;
 
-        if (updateFov)
+        if (updateSize || updateFov)
         {
             std::vector<QPointF> top_curve = {
                 m_pageParams.perspectiveParams().corner(PerspectiveParams::TOP_LEFT),
@@ -1596,17 +1605,57 @@ try
                 dewarping::BendParams(MODE_MANUAL, 0.0, 0.0, 0.0)
             );
 
-            ui.fovSpinBox->setValue(dewarper.fov());
-            ui.fovSlider->setValue(fovToSlider(dewarper.fov()));
+            if (updateSize)
+            {
+                std::vector<QPointF> top_curve;
+                std::vector<QPointF> bottom_curve;
+                top_curve.push_back(m_pageParams.perspectiveParams().corner(PerspectiveParams::TOP_LEFT));
+                top_curve.push_back(m_pageParams.perspectiveParams().corner(PerspectiveParams::TOP_RIGHT));
+                bottom_curve.push_back(m_pageParams.perspectiveParams().corner(PerspectiveParams::BOTTOM_LEFT));
+                bottom_curve.push_back(m_pageParams.perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT));
+
+                dewarping::ImageSize const image_size = dewarper.imageSize(
+                    top_curve, bottom_curve, m_pageParams.perspectiveParams().sizeParams()
+                );
+                
+                switch (ui.sizeModeComboBox->currentIndex())
+                {
+                case dewarping::SizeMode::BY_AREA:
+                    ui.sizeWidthSpinBox->setValue(image_size.width);
+                    ui.sizeHeightSpinBox->setValue(image_size.height);
+                    ui.sizeDistanceSpinBox->setValue(image_size.distance);
+                    break;
+                case dewarping::SizeMode::FIT:
+                    ui.sizeDistanceSpinBox->setValue(image_size.distance);
+                    break;
+                case dewarping::SizeMode::STRETCH:
+                    ui.sizeDistanceSpinBox->setValue(image_size.distance);
+                    break;
+                case dewarping::SizeMode::BY_DISTANCE:
+                    ui.sizeWidthSpinBox->setValue(image_size.width);
+                    ui.sizeHeightSpinBox->setValue(image_size.height);
+                    break;
+                default:
+                    assert(!"Unreachable");
+                    break;
+                }
+            }
+
+            if (updateFov)
+            {
+                ui.fovSpinBox->setValue(dewarper.fov());
+                ui.fovSlider->setValue(fovToSlider(dewarper.fov()));
+            }
         }
         break;
     }
     case DistortionType::WARP:
     {
+        bool updateSize = true;
         bool updateFov = m_pageParams.dewarpingParams().fovParams().mode() == MODE_AUTO;
         bool updateBend = m_pageParams.dewarpingParams().bendParams().mode() == MODE_AUTO;
 
-        if (updateFov || updateBend)
+        if (updateSize || updateFov || updateBend)
         {
             dewarping::CylindricalSurfaceDewarper dewarper(
                 m_pageParams.dewarpingParams().distortionModel().topCurve().polyline(),
@@ -1615,6 +1664,37 @@ try
                 m_pageParams.dewarpingParams().frameParams(),
                 m_pageParams.dewarpingParams().bendParams()
             );
+
+            if (updateSize)
+            {
+                dewarping::ImageSize const image_size = dewarper.imageSize(
+                    m_pageParams.dewarpingParams().distortionModel().topCurve().polyline(),
+                    m_pageParams.dewarpingParams().distortionModel().bottomCurve().polyline(),
+                    m_pageParams.dewarpingParams().sizeParams()
+                );
+
+                switch (ui.sizeModeComboBox->currentIndex())
+                {
+                case dewarping::SizeMode::BY_AREA:
+                    ui.sizeWidthSpinBox->setValue(image_size.width);
+                    ui.sizeHeightSpinBox->setValue(image_size.height);
+                    ui.sizeDistanceSpinBox->setValue(image_size.distance);
+                    break;
+                case dewarping::SizeMode::FIT:
+                    ui.sizeDistanceSpinBox->setValue(image_size.distance);
+                    break;
+                case dewarping::SizeMode::STRETCH:
+                    ui.sizeDistanceSpinBox->setValue(image_size.distance);
+                    break;
+                case dewarping::SizeMode::BY_DISTANCE:
+                    ui.sizeWidthSpinBox->setValue(image_size.width);
+                    ui.sizeHeightSpinBox->setValue(image_size.height);
+                    break;
+                default:
+                    assert(!"Unreachable");
+                    break;
+                }
+            }
 
             if (updateFov)
             {
