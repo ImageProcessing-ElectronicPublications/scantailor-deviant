@@ -167,6 +167,16 @@ DewarpingImageTransform::transformedCropArea() const
     return poly;
 }
 
+ImageSize
+DewarpingImageTransform::imageSize() const
+{
+    return m_dewarper.imageSize(
+        m_topPolyline,
+        m_bottomPolyline,
+        m_sizeParams
+    );
+}
+
 QTransform
 DewarpingImageTransform::scale(qreal xscale, qreal yscale)
 {
@@ -312,75 +322,11 @@ int const DewarpingImageTransform::INTRINSIC_SCALE_ALGO_VERSION = 1;
 void
 DewarpingImageTransform::setupIntrinsicScale()
 {
-    switch (m_sizeParams.mode())
-    {
-    case SizeMode::BY_AREA:
-    {
-        double const model_area = m_dewarper.Sx() * m_dewarper.Sy();
+    ImageSize const image_size =
+        m_dewarper.imageSize(m_topPolyline, m_bottomPolyline, m_sizeParams);
 
-        QPointF const image_bounds[] = {
-            m_topPolyline.front(),
-            m_topPolyline.back(),
-            m_bottomPolyline.back(),
-            m_bottomPolyline.front(),
-            m_topPolyline.front()
-        };
-
-        double image_area = 0.0;
-        for (int i = 0; i < 4; ++i)
-        {
-            image_area += image_bounds[i    ].x() * image_bounds[i + 1].y()
-                        - image_bounds[i + 1].x() * image_bounds[i    ].y();
-        }
-        image_area = 0.5 * std::abs(image_area);
-
-        double const scale_factor = std::sqrt(image_area / model_area);
-
-        m_intrinsicScaleX = scale_factor * m_dewarper.Sx();
-        m_intrinsicScaleY = scale_factor * m_dewarper.Sy();
-
-        break;
-    }
-    case SizeMode::FIT:
-    {
-        double const scale_factor_x = m_sizeParams.width() / m_dewarper.Sx();
-        double const scale_factor_y = m_sizeParams.height() / m_dewarper.Sy();
-
-        double const scale_factor = std::min(scale_factor_x, scale_factor_y);
-
-        m_intrinsicScaleX = scale_factor * m_dewarper.Sx();
-        m_intrinsicScaleY = scale_factor * m_dewarper.Sy();
-
-        break;
-    }
-    case SizeMode::STRETCH:
-    {
-        m_intrinsicScaleX = m_sizeParams.width();  //  / m_dewarper.Sx();
-        m_intrinsicScaleY = m_sizeParams.height(); //  / m_dewarper.Sy();
-
-        break;
-    }
-    case SizeMode::BY_DISTANCE:
-    {
-        double const distance = m_sizeParams.distance();
-
-        m_intrinsicScaleX = m_dewarper.Sx() * distance;
-        m_intrinsicScaleY = m_dewarper.Sy() * distance;
-
-        break;
-    }
-    default:
-    {
-        assert(!"Unreachable");
-
-        double const focus = std::max(m_origSize.width(), m_origSize.height()) / m_dewarper.fov();
-
-        m_intrinsicScaleX = m_dewarper.Sx() * focus;
-        m_intrinsicScaleY = m_dewarper.Sy() * focus;
-
-        break;
-    }
-    }
+    m_intrinsicScaleX = image_size.width;
+    m_intrinsicScaleY = image_size.height;
 }
 
 QPolygonF

@@ -84,6 +84,8 @@ public:
 
     virtual QPolygonF transformedCropArea() const;
 
+    ImageSize imageSize() const;
+
     virtual QTransform scale(qreal xscale, qreal yscale);
 
     virtual imageproc::AffineTransformedImage toAffine(

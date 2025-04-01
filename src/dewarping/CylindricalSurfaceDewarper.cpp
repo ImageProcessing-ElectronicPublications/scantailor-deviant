@@ -27,6 +27,7 @@
 #include "dewarping/FovParams.h"
 #include "dewarping/FrameParams.h"
 #include "dewarping/BendParams.h"
+#include "dewarping/SizeParams.h"
 #include <Eigen/Core>
 #include <Eigen/QR>
 #include <QLineF>
@@ -77,6 +78,93 @@ CylindricalSurfaceDewarper::CylindricalSurfaceDewarper(
       m_imgDirectrix2Intersector(img_directrix2)
 {
     initArcLengthMapper(img_directrix1, img_directrix2, bend_params);
+}
+
+ImageSize
+CylindricalSurfaceDewarper::imageSize(
+    std::vector<QPointF> const& img_directrix1,
+    std::vector<QPointF> const& img_directrix2,
+    SizeParams const& size_params) const
+{
+    switch (size_params.mode())
+    {
+    case SizeMode::BY_AREA:
+    {
+        double const model_area = m_Sx * m_Sy;
+
+        QPointF const image_bounds[] = {
+            img_directrix1.front(),
+            img_directrix1.back(),
+            img_directrix2.back(),
+            img_directrix2.front(),
+            img_directrix1.front()
+        };
+
+        double image_area = 0.0;
+        for (int i = 0; i < 4; ++i)
+        {
+            image_area += image_bounds[i].x() * image_bounds[i + 1].y()
+                        - image_bounds[i + 1].x() * image_bounds[i].y();
+        }
+        image_area = 0.5 * std::abs(image_area);
+
+        double const scale_factor = std::sqrt(image_area / model_area);
+
+        return {
+            scale_factor* m_Sx,
+            scale_factor* m_Sy,
+            scale_factor
+        };
+    }
+    case SizeMode::FIT:
+    {
+        double const scale_factor_x = size_params.width() / m_Sx;
+        double const scale_factor_y = size_params.height() / m_Sy;
+
+        double const scale_factor = std::min(scale_factor_x, scale_factor_y);
+
+        return {
+            scale_factor * m_Sx,
+            scale_factor * m_Sy,
+            scale_factor
+        };
+    }
+    case SizeMode::STRETCH:
+    {
+        double const scale_factor_x = size_params.width() / m_Sx;
+        double const scale_factor_y = size_params.height() / m_Sy;
+
+        double const scale_factor = 0.5 * (scale_factor_x + scale_factor_y);
+
+        return {
+            size_params.width(),
+            size_params.height(),
+            scale_factor
+        };
+    }
+    case SizeMode::BY_DISTANCE:
+    {
+        double const scale_factor = size_params.distance();
+
+        return {
+            scale_factor * m_Sx,
+            scale_factor * m_Sy,
+            scale_factor
+        };
+    }
+    default:
+    {
+        assert(!"Unreachable");
+
+        double const scale_factor = 1024.0;
+
+        return {
+            scale_factor,
+            scale_factor,
+            scale_factor
+        };
+    }
+    }
 }
 
 CylindricalSurfaceDewarper::Generatrix

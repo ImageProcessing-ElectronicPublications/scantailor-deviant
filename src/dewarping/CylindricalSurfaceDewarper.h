@@ -23,6 +23,7 @@
 #include "PerspectiveTransform.h"
 #include "PolylineIntersector.h"
 #include "ArcLengthMapper.h"
+#include "ImageSize.h"
 #include <boost/array.hpp>
 #include <vector>
 #include <utility>
@@ -35,6 +36,7 @@ namespace dewarping
 class FovParams;
 class FrameParams;
 class BendParams;
+class SizeParams;
 
 /**
  * @brief A model for mapping a curved quadrilateral into a rectangle.
@@ -90,15 +92,10 @@ public:
         return m_bend;
     }
 
-    double Sx() const
-    {
-        return m_Sx;
-    }
-
-    double Sy() const
-    {
-        return m_Sy;
-    }
+    ImageSize imageSize(
+        std::vector<QPointF> const& img_directrix1,
+        std::vector<QPointF> const& img_directrix2,
+        SizeParams const& size_params) const;
 
     Generatrix mapGeneratrix(double crv_x, State& state) const;
 
