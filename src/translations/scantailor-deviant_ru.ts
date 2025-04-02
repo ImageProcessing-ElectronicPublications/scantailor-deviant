@@ -2533,17 +2533,24 @@ and press [Enter] to edit the shortcut:</source>
         <translation>y: проп.</translation>
     </message>
     <message>
+        <location filename="../core/filters/deskew/Filter.cpp" line="52"/>
         <location filename="../core/filters/fix_orientation/Filter.cpp" line="58"/>
         <source>Natural order</source>
         <translation>Естественный порядок</translation>
     </message>
     <message>
+        <location filename="../core/filters/deskew/Filter.cpp" line="53"/>
         <location filename="../core/filters/output/Filter.cpp" line="64"/>
         <location filename="../core/filters/page_layout/Filter.cpp" line="70"/>
         <location filename="../core/filters/page_split/Filter.cpp" line="67"/>
         <location filename="../core/filters/select_content/Filter.cpp" line="59"/>
         <source>Processed then unprocessed</source>
         <translation>Сначала уже обработанные</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/Filter.cpp" line="54"/>
+        <source>Order by distortion type</source>
+        <translation>Сортировка по типу искажения</translation>
     </message>
     <message>
         <location filename="../core/filters/output/OrderByModeProvider.cpp" line="70"/>
@@ -2610,9 +2617,36 @@ and press [Enter] to edit the shortcut:</source>
         <translation>на 2 страницы</translation>
     </message>
     <message>
+        <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="90"/>
+        <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="106"/>
         <location filename="../core/filters/page_split/OrderBySplitTypeProvider.cpp" line="90"/>
         <source>unknown</source>
         <translation>неизвестно</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="82"/>
+        <source>none</source>
+        <translation>нет</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="84"/>
+        <source>rotation</source>
+        <translation>поворот</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="86"/>
+        <source>perspective</source>
+        <translation>перспектива</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="88"/>
+        <source>warp</source>
+        <translation>развертка</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="97"/>
+        <source>Distortion type: %1</source>
+        <translation>Тип искажения: %1</translation>
     </message>
     <message>
         <location filename="../core/filters/page_split/OrderBySplitTypeProvider.cpp" line="97"/>
@@ -2656,7 +2690,7 @@ and press [Enter] to edit the shortcut:</source>
     <message>
         <location filename="../core/filters/fix_orientation/Filter.cpp" line="59"/>
         <source>Order by rotation</source>
-        <translation>По повороту</translation>
+        <translation>Сортировка по повороту</translation>
     </message>
     <message>
         <location filename="../core/filters/fix_orientation/OrderByRotation.cpp" line="49"/>
@@ -3935,7 +3969,7 @@ Continue?</source>
 <context>
     <name>deskew::Filter</name>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="52"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="64"/>
         <source>Distortions correction</source>
         <translation>Исправление искажений</translation>
     </message>
@@ -4418,7 +4452,7 @@ and it&apos;s top and bottom hard margins</source>
     <message>
         <location filename="../core/filters/page_split/Filter.cpp" line="69"/>
         <source>Order by page size</source>
-        <translation>По размеру страницы</translation>
+        <translation>Сортировка по размеру страницы</translation>
     </message>
     <message>
         <location filename="../core/filters/page_split/Filter.cpp" line="79"/>

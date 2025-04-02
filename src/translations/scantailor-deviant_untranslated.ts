@@ -1998,16 +1998,23 @@ and press [Enter] to edit the shortcut:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/filters/deskew/Filter.cpp" line="52"/>
         <location filename="../core/filters/fix_orientation/Filter.cpp" line="58"/>
         <source>Natural order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/filters/deskew/Filter.cpp" line="53"/>
         <location filename="../core/filters/output/Filter.cpp" line="64"/>
         <location filename="../core/filters/page_layout/Filter.cpp" line="70"/>
         <location filename="../core/filters/page_split/Filter.cpp" line="67"/>
         <location filename="../core/filters/select_content/Filter.cpp" line="59"/>
         <source>Processed then unprocessed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/Filter.cpp" line="54"/>
+        <source>Order by distortion type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2268,8 +2275,35 @@ and press [Enter] to edit the shortcut:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="90"/>
+        <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="106"/>
         <location filename="../core/filters/page_split/OrderBySplitTypeProvider.cpp" line="90"/>
         <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="82"/>
+        <source>none</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="84"/>
+        <source>rotation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="86"/>
+        <source>perspective</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="88"/>
+        <source>warp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="97"/>
+        <source>Distortion type: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3822,7 +3856,7 @@ Continue?</source>
 <context>
     <name>deskew::Filter</name>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="52"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="64"/>
         <source>Distortions correction</source>
         <translation type="unfinished"></translation>
     </message>

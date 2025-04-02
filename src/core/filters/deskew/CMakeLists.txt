@@ -15,6 +15,7 @@ SET(
         ImageView.cpp ImageView.h
         NoDistortionView.cpp NoDistortionView.h
         OptionsWidget.cpp OptionsWidget.h
+        OrderByDistortionTypeProvider.cpp OrderByDistortionTypeProvider.h
         Params.cpp Params.h
         PerspectiveParams.cpp PerspectiveParams.h
         RotationParams.cpp RotationParams.h
