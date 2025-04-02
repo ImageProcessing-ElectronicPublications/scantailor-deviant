@@ -25,6 +25,7 @@
 #include "ProjectReader.h"
 #include "ProjectWriter.h"
 #include "AbstractRelinker.h"
+#include <QObject>
 #include <QCoreApplication>
 #include <QDomDocument>
 #include <QDomElement>
@@ -35,11 +36,19 @@ namespace deskew
 
 Filter::Filter(PageSelectionAccessor const& page_selection_accessor)
     : m_ptrSettings(new Settings)
+    , m_selectedPageOrder(0)
 {
     if (CommandLine::get().isGui())
     {
         m_ptrOptionsWidget.reset(new OptionsWidget(m_ptrSettings, page_selection_accessor));
     }
+
+    typedef PageOrderOption::ProviderPtr ProviderPtr;
+
+    ProviderPtr const default_order;
+
+    m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Natural order"), default_order));
+    m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Processed then unprocessed"), ProviderPtr(new OrderByReadiness())));
 }
 
 Filter::~Filter()
@@ -169,6 +178,25 @@ Filter::createCacheDrivenTask(
     return IntrusivePtr<CacheDrivenTask>(
         new CacheDrivenTask(m_ptrSettings, next_task)
     );
+}
+
+std::vector<PageOrderOption>
+Filter::pageOrderOptions() const
+{
+    return m_pageOrderOptions;
+}
+
+int
+Filter::selectedPageOrder() const
+{
+    return m_selectedPageOrder;
+}
+
+void
+Filter::selectPageOrder(int option)
+{
+    assert((unsigned)option < m_pageOrderOptions.size());
+    m_selectedPageOrder = option;
 }
 
 } // namespace deskew
