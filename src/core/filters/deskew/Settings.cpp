@@ -152,6 +152,13 @@ Settings::setPerspectiveMode(
         PerPageParams::iterator it = m_perPageParams.find(page_id);
         if (it != m_perPageParams.end())
         {
+            if (mode == MODE_AUTO && it->second.perspectiveParams().mode() != MODE_AUTO)
+            {
+                it->second.perspectiveParams().setCorner(PerspectiveParams::TOP_LEFT, QPointF());
+                it->second.perspectiveParams().setCorner(PerspectiveParams::TOP_RIGHT, QPointF());
+                it->second.perspectiveParams().setCorner(PerspectiveParams::BOTTOM_LEFT, QPointF());
+                it->second.perspectiveParams().setCorner(PerspectiveParams::BOTTOM_RIGHT, QPointF());
+            }
             it->second.perspectiveParams().setMode(mode);
         }
         else
@@ -244,6 +251,10 @@ Settings::setDewarpingMode(
         PerPageParams::iterator it = m_perPageParams.find(page_id);
         if (it != m_perPageParams.end())
         {
+            if (mode == MODE_AUTO && it->second.dewarpingParams().mode() != MODE_AUTO)
+            {
+                it->second.dewarpingParams().invalidate();
+            }
             it->second.dewarpingParams().setMode(mode);
         }
         else
@@ -348,3 +359,4 @@ Settings::setDewarpingSizeParams(
 }
 
 } // namespace deskew
+

@@ -377,50 +377,76 @@ Task::processPerspectiveDistortion(
 
     if (!params.perspectiveParams().isValid())
     {
-
-        DistortionModelBuilder model_builder(
-            orig_image_transform.transform().inverted().map(QPointF(0, 1))
-        );
-
-        TextLineTracer::trace(
-            AffineTransformedImage(data.grayImage(), orig_image_transform),
-            model_builder, status, m_ptrDbg.get()
-        );
-
-        TopBottomEdgeTracer::trace(
-            data.grayImage(), model_builder.verticalBounds(),
-            model_builder, status, m_ptrDbg.get()
-        );
-
-        DistortionModel distortion_model(
-            model_builder.tryBuildModel(
-                params.perspectiveParams().fovParams(),
-                params.perspectiveParams().frameParams(),
-                BendParams(MODE_MANUAL, 0.0, 0.0, 0.0),
-                m_ptrDbg.get(), &data.origImage()
-            )
-        );
-
-        if (distortion_model.isValid())
+        switch (params.perspectiveParams().mode())
         {
-            params.perspectiveParams().setCorner(
-                PerspectiveParams::TOP_LEFT,
-                distortion_model.topCurve().polyline().front()
+        case MODE_AUTO:
+        {
+            DistortionModelBuilder model_builder(
+                orig_image_transform.transform().inverted().map(QPointF(0, 1))
             );
-            params.perspectiveParams().setCorner(
-                PerspectiveParams::TOP_RIGHT,
-                distortion_model.topCurve().polyline().back()
+
+            TextLineTracer::trace(
+                AffineTransformedImage(data.grayImage(), orig_image_transform),
+                model_builder, status, m_ptrDbg.get()
             );
-            params.perspectiveParams().setCorner(
-                PerspectiveParams::BOTTOM_LEFT,
-                distortion_model.bottomCurve().polyline().front()
+
+            TopBottomEdgeTracer::trace(
+                data.grayImage(), model_builder.verticalBounds(),
+                model_builder, status, m_ptrDbg.get()
             );
-            params.perspectiveParams().setCorner(
-                PerspectiveParams::BOTTOM_RIGHT,
-                distortion_model.bottomCurve().polyline().back()
+
+            DistortionModel distortion_model(
+                model_builder.tryBuildModel(
+                    params.perspectiveParams().fovParams(),
+                    params.perspectiveParams().frameParams(),
+                    BendParams(MODE_MANUAL, 0.0, 0.0, 0.0),
+                    m_ptrDbg.get(), &data.origImage()
+                )
             );
+
+            if (distortion_model.isValid())
+            {
+                params.perspectiveParams().setCorner(
+                    PerspectiveParams::TOP_LEFT,
+                    distortion_model.topCurve().polyline().front()
+                );
+                params.perspectiveParams().setCorner(
+                    PerspectiveParams::TOP_RIGHT,
+                    distortion_model.topCurve().polyline().back()
+                );
+                params.perspectiveParams().setCorner(
+                    PerspectiveParams::BOTTOM_LEFT,
+                    distortion_model.bottomCurve().polyline().front()
+                );
+                params.perspectiveParams().setCorner(
+                    PerspectiveParams::BOTTOM_RIGHT,
+                    distortion_model.bottomCurve().polyline().back()
+                );
+            }
+            else
+            {
+                // Set up a trivial transformation.
+
+                QTransform const to_orig(data.xform().transformBack());
+                QRectF const transformed_box(data.xform().resultingPostCropArea().boundingRect());
+
+                params.perspectiveParams().setCorner(
+                    PerspectiveParams::TOP_LEFT, to_orig.map(transformed_box.topLeft())
+                );
+                params.perspectiveParams().setCorner(
+                    PerspectiveParams::TOP_RIGHT, to_orig.map(transformed_box.topRight())
+                );
+                params.perspectiveParams().setCorner(
+                    PerspectiveParams::BOTTOM_LEFT, to_orig.map(transformed_box.bottomLeft())
+                );
+                params.perspectiveParams().setCorner(
+                    PerspectiveParams::BOTTOM_RIGHT, to_orig.map(transformed_box.bottomRight())
+                );
+            }
+
+            break;
         }
-        else
+        default:
         {
             // Set up a trivial transformation.
 
@@ -439,9 +465,10 @@ Task::processPerspectiveDistortion(
             params.perspectiveParams().setCorner(
                 PerspectiveParams::BOTTOM_RIGHT, to_orig.map(transformed_box.bottomRight())
             );
-        }
 
-        params.perspectiveParams().setMode(MODE_AUTO);
+            break;
+        }
+        }
     } // if (!params.isValid())
 
     std::vector<QPointF> top_curve;
@@ -537,57 +564,93 @@ Task::processWarpDistortion(
 
     if (!params.dewarpingParams().isValid())
     {
+        switch (params.dewarpingParams().mode())
+        {
+        case MODE_AUTO:
+        {
+            DistortionModelBuilder model_builder(
+                orig_image_transform.transform().inverted().map(QPointF(0, 1))
+            );
 
-        DistortionModelBuilder model_builder(
-            orig_image_transform.transform().inverted().map(QPointF(0, 1))
-        );
+            TextLineTracer::trace(
+                AffineTransformedImage(data.grayImage(), orig_image_transform),
+                model_builder, status, m_ptrDbg.get()
+            );
 
-        TextLineTracer::trace(
-            AffineTransformedImage(data.grayImage(), orig_image_transform),
-            model_builder, status, m_ptrDbg.get()
-        );
+            TopBottomEdgeTracer::trace(
+                data.grayImage(), model_builder.verticalBounds(),
+                model_builder, status, m_ptrDbg.get()
+            );
 
-        TopBottomEdgeTracer::trace(
-            data.grayImage(), model_builder.verticalBounds(),
-            model_builder, status, m_ptrDbg.get()
-        );
+            DistortionModel distortion_model(
+                model_builder.tryBuildModel(
+                    params.dewarpingParams().fovParams(),
+                    params.dewarpingParams().frameParams(),
+                    params.dewarpingParams().bendParams(),
+                    m_ptrDbg.get(), &data.origImage())
+            );
 
-        DistortionModel distortion_model(
-            model_builder.tryBuildModel(
-                params.dewarpingParams().fovParams(),
-                params.dewarpingParams().frameParams(),
-                params.dewarpingParams().bendParams(),
-                m_ptrDbg.get(), &data.origImage())
-        );
+            if (!distortion_model.isValid())
+            {
+                // Set up a trivial transformation.
 
-        if (!distortion_model.isValid())
+                QTransform const to_orig(data.xform().transformBack());
+                QRectF const transformed_box(data.xform().resultingPostCropArea().boundingRect());
+
+                distortion_model.setTopCurve(
+                    std::vector<QPointF>
+                    {
+                        to_orig.map(transformed_box.topLeft()),
+                        to_orig.map(transformed_box.topRight())
+                    }
+                );
+
+                distortion_model.setBottomCurve(
+                    std::vector<QPointF>
+                    {
+                        to_orig.map(transformed_box.bottomLeft()),
+                        to_orig.map(transformed_box.bottomRight())
+                    }
+                );
+
+                assert(distortion_model.isValid());
+            }
+
+            params.dewarpingParams().setDistortionModel(distortion_model);
+
+            break;
+        }
+        default:
         {
             // Set up a trivial transformation.
+            DistortionModel distortion_model;
 
             QTransform const to_orig(data.xform().transformBack());
             QRectF const transformed_box(data.xform().resultingPostCropArea().boundingRect());
 
             distortion_model.setTopCurve(
                 std::vector<QPointF>
-                {
-                    to_orig.map(transformed_box.topLeft()),
-                        to_orig.map(transformed_box.topRight())
-                }
+            {
+                to_orig.map(transformed_box.topLeft()),
+                    to_orig.map(transformed_box.topRight())
+            }
             );
 
             distortion_model.setBottomCurve(
                 std::vector<QPointF>
-                {
-                    to_orig.map(transformed_box.bottomLeft()),
-                        to_orig.map(transformed_box.bottomRight())
-                }
+            {
+                to_orig.map(transformed_box.bottomLeft()),
+                    to_orig.map(transformed_box.bottomRight())
+            }
             );
 
             assert(distortion_model.isValid());
-        }
 
-        params.dewarpingParams().setDistortionModel(distortion_model);
-        params.dewarpingParams().setMode(MODE_AUTO);
+            params.dewarpingParams().setDistortionModel(distortion_model);
+
+            break;
+        }
+        }
     } // if (!params.isValid())
 
     DewarpingImageTransform dewarping_transform(
