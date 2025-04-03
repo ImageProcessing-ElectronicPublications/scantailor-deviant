@@ -650,15 +650,15 @@ OptionsWidget::preUpdateUI(PageId const& page_id, DistortionType const& distorti
     switch (distortion_type)
     {
     case DistortionType::PERSPECTIVE:
-        updateFovPanel(m_pageParams.perspectiveParams().fovParams());
-        updateFramePanel(m_pageParams.perspectiveParams().frameParams());
-        updateSizePanel(m_pageParams.perspectiveParams().sizeParams());
+        preUpdateFovPanel(m_pageParams.perspectiveParams().fovParams());
+        preUpdateFramePanel(m_pageParams.perspectiveParams().frameParams());
+        preUpdateSizePanel(m_pageParams.perspectiveParams().sizeParams());
         break;
     case DistortionType::WARP:
-        updateFovPanel(m_pageParams.dewarpingParams().fovParams());
-        updateFramePanel(m_pageParams.dewarpingParams().frameParams());
-        updateBendPanel(m_pageParams.dewarpingParams().bendParams());
-        updateSizePanel(m_pageParams.dewarpingParams().sizeParams());
+        preUpdateFovPanel(m_pageParams.dewarpingParams().fovParams());
+        preUpdateFramePanel(m_pageParams.dewarpingParams().frameParams());
+        preUpdateBendPanel(m_pageParams.dewarpingParams().bendParams());
+        preUpdateSizePanel(m_pageParams.dewarpingParams().sizeParams());
         break;
     default:
         break;
@@ -681,16 +681,16 @@ OptionsWidget::postUpdateUI(Params const& page_params)
     switch (page_params.distortionType())
     {
     case DistortionType::PERSPECTIVE:
-        updateFovPanel(page_params.perspectiveParams().fovParams());
-        updateFramePanel(page_params.perspectiveParams().frameParams());
-        updateSizePanel(page_params.perspectiveParams().sizeParams());
+        postUpdateFovPanel(page_params.perspectiveParams().fovParams());
+        postUpdateFramePanel(page_params.perspectiveParams().frameParams());
+        postUpdateSizePanel(page_params.perspectiveParams().sizeParams());
         updateAutoValuesOnPanels();
         break;
     case DistortionType::WARP:
-        updateFovPanel(page_params.dewarpingParams().fovParams());
-        updateFramePanel(page_params.dewarpingParams().frameParams());
-        updateBendPanel(page_params.dewarpingParams().bendParams());
-        updateSizePanel(page_params.dewarpingParams().sizeParams());
+        postUpdateFovPanel(page_params.dewarpingParams().fovParams());
+        postUpdateFramePanel(page_params.dewarpingParams().frameParams());
+        postUpdateBendPanel(page_params.dewarpingParams().bendParams());
+        postUpdateSizePanel(page_params.dewarpingParams().sizeParams());
         updateAutoValuesOnPanels();
         break;
     default:
@@ -1453,7 +1453,32 @@ OptionsWidget::updateModeIndication(AutoManualMode const mode)
 }
 
 void
-OptionsWidget::updateFovPanel(dewarping::FovParams const& fov_params)
+OptionsWidget::preUpdateFovPanel(dewarping::FovParams const& fov_params)
+{
+    if (fov_params.mode() == MODE_AUTO)
+    {
+        ui.fovAutoBtn->setChecked(true);
+        ui.fovSlider->setDisabled(true);
+        ui.fovSpinBox->setDisabled(true);
+    }
+    else
+    {
+        ui.fovManualBtn->setChecked(true);
+        ui.fovSlider->setEnabled(true);
+        ui.fovSpinBox->setEnabled(true);
+    }
+
+    ui.fovMinSpinBox->setValue(ui.fovMinSpinBox->minimum());
+    ui.fovSpinBox->setValue(ui.fovSpinBox->minimum());
+    ui.fovMaxSpinBox->setValue(ui.fovMaxSpinBox->minimum());
+
+    ui.fovMinSpinBox->setSpecialValueText(" ");
+    ui.fovSpinBox->setSpecialValueText(" ");
+    ui.fovMaxSpinBox->setSpecialValueText(" ");
+}
+
+void
+OptionsWidget::postUpdateFovPanel(dewarping::FovParams const& fov_params)
 {
     if (fov_params.mode() == MODE_AUTO)
     {
@@ -1476,16 +1501,51 @@ OptionsWidget::updateFovPanel(dewarping::FovParams const& fov_params)
     ui.fovMinSpinBox->setMaximum(fov_params.fovMax());
     ui.fovMaxSpinBox->setMinimum(fov_params.fovMin());
     ui.fovSpinBox->setRange(
-        fov_params.fovMin(), 
+        fov_params.fovMin(),
         fov_params.fovMax());
 
     ui.fovMinSpinBox->setValue(fov_params.fovMin());
     ui.fovSpinBox->setValue(fov_params.fov());
     ui.fovMaxSpinBox->setValue(fov_params.fovMax());
+
+    ui.fovMinSpinBox->setSpecialValueText("");
+    ui.fovSpinBox->setSpecialValueText("");
+    ui.fovMaxSpinBox->setSpecialValueText("");
 }
 
 void
-OptionsWidget::updateFramePanel(dewarping::FrameParams const& frame_params)
+OptionsWidget::preUpdateFramePanel(dewarping::FrameParams const& frame_params)
+{
+    if (frame_params.mode() == MODE_AUTO)
+    {
+        ui.frameAutoBtn->setChecked(true);
+        ui.frameWidthSpinBox->setDisabled(true);
+        ui.frameHeightSpinBox->setDisabled(true);
+        ui.frameCenterXSpinBox->setDisabled(true);
+        ui.frameCenterYSpinBox->setDisabled(true);
+    }
+    else
+    {
+        ui.frameManualBtn->setChecked(true);
+        ui.frameWidthSpinBox->setEnabled(true);
+        ui.frameHeightSpinBox->setEnabled(true);
+        ui.frameCenterXSpinBox->setEnabled(true);
+        ui.frameCenterYSpinBox->setEnabled(true);
+    }
+
+    ui.frameWidthSpinBox->setValue(ui.frameWidthSpinBox->minimum());
+    ui.frameHeightSpinBox->setValue(ui.frameHeightSpinBox->minimum());
+    ui.frameCenterXSpinBox->setValue(ui.frameCenterXSpinBox->minimum());
+    ui.frameCenterYSpinBox->setValue(ui.frameCenterYSpinBox->minimum());
+
+    ui.frameWidthSpinBox->setSpecialValueText(" ");
+    ui.frameHeightSpinBox->setSpecialValueText(" ");
+    ui.frameCenterXSpinBox->setSpecialValueText(" ");
+    ui.frameCenterYSpinBox->setSpecialValueText(" ");
+}
+
+void
+OptionsWidget::postUpdateFramePanel(dewarping::FrameParams const& frame_params)
 {
     if (frame_params.mode() == MODE_AUTO)
     {
@@ -1508,10 +1568,40 @@ OptionsWidget::updateFramePanel(dewarping::FrameParams const& frame_params)
     ui.frameHeightSpinBox->setValue(frame_params.height());
     ui.frameCenterXSpinBox->setValue(frame_params.centerX());
     ui.frameCenterYSpinBox->setValue(frame_params.centerY());
+
+    ui.frameWidthSpinBox->setSpecialValueText("");
+    ui.frameHeightSpinBox->setSpecialValueText("");
+    ui.frameCenterXSpinBox->setSpecialValueText("");
+    ui.frameCenterYSpinBox->setSpecialValueText("");
 }
 
 void
-OptionsWidget::updateBendPanel(dewarping::BendParams const& bend_params)
+OptionsWidget::preUpdateBendPanel(dewarping::BendParams const& bend_params)
+{
+    if (bend_params.mode() == MODE_AUTO)
+    {
+        ui.bendAutoBtn->setChecked(true);
+        ui.bendSlider->setDisabled(true);
+        ui.bendSpinBox->setDisabled(true);
+    }
+    else
+    {
+        ui.bendManualBtn->setChecked(true);
+        ui.bendSlider->setEnabled(true);
+        ui.bendSpinBox->setEnabled(true);
+    }
+
+    ui.bendMinSpinBox->setValue(ui.bendMinSpinBox->minimum());
+    ui.bendSpinBox->setValue(ui.bendSpinBox->minimum());
+    ui.bendMaxSpinBox->setValue(ui.bendMaxSpinBox->minimum());
+
+    ui.bendMinSpinBox->setSpecialValueText(" ");
+    ui.bendSpinBox->setSpecialValueText(" ");
+    ui.bendMaxSpinBox->setSpecialValueText(" ");
+}
+
+void
+OptionsWidget::postUpdateBendPanel(dewarping::BendParams const& bend_params)
 {
     if (bend_params.mode() == MODE_AUTO)
     {
@@ -1542,10 +1632,51 @@ OptionsWidget::updateBendPanel(dewarping::BendParams const& bend_params)
     ui.bendMinSpinBox->setValue(bend_params.bendMin());
     ui.bendSpinBox->setValue(bend_params.bend());
     ui.bendMaxSpinBox->setValue(bend_params.bendMax());
+
+    ui.bendMinSpinBox->setSpecialValueText("");
+    ui.bendSpinBox->setSpecialValueText("");
+    ui.bendMaxSpinBox->setSpecialValueText("");
 }
 
 void
-OptionsWidget::updateSizePanel(dewarping::SizeParams const& size_params)
+OptionsWidget::preUpdateSizePanel(dewarping::SizeParams const& size_params)
+{
+    switch (size_params.mode())
+    {
+    case dewarping::SizeMode::BY_AREA:
+        ui.sizeWidthSpinBox->setDisabled(true);
+        ui.sizeHeightSpinBox->setDisabled(true);
+        ui.sizeDistanceSpinBox->setDisabled(true);
+        break;
+    case dewarping::SizeMode::FIT:
+        ui.sizeWidthSpinBox->setEnabled(true);
+        ui.sizeHeightSpinBox->setEnabled(true);
+        ui.sizeDistanceSpinBox->setDisabled(true);
+        break;
+    case dewarping::SizeMode::STRETCH:
+        ui.sizeWidthSpinBox->setEnabled(true);
+        ui.sizeHeightSpinBox->setEnabled(true);
+        ui.sizeDistanceSpinBox->setDisabled(true);
+        break;
+    case dewarping::SizeMode::BY_DISTANCE:
+        ui.sizeWidthSpinBox->setDisabled(true);
+        ui.sizeHeightSpinBox->setDisabled(true);
+        ui.sizeDistanceSpinBox->setEnabled(true);
+        break;
+    }
+
+    ui.sizeModeComboBox->setCurrentIndex(-1);
+    ui.sizeWidthSpinBox->setValue(ui.sizeWidthSpinBox->minimum());
+    ui.sizeHeightSpinBox->setValue(ui.sizeHeightSpinBox->minimum());
+    ui.sizeDistanceSpinBox->setValue(ui.sizeDistanceSpinBox->minimum());
+
+    ui.sizeWidthSpinBox->setSpecialValueText(" ");
+    ui.sizeHeightSpinBox->setSpecialValueText(" ");
+    ui.sizeDistanceSpinBox->setSpecialValueText(" ");
+}
+
+void
+OptionsWidget::postUpdateSizePanel(dewarping::SizeParams const& size_params)
 {
     switch (size_params.mode())
     {
@@ -1575,6 +1706,10 @@ OptionsWidget::updateSizePanel(dewarping::SizeParams const& size_params)
     ui.sizeWidthSpinBox->setValue(size_params.width());
     ui.sizeHeightSpinBox->setValue(size_params.height());
     ui.sizeDistanceSpinBox->setValue(size_params.distance());
+
+    ui.sizeWidthSpinBox->setSpecialValueText("");
+    ui.sizeHeightSpinBox->setSpecialValueText("");
+    ui.sizeDistanceSpinBox->setSpecialValueText("");
 }
 
 void

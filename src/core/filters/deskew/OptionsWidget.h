@@ -168,13 +168,21 @@ private:
 
     void updateModeIndication(AutoManualMode mode);
 
-    void updateFovPanel(dewarping::FovParams const& fov_params);
+    void preUpdateFovPanel(dewarping::FovParams const& fov_params);
 
-    void updateFramePanel(dewarping::FrameParams const& frame_params);
+    void postUpdateFovPanel(dewarping::FovParams const& fov_params);
 
-    void updateBendPanel(dewarping::BendParams const& bend_params);
+    void preUpdateFramePanel(dewarping::FrameParams const& frame_params);
 
-    void updateSizePanel(dewarping::SizeParams const& size_params);
+    void postUpdateFramePanel(dewarping::FrameParams const& frame_params);
+
+    void preUpdateBendPanel(dewarping::BendParams const& bend_params);
+
+    void postUpdateBendPanel(dewarping::BendParams const& bend_params);
+
+    void preUpdateSizePanel(dewarping::SizeParams const& size_params);
+
+    void postUpdateSizePanel(dewarping::SizeParams const& size_params);
 
     void updateAutoValuesOnPanels();
 
