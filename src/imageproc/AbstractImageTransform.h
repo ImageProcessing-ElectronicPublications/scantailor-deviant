@@ -49,15 +49,6 @@ public:
     virtual bool isAffine() const = 0;
 
     /**
-     * @brief Produces a hash of the transform.
-     *
-     * The hash has to be resistent to loss of accuracy of floating point
-     * values that happens when saving a project to an XML based format.
-     * Implementations should use RoundingHasher to address this problem.
-     */
-    virtual QString fingerprint() const = 0;
-
-    /**
      * @brief Dimensions of original image.
      */
     virtual QSize const& origSize() const = 0;

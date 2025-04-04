@@ -53,8 +53,6 @@ public:
         return true;
     }
 
-    virtual QString fingerprint() const;
-
     virtual QSize const& origSize() const
     {
         return m_origSize;

@@ -70,8 +70,6 @@ public:
         return false;
     }
 
-    virtual QString fingerprint() const;
-
     virtual QSize const& origSize() const
     {
         return m_origSize;
@@ -104,8 +102,6 @@ private:
     std::pair<double, double> calcMinMaxDensities() const;
 
     QPointF postScale(QPointF const& pt) const;
-
-    static int const INTRINSIC_SCALE_ALGO_VERSION;
 
     QSize m_origSize;
     QPolygonF m_origCropArea;

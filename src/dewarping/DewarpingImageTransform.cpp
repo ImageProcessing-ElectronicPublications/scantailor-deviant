@@ -121,30 +121,6 @@ DewarpingImageTransform::~DewarpingImageTransform()
 {
 }
 
-QString
-DewarpingImageTransform::fingerprint() const
-{
-    RoundingHasher hash(QCryptographicHash::Sha1);
-
-    hash << "DewarpingImageTransform";
-    hash << m_origSize << m_origCropArea;
-
-    for (QPointF const& pt : m_topPolyline)
-    {
-        hash << pt;
-    }
-
-    for (QPointF const& pt : m_bottomPolyline)
-    {
-        hash << pt;
-    }
-
-    hash << INTRINSIC_SCALE_ALGO_VERSION;
-    hash << m_userScaleX << m_userScaleY;
-
-    return QString::fromUtf8(hash.result().toHex());
-}
-
 std::unique_ptr<AbstractImageTransform>
 DewarpingImageTransform::clone() const
 {
@@ -240,16 +216,6 @@ DewarpingImageTransform::postScale(QPointF const& pt) const
     qreal const yscale = m_intrinsicScaleY * m_userScaleY;
     return QPointF(pt.x() * xscale, pt.y() * yscale);
 }
-
-/**
- * m_intrinsicScale[XY] factors don't participate in transform fingerprint calculation
- * due to them being derived from the distortion model and associated problems with
- * RoundingHasher. Still, the way we derive them from the distortion model may change
- * in the future and we'd like to reflect such changes in transform fingerprint.
- * This value is to be incremented each time we change the algorithm used to calculate
- * the intrinsic scale factors.
- */
-int const DewarpingImageTransform::INTRINSIC_SCALE_ALGO_VERSION = 1;
 
 /**
  * Initializes m_intrinsicScaleX and m_intrinsicScaleY in such a way that pixel
