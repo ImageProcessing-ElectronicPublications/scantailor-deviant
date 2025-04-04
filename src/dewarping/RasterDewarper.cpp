@@ -402,8 +402,6 @@ void dewarpGeneric(
 
         std::pair<int, int> dst_y_range(0, dst_height - 1); // Inclusive.
 
-        double const recip_len = 1.0 / generatrix.imgLine.length();
-
         int const dst_y_first = std::max(prev_dst_y_range.first, dst_y_range.first);
         int const dst_y_last = std::min(prev_dst_y_range.second, dst_y_range.second);
         // The case with dst_y_first > dst_y_first is not a problem, as long as both
