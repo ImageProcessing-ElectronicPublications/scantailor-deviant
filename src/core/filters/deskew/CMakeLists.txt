@@ -6,7 +6,6 @@ SET(
         sources
         CacheDrivenTask.cpp CacheDrivenTask.h
         Dependencies.cpp Dependencies.h
-        DewarpingMode.cpp DewarpingMode.h
         DewarpingParams.cpp DewarpingParams.h
         DewarpingThumbnail.cpp DewarpingThumbnail.h
         DewarpingView.cpp DewarpingView.h
