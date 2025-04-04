@@ -1311,23 +1311,15 @@ BinaryImage
 OutputGenerator::binarize(QImage const& image,
                           QPolygonF const& crop_area, BinaryImage const* mask, const int* adjustment) const
 {
-    QPainterPath path;
-    path.addPolygon(crop_area);
+    BinaryImage modified_mask(image.size(), BLACK);
+    PolygonRasterizer::fillExcept(modified_mask, WHITE, crop_area, Qt::WindingFill);
+    modified_mask = erodeBrick(modified_mask, QSize(3, 3), WHITE);
 
-    if (path.contains(image.rect()) && !mask) {
-        BinaryThreshold const bw_thresh(BinaryThreshold::otsuThreshold(image));
-        return BinaryImage(image, adjustThreshold(bw_thresh, adjustment));
-    } else {
-        BinaryImage modified_mask(image.size(), BLACK);
-        PolygonRasterizer::fillExcept(modified_mask, WHITE, crop_area, Qt::WindingFill);
-        modified_mask = erodeBrick(modified_mask, QSize(3, 3), WHITE);
-
-        if (mask) {
-            rasterOp<RopAnd<RopSrc, RopDst> >(modified_mask, *mask);
-        }
-
-        return binarize(image, modified_mask, adjustment);
+    if (mask) {
+        rasterOp<RopAnd<RopSrc, RopDst> >(modified_mask, *mask);
     }
+
+    return binarize(image, modified_mask, adjustment);
 }
 
 /**
