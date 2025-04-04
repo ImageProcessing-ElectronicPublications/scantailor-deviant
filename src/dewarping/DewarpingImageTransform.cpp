@@ -173,11 +173,9 @@ DewarpingImageTransform::materialize(QImage const& image,
 
     QRectF model_domain(0, 0, m_intrinsicScaleX * m_userScaleX, m_intrinsicScaleY * m_userScaleY);
     model_domain.translate(-target_rect.topLeft());
-    auto const minmax_densities = calcMinMaxDensities();
 
     return RasterDewarper::dewarp(
-               image, target_rect.size(), m_dewarper, model_domain, outside_color,
-               minmax_densities.first, minmax_densities.second
+               image, target_rect.size(), m_dewarper, model_domain, outside_color
            );
 }
 
