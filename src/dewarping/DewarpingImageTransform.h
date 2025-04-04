@@ -88,11 +88,6 @@ public:
 
     virtual QTransform scale(qreal xscale, qreal yscale);
 
-    virtual imageproc::AffineTransformedImage toAffine(
-        QImage const& image, QColor const& outside_color) const;
-
-    virtual imageproc::AffineImageTransform toAffine() const;
-
     virtual QImage materialize(QImage const& image,
                                QRect const& target_rect, QColor const& outside_color) const;
 

@@ -106,11 +106,6 @@ public:
     template<typename T>
     AffineImageTransform adjusted(T adjuster) const;
 
-    virtual AffineTransformedImage toAffine(
-        QImage const& image, QColor const& outside_color) const;
-
-    virtual AffineImageTransform toAffine() const;
-
     virtual QImage materialize(QImage const& image,
                                QRect const& target_rect, QColor const& outside_color) const;
 

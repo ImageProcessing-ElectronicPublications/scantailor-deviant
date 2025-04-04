@@ -188,61 +188,6 @@ DewarpingImageTransform::scale(qreal xscale, qreal yscale)
     return scaling_transform;
 }
 
-AffineTransformedImage
-DewarpingImageTransform::toAffine(
-    QImage const& image, QColor const& outside_color) const
-{
-    assert(!image.isNull());
-
-    QPolygonF const transformed_crop_area(transformedCropArea());
-    QRectF const dewarped_rect(transformed_crop_area.boundingRect());
-    QSize const dst_size(dewarped_rect.toRect().size());
-    QRectF const model_domain(
-        -dewarped_rect.topLeft(),
-        QSizeF(m_intrinsicScaleX * m_userScaleX, m_intrinsicScaleY * m_userScaleY)
-    );
-    auto const minmax_densities = calcMinMaxDensities();
-
-    QImage const dewarped_image = RasterDewarper::dewarp(
-                                      image, dst_size, m_dewarper, model_domain, outside_color,
-                                      minmax_densities.first, minmax_densities.second
-                                  );
-
-    AffineImageTransform affine_transform(dst_size);
-    affine_transform.setOrigCropArea(
-        transformed_crop_area.translated(-dewarped_rect.topLeft())
-    );
-
-    // Translation is necessary to ensure that
-    // transformedCropArea() == toAffine().transformedCropArea()
-    affine_transform.setTransform(
-        QTransform().translate(dewarped_rect.x(), dewarped_rect.y())
-    );
-
-    return AffineTransformedImage(dewarped_image, affine_transform);
-}
-
-AffineImageTransform
-DewarpingImageTransform::toAffine() const
-{
-    QPolygonF const transformed_crop_area(transformedCropArea());
-    QRectF const dewarped_rect(transformed_crop_area.boundingRect());
-    QSize const dst_size(dewarped_rect.toRect().size());
-
-    AffineImageTransform affine_transform(dst_size);
-    affine_transform.setOrigCropArea(
-        transformed_crop_area.translated(-dewarped_rect.topLeft())
-    );
-
-    // Translation is necessary to ensure that
-    // transformedCropArea() == toAffine().transformedCropArea()
-    affine_transform.setTransform(
-        QTransform().translate(dewarped_rect.x(), dewarped_rect.y())
-    );
-
-    return affine_transform;
-}
-
 QImage
 DewarpingImageTransform::materialize(QImage const& image,
                                      QRect const& target_rect, QColor const& outside_color) const

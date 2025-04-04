@@ -127,20 +127,6 @@ AffineImageTransform::rotate(qreal degrees)
     m_transform *= QTransform().rotate(degrees);
 }
 
-AffineTransformedImage
-AffineImageTransform::toAffine(QImage const& image, QColor const& /*outside_color*/) const
-{
-    assert(!image.isNull());
-    assert(image.size() == m_origSize);
-    return AffineTransformedImage(image, *this);
-}
-
-AffineImageTransform
-AffineImageTransform::toAffine() const
-{
-    return *this;
-}
-
 QImage
 AffineImageTransform::materialize(QImage const& image,
                                   QRect const& target_rect, QColor const& outside_color) const
