@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>244</width>
-    <height>196</height>
+    <width>176</width>
+    <height>217</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,19 +21,19 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
-    <number>3</number>
+    <number>4</number>
    </property>
    <property name="leftMargin">
-    <number>3</number>
+    <number>4</number>
    </property>
    <property name="topMargin">
-    <number>3</number>
+    <number>4</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>4</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>4</number>
    </property>
    <item>
     <widget class="QCheckBox" name="alignWithOthersCB">
@@ -49,19 +49,19 @@
     <widget class="QWidget" name="panelAlignment" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <property name="spacing">
-       <number>3</number>
+       <number>4</number>
       </property>
       <property name="leftMargin">
-       <number>3</number>
+       <number>4</number>
       </property>
       <property name="topMargin">
-       <number>3</number>
+       <number>4</number>
       </property>
       <property name="rightMargin">
-       <number>3</number>
+       <number>4</number>
       </property>
       <property name="bottomMargin">
-       <number>3</number>
+       <number>4</number>
       </property>
       <item>
        <spacer name="horizontalSpacer_6">
@@ -70,8 +70,8 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>1</width>
-          <height>1</height>
+          <width>4</width>
+          <height>20</height>
          </size>
         </property>
        </spacer>
@@ -79,7 +79,7 @@
       <item>
        <layout class="QGridLayout" name="alignmentLayout">
         <property name="spacing">
-         <number>16</number>
+         <number>4</number>
         </property>
         <item row="0" column="0">
          <widget class="QToolButton" name="alignTopLeftBtn">
@@ -300,8 +300,8 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>1</width>
-          <height>1</height>
+          <width>4</width>
+          <height>20</height>
          </size>
         </property>
        </spacer>
@@ -312,11 +312,20 @@
    <item>
     <widget class="QWidget" name="panelAdvancedAlignment" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_8">
+      <property name="spacing">
+       <number>4</number>
+      </property>
+      <property name="leftMargin">
+       <number>4</number>
+      </property>
       <property name="topMargin">
-       <number>3</number>
+       <number>4</number>
+      </property>
+      <property name="rightMargin">
+       <number>4</number>
       </property>
       <property name="bottomMargin">
-       <number>3</number>
+       <number>4</number>
       </property>
       <item>
        <spacer name="horizontalSpacer_18">
@@ -325,7 +334,7 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
+          <width>4</width>
           <height>20</height>
          </size>
         </property>
@@ -492,7 +501,7 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
+          <width>4</width>
           <height>20</height>
          </size>
         </property>
@@ -500,6 +509,19 @@
       </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>

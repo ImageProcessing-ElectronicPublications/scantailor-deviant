@@ -365,8 +365,9 @@ QGroupBox
 {
     border: 1px solid #76797c;
     border-radius: 0.2ex;
-    padding-top: 1ex;
-    margin-top: 1ex;
+    padding-top: 2.25ex;
+    padding-bottom: 1.25ex;
+    margin-top: 2.25ex;
 }
 
 QGroupBox::title
