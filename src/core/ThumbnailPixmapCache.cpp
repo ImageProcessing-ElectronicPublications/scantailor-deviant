@@ -322,24 +322,6 @@ ThumbnailPixmapCache::setThumbDir(QString const& thumb_dir)
 }
 
 ThumbnailPixmapCache::Status
-ThumbnailPixmapCache::loadFromCache(
-    ImageId const& image_id, QString const& version, QPixmap& pixmap)
-{
-    return m_ptrImpl->request(
-        ThumbId(image_id, version),
-        pixmap);
-}
-
-ThumbnailPixmapCache::Status
-ThumbnailPixmapCache::loadNow(
-    ImageId const& image_id, QString const& version, QPixmap& pixmap)
-{
-    return m_ptrImpl->request(
-        ThumbId(image_id, version),
-        pixmap, true);
-}
-
-ThumbnailPixmapCache::Status
 ThumbnailPixmapCache::loadRequest(
     ImageId const& image_id, QString const& version, QPixmap& pixmap,
     boost::weak_ptr<CompletionHandler> const& completion_handler)

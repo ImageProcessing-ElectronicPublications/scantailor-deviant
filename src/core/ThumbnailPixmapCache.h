@@ -74,24 +74,6 @@ public:
     void setThumbDir(QString const& thumb_dir);
 
     /**
-     * \brief Take the pixmap from cache, if it's there.
-     *
-     * If it's not, LOAD_FAILED will be returned.
-     *
-     * \note This function is to be called from the GUI thread only.
-     */
-    Status loadFromCache(
-        ImageId const& image_id, QString const& version, QPixmap& pixmap);
-
-    /**
-     * \brief Take the pixmap from cache or from disk, blocking if necessary.
-     *
-     * \note This function is to be called from the GUI thread only.
-     */
-    Status loadNow(
-        ImageId const& image_id, QString const& version, QPixmap& pixmap);
-
-    /**
      * \brief Take the pixmap from cache or schedule a load request.
      *
      * If the pixmap is in cache, return it immediately.  Otherwise,
