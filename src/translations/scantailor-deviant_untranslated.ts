@@ -1730,22 +1730,22 @@ Cancelling...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="189"/>
-        <source>Change...</source>
+        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="275"/>
+        <source>Apply To ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="214"/>
+        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="177"/>
         <source>Split Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="250"/>
+        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="213"/>
         <source>Auto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="266"/>
+        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="229"/>
         <source>Manual</source>
         <translation type="unfinished"></translation>
     </message>

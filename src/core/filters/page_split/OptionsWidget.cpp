@@ -64,7 +64,7 @@ OptionsWidget::OptionsWidget(
         this, SLOT(layoutTypeButtonToggled(bool))
     );
     connect(
-        changeBtn, SIGNAL(clicked()),
+        layoutApplyBtn, SIGNAL(clicked()),
         this, SLOT(showChangeDialog())
     );
     connect(
@@ -110,10 +110,10 @@ OptionsWidget::preUpdateUI(PageId const& page_id)
     splitLineGroup->setVisible(layout_type != SINGLE_PAGE_UNCUT);
 
     if (layout_type == AUTO_LAYOUT_TYPE) {
-        changeBtn->setEnabled(false);
+        layoutApplyBtn->setEnabled(false);
         scopeLabel->setText("?");
     } else {
-        changeBtn->setEnabled(true);
+        layoutApplyBtn->setEnabled(true);
         scopeLabel->setText(tr("Set manually"));
     }
 
@@ -136,7 +136,7 @@ OptionsWidget::postUpdateUI(UiData const& ui_data)
 
     m_uiData = ui_data;
 
-    changeBtn->setEnabled(true);
+    layoutApplyBtn->setEnabled(true);
     autoBtn->setEnabled(true);
     manualBtn->setEnabled(true);
 

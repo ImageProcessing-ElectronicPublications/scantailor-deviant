@@ -1757,22 +1757,22 @@ To determine it, run batch processing at &quot;Select Content&quot; or &quot;Pag
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="189"/>
-        <source>Change...</source>
-        <translation>Изменить...</translation>
+        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="275"/>
+        <source>Apply To ...</source>
+        <translation>Применить к ...</translation>
     </message>
     <message>
-        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="214"/>
+        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="177"/>
         <source>Split Line</source>
         <translation>Разделительная линия</translation>
     </message>
     <message>
-        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="250"/>
+        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="213"/>
         <source>Auto</source>
         <translation>Автоматически</translation>
     </message>
     <message>
-        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="266"/>
+        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="229"/>
         <source>Manual</source>
         <translation>Вручную</translation>
     </message>
