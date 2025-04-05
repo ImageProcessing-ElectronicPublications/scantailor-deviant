@@ -172,64 +172,64 @@ Russian - Alexander Trufanov</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="352"/>
+        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="361"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select alignment automatically&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="355"/>
+        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="364"/>
         <source>Automatically select alignment based on how close content to page borders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="362"/>
-        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="426"/>
+        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="371"/>
+        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="435"/>
         <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="371"/>
+        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="380"/>
         <source>Auto-magnet both axes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="380"/>
+        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="389"/>
         <source>Auto-magnet vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="389"/>
+        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="398"/>
         <source>Auto-magnet horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="416"/>
-        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="419"/>
+        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="425"/>
+        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="428"/>
         <source>Place proportionally to position on original scan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="435"/>
+        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="444"/>
         <source>Original proportions all axes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="444"/>
+        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="453"/>
         <source>Original proportions vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="453"/>
+        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="462"/>
         <source>Original proportions horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="465"/>
+        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="474"/>
         <source>Reset advanced alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="468"/>
+        <location filename="../core/filters/page_layout/ui/alignmentwidget.ui" line="477"/>
         <source>Reset advanced alignment options</source>
         <translation type="unfinished"></translation>
     </message>
@@ -308,153 +308,153 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="20"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="35"/>
         <source>Distortion type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="44"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="74"/>
         <source>Scan of straight aligned page.
 No distortion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="72"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="102"/>
         <source>Scan of skewed page.
 Rotation correction.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="100"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="130"/>
         <source>Photo of flat page.
 Perspective correction.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="128"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="158"/>
         <source>Photo of cylindrical-curved page.
 3D perspective correcton.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="186"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="294"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="538"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="751"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="953"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1117"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="216"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="351"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="625"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="853"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1070"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1249"/>
         <source>Apply To ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="211"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="241"/>
         <source>Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="232"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="385"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="584"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="797"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="283"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="472"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="686"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="914"/>
         <source>Auto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="248"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="401"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="600"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="813"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="305"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="488"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="702"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="930"/>
         <source>Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="319"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="376"/>
         <source>Rotation angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="364"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="436"/>
         <source>FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="501"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="916"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="588"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1033"/>
         <source>min</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="511"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="926"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="598"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1043"/>
         <source>max</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="563"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="650"/>
         <source>Frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="630"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1010"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="732"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1142"/>
         <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="656"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1040"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="758"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1172"/>
         <source>Height:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="682"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="784"/>
         <source>Center X:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="708"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="810"/>
         <source>Center Y:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="776"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="878"/>
         <source>Bend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="978"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1095"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="985"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1117"/>
         <source>By image area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="990"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1122"/>
         <source>Fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="995"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1127"/>
         <source>Stretch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1000"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1132"/>
         <source>By camera distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1033"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1063"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1093"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1165"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1195"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1225"/>
         <source>px</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1070"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1202"/>
         <source>Distance:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -791,22 +791,22 @@ for content in foreground subscans (lengthy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3466"/>
+        <location filename="../app/MainWindow.cpp" line="3467"/>
         <source>Go to page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3466"/>
+        <location filename="../app/MainWindow.cpp" line="3467"/>
         <source>Page number:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3479"/>
+        <location filename="../app/MainWindow.cpp" line="3480"/>
         <source>Select pages by number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3480"/>
+        <location filename="../app/MainWindow.cpp" line="3481"/>
         <source>Numbers should start from 1
  Line ends are ignored
 Any non digit symbols are interpreted as number separators
@@ -815,12 +815,12 @@ Number followed by &apos;-&apos; or &apos;:&apos; treated as a start of page seq
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3483"/>
+        <location filename="../app/MainWindow.cpp" line="3484"/>
         <source>Input page numbers:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3489"/>
+        <location filename="../app/MainWindow.cpp" line="3490"/>
         <source>Pages to be selected: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -885,8 +885,8 @@ Number followed by &apos;-&apos; or &apos;:&apos; treated as a start of page seq
         <location filename="../app/MainWindow.cpp" line="1905"/>
         <location filename="../app/MainWindow.cpp" line="1983"/>
         <location filename="../app/MainWindow.cpp" line="1989"/>
-        <location filename="../app/MainWindow.cpp" line="2455"/>
-        <location filename="../app/MainWindow.cpp" line="2490"/>
+        <location filename="../app/MainWindow.cpp" line="2456"/>
+        <location filename="../app/MainWindow.cpp" line="2491"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -902,127 +902,127 @@ Number followed by &apos;-&apos; or &apos;:&apos; treated as a start of page seq
     </message>
     <message>
         <location filename="../app/MainWindow.cpp" line="1983"/>
-        <location filename="../app/MainWindow.cpp" line="2175"/>
+        <location filename="../app/MainWindow.cpp" line="2176"/>
         <source>Batch processing is in the progress.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../app/MainWindow.cpp" line="1989"/>
-        <location filename="../app/MainWindow.cpp" line="2180"/>
+        <location filename="../app/MainWindow.cpp" line="2181"/>
         <source>No project is loaded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2195"/>
+        <location filename="../app/MainWindow.cpp" line="2196"/>
         <source>build on </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2340"/>
+        <location filename="../app/MainWindow.cpp" line="2341"/>
         <source>Output is not yet possible, as the final size of pages is not yet known.
 To determine it, run batch processing at &quot;Select Content&quot; or &quot;Page Layout&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2375"/>
+        <location filename="../app/MainWindow.cpp" line="2376"/>
         <source>Unnamed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2382"/>
+        <location filename="../app/MainWindow.cpp" line="2383"/>
         <source>%2 - Scan Tailor &quot;Deviant&quot; %3 [%1bit]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2386"/>
+        <location filename="../app/MainWindow.cpp" line="2387"/>
         <source>%1% - %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2456"/>
-        <location filename="../app/MainWindow.cpp" line="2491"/>
+        <location filename="../app/MainWindow.cpp" line="2457"/>
+        <location filename="../app/MainWindow.cpp" line="2492"/>
         <source>Error saving the project file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2485"/>
+        <location filename="../app/MainWindow.cpp" line="2486"/>
         <source>Saving project...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2543"/>
+        <location filename="../app/MainWindow.cpp" line="2544"/>
         <source>Files to insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2551"/>
+        <location filename="../app/MainWindow.cpp" line="2552"/>
         <source>Images not in project (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2598"/>
+        <location filename="../app/MainWindow.cpp" line="2599"/>
         <source>Skip failed files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2702"/>
+        <location filename="../app/MainWindow.cpp" line="2703"/>
         <source>Overwrite default file name for resulting image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2704"/>
+        <location filename="../app/MainWindow.cpp" line="2705"/>
         <source>Here you may overwrite default resulting image file name
 that will be generated for this page. It may be
 helpful to keep the right alphabetical order of files in out subfolder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2721"/>
+        <location filename="../app/MainWindow.cpp" line="2722"/>
         <source>File %1 already exists in out subfolder.
 Would you like to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2723"/>
+        <location filename="../app/MainWindow.cpp" line="2724"/>
         <source>Can&apos;t remove file %1!
 Cancelling...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2731"/>
+        <location filename="../app/MainWindow.cpp" line="2732"/>
         <source>Can&apos;t rename file %1!
 Cancelling...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="2753"/>
+        <location filename="../app/MainWindow.cpp" line="2754"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3215"/>
+        <location filename="../app/MainWindow.cpp" line="3216"/>
         <source>p. %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3291"/>
+        <location filename="../app/MainWindow.cpp" line="3292"/>
         <source>%1, %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../app/ui/MainWindow.ui" line="877"/>
-        <location filename="../app/MainWindow.cpp" line="3331"/>
+        <location filename="../app/MainWindow.cpp" line="3332"/>
         <source>Insert before</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../app/ui/MainWindow.ui" line="892"/>
-        <location filename="../app/MainWindow.cpp" line="3341"/>
+        <location filename="../app/MainWindow.cpp" line="3342"/>
         <source>Insert after</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3358"/>
+        <location filename="../app/MainWindow.cpp" line="3359"/>
         <source>Use %1, %2, %3 (or %4), %5 (or %6) to navigate between pages.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1268,22 +1268,17 @@ Cancelling...</source>
 <context>
     <name>OrientationOptionsWidget</name>
     <message>
-        <location filename="../core/filters/fix_orientation/ui/OrientationOptionsWidget.ui" line="20"/>
+        <location filename="../core/filters/fix_orientation/ui/OrientationOptionsWidget.ui" line="35"/>
         <source>Rotate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/fix_orientation/ui/OrientationOptionsWidget.ui" line="145"/>
+        <location filename="../core/filters/fix_orientation/ui/OrientationOptionsWidget.ui" line="175"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/fix_orientation/ui/OrientationOptionsWidget.ui" line="170"/>
-        <source>Scope</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/fix_orientation/ui/OrientationOptionsWidget.ui" line="191"/>
+        <location filename="../core/filters/fix_orientation/ui/OrientationOptionsWidget.ui" line="215"/>
         <source>Apply to...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1400,127 +1395,127 @@ Cancelling...</source>
 <context>
     <name>OutputOptionsWidget</name>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="31"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="46"/>
         <source>Output Resolution:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="54"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="134"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="69"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="149"/>
         <source>value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="114"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="129"/>
         <source>Mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="161"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="176"/>
         <source>White margins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="168"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="183"/>
         <source>Equalize illumination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="196"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="211"/>
         <source>Auto layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="206"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="221"/>
         <source>Picture Zones layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="213"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="228"/>
         <source>Foreground layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="339"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="354"/>
         <source>Binarisation threshold:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="547"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="562"/>
         <source>Foreground layer threshold:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="238"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="486"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="647"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="891"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="253"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="501"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="662"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="906"/>
         <source>Apply To...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="423"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="438"/>
         <source>Window size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="430"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="445"/>
         <source>The dimensions of a pixel neighborhood to consider.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="443"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="458"/>
         <source>Default value is 0.34.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="459"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="474"/>
         <source>Coef:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="705"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="720"/>
         <source>Despeckling:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="758"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="773"/>
         <source>No despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="783"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="798"/>
         <source>Cautious despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="809"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="824"/>
         <source>Normal despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="835"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="850"/>
         <source>Aggressive despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="960"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="975"/>
         <source>&amp;Black and White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="965"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="980"/>
         <source>&amp;Color / Grayscale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="970"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="985"/>
         <source>&amp;Mixed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="975"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="980"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="990"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="995"/>
         <source>&amp;Reset to default value</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1546,64 +1541,64 @@ Cancelling...</source>
 <context>
     <name>PageLayoutOptionsWidget</name>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="20"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="35"/>
         <source>Margins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="44"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="74"/>
         <source>Millimeters (mm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="49"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="79"/>
         <source>Inches (in)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="92"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="122"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="105"/>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="166"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="135"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="196"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="126"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="156"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="143"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="173"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="190"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="220"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="266"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="296"/>
         <source>Auto Margins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="307"/>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="356"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="337"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="401"/>
         <source>Apply To...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="332"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="362"/>
         <source>Alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="396"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="441"/>
         <source>Currently selected content alignment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1725,32 +1720,32 @@ Cancelling...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="26"/>
+        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="41"/>
         <source>Page Layout on image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="134"/>
+        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="164"/>
         <source>?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="159"/>
+        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="189"/>
         <source>Change...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="184"/>
+        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="214"/>
         <source>Split Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="214"/>
+        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="250"/>
         <source>Auto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="230"/>
+        <location filename="../core/filters/page_split/ui/PageSplitOptionsWidget.ui" line="266"/>
         <source>Manual</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1943,34 +1938,34 @@ and press [Enter] to edit the shortcut:</source>
 <context>
     <name>QObject</name>
     <message numerus="yes">
-        <location filename="../app/MainWindow.cpp" line="2750"/>
+        <location filename="../app/MainWindow.cpp" line="2751"/>
         <source>Remove %n page(s) from project?</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../app/MainWindow.cpp" line="3275"/>
+        <location filename="../app/MainWindow.cpp" line="3276"/>
         <source>%1 x %2 %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ThumbnailSequence.cpp" line="1020"/>
+        <location filename="../app/ThumbnailSequence.cpp" line="1033"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ThumbnailSequence.cpp" line="1021"/>
+        <location filename="../app/ThumbnailSequence.cpp" line="1034"/>
         <source>The file &quot;%1&quot; is not ready for output.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ThumbnailSequence.cpp" line="1701"/>
+        <location filename="../app/ThumbnailSequence.cpp" line="1714"/>
         <source>Meta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ThumbnailSequence.cpp" line="1703"/>
+        <location filename="../app/ThumbnailSequence.cpp" line="1716"/>
         <source>Ctrl</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2729,74 +2724,74 @@ and press [Enter] to edit the shortcut:</source>
 <context>
     <name>SelectContentOptionsWidget</name>
     <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="20"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="35"/>
         <source>Page Box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="28"/>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="180"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="58"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="255"/>
         <source>Disable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="44"/>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="193"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="74"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="268"/>
         <source>Auto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="62"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="107"/>
         <source>Shift with corners while they are in black. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="65"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="110"/>
         <source>Fine Tune Page Corners</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="75"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="120"/>
         <source>Borders in MM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="98"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="158"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="108"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="168"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="118"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="178"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="128"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="188"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="161"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="221"/>
         <source>Content Box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="209"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="284"/>
         <source>Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="238"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="313"/>
         <source>Scope</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="259"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="349"/>
         <source>Apply to...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3702,7 +3697,7 @@ As Foreground layer is using binarization to separate content from background it
 <context>
     <name>ThumbnailSequence</name>
     <message>
-        <location filename="../app/ThumbnailSequence.cpp" line="1714"/>
+        <location filename="../app/ThumbnailSequence.cpp" line="1727"/>
         <source>You are going to cancel %1 pages selection.
 Sometimes this could happen accidentally due to misclicks.
 Please note that there is a button on top of pages list panel that toggles simulation of the %2 key pressing.You can use it to safely select several pages across the project.
@@ -3710,12 +3705,12 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ThumbnailSequence.cpp" line="1724"/>
+        <location filename="../app/ThumbnailSequence.cpp" line="1737"/>
         <source>Don&apos;t show this again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/ThumbnailSequence.cpp" line="1886"/>
+        <location filename="../app/ThumbnailSequence.cpp" line="1899"/>
         <source>%1 (page %2)</source>
         <translation type="unfinished"></translation>
     </message>
