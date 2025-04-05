@@ -1999,6 +1999,7 @@ MainWindow::ExportOutput(exporting::ExportSettings settings)
 // Checking whether all the output thumbnails don't have a question mark on them
 
     m_ptrThumbSequence_export.reset(new ThumbnailSequence(m_maxLogicalThumbSize));
+    m_ptrThumbSequence_export->setThumbnailViewStyle(thumbView->qssStyle());
 
     if (m_ptrThumbnailCache.get()) {
         IntrusivePtr<CompositeCacheDrivenTask> const task(

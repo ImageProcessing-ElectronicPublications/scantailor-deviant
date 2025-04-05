@@ -25,13 +25,13 @@
 #include "PageRange.h"
 #include "PageOrderProvider.h"
 #include "BeforeOrAfter.h"
+#include "ThumbnailView.h"
 #include <QObject>
 #include <memory>
 #include <vector>
 #include <set>
 
 class QGraphicsItem;
-class ThumbnailView;
 class PageId;
 class ImageId;
 class PageInfo;
@@ -40,6 +40,7 @@ class ThumbnailFactory;
 class QSizeF;
 class QRectF;
 class QPoint;
+class QssStyle;
 
 class ThumbnailSequence : public QObject
 {
@@ -77,6 +78,8 @@ public:
     void setThumbnailFactory(IntrusivePtr<ThumbnailFactory> const& factory);
 
     void attachView(ThumbnailView* view);
+
+    void setThumbnailViewStyle(ThumbnailView::QssStyle const* style);
 
     /**
      * \brief Re-populate the list of thumbnails.
