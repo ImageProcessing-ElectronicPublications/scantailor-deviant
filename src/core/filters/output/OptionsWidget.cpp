@@ -85,10 +85,6 @@ OptionsWidget::OptionsWidget(
     thresholdSlider->installEventFilter(this);
     thresholdForegroundSlider->installEventFilter(this);
 
-    m_menuMode.addAction(actionModeBW);
-    m_menuMode.addAction(actionModeColorOrGrayscale);
-    m_menuMode.addAction(actionModeMixed);
-
     updateDpiDisplay();
     updateColorsDisplay();
     updateLayersDisplay();
@@ -99,8 +95,8 @@ OptionsWidget::OptionsWidget(
     );
 
     connect(
-        modeValue, SIGNAL(clicked(bool)),
-        this, SLOT(modeValueClicked())
+        modeSelector, SIGNAL(currentIndexChanged(int)),
+        this, SLOT(modeSelectorIndexChanged(int))
     );
 
     connect(
@@ -246,27 +242,6 @@ OptionsWidget::tabChanged(ImageViewTab const tab)
 }
 
 void
-OptionsWidget::changeColorMode(ColorParams::ColorMode const mode)
-{
-    setModeValue(mode);
-    m_colorParams.setColorMode((ColorParams::ColorMode)mode);
-
-    ColorGrayscaleOptions opt = m_colorParams.colorGrayscaleOptions();
-    if (opt.foregroundLayerEnabled()) {
-        opt.setForegroundLayerEnabled(false);
-        m_colorParams.setColorGrayscaleOptions(opt);
-    }
-
-    m_ptrSettings->setColorParams(m_pageId, m_colorParams, ColorParamsApplyFilter::CopyMode);
-    autoLayerCB->setChecked(true);
-    pictureZonesLayerCB->setChecked(false);
-    foregroundLayerCB->setChecked(false);
-    updateColorsDisplay();
-    updateLayersDisplay();
-    emit reloadRequested();
-}
-
-void
 OptionsWidget::thresholdMethodChanged(int idx)
 {
     ThresholdFilter const method = (ThresholdFilter) thresholdMethodSelector->itemData(idx).toInt();
@@ -295,6 +270,27 @@ OptionsWidget::thresholdCoefChanged(double value) {
     m_ptrSettings->setColorParams(m_pageId, m_colorParams);
     if (blackWhiteOptions.thresholdMethod() != OTSU && blackWhiteOptions.thresholdMethod() != MEANDELTA)
         emit reloadRequested();
+}
+
+void
+OptionsWidget::modeSelectorIndexChanged(int idx)
+{
+    m_currentMode = static_cast<ColorParams::ColorMode>(idx);
+    m_colorParams.setColorMode(static_cast<ColorParams::ColorMode>(idx));
+
+    ColorGrayscaleOptions opt = m_colorParams.colorGrayscaleOptions();
+    if (opt.foregroundLayerEnabled()) {
+        opt.setForegroundLayerEnabled(false);
+        m_colorParams.setColorGrayscaleOptions(opt);
+    }
+
+    m_ptrSettings->setColorParams(m_pageId, m_colorParams, ColorParamsApplyFilter::CopyMode);
+    autoLayerCB->setChecked(true);
+    pictureZonesLayerCB->setChecked(false);
+    foregroundLayerCB->setChecked(false);
+    updateColorsDisplay();
+    updateLayersDisplay();
+    emit reloadRequested();
 }
 
 void
@@ -452,21 +448,6 @@ OptionsWidget::updateDpiDisplay()
 }
 
 void
-OptionsWidget::updateModeValueText()
-{
-    switch (m_currentMode) {
-    case ColorParams::BLACK_AND_WHITE:
-        modeValue->setText(actionModeBW->toolTip());
-        break;
-    case ColorParams::COLOR_GRAYSCALE:
-        modeValue->setText(actionModeColorOrGrayscale->toolTip());
-        break;
-    case ColorParams::MIXED:
-        modeValue->setText(actionModeMixed->toolTip());
-        break;
-    }
-}
-void
 OptionsWidget::updateLayersDisplay()
 {
     QSettings settings;
@@ -502,7 +483,8 @@ OptionsWidget::updateLayersDisplay()
 void
 OptionsWidget::updateColorsDisplay()
 {
-    setModeValue(m_colorParams.colorMode());
+    m_currentMode = m_colorParams.colorMode();
+    modeSelector->setCurrentIndex(m_currentMode);
 
     bool color_grayscale_options_visible = false;
     bool bw_options_visible = false;
@@ -629,32 +611,6 @@ void output::OptionsWidget::applyColorsButtonClicked()
     );
 
     dialog->show();
-}
-
-void output::OptionsWidget::modeValueClicked()
-{
-    m_menuMode.popup(modeValue->mapToGlobal(QPoint(0, modeValue->geometry().height())));
-}
-
-void output::OptionsWidget::on_actionModeBW_triggered()
-{
-    modeValue->setText(actionModeBW->toolTip());
-    changeColorMode(ColorParams::BLACK_AND_WHITE);
-    emit invalidateThumbnail(m_pageId);
-}
-
-void output::OptionsWidget::on_actionModeColorOrGrayscale_triggered()
-{
-    modeValue->setText(actionModeColorOrGrayscale->toolTip());
-    changeColorMode(ColorParams::COLOR_GRAYSCALE);
-    emit invalidateThumbnail(m_pageId);
-}
-
-void output::OptionsWidget::on_actionModeMixed_triggered()
-{
-    modeValue->setText(actionModeMixed->toolTip());
-    changeColorMode(ColorParams::MIXED);
-    emit invalidateThumbnail(m_pageId);
 }
 
 int sum_y = 0;

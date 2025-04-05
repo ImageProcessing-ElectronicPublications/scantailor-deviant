@@ -178,41 +178,23 @@
           <number>4</number>
          </property>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <widget class="QComboBox" name="modeSelector">
            <item>
-            <widget class="QLabel" name="modeLabel">
-             <property name="font">
-              <font>
-               <weight>50</weight>
-               <bold>false</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Mode:</string>
-             </property>
-            </widget>
+            <property name="text">
+             <string>Black and White</string>
+            </property>
            </item>
            <item>
-            <spacer name="horizontalSpacer_10">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>4</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
+            <property name="text">
+             <string>Color / Grayscale</string>
+            </property>
            </item>
            <item>
-            <widget class="QPushButton" name="modeValue">
-             <property name="text">
-              <string>value</string>
-             </property>
-            </widget>
+            <property name="text">
+             <string>Mixed</string>
+            </property>
            </item>
-          </layout>
+          </widget>
          </item>
          <item>
           <widget class="QWidget" name="illuminationPanel" native="true">
@@ -950,21 +932,6 @@
     </spacer>
    </item>
   </layout>
-  <action name="actionModeBW">
-   <property name="text">
-    <string>&amp;Black and White</string>
-   </property>
-  </action>
-  <action name="actionModeColorOrGrayscale">
-   <property name="text">
-    <string>&amp;Color / Grayscale</string>
-   </property>
-  </action>
-  <action name="actionModeMixed">
-   <property name="text">
-    <string>&amp;Mixed</string>
-   </property>
-  </action>
   <action name="actionReset_to_default_value">
    <property name="text">
     <string>&amp;Reset to default value</string>
@@ -998,7 +965,6 @@
  </widget>
  <tabstops>
   <tabstop>dpiValue</tabstop>
-  <tabstop>modeValue</tabstop>
   <tabstop>whiteMarginsCB</tabstop>
   <tabstop>equalizeIlluminationCB</tabstop>
   <tabstop>autoLayerCB</tabstop>
