@@ -100,8 +100,6 @@ private slots:
 
     void on_actionModeMixed_triggered();
 
-    void on_despeckleSlider_valueChanged(int value);
-
     void on_thresholdSlider_valueChanged();
 
     void on_thresholdForegroundSlider_valueChanged();
@@ -173,9 +171,6 @@ private:
     void setDespeckleLevel(DespeckleLevel v)
     {
         m_despeckleLevel = v;
-        if (despeckleSlider->value() != (int)v) {
-            despeckleSlider->setValue((int)v);
-        }
         updateDespeckleValueText();
     }
 

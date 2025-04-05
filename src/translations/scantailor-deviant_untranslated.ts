@@ -337,124 +337,124 @@ Perspective correction.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="216"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="351"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="625"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="853"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1070"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1249"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="219"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="359"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="641"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="877"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1102"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1289"/>
         <source>Apply To ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="241"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="246"/>
         <source>Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="283"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="472"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="686"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="914"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="288"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="485"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="707"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="943"/>
         <source>Auto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="305"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="488"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="702"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="930"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="310"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="501"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="723"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="959"/>
         <source>Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="376"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="371"/>
         <source>Rotation angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="436"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="449"/>
         <source>FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="588"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1033"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="601"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1062"/>
         <source>min</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="598"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1043"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="611"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1072"/>
         <source>max</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="650"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="671"/>
         <source>Frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="732"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1142"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="753"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1179"/>
         <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="758"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1172"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="779"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1209"/>
         <source>Height:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="784"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="805"/>
         <source>Center X:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="810"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="831"/>
         <source>Center Y:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="878"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="907"/>
         <source>Bend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1095"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1132"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1117"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1154"/>
         <source>By image area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1122"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1159"/>
         <source>Fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1127"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1164"/>
         <source>Stretch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1132"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1169"/>
         <source>By camera distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1165"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1195"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1225"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1202"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1232"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1262"/>
         <source>px</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1202"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1239"/>
         <source>Distance:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1395,127 +1395,144 @@ Cancelling...</source>
 <context>
     <name>OutputOptionsWidget</name>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="46"/>
-        <source>Output Resolution:</source>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="53"/>
+        <source>Output Resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="69"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="149"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="111"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="235"/>
         <source>value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="129"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="186"/>
+        <source>Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="215"/>
         <source>Mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="176"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="262"/>
         <source>White margins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="183"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="269"/>
         <source>Equalize illumination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="211"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="297"/>
         <source>Auto layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="221"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="307"/>
         <source>Picture Zones layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="228"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="314"/>
         <source>Foreground layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="354"/>
-        <source>Binarisation threshold:</source>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="581"/>
+        <source>Foreground options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="562"/>
-        <source>Foreground layer threshold:</source>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="736"/>
+        <source>Despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="253"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="501"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="662"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="906"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="138"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="342"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="551"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="706"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="954"/>
         <source>Apply To...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="438"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="88"/>
+        <source>Resolution:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="372"/>
+        <source>B/W options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="408"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="610"/>
+        <source>Threshold:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="485"/>
         <source>Window size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="445"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="492"/>
         <source>The dimensions of a pixel neighborhood to consider.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="458"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="505"/>
         <source>Default value is 0.34.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="474"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="521"/>
         <source>Coef:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="720"/>
-        <source>Despeckling:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="773"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="775"/>
         <source>No despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="798"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="800"/>
         <source>Cautious despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="824"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="826"/>
         <source>Normal despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="850"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="852"/>
         <source>Aggressive despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="975"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="979"/>
         <source>&amp;Black and White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="980"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="984"/>
         <source>&amp;Color / Grayscale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="985"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="989"/>
         <source>&amp;Mixed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="990"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="995"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="994"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="999"/>
         <source>&amp;Reset to default value</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1587,18 +1604,18 @@ Cancelling...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="337"/>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="401"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="340"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="431"/>
         <source>Apply To...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="362"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="349"/>
         <source>Alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="441"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="391"/>
         <source>Currently selected content alignment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2786,12 +2803,7 @@ and press [Enter] to edit the shortcut:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="313"/>
-        <source>Scope</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="349"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="328"/>
         <source>Apply to...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4092,32 +4104,32 @@ of a non grey color in the source files</source>
 <context>
     <name>output::OptionsWidget</name>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="446"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="442"/>
         <source>%1 x %2 dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="451"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="447"/>
         <source>%1 dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="597"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="592"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="598"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="593"/>
         <source>Cautious</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="599"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="594"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="600"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="595"/>
         <source>Aggressive</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4177,37 +4189,37 @@ of a non grey color in the source files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="610"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="605"/>
         <source>Apply Despeckling Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="626"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="621"/>
         <source>Apply Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="818"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="801"/>
         <source>Apply Output Resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="853"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="836"/>
         <source>Apply Threshold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="923"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="906"/>
         <source>Apply Foreground layer threshold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="978"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="961"/>
         <source>Copy zone and its settings to:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="1043"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="1026"/>
         <source>Find and remove this zone from:</source>
         <translation type="unfinished"></translation>
     </message>

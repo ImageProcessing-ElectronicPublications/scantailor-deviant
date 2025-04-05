@@ -84,9 +84,6 @@ OptionsWidget::OptionsWidget(
     m_ignore_system_wheel_settings = _settings.value(_key_mouse_ignore_system_wheel_settings, _key_mouse_ignore_system_wheel_settings_def).toBool();
     thresholdSlider->installEventFilter(this);
     thresholdForegroundSlider->installEventFilter(this);
-    if (m_ignore_system_wheel_settings) {
-        despeckleSlider->installEventFilter(this);
-    }
 
     m_menuMode.addAction(actionModeBW);
     m_menuMode.addAction(actionModeColorOrGrayscale);
@@ -135,7 +132,6 @@ OptionsWidget::OptionsWidget(
         this, SLOT(equalizeIlluminationToggled(bool))
     );
 
-    despeckleSliderPanel->setVisible(false);
     connect(
         despeckleOffBtn, SIGNAL(clicked()),
         this, SLOT(despeckleOffSelected())
@@ -539,10 +535,9 @@ OptionsWidget::updateColorsDisplay()
         equalizeIlluminationCB->setEnabled(opt.whiteMargins());
     }
 
-    modePanel->setVisible(m_lastTab != TAB_DEWARPING);
     layersPanel->setVisible(m_currentMode == ColorParams::MIXED);
     bwOptions->setVisible(bw_options_visible);
-    despecklingPanel->setVisible(despeckle_controls_enbled && m_lastTab != TAB_DEWARPING);
+    despecklingPanel->setVisible(despeckle_controls_enbled);
 
     if (bw_options_visible) {
         ScopedIncDec<int> const guard(m_ignoreThresholdChanges);
@@ -659,18 +654,6 @@ void output::OptionsWidget::on_actionModeMixed_triggered()
 {
     modeValue->setText(actionModeMixed->toolTip());
     changeColorMode(ColorParams::MIXED);
-    emit invalidateThumbnail(m_pageId);
-}
-
-void output::OptionsWidget::on_despeckleSlider_valueChanged(int value)
-{
-    switch (value) {
-    case 0: handleDespeckleLevelChange(DESPECKLE_OFF); break;
-    case 1: handleDespeckleLevelChange(DESPECKLE_CAUTIOUS); break;
-    case 2: handleDespeckleLevelChange(DESPECKLE_NORMAL); break;
-    case 3: handleDespeckleLevelChange(DESPECKLE_AGGRESSIVE); break;
-    default: ;
-    }
     emit invalidateThumbnail(m_pageId);
 }
 

@@ -345,124 +345,124 @@ Perspective correction.</source>
 Исправление 3D-перспективы.</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="216"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="351"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="625"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="853"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1070"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1249"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="219"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="359"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="641"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="877"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1102"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1289"/>
         <source>Apply To ...</source>
         <translation>Применить к ...</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="241"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="246"/>
         <source>Mode</source>
         <translation>Режим</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="283"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="472"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="686"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="914"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="288"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="485"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="707"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="943"/>
         <source>Auto</source>
         <translation>Автоматически</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="305"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="488"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="702"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="930"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="310"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="501"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="723"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="959"/>
         <source>Manual</source>
         <translation>Вручную</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="376"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="371"/>
         <source>Rotation angle</source>
         <translation>Угол поворота</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="436"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="449"/>
         <source>FOV</source>
         <translation>Поле зрения</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="588"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1033"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="601"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1062"/>
         <source>min</source>
         <translation>мин</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="598"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1043"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="611"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1072"/>
         <source>max</source>
         <translation>макс</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="650"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="671"/>
         <source>Frame</source>
         <translation>Кадр</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="732"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1142"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="753"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1179"/>
         <source>Width:</source>
         <translation>Ширина:</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="758"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1172"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="779"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1209"/>
         <source>Height:</source>
         <translation>Высота:</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="784"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="805"/>
         <source>Center X:</source>
         <translation>Центр X:</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="810"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="831"/>
         <source>Center Y:</source>
         <translation>Центр Y:</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="878"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="907"/>
         <source>Bend</source>
         <translation>Выгиб</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1095"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1132"/>
         <source>Size</source>
         <translation>Размер</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1117"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1154"/>
         <source>By image area</source>
         <translation>По площади изображения</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1122"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1159"/>
         <source>Fit</source>
         <translation>Вписать</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1127"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1164"/>
         <source>Stretch</source>
         <translation>Растянуть</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1132"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1169"/>
         <source>By camera distance</source>
         <translation>По расстоянию до камеры</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1165"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1195"/>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1225"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1202"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1232"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1262"/>
         <source>px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1202"/>
+        <location filename="../core/filters/deskew/ui/DeskewOptionsWidget.ui" line="1239"/>
         <source>Distance:</source>
         <translation>Расстояние:</translation>
     </message>
@@ -1420,127 +1420,144 @@ To determine it, run batch processing at &quot;Select Content&quot; or &quot;Pag
 <context>
     <name>OutputOptionsWidget</name>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="773"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="775"/>
         <source>No despeckling</source>
         <translation>Не удалять мусор</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="46"/>
-        <source>Output Resolution:</source>
-        <translation>Разрешение результата:</translation>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="53"/>
+        <source>Output Resolution</source>
+        <translation>Разрешение результата</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="69"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="149"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="111"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="235"/>
         <source>value</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="129"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="186"/>
+        <source>Mode</source>
+        <translation>Режим</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="215"/>
         <source>Mode:</source>
         <translation>Режим:</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="211"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="297"/>
         <source>Auto layer</source>
         <translation>Слой поиска иллюстраций</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="221"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="307"/>
         <source>Picture Zones layer</source>
         <translation>Слой зон иллюстраций</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="228"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="314"/>
         <source>Foreground layer</source>
         <translation>Слой всего контента</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="253"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="501"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="662"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="906"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="372"/>
+        <source>B/W options</source>
+        <translation>Настройки Ч/Б</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="408"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="610"/>
+        <source>Threshold:</source>
+        <translation>Порог:</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="581"/>
+        <source>Foreground options</source>
+        <translation>Настройки слоя контента</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="736"/>
+        <source>Despeckling</source>
+        <translation>Удаление мусора</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="138"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="342"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="551"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="706"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="954"/>
         <source>Apply To...</source>
         <translation>Применить к...</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="354"/>
-        <source>Binarisation threshold:</source>
-        <translation>Порог бинаризации ч/б:</translation>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="88"/>
+        <source>Resolution:</source>
+        <translation>Разрешение:</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="438"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="485"/>
         <source>Window size:</source>
         <translation>Размер окна:</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="445"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="492"/>
         <source>The dimensions of a pixel neighborhood to consider.</source>
         <translation>Размеры окрестности пикселя, которые следует учитывать.</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="458"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="505"/>
         <source>Default value is 0.34.</source>
         <translation>Значение по умолчанию 0.34.</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="474"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="521"/>
         <source>Coef:</source>
         <translation>Коэффициент:</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="562"/>
-        <source>Foreground layer threshold:</source>
-        <translation>Порог слоя всего контента:</translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="720"/>
-        <source>Despeckling:</source>
-        <translation>Удаление мусора:</translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="798"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="800"/>
         <source>Cautious despeckling</source>
         <translation>Осторожное удаление мусора</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="824"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="826"/>
         <source>Normal despeckling</source>
         <translation>Обычное удаление мусора</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="850"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="852"/>
         <source>Aggressive despeckling</source>
         <translation>Агрессивное удаление мусора</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="975"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="979"/>
         <source>&amp;Black and White</source>
         <translation>&amp;Чёрно/Белый</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="980"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="984"/>
         <source>&amp;Color / Grayscale</source>
         <translation>&amp;Цветной / Оттенки серого</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="985"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="989"/>
         <source>&amp;Mixed</source>
         <translation>&amp;Смешанный</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="990"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="995"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="994"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="999"/>
         <source>&amp;Reset to default value</source>
         <translation>&amp;Установить по умолчанию</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="176"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="262"/>
         <source>White margins</source>
         <translation>Белые поля</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="183"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="269"/>
         <source>Equalize illumination</source>
         <translation>Выровнять освещение</translation>
     </message>
@@ -1607,18 +1624,18 @@ To determine it, run batch processing at &quot;Select Content&quot; or &quot;Pag
         <translation>Справа</translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="337"/>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="401"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="340"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="431"/>
         <source>Apply To...</source>
         <translation>Применить к...</translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="362"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="349"/>
         <source>Alignment</source>
         <translation>Выравнивание</translation>
     </message>
     <message>
-        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="441"/>
+        <location filename="../core/filters/page_layout/ui/PageLayoutOptionsWidget.ui" line="391"/>
         <source>Currently selected content alignment</source>
         <translation>Выбранное в данный момент выравнивание положения области контента</translation>
     </message>
@@ -2824,12 +2841,7 @@ and press [Enter] to edit the shortcut:</source>
         <translation>Вручную</translation>
     </message>
     <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="313"/>
-        <source>Scope</source>
-        <translation>Скопировать настройки:</translation>
-    </message>
-    <message>
-        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="349"/>
+        <location filename="../core/filters/select_content/ui/SelectContentOptionsWidget.ui" line="328"/>
         <source>Apply to...</source>
         <translation>Применить к...</translation>
     </message>
@@ -3663,7 +3675,7 @@ As Foreground layer is using binarization to separate content from background it
     <message>
         <location filename="../app/SettingsDialog.cpp" line="540"/>
         <source>Aggressive</source>
-        <translation>Агрессивный</translation>
+        <translation>Агрессивное</translation>
     </message>
     <message>
         <location filename="../app/SettingsDialog.cpp" line="576"/>
@@ -4206,7 +4218,7 @@ of a non grey color in the source files</source>
 <context>
     <name>output::OptionsWidget</name>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="610"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="605"/>
         <source>Apply Despeckling Level</source>
         <translation>Применить уровень удаления мусора</translation>
     </message>
@@ -4266,62 +4278,62 @@ of a non grey color in the source files</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="446"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="442"/>
         <source>%1 x %2 dpi</source>
         <translation>%1 x %2 dpi</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="451"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="447"/>
         <source>%1 dpi</source>
         <translation>%1 dpi</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="597"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="592"/>
         <source>Off</source>
         <translation>Отключено</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="598"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="593"/>
         <source>Cautious</source>
         <translation>Осторожное</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="599"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="594"/>
         <source>Normal</source>
         <translation>Обычное</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="600"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="595"/>
         <source>Aggressive</source>
-        <translation>Агрессивный</translation>
+        <translation>Агрессивное</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="626"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="621"/>
         <source>Apply Mode</source>
         <translation>Применить режим вывода</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="818"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="801"/>
         <source>Apply Output Resolution</source>
         <translation>Применить разрешение вывода</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="923"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="906"/>
         <source>Apply Foreground layer threshold</source>
         <translation>Применить значение порога фона</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="978"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="961"/>
         <source>Copy zone and its settings to:</source>
         <translation>Копировать зону и ее параметры в:</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="1043"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="1026"/>
         <source>Find and remove this zone from:</source>
         <translation>Поиск и удаление зоны из:</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="853"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="836"/>
         <source>Apply Threshold</source>
         <translation>Применить значение Ч/Б порога</translation>
     </message>
