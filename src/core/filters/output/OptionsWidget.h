@@ -76,6 +76,8 @@ public slots:
     void deleteZoneFromPagesDlgRequest(void* zone);
 private slots:
 
+    void modeSelectorIndexChanged(int idx);
+
     void whiteMarginsToggled(bool checked);
 
     void equalizeIlluminationToggled(bool checked);
@@ -92,16 +94,6 @@ private slots:
 
     void applyColorsButtonClicked();
 
-    void modeValueClicked();
-
-    void on_actionModeBW_triggered();
-
-    void on_actionModeColorOrGrayscale_triggered();
-
-    void on_actionModeMixed_triggered();
-
-    void on_despeckleSlider_valueChanged(int value);
-
     void on_thresholdSlider_valueChanged();
 
     void on_thresholdForegroundSlider_valueChanged();
@@ -113,6 +105,8 @@ private slots:
     void thresholdCoefChanged(double value);
 
     void dpiValueClicked();
+
+    void applyDpiButtonClicked();
 
     void on_actionReset_to_default_value_triggered();
 
@@ -146,8 +140,6 @@ private:
 
     void applyDespeckleConfirmed(std::set<PageId> const& pages);
 
-    void changeColorMode(ColorParams::ColorMode const mode);
-
     bool eventFilter(QObject* obj, QEvent* event);
 
     void handleDespeckleLevelChange(DespeckleLevel level);
@@ -160,22 +152,11 @@ private:
 
     void updateLayersDisplay();
 
-    void updateModeValueText();
-
     void updateDespeckleValueText();
-
-    void setModeValue(ColorParams::ColorMode v)
-    {
-        m_currentMode = v;
-        updateModeValueText();
-    }
 
     void setDespeckleLevel(DespeckleLevel v)
     {
         m_despeckleLevel = v;
-        if (despeckleSlider->value() != (int)v) {
-            despeckleSlider->setValue((int)v);
-        }
         updateDespeckleValueText();
     }
 

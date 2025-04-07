@@ -1403,7 +1403,7 @@ OptionsWidget::setupDistortionTypeButtons()
 void
 OptionsWidget::disableDistortionDependentUiElements()
 {
-    ui.modePanel->setDisabled(true);
+    ui.distortionModePanel->setDisabled(true);
     ui.rotationPanel->setDisabled(true);
     ui.fovPanel->setDisabled(true);
     ui.framePanel->setDisabled(true);
@@ -1414,7 +1414,7 @@ OptionsWidget::disableDistortionDependentUiElements()
 void
 OptionsWidget::enableDistortionDependentUiElements()
 {
-    ui.modePanel->setEnabled(true);
+    ui.distortionModePanel->setEnabled(true);
     ui.rotationPanel->setEnabled(true);
     ui.fovPanel->setEnabled(true);
     ui.framePanel->setEnabled(true);
@@ -1429,7 +1429,7 @@ OptionsWidget::setupUiForDistortionType(DistortionType::Type type)
 
     m_distortionTypeButtons[type]->setChecked(true);
 
-    ui.modePanel->setVisible(type != DistortionType::NONE);
+    ui.distortionModePanel->setVisible(type != DistortionType::NONE);
     ui.rotationPanel->setVisible(type == DistortionType::ROTATION);
     ui.fovPanel->setVisible(type == DistortionType::PERSPECTIVE || type == DistortionType::WARP);
     ui.framePanel->setVisible(type == DistortionType::PERSPECTIVE || type == DistortionType::WARP);

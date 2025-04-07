@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>115</width>
-    <height>206</height>
+    <height>183</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
     <number>4</number>
    </property>
    <item>
-    <widget class="QGroupBox" name="groupBox">
+    <widget class="QGroupBox" name="pageRotateGroupBox">
      <property name="title">
       <string>Rotate</string>
      </property>
@@ -195,65 +195,28 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="scopeBox">
-     <property name="title">
-      <string>Scope</string>
-     </property>
-     <layout class="QVBoxLayout">
-      <property name="spacing">
-       <number>4</number>
-      </property>
-      <property name="leftMargin">
-       <number>4</number>
-      </property>
-      <property name="topMargin">
-       <number>4</number>
-      </property>
-      <property name="rightMargin">
-       <number>4</number>
-      </property>
-      <property name="bottomMargin">
-       <number>4</number>
-      </property>
-      <item>
-       <layout class="QHBoxLayout">
-        <item>
-         <spacer>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>4</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="applyToBtn">
-          <property name="text">
-           <string>Apply to...</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>4</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
+    <layout class="QHBoxLayout">
+     <item>
+      <spacer>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>4</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="applyToBtn">
+       <property name="text">
+        <string>Apply to...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <spacer>

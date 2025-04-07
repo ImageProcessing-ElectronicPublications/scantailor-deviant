@@ -9,7 +9,7 @@ ENDIF()
 
 SET(
         sources
-        ChangeDpiWidget.cpp ChangeDpiWidget.h
+        ChangeDpiDialog.cpp ChangeDpiDialog.h
         ImageView.cpp ImageView.h
         ImageViewTab.h
         TabbedImageView.cpp TabbedImageView.h

@@ -16,23 +16,19 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "ChangeDpiWidget.h"
-
-#include "PageSelectionAccessor.h"
+#include "ChangeDpiDialog.h"
 #include "Dpi.h"
-#include <QButtonGroup>
-#include <QVariant>
-#include <QIntValidator>
-#include <QMessageBox>
-#include <QLineEdit>
-#include <QDebug>
-#include <algorithm>
 #include "settings/ini_keys.h"
+#include <QSettings>
+#include <QStringList>
+#include <QLineEdit>
+#include <QMessageBox>
 
 namespace output
 {
 
-ChangeDpiWidget::ChangeDpiWidget(QWidget* parent, Dpi const& dpi):  QWidget(parent)
+ChangeDpiDialog::ChangeDpiDialog(QWidget* parent, Dpi const& dpi)
+    : QDialog(parent)
 {
     setupUi(this);
 
@@ -56,7 +52,8 @@ ChangeDpiWidget::ChangeDpiWidget(QWidget* parent, Dpi const& dpi):  QWidget(pare
 
     if (selected_index != -1) {
         dpiSelector->setCurrentIndex(selected_index);
-    } else {
+    }
+    else {
         dpiSelector->setCurrentIndex(m_customItemIdx);
         dpiSelector->setEditable(true);
         dpiSelector->lineEdit()->setText(m_customDpiString);
@@ -77,12 +74,19 @@ ChangeDpiWidget::ChangeDpiWidget(QWidget* parent, Dpi const& dpi):  QWidget(pare
     );
 }
 
-ChangeDpiWidget::~ChangeDpiWidget()
+void
+ChangeDpiDialog::accept()
 {
+    if (!validate())
+    {
+        return;
+    }
+
+    done(Accepted);
 }
 
 void
-ChangeDpiWidget::dpiSelectionChanged(int const index)
+ChangeDpiDialog::dpiSelectionChanged(int const index)
 {
     dpiSelector->setEditable(index == m_customItemIdx);
     if (index == m_customItemIdx) {
@@ -97,7 +101,7 @@ ChangeDpiWidget::dpiSelectionChanged(int const index)
 }
 
 void
-ChangeDpiWidget::dpiEditTextChanged(QString const& text)
+ChangeDpiDialog::dpiEditTextChanged(QString const& text)
 {
     if (dpiSelector->currentIndex() == m_customItemIdx) {
         m_customDpiString = text;
@@ -105,7 +109,7 @@ ChangeDpiWidget::dpiEditTextChanged(QString const& text)
 }
 
 bool
-ChangeDpiWidget::validate()
+ChangeDpiDialog::validate()
 {
     QString const dpi_str(dpiSelector->currentText());
     if (dpi_str.isEmpty()) {
