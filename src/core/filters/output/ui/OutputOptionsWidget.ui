@@ -989,15 +989,20 @@
  </widget>
  <tabstops>
   <tabstop>dpiValue</tabstop>
+  <tabstop>applyDpiButton</tabstop>
+  <tabstop>modeSelector</tabstop>
   <tabstop>whiteMarginsCB</tabstop>
   <tabstop>equalizeIlluminationCB</tabstop>
   <tabstop>autoLayerCB</tabstop>
   <tabstop>pictureZonesLayerCB</tabstop>
   <tabstop>foregroundLayerCB</tabstop>
   <tabstop>applyColorsButton</tabstop>
+  <tabstop>thresholdMethodSelector</tabstop>
+  <tabstop>thresholdSlider</tabstop>
   <tabstop>thresholdWindowSize</tabstop>
   <tabstop>thresholdCoef</tabstop>
   <tabstop>applyThresholdButton</tabstop>
+  <tabstop>thresholdForegroundSlider</tabstop>
   <tabstop>applyForegroundThresholdButton</tabstop>
   <tabstop>despeckleOffBtn</tabstop>
   <tabstop>despeckleCautiousBtn</tabstop>
