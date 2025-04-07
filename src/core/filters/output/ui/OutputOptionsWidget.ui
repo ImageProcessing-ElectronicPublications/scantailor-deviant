@@ -181,7 +181,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QGroupBox" name="modeGroupBox">
+       <widget class="QGroupBox" name="outputModeGroupBox">
         <property name="title">
          <string>Mode</string>
         </property>
@@ -349,7 +349,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QGroupBox" name="groupBox">
+       <widget class="QGroupBox" name="bwOptionsGroupBox">
         <property name="title">
          <string>B/W options</string>
         </property>

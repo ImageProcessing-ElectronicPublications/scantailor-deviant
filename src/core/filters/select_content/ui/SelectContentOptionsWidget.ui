@@ -228,7 +228,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox">
+    <widget class="QGroupBox" name="contentGroupBox">
      <property name="title">
       <string>Content Box</string>
      </property>

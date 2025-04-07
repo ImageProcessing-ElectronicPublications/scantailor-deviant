@@ -36,7 +36,7 @@
     <number>4</number>
    </property>
    <item>
-    <widget class="QGroupBox" name="groupBox">
+    <widget class="QGroupBox" name="pageLayoutGroupBox">
      <property name="title">
       <string>Page Layout on image</string>
      </property>
@@ -172,7 +172,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="splitLineGroup">
+    <widget class="QGroupBox" name="pageSplitLineGroup">
      <property name="title">
       <string>Split Line</string>
      </property>

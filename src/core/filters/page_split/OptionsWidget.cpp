@@ -107,7 +107,7 @@ OptionsWidget::preUpdateUI(PageId const& page_id)
         break;
     }
 
-    splitLineGroup->setVisible(layout_type != SINGLE_PAGE_UNCUT);
+    pageSplitLineGroup->setVisible(layout_type != SINGLE_PAGE_UNCUT);
 
     if (layout_type == AUTO_LAYOUT_TYPE) {
         layoutApplyBtn->setEnabled(false);
@@ -160,7 +160,7 @@ OptionsWidget::postUpdateUI(UiData const& ui_data)
         break;
     }
 
-    splitLineGroup->setVisible(layout_type != PageLayout::SINGLE_PAGE_UNCUT);
+    pageSplitLineGroup->setVisible(layout_type != PageLayout::SINGLE_PAGE_UNCUT);
 
     if (ui_data.layoutTypeAutoDetected()) {
         scopeLabel->setText(tr("Auto detected"));
@@ -205,7 +205,7 @@ OptionsWidget::layoutTypeButtonToggled(bool const checked)
     Settings::UpdateAction update;
     update.setLayoutType(lt);
 
-    splitLineGroup->setVisible(lt != SINGLE_PAGE_UNCUT);
+    pageSplitLineGroup->setVisible(lt != SINGLE_PAGE_UNCUT);
     scopeLabel->setText(tr("Set manually"));
 
     m_ptrPages->setLayoutTypeFor(m_pageId.imageId(), plt);

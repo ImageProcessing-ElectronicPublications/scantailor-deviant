@@ -223,7 +223,7 @@ Perspective correction.</string>
     </layout>
    </item>
    <item>
-    <widget class="QWidget" name="modePanel" native="true">
+    <widget class="QWidget" name="distortionModePanel" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_6">
       <property name="spacing">
        <number>4</number>
@@ -241,7 +241,7 @@ Perspective correction.</string>
        <number>0</number>
       </property>
       <item>
-       <widget class="QGroupBox" name="modeGroupGox">
+       <widget class="QGroupBox" name="distortionModeGroupGox">
         <property name="title">
          <string>Mode</string>
         </property>

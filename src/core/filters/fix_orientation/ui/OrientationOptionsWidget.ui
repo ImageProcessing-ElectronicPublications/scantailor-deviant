@@ -30,7 +30,7 @@
     <number>4</number>
    </property>
    <item>
-    <widget class="QGroupBox" name="groupBox">
+    <widget class="QGroupBox" name="pageRotateGroupBox">
      <property name="title">
       <string>Rotate</string>
      </property>
