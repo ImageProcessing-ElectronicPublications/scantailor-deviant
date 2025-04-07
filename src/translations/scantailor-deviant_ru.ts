@@ -712,8 +712,8 @@ for content in foreground subscans (lengthy)</source>
     <name>ImageViewBase</name>
     <message>
         <location filename="../core/ImageViewBase.cpp" line="225"/>
-        <source>Use the mouse wheel or %1 to zoom. When zoomed, dragging is possible.</source>
-        <translation>Используйте колесо мыши или %1 для увеличения. В увеличенном виде доступно перетаскивание.</translation>
+        <source>Use the mouse wheel or %1 to zoom. When zoomed, dragging is possible. Double click to zoom all.</source>
+        <translation>Используйте колесо мыши или %1 для увеличения. В увеличенном виде доступно перетаскивание. Двойной щелчок показывает все.</translation>
     </message>
     <message>
         <location filename="../core/ImageViewBase.cpp" line="230"/>

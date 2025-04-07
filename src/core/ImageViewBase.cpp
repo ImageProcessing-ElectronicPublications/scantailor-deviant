@@ -222,7 +222,7 @@ ImageViewBase::ImageViewBase(
     updateWidgetTransformAndFixFocalPoint(CENTER_IF_FITS);
     QString plus_minus = GlobalStaticSettings::getShortcutText(PageViewZoomIn) + "/" +
                          GlobalStaticSettings::getShortcutText(PageViewZoomOut);
-    QString default_tooltip = tr("Use the mouse wheel or %1 to zoom. When zoomed, dragging is possible.").arg(plus_minus);
+    QString default_tooltip = tr("Use the mouse wheel or %1 to zoom. When zoomed, dragging is possible. Double click to zoom all.").arg(plus_minus);
 
     if (!QSettings().value(_key_output_show_orig_on_space, _key_output_show_orig_on_space_def).toBool()) {
         interactionState().setDefaultStatusTip(default_tooltip);
