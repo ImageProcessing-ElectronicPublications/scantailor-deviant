@@ -106,6 +106,8 @@ private slots:
 
     void dpiValueClicked();
 
+    void applyDpiButtonClicked();
+
     void on_actionReset_to_default_value_triggered();
 
     void applyThresholdButtonClicked();

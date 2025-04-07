@@ -18,7 +18,7 @@
 
 #include "OptionsWidget.h"
 
-#include "ChangeDpiWidget.h"
+#include "ChangeDpiDialog.h"
 #include "ApplyToDialog.h"
 #include "Settings.h"
 #include "Params.h"
@@ -92,6 +92,11 @@ OptionsWidget::OptionsWidget(
     connect(
         dpiValue, SIGNAL(clicked(bool)),
         this, SLOT(dpiValueClicked())
+    );
+
+    connect(
+        applyDpiButton, SIGNAL(clicked(bool)),
+        this, SLOT(applyDpiButtonClicked())
     );
 
     connect(
@@ -748,21 +753,35 @@ void output::OptionsWidget::on_thresholdForegroundSlider_valueChanged()
 
 void output::OptionsWidget::dpiValueClicked()
 {
-    ApplyToDialog* dialog = new ApplyToDialog(
-        this, m_pageId, m_pageSelectionAccessor
+    ChangeDpiDialog* dialog = new ChangeDpiDialog(this, m_outputDpi);
+    connect(dialog, &ApplyToDialog::accepted, this, [=]()
+        {
+            const int dpi = dialog->dpi();
+            m_outputDpi = Dpi(dpi, dpi);
+            m_ptrSettings->setDpi(m_pageId, m_outputDpi);
+
+            updateDpiDisplay();
+
+            emit reloadRequested();
+            emit invalidateAllThumbnails();
+        }
     );
+    dialog->show();
+}
 
-    ChangeDpiWidget* options = new ChangeDpiWidget(this, m_outputDpi);
-    dialog->registerValidator(options);
+void
+output::OptionsWidget::applyDpiButtonClicked()
+{
+    ApplyToDialog* dialog = new ApplyToDialog(this, m_pageId, m_pageSelectionAccessor);
     dialog->setWindowTitle(tr("Apply Output Resolution"));
-    dialog->initNewTopSettingsPanel().addWidget(options);
-
-    connect(dialog, &ApplyToDialog::accepted, this, [ = ]() {
-        std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
-        std::set<PageId> pages(vec.begin(), vec.end());
-        const int dpi = options->dpi();
-        dpiChanged(pages, Dpi(dpi, dpi));
-    });
+    connect(
+        dialog, &ApplyToDialog::accepted,
+        this, [=]() {
+            std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
+            std::set<PageId> pages(vec.begin(), vec.end());
+            dpiChanged(pages, m_outputDpi);
+        }
+    );
 
     dialog->show();
 }

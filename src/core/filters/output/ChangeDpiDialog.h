@@ -1,6 +1,6 @@
 /*
     Scan Tailor - Interactive post-processing tool for scanned pages.
-    Copyright (C)  Joseph Artsimovich <joseph_a@mail.ru>
+    Copyright (C)  Joseph Artsimovich <joseph.artsimovich@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,42 +16,37 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef OUTPUT_CHANGEDPIWIDGET_H_
-#define OUTPUT_CHANGEDPIWIDGET_H_
+#ifndef OUTPUT_CHANGEDPIDIALOG_H_
+#define OUTPUT_CHANGEDPIDIALOG_H_
 
-#include "ui/ui_OutputChangeDpiWidget.h"
-#include "PageId.h"
-#include "PageSequence.h"
-#include "IntrusivePtr.h"
-#include <QWidget>
+#include "ui/ui_OutputChangeDpiDialog.h"
+#include <QDialog>
 #include <QString>
-#include <set>
-#include "ApplyToDialog.h"
+
+class Dpi;
 
 namespace output
 {
 
-class ChangeDpiWidget : public QWidget,
-    public ApplyToDialog::Validator,
-    private Ui::widgetOutputChangeDpi
+class ChangeDpiDialog : public QDialog, public Ui_OutputChangeDpiDialog
 {
     Q_OBJECT
 public:
-    ChangeDpiWidget(QWidget* parent, Dpi const& dpi);
-
-    virtual ~ChangeDpiWidget();
+    ChangeDpiDialog(QWidget* parent, Dpi const& dpi);
 
     int dpi() const
     {
         return dpiSelector->currentText().toInt();
     }
-
-    virtual bool validate() override;
+public slots:
+    virtual void accept();
 private slots:
     void dpiSelectionChanged(int index);
 
     void dpiEditTextChanged(QString const& text);
 private:
+    bool validate();
+
     int m_customItemIdx;
     QString m_customDpiString;
 };

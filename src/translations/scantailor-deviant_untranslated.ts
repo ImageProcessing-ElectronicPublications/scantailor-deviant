@@ -1393,6 +1393,19 @@ Cancelling...</source>
     </message>
 </context>
 <context>
+    <name>OutputChangeDpiDialog</name>
+    <message>
+        <location filename="../core/filters/output/ui/OutputChangeDpiDialog.ui" line="14"/>
+        <source>Set DPI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputChangeDpiDialog.ui" line="35"/>
+        <source>DPI</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OutputOptionsWidget</name>
     <message>
         <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="53"/>
@@ -1405,50 +1418,51 @@ Cancelling...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="162"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="186"/>
         <source>Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="220"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="244"/>
         <source>White margins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="227"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="251"/>
         <source>Equalize illumination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="255"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="279"/>
         <source>Auto layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="265"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="289"/>
         <source>Picture Zones layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="272"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="296"/>
         <source>Foreground layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="539"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="563"/>
         <source>Foreground options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="694"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="718"/>
         <source>Despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="300"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="509"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="664"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="912"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="138"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="324"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="533"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="688"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="936"/>
         <source>Apply To...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1458,74 +1472,74 @@ Cancelling...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="184"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="208"/>
         <source>Black and White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="189"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="213"/>
         <source>Color / Grayscale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="194"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="218"/>
         <source>Mixed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="330"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="354"/>
         <source>B/W options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="366"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="568"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="390"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="592"/>
         <source>Threshold:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="443"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="467"/>
         <source>Window size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="450"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="474"/>
         <source>The dimensions of a pixel neighborhood to consider.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="463"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="487"/>
         <source>Default value is 0.34.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="479"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="503"/>
         <source>Coef:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="733"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="757"/>
         <source>No despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="758"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="782"/>
         <source>Cautious despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="784"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="808"/>
         <source>Normal despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="810"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="834"/>
         <source>Aggressive despeckling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="937"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="942"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="961"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="966"/>
         <source>&amp;Reset to default value</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4028,31 +4042,31 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>output::ChangeDpiWidget</name>
+    <name>output::ChangeDpiDialog</name>
     <message>
-        <location filename="../core/filters/output/ChangeDpiWidget.cpp" line="55"/>
+        <location filename="../core/filters/output/ChangeDpiDialog.cpp" line="51"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ChangeDpiWidget.cpp" line="113"/>
-        <location filename="../core/filters/output/ChangeDpiWidget.cpp" line="122"/>
-        <location filename="../core/filters/output/ChangeDpiWidget.cpp" line="130"/>
+        <location filename="../core/filters/output/ChangeDpiDialog.cpp" line="117"/>
+        <location filename="../core/filters/output/ChangeDpiDialog.cpp" line="126"/>
+        <location filename="../core/filters/output/ChangeDpiDialog.cpp" line="134"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ChangeDpiWidget.cpp" line="114"/>
+        <location filename="../core/filters/output/ChangeDpiDialog.cpp" line="118"/>
         <source>DPI is not set.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ChangeDpiWidget.cpp" line="123"/>
+        <location filename="../core/filters/output/ChangeDpiDialog.cpp" line="127"/>
         <source>DPI is too low!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ChangeDpiWidget.cpp" line="131"/>
+        <location filename="../core/filters/output/ChangeDpiDialog.cpp" line="135"/>
         <source>DPI is too high!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4097,32 +4111,32 @@ of a non grey color in the source files</source>
 <context>
     <name>output::OptionsWidget</name>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="438"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="443"/>
         <source>%1 x %2 dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="443"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="448"/>
         <source>%1 dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="574"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="579"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="575"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="580"/>
         <source>Cautious</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="576"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="581"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="577"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="582"/>
         <source>Aggressive</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4182,37 +4196,37 @@ of a non grey color in the source files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="587"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="592"/>
         <source>Apply Despeckling Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="603"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="608"/>
         <source>Apply Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="757"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="776"/>
         <source>Apply Output Resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="792"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="811"/>
         <source>Apply Threshold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="862"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="881"/>
         <source>Apply Foreground layer threshold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="917"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="936"/>
         <source>Copy zone and its settings to:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="982"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="1001"/>
         <source>Find and remove this zone from:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4482,14 +4496,6 @@ and it&apos;s top and bottom hard margins</source>
     <message>
         <location filename="../core/filters/select_content/OptionsWidget.cpp" line="283"/>
         <source>Apply content box</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>widgetOutputChangeDpi</name>
-    <message>
-        <location filename="../core/filters/output/ui/OutputChangeDpiWidget.ui" line="35"/>
-        <source>DPI</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
