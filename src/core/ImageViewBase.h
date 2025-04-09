@@ -64,6 +64,29 @@ class ImageViewBase : public QAbstractScrollArea
 public:
     enum FocalPointMode { CENTER_IF_FITS, DONT_CENTER };
 
+    class Position
+    {
+    public:
+        Position(double zoom, QPointF const& anchor)
+            : m_zoom(zoom)
+            , m_anchor(anchor)
+        {
+        }
+
+        double zoom() const
+        {
+            return m_zoom;
+        }
+
+        QPointF anchor() const
+        {
+            return m_anchor;
+        }
+    private:
+        double m_zoom;
+        QPointF m_anchor;
+    };
+
     /**
      * \brief ImageViewBase constructor.
      *
@@ -225,6 +248,10 @@ public:
      *        focal point so that the image is not moved on screen.
      */
     void setWidgetFocalPointWithoutMoving(QPointF new_widget_fp);
+
+    Position getPosition() const;
+
+    void setPosition(Position const& position);
 
     /**
      * \brief Updates image-to-virtual and recalculates

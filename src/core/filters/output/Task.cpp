@@ -618,7 +618,7 @@ Task::UiUpdater::updateUI(FilterUiInterface* ui)
     }
 
     std::unique_ptr<ImageViewBase> image_view(
-        new ImageView(m_outputImage, m_downscaledOutputImage)
+        new ImageView(m_ptrSettings, m_pageId, m_outputImage, m_downscaledOutputImage)
     );
 
     std::shared_ptr<QImage> alt_image_ptr;

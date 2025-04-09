@@ -26,12 +26,14 @@
 #include "ColorParams.h"
 #include "Params.h"
 #include "OutputParams.h"
+#include "ImageViewBase.h"
 #include "DespeckleLevel.h"
 #include "ZoneSet.h"
 #include "PropertySet.h"
 #include <QMutex>
 #include <map>
 #include <memory>
+#include <boost/optional.hpp>
 //begin of modified by monday2000
 //Picture_Shape
 #include "Params.h"
@@ -91,10 +93,15 @@ public:
     void setDefaultPictureZoneProperties(PropertySet const& props);
 
     void setDefaultFillZoneProperties(PropertySet const& props);
+
+    boost::optional<ImageViewBase::Position> getImageViewPosition(PageId const& page_id) const;
+
+    void setImageViewPosition(PageId const& page_id, ImageViewBase::Position const& imageview_position);
 private:
     typedef std::map<PageId, Params> PerPageParams;
     typedef std::map<PageId, OutputParams> PerPageOutputParams;
     typedef std::map<PageId, ZoneSet> PerPageZones;
+    typedef std::map<PageId, boost::optional<ImageViewBase::Position> >  PerPageImageviewPositions;
 
     static PropertySet initialPictureZoneProps();
 
@@ -105,6 +112,7 @@ private:
     PerPageOutputParams m_perPageOutputParams;
     PerPageZones m_perPagePictureZones;
     PerPageZones m_perPageFillZones;
+    PerPageImageviewPositions m_perPageImageviewPositions;
     PropertySet m_defaultPictureZoneProps;
     PropertySet m_defaultFillZoneProps;
     int m_compression;

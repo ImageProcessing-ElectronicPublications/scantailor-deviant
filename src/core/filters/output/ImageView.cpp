@@ -20,25 +20,36 @@
 
 #include "ImagePresentation.h"
 #include "OutputMargins.h"
+#include "Settings.h"
 
 namespace output
 {
 
-ImageView::ImageView(QImage const& image, QImage const& downscaled_image)
-    :   ImageViewBase(
-            image, downscaled_image,
-            ImagePresentation(QTransform(), QRectF(image.rect())),
-            OutputMargins()
-        ),
-        m_dragHandler(*this),
-        m_zoomHandler(*this)
+ImageView::ImageView(IntrusivePtr<Settings> const& settings, PageId const& page_id,
+                     QImage const& image, QImage const& downscaled_image)
+    : ImageViewBase(
+        image, downscaled_image,
+        ImagePresentation(QTransform(), QRectF(image.rect())),
+        OutputMargins()
+    )
+    , m_ptrSettings(settings)
+    , m_pageId(page_id)
+    , m_dragHandler(*this)
+    , m_zoomHandler(*this)
 {
     rootInteractionHandler().makeLastFollower(m_dragHandler);
     rootInteractionHandler().makeLastFollower(m_zoomHandler);
+
+    boost::optional<ImageViewBase::Position> const position = settings->getImageViewPosition(page_id);
+    if (position)
+    {
+        setPosition(position.value());
+    }
 }
 
 ImageView::~ImageView()
 {
+    m_ptrSettings->setImageViewPosition(m_pageId, getPosition());
 }
 
 } // namespace output

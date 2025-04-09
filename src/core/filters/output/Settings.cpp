@@ -56,6 +56,7 @@ Settings::clear()
     m_perPageOutputParams.clear();
     m_perPagePictureZones.clear();
     m_perPageFillZones.clear();
+    m_perPageImageviewPositions.clear();
 }
 
 void
@@ -67,6 +68,7 @@ Settings::performRelinking(AbstractRelinker const& relinker)
     PerPageOutputParams new_output_params;
     PerPageZones new_picture_zones;
     PerPageZones new_fill_zones;
+    PerPageImageviewPositions new_imageview_positions;
 
     for (PerPageParams::value_type const& kv : m_perPageParams) {
         RelinkablePath const old_path(kv.first.imageId().filePath(), RelinkablePath::File);
@@ -96,10 +98,18 @@ Settings::performRelinking(AbstractRelinker const& relinker)
         new_fill_zones.insert(PerPageZones::value_type(new_page_id, kv.second));
     }
 
+    for (PerPageImageviewPositions::value_type const& kv : m_perPageImageviewPositions) {
+        RelinkablePath const old_path(kv.first.imageId().filePath(), RelinkablePath::File);
+        PageId new_page_id(kv.first);
+        new_page_id.imageId().setFilePath(relinker.substitutionPathFor(old_path));
+        new_imageview_positions.insert(PerPageImageviewPositions::value_type(new_page_id, kv.second));
+    }
+
     m_perPageParams.swap(new_params);
     m_perPageOutputParams.swap(new_output_params);
     m_perPagePictureZones.swap(new_picture_zones);
     m_perPageFillZones.swap(new_fill_zones);
+    m_perPageImageviewPositions.swap(new_imageview_positions);
 }
 
 Params
@@ -287,6 +297,27 @@ Settings::initialFillZoneProps()
     PropertySet props;
     props.locateOrCreate<FillColorProperty>()->setColor(Qt::white);
     return props;
+}
+
+boost::optional<ImageViewBase::Position>
+Settings::getImageViewPosition(PageId const& page_id) const
+{
+    QMutexLocker const locker(&m_mutex);
+
+    PerPageImageviewPositions::const_iterator const it(m_perPageImageviewPositions.find(page_id));
+    if (it != m_perPageImageviewPositions.end()) {
+        return it->second;
+    }
+    else {
+        return boost::optional<ImageViewBase::Position>();
+    }
+}
+
+void
+Settings::setImageViewPosition(PageId const& page_id, ImageViewBase::Position const& imageview_position)
+{
+    QMutexLocker const locker(&m_mutex);
+    Utils::mapSetValue(m_perPageImageviewPositions, page_id, imageview_position);
 }
 
 } // namespace output

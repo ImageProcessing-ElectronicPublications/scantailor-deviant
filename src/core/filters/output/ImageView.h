@@ -22,21 +22,27 @@
 #include "ImageViewBase.h"
 #include "DragHandler.h"
 #include "ZoomHandler.h"
-#include <QColor>
+#include "IntrusivePtr.h"
+#include "PageId.h"
 
 class ImageTransformation;
 
 namespace output
 {
 
+class Settings;
+
 class ImageView : public ImageViewBase
 {
     Q_OBJECT
 public:
-    ImageView(QImage const& image, QImage const& downscaled_image);
+    ImageView(IntrusivePtr<Settings> const& settings, PageId const& page_id,
+              QImage const& image, QImage const& downscaled_image);
 
     virtual ~ImageView();
 private:
+    IntrusivePtr<Settings> m_ptrSettings;
+    PageId const m_pageId;
     DragHandler m_dragHandler;
     ZoomHandler m_zoomHandler;
 };

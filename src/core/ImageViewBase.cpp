@@ -1078,6 +1078,32 @@ ImageViewBase::setWidgetFocalPointWithoutMoving(QPointF const new_widget_fp)
                          );
 }
 
+ImageViewBase::Position
+ImageViewBase::getPosition() const
+{
+    QPointF const anchor_image(widgetToImage().map(rect().center()));
+    QPointF const anchor(
+        anchor_image.x() / m_image.width(),
+        anchor_image.y() / m_image.height()
+    );
+
+    return Position(m_zoom, anchor);
+}
+
+void
+ImageViewBase::setPosition(Position const& position)
+{
+    QPointF const anchor(position.anchor());
+    QPointF const anchor_image(
+        m_image.width() * anchor.x(),
+        m_image.height() * anchor.y()
+    );
+    QPointF const anchor_widget(imageToWidget().map(anchor_image));
+
+    setWidgetFocalPointWithoutMoving(anchor_widget);
+    setZoomLevel(position.zoom());
+}
+
 /**
  * Returns true if m_hqPixmap is valid and up to date.
  */
