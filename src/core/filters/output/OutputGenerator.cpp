@@ -1247,11 +1247,6 @@ OutputGenerator::binarize(QImage const& image, BinaryImage const& mask, const in
             binarized = BinaryImage(image, adjustThreshold(bw_thresh, adjustment));
             break;
         }
-        case NIBLACK:
-        {
-            binarized = binarizeNiblack(image, window_size, threshold_coef, threshold_delta);
-            break;
-        }
         case GATOS:
         {
             binarized = binarizeGatos(image, window_size, 3.0, threshold_coef, threshold_delta);

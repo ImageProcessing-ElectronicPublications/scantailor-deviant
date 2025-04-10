@@ -99,11 +99,7 @@ BlackWhiteOptions::operator!=(BlackWhiteOptions const& other) const
 ThresholdFilter
 BlackWhiteOptions::parseThresholdMethod(QString const& str)
 {
-    if (str == "niblack")
-    {
-        return NIBLACK;
-    }
-    else if (str == "gatos")
+    if (str == "gatos")
     {
         return GATOS;
     }
@@ -129,9 +125,6 @@ BlackWhiteOptions::formatThresholdMethod(ThresholdFilter type)
     {
     case OTSU:
         str = "otsu";
-        break;
-    case NIBLACK:
-        str = "niblack";
         break;
     case GATOS:
         str = "gatos";

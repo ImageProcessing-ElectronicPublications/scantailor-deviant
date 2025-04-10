@@ -4146,11 +4146,6 @@ of a non grey color in the source files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="66"/>
-        <source>Niblack</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/filters/output/OptionsWidget.cpp" line="67"/>
         <source>Gatos</source>
         <translation type="unfinished"></translation>
