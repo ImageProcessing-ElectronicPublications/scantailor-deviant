@@ -4255,11 +4255,6 @@ of a non grey color in the source files</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="74"/>
-        <source>MultiScale</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../core/filters/output/OptionsWidget.cpp" line="443"/>
         <source>%1 x %2 dpi</source>
         <translation>%1 x %2 dpi</translation>

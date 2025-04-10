@@ -116,17 +116,6 @@ BinaryImage binarizeWolf(
 
 BinaryImage peakThreshold(QImage const& image);
 
-/**
- * \brief Image binarization using MultiScale thresholding method.
- *
- * MultiScale thresholding method.
- */
-GrayImage binarizeMScaleMap(
-    GrayImage const& src, QSize window_size, double coef = 0.5);
-BinaryImage binarizeMScale(
-    QImage const& src, QSize window_size,
-    double coef = 0.5, int delta = 0);
-
 } // namespace imageproc
 
 #endif

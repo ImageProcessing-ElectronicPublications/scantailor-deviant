@@ -115,10 +115,6 @@ BlackWhiteOptions::parseThresholdMethod(QString const& str)
     {
         return WOLF;
     }
-    else if (str == "multiscale")
-    {
-        return MSCALE;
-    }
     else
     {
         return OTSU;
@@ -145,9 +141,6 @@ BlackWhiteOptions::formatThresholdMethod(ThresholdFilter type)
         break;
     case WOLF:
         str = "wolf";
-        break;
-    case MSCALE:
-        str = "multiscale";
         break;
     }
     return str;

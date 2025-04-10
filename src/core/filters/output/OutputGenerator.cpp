@@ -1267,11 +1267,6 @@ OutputGenerator::binarize(QImage const& image, BinaryImage const& mask, const in
             binarized = binarizeWolf(image, window_size, 1, 254, threshold_coef, threshold_delta);
             break;
         }
-        case MSCALE:
-        {
-            binarized = binarizeMScale(image, window_size, threshold_coef, threshold_delta);
-            break;
-        }
         }
 
     }

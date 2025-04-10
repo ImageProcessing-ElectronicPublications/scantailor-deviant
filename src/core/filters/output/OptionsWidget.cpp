@@ -66,7 +66,6 @@ OptionsWidget::OptionsWidget(
     thresholdMethodSelector->addItem(tr("Gatos"), GATOS);
     thresholdMethodSelector->addItem(tr("Sauvola"), SAUVOLA);
     thresholdMethodSelector->addItem(tr("Wolf"), WOLF);
-    thresholdMethodSelector->addItem(tr("MultiScale"), MSCALE);
 
     setDespeckleLevel(DESPECKLE_NORMAL);
 
