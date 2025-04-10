@@ -4235,11 +4235,6 @@ of a non grey color in the source files</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="65"/>
-        <source>Mean</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../core/filters/output/OptionsWidget.cpp" line="66"/>
         <source>Niblack</source>
         <translation></translation>

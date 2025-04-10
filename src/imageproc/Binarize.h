@@ -38,12 +38,6 @@ class GrayImage;
 BinaryImage binarizeOtsu(QImage const& src, int delta = 0);
 
 /**
- * \brief Image binarization using DeltaMean global thresholding method.
- */
-BinaryImage binarizeMean(
-    QImage const& src, int const delta = 0);
-
-/**
  * \brief Image binarization using Mokji's global thresholding method.
  *
  * M. M. Mokji, S. A. R. Abu-Bakar: Adaptive Thresholding Based on
