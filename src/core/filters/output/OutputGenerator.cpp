@@ -1247,11 +1247,6 @@ OutputGenerator::binarize(QImage const& image, BinaryImage const& mask, const in
             binarized = BinaryImage(image, adjustThreshold(bw_thresh, adjustment));
             break;
         }
-        case GATOS:
-        {
-            binarized = binarizeGatos(image, window_size, 3.0, threshold_coef, threshold_delta);
-            break;
-        }
         case SAUVOLA:
         {
             binarized = binarizeSauvola(image, window_size, threshold_coef, threshold_delta);
@@ -1260,6 +1255,11 @@ OutputGenerator::binarize(QImage const& image, BinaryImage const& mask, const in
         case WOLF:
         {
             binarized = binarizeWolf(image, window_size, 1, 254, threshold_coef, threshold_delta);
+            break;
+        }
+        case GATOS:
+        {
+            binarized = binarizeGatos(image, window_size, 3.0, threshold_coef, threshold_delta);
             break;
         }
         }

@@ -99,17 +99,17 @@ BlackWhiteOptions::operator!=(BlackWhiteOptions const& other) const
 ThresholdFilter
 BlackWhiteOptions::parseThresholdMethod(QString const& str)
 {
-    if (str == "gatos")
-    {
-        return GATOS;
-    }
-    else if (str == "sauvola")
+    if (str == "sauvola")
     {
         return SAUVOLA;
     }
     else if (str == "wolf")
     {
         return WOLF;
+    }
+    else if (str == "gatos")
+    {
+        return GATOS;
     }
     else
     {
@@ -126,14 +126,14 @@ BlackWhiteOptions::formatThresholdMethod(ThresholdFilter type)
     case OTSU:
         str = "otsu";
         break;
-    case GATOS:
-        str = "gatos";
-        break;
     case SAUVOLA:
         str = "sauvola";
         break;
     case WOLF:
         str = "wolf";
+        break;
+    case GATOS:
+        str = "gatos";
         break;
     }
     return str;

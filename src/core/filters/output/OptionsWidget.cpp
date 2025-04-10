@@ -62,9 +62,9 @@ OptionsWidget::OptionsWidget(
     setupUi(this);
 
     thresholdMethodSelector->addItem(tr("Otsu"), OTSU);
-    thresholdMethodSelector->addItem(tr("Gatos"), GATOS);
     thresholdMethodSelector->addItem(tr("Sauvola"), SAUVOLA);
     thresholdMethodSelector->addItem(tr("Wolf"), WOLF);
+    thresholdMethodSelector->addItem(tr("Gatos"), GATOS);
 
     setDespeckleLevel(DESPECKLE_NORMAL);
 
