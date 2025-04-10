@@ -174,6 +174,19 @@ OptionsWidget::OptionsWidget(
         this, SLOT(thresholdCoefChanged(double))
     );
 
+    connect(
+        qCoef, SIGNAL(valueChanged(double)),
+        this, SLOT(qCoefChanged(double))
+    );  
+    connect(
+        p1Coef, SIGNAL(valueChanged(double)),
+        this, SLOT(p1CoefChanged(double))
+    );   
+    connect(
+        p2Coef, SIGNAL(valueChanged(double)),
+        this, SLOT(p2CoefChanged(double))
+    );
+
     addAction(actionactionDespeckleOff);
     addAction(actionactionDespeckleNormal);
     addAction(actionactionDespeckleCautious);
@@ -271,6 +284,39 @@ void
 OptionsWidget::thresholdCoefChanged(double value) {
     BlackWhiteOptions blackWhiteOptions(m_colorParams.blackWhiteOptions());
     blackWhiteOptions.setThresholdCoef(value);
+    m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
+    m_ptrSettings->setColorParams(m_pageId, m_colorParams);
+    if (blackWhiteOptions.thresholdMethod() != OTSU && blackWhiteOptions.thresholdMethod() != MEANDELTA)
+        emit reloadRequested();
+}
+
+void
+OptionsWidget::qCoefChanged(double value)
+{
+    BlackWhiteOptions blackWhiteOptions(m_colorParams.blackWhiteOptions());
+    blackWhiteOptions.setQCoef(value);
+    m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
+    m_ptrSettings->setColorParams(m_pageId, m_colorParams);
+    if (blackWhiteOptions.thresholdMethod() != OTSU && blackWhiteOptions.thresholdMethod() != MEANDELTA)
+        emit reloadRequested();
+}
+
+void
+OptionsWidget::p1CoefChanged(double value)
+{
+    BlackWhiteOptions blackWhiteOptions(m_colorParams.blackWhiteOptions());
+    blackWhiteOptions.setP1Coef(value);
+    m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
+    m_ptrSettings->setColorParams(m_pageId, m_colorParams);
+    if (blackWhiteOptions.thresholdMethod() != OTSU && blackWhiteOptions.thresholdMethod() != MEANDELTA)
+        emit reloadRequested();
+}
+
+void
+OptionsWidget::p2CoefChanged(double value)
+{
+    BlackWhiteOptions blackWhiteOptions(m_colorParams.blackWhiteOptions());
+    blackWhiteOptions.setP2Coef(value);
     m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
     m_ptrSettings->setColorParams(m_pageId, m_colorParams);
     if (blackWhiteOptions.thresholdMethod() != OTSU && blackWhiteOptions.thresholdMethod() != MEANDELTA)
@@ -534,6 +580,9 @@ OptionsWidget::updateColorsDisplay()
         thresholdSlider->setValue(blackWhiteOptions.thresholdAdjustment());
         thresholdWindowSize->setValue(blackWhiteOptions.thresholdWindowSize());
         thresholdCoef->setValue(blackWhiteOptions.thresholdCoef());
+        qCoef->setValue(blackWhiteOptions.q());
+        p1Coef->setValue(blackWhiteOptions.p1());
+        p2Coef->setValue(blackWhiteOptions.p2());
         if (blackWhiteOptions.thresholdMethod() == OTSU || blackWhiteOptions.thresholdMethod() == MEANDELTA)
         {
             thresholdWindowSize->setEnabled( false );
@@ -543,6 +592,18 @@ OptionsWidget::updateColorsDisplay()
         {
             thresholdWindowSize->setEnabled( true );
             thresholdCoef->setEnabled( true );
+        }
+        if (blackWhiteOptions.thresholdMethod() == GATOS)
+        {
+            qCoef->setEnabled(true);
+            p1Coef->setEnabled(true);
+            p2Coef->setEnabled(true);
+        }
+        else
+        {
+            qCoef->setDisabled(true);
+            p1Coef->setDisabled(true);
+            p2Coef->setDisabled(true);
         }
     }
 

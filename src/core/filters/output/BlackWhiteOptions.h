@@ -87,6 +87,14 @@ public:
         m_thresholdCoef = val;
     }
 
+    double q() const { return m_q; }
+    double p1() const { return m_p1; }
+    double p2() const { return m_p2; }
+
+    void setQCoef(double q) { m_q = q; }
+    void setP1Coef(double p1) { m_p1 = p1; }
+    void setP2Coef(double p2) { m_p2 = p2; }
+
     bool operator==(BlackWhiteOptions const& other) const;
 
     bool operator!=(BlackWhiteOptions const& other) const;
@@ -96,6 +104,10 @@ private:
     ThresholdFilter m_thresholdMethod;
     int m_thresholdWindowSize;
     double m_thresholdCoef;
+
+    double m_q;
+    double m_p1;
+    double m_p2;
 
     static ThresholdFilter parseThresholdMethod(QString const& str);
 

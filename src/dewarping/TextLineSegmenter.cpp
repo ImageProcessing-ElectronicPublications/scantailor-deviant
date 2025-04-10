@@ -410,7 +410,7 @@ double
 TextLineSegmenter::findSkewAngleRad(
     GrayImage const& image, TaskStatus const& status, DebugImages* dbg)
 {
-    BinaryImage const binarized(binarizeGatos(image, QSize(9, 9), 3.0));
+    BinaryImage const binarized(binarizeGatos(image, QSize(9, 9), 3.0, 0.6, 0.5, 0.8));
 
     status.throwIfCancelled();
 
@@ -1096,7 +1096,7 @@ std::list<std::vector<QPointF>>
         dbg->add(seed, "vert_comps_removed");
     }
 
-    BinaryImage binarized(binarizeGatos(seed, QSize(9, 9), 3.0));
+    BinaryImage binarized(binarizeGatos(seed, QSize(9, 9), 3.0, 0.6, 0.5, 0.8));
     seed = GrayImage();
 
     status.throwIfCancelled();

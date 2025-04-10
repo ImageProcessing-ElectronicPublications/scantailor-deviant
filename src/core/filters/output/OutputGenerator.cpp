@@ -1230,6 +1230,9 @@ OutputGenerator::binarize(QImage const& image, BinaryImage const& mask, const in
     int const threshold_delta = black_white_options.thresholdAdjustment();
     QSize const window_size = QSize(black_white_options.thresholdWindowSize(), black_white_options.thresholdWindowSize());
     double const threshold_coef = black_white_options.thresholdCoef();
+    double const q = black_white_options.q();
+    double const p1 = black_white_options.p1();
+    double const p2 = black_white_options.p2();
 
     BinaryImage binarized;
     if ((image.format() == QImage::Format_Mono) || (image.format() == QImage::Format_MonoLSB))
@@ -1259,7 +1262,7 @@ OutputGenerator::binarize(QImage const& image, BinaryImage const& mask, const in
         }
         case GATOS:
         {
-            binarized = binarizeGatos(image, window_size, 3.0, threshold_coef, threshold_delta);
+            binarized = binarizeGatos(image, window_size, q, p1, p2, 3.0, threshold_coef, threshold_delta);
             break;
         }
         case SAUVOLA:

@@ -348,7 +348,8 @@ BinaryImage binarizeNiblack(
 
 BinaryImage binarizeGatosCleaner(
     GrayImage& wiener, BinaryImage const& niblack,
-    QSize const window_size)
+    QSize const window_size,
+    double q, double p1, double p2)
 {
     if (window_size.isEmpty())
     {
@@ -458,10 +459,6 @@ BinaryImage binarizeGatosCleaner(
     double const delta = double(sum_diff) / (w*h - niblack_bg_ii.sum(image_rect));
     double const b = double(sum_bg) / niblack_bg_ii.sum(image_rect);
 
-    double const q = 0.6;
-    double const p1 = 0.5;
-    double const p2 = 0.8;
-
     double const exp_scale = -4.0 / (b * (1.0 - p1));
     double const exp_bias = 2.0 * (1.0 + p1) / (1.0 - p1);
     double const threshold_scale = q * delta * (1.0 - p2);
@@ -488,6 +485,7 @@ BinaryImage binarizeGatosCleaner(
 
 BinaryImage binarizeGatos(
     QImage const& src, QSize const window_size,
+    double q, double p1, double p2,
     double const noise_sigma, double const k, int const delta)
 {
     if (window_size.isEmpty())
@@ -508,7 +506,7 @@ BinaryImage binarizeGatos(
 
     GrayImage wiener(wienerFilter(gray, QSize(5, 5), noise_sigma));
     BinaryImage niblack(binarizeNiblack(wiener, window_size, k, delta));
-    BinaryImage bw_img(binarizeGatosCleaner(wiener, niblack, window_size));
+    BinaryImage bw_img(binarizeGatosCleaner(wiener, niblack, window_size, q, p1, p2));
 
     return bw_img;
 }

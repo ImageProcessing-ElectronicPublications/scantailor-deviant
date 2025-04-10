@@ -31,7 +31,10 @@ BlackWhiteOptions::BlackWhiteOptions():
     m_thresholdForegroundAdjustment(m_thresholdAdjustment),
     m_thresholdMethod(OTSU),
     m_thresholdWindowSize(200),
-    m_thresholdCoef(0.3)
+    m_thresholdCoef(0.3),
+    m_q(0.6),
+    m_p1(0.5),
+    m_p2(0.8)
 {
 }
 
@@ -40,7 +43,11 @@ BlackWhiteOptions::BlackWhiteOptions(QDomElement const& el)
         m_thresholdForegroundAdjustment(el.attribute("thresholdForegAdj").toInt()),
         m_thresholdMethod(parseThresholdMethod(el.attribute("thresholdMethod"))),
         m_thresholdWindowSize(el.attribute("thresholdWinSize").toInt()),
-        m_thresholdCoef(el.attribute("thresholdCoef").toDouble())
+        m_thresholdCoef(el.attribute("thresholdCoef").toDouble()),
+    
+    m_q(el.attribute("q").toDouble()),
+    m_p1(el.attribute("p1").toDouble()),
+    m_p2(el.attribute("p2").toDouble())
 {
    if (m_thresholdWindowSize <= 0)
     {
@@ -50,6 +57,11 @@ BlackWhiteOptions::BlackWhiteOptions(QDomElement const& el)
     {
         m_thresholdCoef = 0.0;
     }
+
+    // move to init list
+    m_q = qBound(0.0, m_q, 1.0);
+    m_p1 = qBound(0.0, m_p1, 0.99);
+    m_p2 = qBound(0.0, m_p2, 0.99);
 }
 
 QDomElement
@@ -61,6 +73,9 @@ BlackWhiteOptions::toXml(QDomDocument& doc, QString const& name) const
     el.setAttribute("thresholdMethod", formatThresholdMethod(m_thresholdMethod));
     el.setAttribute("thresholdWinSize", m_thresholdWindowSize);
     el.setAttribute("thresholdCoef", m_thresholdCoef);
+    el.setAttribute("q", m_q);
+    el.setAttribute("p1", m_p1);
+    el.setAttribute("p2", m_p2);
 
     return el;
 }
@@ -83,6 +98,18 @@ BlackWhiteOptions::operator==(BlackWhiteOptions const& other) const
         return false;
     }
     if (m_thresholdCoef != other.m_thresholdCoef)
+    {
+        return false;
+    }
+    if (m_q != other.m_q)
+    {
+        return false;
+    }
+    if (m_p1 != other.m_p1)
+    {
+        return false;
+    }
+    if (m_p2 != other.m_p2)
     {
         return false;
     }

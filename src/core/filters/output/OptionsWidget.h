@@ -104,6 +104,10 @@ private slots:
 
     void thresholdCoefChanged(double value);
 
+    void qCoefChanged(double value);
+    void p1CoefChanged(double value);
+    void p2CoefChanged(double value);
+
     void dpiValueClicked();
 
     void applyDpiButtonClicked();

@@ -124,7 +124,7 @@ TextLineTracer::trace(
 
     status.throwIfCancelled();
 
-    downscaled_image = GrayImage(binarizeGatos(downscaled_image, QSize(21, 21), 3.0).toQImage());
+    downscaled_image = GrayImage(binarizeGatos(downscaled_image, QSize(21, 21), 3.0, 0.6, 0.5, 0.8).toQImage());
 
     status.throwIfCancelled();
 

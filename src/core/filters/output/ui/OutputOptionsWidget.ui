@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>161</width>
-    <height>687</height>
+    <height>765</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -461,10 +461,19 @@
          </item>
          <item>
           <layout class="QGridLayout" name="gridLayout">
-           <item row="0" column="0">
-            <widget class="QLabel" name="thresholdWindowSizeLabel">
-             <property name="text">
-              <string>Window size:</string>
+           <item row="3" column="1">
+            <widget class="QDoubleSpinBox" name="p1Coef">
+             <property name="toolTip">
+              <string>Default value is 0.34.</string>
+             </property>
+             <property name="minimum">
+              <double>0.000000000000000</double>
+             </property>
+             <property name="maximum">
+              <double>0.990000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>0.010000000000000</double>
              </property>
             </widget>
            </item>
@@ -478,6 +487,27 @@
              </property>
              <property name="maximum">
               <number>9999</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="thresholdCoefLabel">
+             <property name="text">
+              <string>Coef:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="thresholdWindowSizeLabel">
+             <property name="text">
+              <string>Window size:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="p1CoefLabel">
+             <property name="text">
+              <string>p1:</string>
              </property>
             </widget>
            </item>
@@ -497,10 +527,49 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="thresholdCoefLabel">
+           <item row="2" column="0">
+            <widget class="QLabel" name="qCoefLabel">
              <property name="text">
-              <string>Coef:</string>
+              <string>q:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QDoubleSpinBox" name="qCoef">
+             <property name="toolTip">
+              <string>Default value is 0.34.</string>
+             </property>
+             <property name="minimum">
+              <double>0.000000000000000</double>
+             </property>
+             <property name="maximum">
+              <double>1.000000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>0.010000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="p2CoefLabel">
+             <property name="text">
+              <string>p2:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QDoubleSpinBox" name="p2Coef">
+             <property name="toolTip">
+              <string>Default value is 0.34.</string>
+             </property>
+             <property name="minimum">
+              <double>0.000000000000000</double>
+             </property>
+             <property name="maximum">
+              <double>0.990000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>0.010000000000000</double>
              </property>
             </widget>
            </item>
