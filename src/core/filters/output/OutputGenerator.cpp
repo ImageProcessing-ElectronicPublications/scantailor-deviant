@@ -1247,21 +1247,6 @@ OutputGenerator::binarize(QImage const& image, BinaryImage const& mask, const in
             binarized = BinaryImage(image, adjustThreshold(bw_thresh, adjustment));
             break;
         }
-        case MEANDELTA:
-        {
-            binarized = binarizeMean(image, threshold_delta);
-            break;
-        }
-        case NIBLACK:
-        {
-            binarized = binarizeNiblack(image, window_size, threshold_coef, threshold_delta);
-            break;
-        }
-        case GATOS:
-        {
-            binarized = binarizeGatos(image, window_size, 3.0, threshold_coef, threshold_delta);
-            break;
-        }
         case SAUVOLA:
         {
             binarized = binarizeSauvola(image, window_size, threshold_coef, threshold_delta);
@@ -1272,29 +1257,9 @@ OutputGenerator::binarize(QImage const& image, BinaryImage const& mask, const in
             binarized = binarizeWolf(image, window_size, 1, 254, threshold_coef, threshold_delta);
             break;
         }
-        case BRADLEY:
+        case GATOS:
         {
-            binarized = binarizeBradley(image, window_size, threshold_coef, threshold_delta);
-            break;
-        }
-        case EDGEPLUS:
-        {
-            binarized = binarizeEdgeDiv(image, window_size, threshold_coef, 0.0, threshold_delta);
-            break;
-        }
-        case BLURDIV:
-        {
-            binarized = binarizeEdgeDiv(image, window_size, 0.0, threshold_coef, threshold_delta);
-            break;
-        }
-        case EDGEDIV:
-        {
-            binarized = binarizeEdgeDiv(image, window_size, threshold_coef, threshold_coef, threshold_delta);
-            break;
-        }
-        case MSCALE:
-        {
-            binarized = binarizeMScale(image, window_size, threshold_coef, threshold_delta);
+            binarized = binarizeGatos(image, window_size, 3.0, threshold_coef, threshold_delta);
             break;
         }
         }

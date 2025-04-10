@@ -62,16 +62,9 @@ OptionsWidget::OptionsWidget(
     setupUi(this);
 
     thresholdMethodSelector->addItem(tr("Otsu"), OTSU);
-    thresholdMethodSelector->addItem(tr("Mean"), MEANDELTA);
-    thresholdMethodSelector->addItem(tr("Niblack"), NIBLACK);
-    thresholdMethodSelector->addItem(tr("Gatos"), GATOS);
     thresholdMethodSelector->addItem(tr("Sauvola"), SAUVOLA);
     thresholdMethodSelector->addItem(tr("Wolf"), WOLF);
-    thresholdMethodSelector->addItem(tr("Bradley"), BRADLEY);
-    thresholdMethodSelector->addItem(tr("EdgePlus"), EDGEPLUS);
-    thresholdMethodSelector->addItem(tr("BlurDiv"), BLURDIV);
-    thresholdMethodSelector->addItem(tr("EdgeDiv"), EDGEDIV);
-    thresholdMethodSelector->addItem(tr("MultiScale"), MSCALE);
+    thresholdMethodSelector->addItem(tr("Gatos"), GATOS);
 
     setDespeckleLevel(DESPECKLE_NORMAL);
 
@@ -263,7 +256,7 @@ OptionsWidget::thresholdWindowSizeChanged(int value) {
     blackWhiteOptions.setThresholdWindowSize(value);
     m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
     m_ptrSettings->setColorParams(m_pageId, m_colorParams);
-    if (blackWhiteOptions.thresholdMethod() != OTSU && blackWhiteOptions.thresholdMethod() != MEANDELTA)
+    if (blackWhiteOptions.thresholdMethod() != OTSU)
         emit reloadRequested();
 }
 
@@ -273,7 +266,7 @@ OptionsWidget::thresholdCoefChanged(double value) {
     blackWhiteOptions.setThresholdCoef(value);
     m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
     m_ptrSettings->setColorParams(m_pageId, m_colorParams);
-    if (blackWhiteOptions.thresholdMethod() != OTSU && blackWhiteOptions.thresholdMethod() != MEANDELTA)
+    if (blackWhiteOptions.thresholdMethod() != OTSU)
         emit reloadRequested();
 }
 
@@ -534,7 +527,7 @@ OptionsWidget::updateColorsDisplay()
         thresholdSlider->setValue(blackWhiteOptions.thresholdAdjustment());
         thresholdWindowSize->setValue(blackWhiteOptions.thresholdWindowSize());
         thresholdCoef->setValue(blackWhiteOptions.thresholdCoef());
-        if (blackWhiteOptions.thresholdMethod() == OTSU || blackWhiteOptions.thresholdMethod() == MEANDELTA)
+        if (blackWhiteOptions.thresholdMethod() == OTSU)
         {
             thresholdWindowSize->setEnabled( false );
             thresholdCoef->setEnabled( false );

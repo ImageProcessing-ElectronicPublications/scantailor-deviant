@@ -4235,16 +4235,6 @@ of a non grey color in the source files</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="65"/>
-        <source>Mean</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="66"/>
-        <source>Niblack</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../core/filters/output/OptionsWidget.cpp" line="67"/>
         <source>Gatos</source>
         <translation></translation>
@@ -4257,31 +4247,6 @@ of a non grey color in the source files</source>
     <message>
         <location filename="../core/filters/output/OptionsWidget.cpp" line="69"/>
         <source>Wolf</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="70"/>
-        <source>Bradley</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="71"/>
-        <source>EdgePlus</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="72"/>
-        <source>BlurDiv</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="73"/>
-        <source>EdgeDiv</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="74"/>
-        <source>MultiScale</source>
         <translation></translation>
     </message>
     <message>

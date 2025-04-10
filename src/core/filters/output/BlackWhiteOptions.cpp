@@ -99,19 +99,7 @@ BlackWhiteOptions::operator!=(BlackWhiteOptions const& other) const
 ThresholdFilter
 BlackWhiteOptions::parseThresholdMethod(QString const& str)
 {
-    if (str == "mean")
-    {
-        return MEANDELTA;
-    }
-    else if (str == "niblack")
-    {
-        return NIBLACK;
-    }
-    else if (str == "gatos")
-    {
-        return GATOS;
-    }
-    else if (str == "sauvola")
+    if (str == "sauvola")
     {
         return SAUVOLA;
     }
@@ -119,25 +107,9 @@ BlackWhiteOptions::parseThresholdMethod(QString const& str)
     {
         return WOLF;
     }
-    else if (str == "bradley")
+    else if (str == "gatos")
     {
-        return BRADLEY;
-    }
-    else if (str == "edgeplus")
-    {
-        return EDGEPLUS;
-    }
-    else if (str == "blurdiv")
-    {
-        return BLURDIV;
-    }
-    else if (str == "edgediv")
-    {
-        return EDGEDIV;
-    }
-    else if (str == "multiscale")
-    {
-        return MSCALE;
+        return GATOS;
     }
     else
     {
@@ -154,35 +126,14 @@ BlackWhiteOptions::formatThresholdMethod(ThresholdFilter type)
     case OTSU:
         str = "otsu";
         break;
-    case MEANDELTA:
-        str = "mean";
-        break;
-    case NIBLACK:
-        str = "niblack";
-        break;
-    case GATOS:
-        str = "gatos";
-        break;
     case SAUVOLA:
         str = "sauvola";
         break;
     case WOLF:
         str = "wolf";
         break;
-    case BRADLEY:
-        str = "bradley";
-        break;
-    case EDGEPLUS:
-        str = "edgeplus";
-        break;
-    case BLURDIV:
-        str = "blurdiv";
-        break;
-    case EDGEDIV:
-        str = "edgediv";
-        break;
-    case MSCALE:
-        str = "multiscale";
+    case GATOS:
+        str = "gatos";
         break;
     }
     return str;
