@@ -114,15 +114,6 @@ BinaryImage binarizeWolf(
     unsigned char lower_bound = 1, unsigned char upper_bound = 254,
     double k = 0.30, int delta = 0);
 
-/**
- * \brief Image binarization using EdgeDiv (EdgePlus & BlurDiv) local/global thresholding method.
- *
- * EdgeDiv, zvezdochiot 2023. "Adaptive/global document image binarization".
- */
-BinaryImage binarizeEdgeDiv(
-    QImage const& src, QSize window_size,
-    double kep = 0.5, double kdb = 0.5, int delta = 0);
-
 BinaryImage peakThreshold(QImage const& image);
 
 /**

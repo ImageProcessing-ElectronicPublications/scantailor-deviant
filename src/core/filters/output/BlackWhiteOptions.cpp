@@ -115,18 +115,6 @@ BlackWhiteOptions::parseThresholdMethod(QString const& str)
     {
         return WOLF;
     }
-    else if (str == "edgeplus")
-    {
-        return EDGEPLUS;
-    }
-    else if (str == "blurdiv")
-    {
-        return BLURDIV;
-    }
-    else if (str == "edgediv")
-    {
-        return EDGEDIV;
-    }
     else if (str == "multiscale")
     {
         return MSCALE;
@@ -157,15 +145,6 @@ BlackWhiteOptions::formatThresholdMethod(ThresholdFilter type)
         break;
     case WOLF:
         str = "wolf";
-        break;
-    case EDGEPLUS:
-        str = "edgeplus";
-        break;
-    case BLURDIV:
-        str = "blurdiv";
-        break;
-    case EDGEDIV:
-        str = "edgediv";
         break;
     case MSCALE:
         str = "multiscale";

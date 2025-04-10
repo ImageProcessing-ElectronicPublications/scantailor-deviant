@@ -4255,21 +4255,6 @@ of a non grey color in the source files</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="71"/>
-        <source>EdgePlus</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="72"/>
-        <source>BlurDiv</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="73"/>
-        <source>EdgeDiv</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../core/filters/output/OptionsWidget.cpp" line="74"/>
         <source>MultiScale</source>
         <translation></translation>

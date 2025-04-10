@@ -1267,21 +1267,6 @@ OutputGenerator::binarize(QImage const& image, BinaryImage const& mask, const in
             binarized = binarizeWolf(image, window_size, 1, 254, threshold_coef, threshold_delta);
             break;
         }
-        case EDGEPLUS:
-        {
-            binarized = binarizeEdgeDiv(image, window_size, threshold_coef, 0.0, threshold_delta);
-            break;
-        }
-        case BLURDIV:
-        {
-            binarized = binarizeEdgeDiv(image, window_size, 0.0, threshold_coef, threshold_delta);
-            break;
-        }
-        case EDGEDIV:
-        {
-            binarized = binarizeEdgeDiv(image, window_size, threshold_coef, threshold_coef, threshold_delta);
-            break;
-        }
         case MSCALE:
         {
             binarized = binarizeMScale(image, window_size, threshold_coef, threshold_delta);
