@@ -115,10 +115,6 @@ BlackWhiteOptions::parseThresholdMethod(QString const& str)
     {
         return WOLF;
     }
-    else if (str == "bradley")
-    {
-        return BRADLEY;
-    }
     else if (str == "edgeplus")
     {
         return EDGEPLUS;
@@ -161,9 +157,6 @@ BlackWhiteOptions::formatThresholdMethod(ThresholdFilter type)
         break;
     case WOLF:
         str = "wolf";
-        break;
-    case BRADLEY:
-        str = "bradley";
         break;
     case EDGEPLUS:
         str = "edgeplus";
