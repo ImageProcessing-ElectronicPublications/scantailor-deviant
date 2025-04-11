@@ -459,7 +459,10 @@ ConsoleBatch::setupOutput(std::set<PageId> allPages)
 
         if (cli.hasThreshold()) {
             output::BlackWhiteOptions bwo;
-            bwo.setThresholdAdjustment(cli.getThreshold());
+            bwo.setThresholdOtsuAdjustment(cli.getThreshold());
+            bwo.setThresholdSauvolaAdjustment(cli.getThreshold());
+            bwo.setThresholdWolfAdjustment(cli.getThreshold());
+            bwo.setThresholdGatosAdjustment(cli.getThreshold());
             colorParams.setBlackWhiteOptions(bwo);
         }
 

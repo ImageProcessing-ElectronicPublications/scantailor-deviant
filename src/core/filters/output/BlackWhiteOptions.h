@@ -37,14 +37,126 @@ public:
 
     QDomElement toXml(QDomDocument& doc, QString const& name) const;
 
-    int thresholdAdjustment() const
+    ThresholdFilter thresholdMethod() const
     {
-        return m_thresholdAdjustment;
+        return m_thresholdMethod;
     }
 
-    void setThresholdAdjustment(int val)
+    void setThresholdMethod(ThresholdFilter val)
     {
-        m_thresholdAdjustment = val;
+        m_thresholdMethod = val;
+    }
+
+    int thresholdAdjustment() const;
+
+    int thresholdOtsuAdjustment() const
+    {
+        return m_thresholdOtsuAdjustment;
+    }
+
+    void setThresholdOtsuAdjustment(int val)
+    {
+        m_thresholdOtsuAdjustment = val;
+    }
+
+    int thresholdSauvolaAdjustment() const
+    {
+        return m_thresholdSauvolaAdjustment;
+    }
+
+    void setThresholdSauvolaAdjustment(int val)
+    {
+        m_thresholdSauvolaAdjustment = val;
+    }
+
+    int thresholdSauvolaWindowSize() const
+    {
+        return m_thresholdSauvolaWindowSize;
+    }
+
+    void setThresholdSauvolaWindowSize(int val)
+    {
+        m_thresholdSauvolaWindowSize = val;
+    }
+
+    double thresholdSauvolaCoef() const
+    {
+        return m_thresholdSauvolaCoef;
+    }
+
+    void setThresholdSauvolaCoef(float val)
+    {
+        m_thresholdSauvolaCoef = val;
+    }
+
+    int thresholdWolfAdjustment() const
+    {
+        return m_thresholdWolfAdjustment;
+    }
+
+    void setThresholdWolfAdjustment(int val)
+    {
+        m_thresholdWolfAdjustment = val;
+    }
+
+    int thresholdWolfWindowSize() const
+    {
+        return m_thresholdWolfWindowSize;
+    }
+
+    void setThresholdWolfWindowSize(int val)
+    {
+        m_thresholdWolfWindowSize = val;
+    }
+
+    double thresholdWolfCoef() const
+    {
+        return m_thresholdWolfCoef;
+    }
+
+    void setThresholdWolfCoef(float val)
+    {
+        m_thresholdWolfCoef = val;
+    }
+
+    int thresholdGatosAdjustment() const
+    {
+        return m_thresholdGatosAdjustment;
+    }
+
+    void setThresholdGatosAdjustment(int val)
+    {
+        m_thresholdGatosAdjustment = val;
+    }
+
+    int thresholdGatosWindowSize() const
+    {
+        return m_thresholdGatosWindowSize;
+    }
+
+    void setThresholdGatosWindowSize(int val)
+    {
+        m_thresholdGatosWindowSize = val;
+    }
+
+    double thresholdGatosCoef() const
+    {
+        return m_thresholdGatosCoef;
+    }
+
+    void setThresholdGatosCoef(float val)
+    {
+        m_thresholdGatosCoef = val;
+    }
+
+    double thresholdGatosScale() const
+    {
+        return m_thresholdGatosScale;
+    }
+
+    void setThresholdGatosScale(float val)
+    {
+        m_thresholdGatosScale = val;
     }
 
     int thresholdForegroundAdjustment() const
@@ -57,45 +169,28 @@ public:
         m_thresholdForegroundAdjustment = val;
     }
 
-    ThresholdFilter thresholdMethod() const
-    {
-        return m_thresholdMethod;
-    }
-
-    int thresholdWindowSize() const
-    {
-        return m_thresholdWindowSize;
-    }
-
-    double thresholdCoef() const
-    {
-        return m_thresholdCoef;
-    }
-
-    void setThresholdMethod(ThresholdFilter val)
-    {
-        m_thresholdMethod = val;
-    }
-
-    void setThresholdWindowSize(int val)
-    {
-        m_thresholdWindowSize = val;
-    }
-
-    void setThresholdCoef(float val)
-    {
-        m_thresholdCoef = val;
-    }
-
     bool operator==(BlackWhiteOptions const& other) const;
 
     bool operator!=(BlackWhiteOptions const& other) const;
 private:
-    int m_thresholdAdjustment;
-    int m_thresholdForegroundAdjustment;
     ThresholdFilter m_thresholdMethod;
-    int m_thresholdWindowSize;
-    double m_thresholdCoef;
+
+    int m_thresholdOtsuAdjustment;
+
+    int m_thresholdSauvolaAdjustment;
+    int m_thresholdSauvolaWindowSize;
+    double m_thresholdSauvolaCoef;
+
+    int m_thresholdWolfAdjustment;
+    int m_thresholdWolfWindowSize;
+    double m_thresholdWolfCoef;
+
+    int m_thresholdGatosAdjustment;
+    int m_thresholdGatosWindowSize;
+    double m_thresholdGatosCoef;
+    double m_thresholdGatosScale;
+
+    int m_thresholdForegroundAdjustment;
 
     static ThresholdFilter parseThresholdMethod(QString const& str);
 

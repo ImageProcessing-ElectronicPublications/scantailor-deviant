@@ -94,21 +94,43 @@ private slots:
 
     void applyColorsButtonClicked();
 
-    void on_thresholdSlider_valueChanged();
+    void on_thresholdOtsuSlider_valueChanged();
+
+    void on_thresholdSauvolaSlider_valueChanged();
+
+    void on_thresholdWolfSlider_valueChanged();
+
+    void on_thresholdGatosSlider_valueChanged();
 
     void on_thresholdForegroundSlider_valueChanged();
 
     void thresholdMethodChanged(int idx);
 
-    void thresholdWindowSizeChanged(int value);
+    void thresholdSauvolaWindowSizeChanged(int value);
 
-    void thresholdCoefChanged(double value);
+    void thresholdSauvolaCoefChanged(double value);
+
+    void thresholdWolfWindowSizeChanged(int value);
+
+    void thresholdWolfCoefChanged(double value);
+
+    void thresholdGatosWindowSizeChanged(int value);
+
+    void thresholdGatosCoefChanged(double value);
+
+    void thresholdGatosScaleChanged(double value);
 
     void dpiValueClicked();
 
     void applyDpiButtonClicked();
 
-    void on_actionReset_to_default_value_triggered();
+    void on_actionReset_to_default_value_otsu_triggered();
+
+    void on_actionReset_to_default_value_sauvola_triggered();
+
+    void on_actionReset_to_default_value_wolf_triggered();
+
+    void on_actionReset_to_default_value_gatos_triggered();
 
     void applyThresholdButtonClicked();
 
@@ -120,7 +142,7 @@ private slots:
 
     void applyForegroundThresholdButtonClicked();
 
-    void on_actionReset_to_default_value_foeground_triggered();
+    void on_actionReset_to_default_value_foreground_triggered();
 
     void on_actionactionDespeckleOff_triggered();
 

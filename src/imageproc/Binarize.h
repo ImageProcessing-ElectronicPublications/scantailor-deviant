@@ -78,9 +78,9 @@ BinaryImage binarizeNiblack(
  */
 BinaryImage binarizeGatosCleaner(
     GrayImage& wiener, BinaryImage const& niblack,
-    QSize const window_size);
+    QSize const window_size, double scale);
 BinaryImage binarizeGatos(
-    QImage const& src, QSize window_size,
+    QImage const& src, QSize window_size, double scale = 0.6,
     double noise_sigma = 3.0, double k = 0.2, int delta = 0);
 
 /**

@@ -1670,7 +1670,6 @@ ThumbnailView
     qproperty-leaderBackgroundColor: #2EA3FF;
 }
 
-
 QGroupBox#pageRotateGroupBox,
 QGroupBox#pageRotateGroupBox > QLabel,
 QGroupBox#pageLayoutGroupBox,
@@ -1712,14 +1711,24 @@ QWidget#layersPanel > QCheckBox,
 QWidget#autoMarginsLayout_2,
 QGroupBox#bwOptionsGroupBox,
 QGroupBox#bwOptionsGroupBox > QLabel,
-QGroupBox#bwOptionsGroupBox > QSlider,
 QGroupBox#foregroundOptionsGroupBox,
 QGroupBox#foregroundOptionsGroupBox > QLabel,
 QGroupBox#foregroundOptionsGroupBox > QSlider,
 QGroupBox#despecklingGroupBox,
 QGroupBox#despecklingGroupBox > QLabel,
 QGroupBox#outputResolutionGroupBox > QLabel,
-QGroupBox#outputResolutionGroupBox
+QGroupBox#outputResolutionGroupBox,
+QWidget#bwOtsuOptionsPanel,
+QWidget#bwOtsuOptionsPanel > QSlider,
+QWidget#bwSauvolaOptionsPanel,
+QWidget#bwSauvolaOptionsPanel > QLabel,
+QWidget#bwSauvolaOptionsPanel > QSlider,
+QWidget#bwWolfOptionsPanel,
+QWidget#bwWolfOptionsPanel > QLabel,
+QWidget#bwWolfOptionsPanel > QSlider,
+QWidget#bwGatosOptionsPanel,
+QWidget#bwGatosOptionsPanel > QLabel,
+QWidget#bwGatosOptionsPanel > QSlider
 {
     background-color: #2C3036;
 }

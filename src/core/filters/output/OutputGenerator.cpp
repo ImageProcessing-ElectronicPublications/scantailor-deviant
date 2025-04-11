@@ -1227,10 +1227,6 @@ OutputGenerator::binarize(QImage const& image, BinaryImage const& mask, const in
     BlackWhiteOptions const& black_white_options = m_colorParams.blackWhiteOptions();
     ThresholdFilter const thresholdMethod = black_white_options.thresholdMethod();
 
-    int const threshold_delta = black_white_options.thresholdAdjustment();
-    QSize const window_size = QSize(black_white_options.thresholdWindowSize(), black_white_options.thresholdWindowSize());
-    double const threshold_coef = black_white_options.thresholdCoef();
-
     BinaryImage binarized;
     if ((image.format() == QImage::Format_Mono) || (image.format() == QImage::Format_MonoLSB))
     {
@@ -1242,6 +1238,7 @@ OutputGenerator::binarize(QImage const& image, BinaryImage const& mask, const in
         {
         case OTSU:
         {
+            int const threshold_delta = black_white_options.thresholdOtsuAdjustment();
             GrayscaleHistogram hist(image, mask);
             BinaryThreshold const bw_thresh(BinaryThreshold::otsuThreshold(hist));
             binarized = BinaryImage(image, adjustThreshold(bw_thresh, adjustment));
@@ -1249,21 +1246,30 @@ OutputGenerator::binarize(QImage const& image, BinaryImage const& mask, const in
         }
         case SAUVOLA:
         {
+            int const threshold_delta = black_white_options.thresholdSauvolaAdjustment();
+            QSize const window_size = QSize(black_white_options.thresholdSauvolaWindowSize(), black_white_options.thresholdSauvolaWindowSize());
+            double const threshold_coef = black_white_options.thresholdSauvolaCoef();
             binarized = binarizeSauvola(image, window_size, threshold_coef, threshold_delta);
             break;
         }
         case WOLF:
         {
+            int const threshold_delta = black_white_options.thresholdWolfAdjustment();
+            QSize const window_size = QSize(black_white_options.thresholdWolfWindowSize(), black_white_options.thresholdWolfWindowSize());
+            double const threshold_coef = black_white_options.thresholdWolfCoef();
             binarized = binarizeWolf(image, window_size, 1, 254, threshold_coef, threshold_delta);
             break;
         }
         case GATOS:
         {
-            binarized = binarizeGatos(image, window_size, 3.0, threshold_coef, threshold_delta);
+            int const threshold_delta = black_white_options.thresholdGatosAdjustment();
+            QSize const window_size = QSize(black_white_options.thresholdGatosWindowSize(), black_white_options.thresholdGatosWindowSize());
+            double const threshold_coef = black_white_options.thresholdGatosCoef();
+            double const threshold_scale = black_white_options.thresholdGatosScale();
+            binarized = binarizeGatos(image, window_size, threshold_scale, 3.0, threshold_coef, threshold_delta);
             break;
         }
         }
-
     }
 
     // Fill masked out areas with white.
