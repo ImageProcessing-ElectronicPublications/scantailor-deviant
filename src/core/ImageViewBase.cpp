@@ -713,7 +713,17 @@ ImageViewBase::resizeEvent(QResizeEvent* event)
 
     if (maximumViewportSize() != m_lastMaximumViewportSize) {
         m_lastMaximumViewportSize = maximumViewportSize();
-        m_widgetFocalPoint = centeredWidgetFocalPoint();
+
+        // Since the the value of maximumViewportSize() changed,
+        // we need to call updateWidgetTransform(). This has to
+        // go before getIdealWidgetFocalPoint(), as it updates
+        // the transform getIdealWidgetFocalPoint() relies on.
+        updateWidgetTransform();
+
+        m_widgetFocalPoint = getIdealWidgetFocalPoint(CENTER_IF_FITS);
+
+        // Having updated m_widgetFocalPoint, we need to update
+        // the virtual <-> widget transforms again.
         updateWidgetTransform();
     } else {
         TransformChangeWatcher const watcher(*this);
