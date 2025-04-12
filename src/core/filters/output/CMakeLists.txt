@@ -14,6 +14,7 @@ SET(
         ImageViewTab.h
         TabbedImageView.cpp TabbedImageView.h
         Filter.cpp Filter.h
+        ThresholdsApplyWidget.cpp ThresholdsApplyWidget.h
         OptionsWidget.cpp OptionsWidget.h
         Task.cpp Task.h
         CacheDrivenTask.cpp CacheDrivenTask.h

@@ -54,6 +54,11 @@ public:
         m_dpi = dpi;
     }
 
+    ColorParams& colorParams()
+    {
+        return m_colorParams;
+    }
+
     ColorParams const& colorParams() const
     {
         return m_colorParams;

@@ -158,7 +158,9 @@ private:
 
     void applyColorsConfirmed(std::set<PageId> const& pages);
 
-    void applyThresholdConfirmed(std::set<PageId> const& pages, ColorParamsApplyFilter const& paramFilter);
+    void applyThresholdConfirmed(std::set<PageId> const& pages, std::vector<ThresholdFilter> const& thresholds);
+    
+    void applyForegroundThresholdConfirmed(std::set<PageId> const& pages);
 
     void applyDespeckleConfirmed(std::set<PageId> const& pages);
 

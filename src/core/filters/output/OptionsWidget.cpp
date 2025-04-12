@@ -31,6 +31,7 @@
 #include "config.h"
 #include "StatusBarProvider.h"
 #include "VirtualZoneProperty.h"
+#include "ThresholdsApplyWidget.h"
 #include <QtGlobal>
 #include <QVariant>
 #include <QColorDialog>
@@ -1117,10 +1118,25 @@ void output::OptionsWidget::on_actionReset_to_default_value_gatos_triggered()
     thresholdGatosSlider->setValue(def);
 }
 
-void output::OptionsWidget::applyThresholdConfirmed(std::set<PageId> const& pages, ColorParamsApplyFilter const& paramFilter)
+void output::OptionsWidget::applyThresholdConfirmed(std::set<PageId> const& pages, std::vector<ThresholdFilter> const& thresholds)
+{
+    bool const set_foreground = !bwForegroundOptions->isVisible();
+
+    for (PageId const& page_id : pages) {
+        m_ptrSettings->setColorParams(page_id, m_colorParams, thresholds, set_foreground);
+    }
+
+    emit invalidateAllThumbnails();
+
+    if (pages.find(m_pageId) != pages.end()) {
+        emit reloadRequested();
+    }
+}
+
+void output::OptionsWidget::applyForegroundThresholdConfirmed(std::set<PageId> const& pages)
 {
     for (PageId const& page_id : pages) {
-        m_ptrSettings->setColorParams(page_id, m_colorParams, paramFilter);
+        m_ptrSettings->setColorParams(page_id, m_colorParams, ColorParamsApplyFilter::CopyForegroundThreshold);
     }
 
     emit invalidateAllThumbnails();
@@ -1133,13 +1149,16 @@ void output::OptionsWidget::applyThresholdConfirmed(std::set<PageId> const& page
 void output::OptionsWidget::applyThresholdButtonClicked()
 {
     ApplyToDialog* dialog = new ApplyToDialog(this, m_pageId, m_pageSelectionAccessor);
+    ThresholdsWidget* options = new ThresholdsWidget(dialog, m_colorParams.blackWhiteOptions().thresholdMethod());
+    QLayout& layout = dialog->initNewTopSettingsPanel();
+    layout.addWidget(options);
     dialog->setWindowTitle(tr("Apply Threshold"));
     connect(
         dialog, &ApplyToDialog::accepted,
     this, [ = ]() {
         std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
         std::set<PageId> pages(vec.begin(), vec.end());
-        applyThresholdConfirmed(pages, ColorParamsApplyFilter::CopyThreshold);
+        applyThresholdConfirmed(pages, options->thresholdsChecked());
     }
     );
 
@@ -1209,7 +1228,7 @@ void output::OptionsWidget::applyForegroundThresholdButtonClicked()
     this, [ = ]() {
         std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
         std::set<PageId> pages(vec.begin(), vec.end());
-        applyThresholdConfirmed(pages, ColorParamsApplyFilter::CopyForegroundThreshold);
+        applyForegroundThresholdConfirmed(pages);
     }
     );
 

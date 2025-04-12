@@ -147,6 +147,79 @@ Settings::setColorParams(PageId const& page_id, ColorParams const& prms, ColorPa
     }
 }
 
+static void copyBwOptions(BlackWhiteOptions *dst, BlackWhiteOptions const& src, std::vector<ThresholdFilter> const& thresholds, bool set_foreground)
+{
+    dst->setThresholdMethod(src.thresholdMethod());
+
+    for (ThresholdFilter const threshold : thresholds)
+    {
+        switch (threshold)
+        {
+        case OTSU:
+            dst->setThresholdOtsuAdjustment(src.thresholdOtsuAdjustment());
+            break;
+        case SAUVOLA:
+            dst->setThresholdSauvolaAdjustment(src.thresholdSauvolaAdjustment());
+            dst->setThresholdSauvolaWindowSize(src.thresholdSauvolaWindowSize());
+            dst->setThresholdSauvolaCoef(src.thresholdSauvolaCoef());
+            break;
+        case WOLF:
+            dst->setThresholdWolfAdjustment(src.thresholdWolfAdjustment());
+            dst->setThresholdWolfWindowSize(src.thresholdWolfWindowSize());
+            dst->setThresholdWolfCoef(src.thresholdWolfCoef());
+            break;
+        case GATOS:
+            dst->setThresholdGatosAdjustment(src.thresholdGatosAdjustment());
+            dst->setThresholdGatosWindowSize(src.thresholdGatosWindowSize());
+            dst->setThresholdGatosCoef(src.thresholdGatosCoef());
+            dst->setThresholdGatosScale(src.thresholdGatosScale());
+            break;
+        default:
+            assert(!"Unreachable");
+            break;
+        }
+    }
+
+    if (set_foreground)
+    {
+        dst->setThresholdForegroundAdjustment(src.thresholdForegroundAdjustment());
+    }
+}
+
+void
+Settings::setColorParams(PageId const& page_id, ColorParams const& prms, std::vector<ThresholdFilter> const& thresholds, bool set_foreground)
+{
+    QMutexLocker const locker(&m_mutex);
+
+    PerPageParams::iterator const it(m_perPageParams.lower_bound(page_id));
+    if (it == m_perPageParams.end() || m_perPageParams.key_comp()(page_id, it->first)) {
+        Params params;
+        BlackWhiteOptions& bw_options = params.colorParams().blackWhiteOptions();
+        BlackWhiteOptions const& bw_opt = prms.blackWhiteOptions();
+
+        copyBwOptions(&bw_options, bw_opt, thresholds, set_foreground);
+
+        m_perPageParams.insert(it, PerPageParams::value_type(page_id, params));
+    }
+    else {
+        ColorParams::ColorMode old_mode = it->second.colorParams().colorMode();
+        if (old_mode == ColorParams::MIXED && prms.colorMode() != old_mode) {
+            //clearPictureAutoZonesForPage(page_id);
+            PerPageZones::iterator const itz(m_perPagePictureZones.find(page_id));
+            if (itz != m_perPagePictureZones.end()) {
+                ZoneSet zones = itz->second;
+                zones.remove_auto_zones();
+                itz->second = zones;
+            }
+        }
+        
+        BlackWhiteOptions& bw_options = it->second.colorParams().blackWhiteOptions();
+        BlackWhiteOptions const& bw_opt = prms.blackWhiteOptions();
+
+        copyBwOptions(&bw_options, bw_opt, thresholds, set_foreground);
+    }
+}
+
 void
 Settings::setDpi(PageId const& page_id, Dpi const& dpi)
 {

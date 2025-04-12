@@ -1433,7 +1433,7 @@ To determine it, run batch processing at &quot;Select Content&quot; or &quot;Pag
 <context>
     <name>OutputOptionsWidget</name>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="946"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1090"/>
         <source>No despeckling</source>
         <translation>Не удалять мусор</translation>
     </message>
@@ -1474,31 +1474,39 @@ To determine it, run batch processing at &quot;Select Content&quot; or &quot;Pag
     </message>
     <message>
         <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="390"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="781"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="928"/>
         <source>Threshold:</source>
         <translation>Порог:</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="672"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="573"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="687"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="791"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="817"/>
+        <source>Default value is 0.3.</source>
+        <translation>Значение по умолчанию 0.3.</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="810"/>
         <source>Scale:</source>
         <translation>Масштаб:</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="752"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="899"/>
         <source>Foreground options</source>
         <translation>Настройки слоя контента</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="907"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1051"/>
         <source>Despeckling</source>
         <translation>Удаление мусора</translation>
     </message>
     <message>
         <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="138"/>
         <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="324"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="722"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="877"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1125"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="872"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1021"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1269"/>
         <source>Apply To...</source>
         <translation>Применить к...</translation>
     </message>
@@ -1523,52 +1531,47 @@ To determine it, run batch processing at &quot;Select Content&quot; or &quot;Pag
         <translation>Смешанный</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="483"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="553"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="623"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="543"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="657"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="836"/>
         <source>Window size:</source>
         <translation>Размер окна:</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="490"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="560"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="630"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="550"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="664"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="768"/>
         <source>The dimensions of a pixel neighborhood to consider.</source>
         <translation>Размеры окрестности пикселя, которые следует учитывать.</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="513"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="583"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="646"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="679"/>
-        <source>Default value is 0.3.</source>
-        <translation>Значение по умолчанию 0.3.</translation>
-    </message>
-    <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="506"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="576"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="665"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="566"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="680"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="784"/>
         <source>Coef:</source>
         <translation>Коэффициент:</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="971"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1115"/>
         <source>Cautious despeckling</source>
         <translation>Осторожное удаление мусора</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="997"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1141"/>
         <source>Normal despeckling</source>
         <translation>Обычное удаление мусора</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1023"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1167"/>
         <source>Aggressive despeckling</source>
         <translation>Агрессивное удаление мусора</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1150"/>
-        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1155"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1294"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1299"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1304"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1309"/>
+        <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="1314"/>
         <source>&amp;Reset to default value</source>
         <translation>&amp;Установить по умолчанию</translation>
     </message>
@@ -1581,6 +1584,34 @@ To determine it, run batch processing at &quot;Select Content&quot; or &quot;Pag
         <location filename="../core/filters/output/ui/OutputOptionsWidget.ui" line="251"/>
         <source>Equalize illumination</source>
         <translation>Выровнять освещение</translation>
+    </message>
+</context>
+<context>
+    <name>OutputThresholdsApplyWidget</name>
+    <message>
+        <location filename="../core/filters/output/ui/OutputThresholdsApplyWidget.ui" line="35"/>
+        <source>Thresholds:</source>
+        <translation>Пороги:</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputThresholdsApplyWidget.ui" line="77"/>
+        <source>Gatos</source>
+        <translation>Gatos</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputThresholdsApplyWidget.ui" line="70"/>
+        <source>Wolf</source>
+        <translation>Wolf</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputThresholdsApplyWidget.ui" line="63"/>
+        <source>Sauvola</source>
+        <translation>Sauvola</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/output/ui/OutputThresholdsApplyWidget.ui" line="56"/>
+        <source>Otsu</source>
+        <translation>Otsu</translation>
     </message>
 </context>
 <context>
@@ -4239,87 +4270,87 @@ of a non grey color in the source files</source>
 <context>
     <name>output::OptionsWidget</name>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="689"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="756"/>
         <source>Apply Despeckling Level</source>
         <translation>Применить уровень удаления мусора</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="64"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="65"/>
         <source>Otsu</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="67"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="68"/>
         <source>Gatos</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="65"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="66"/>
         <source>Sauvola</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="66"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="67"/>
         <source>Wolf</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="515"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="570"/>
         <source>%1 x %2 dpi</source>
         <translation>%1 x %2 dpi</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="520"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="575"/>
         <source>%1 dpi</source>
         <translation>%1 dpi</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="676"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="743"/>
         <source>Off</source>
         <translation>Отключено</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="677"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="744"/>
         <source>Cautious</source>
         <translation>Осторожное</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="678"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="745"/>
         <source>Normal</source>
         <translation>Обычное</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="679"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="746"/>
         <source>Aggressive</source>
         <translation>Агрессивное</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="705"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="772"/>
         <source>Apply Mode</source>
         <translation>Применить режим вывода</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="873"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="1084"/>
         <source>Apply Output Resolution</source>
         <translation>Применить разрешение вывода</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="978"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="1225"/>
         <source>Apply Foreground layer threshold</source>
         <translation>Применить значение порога фона</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="1033"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="1280"/>
         <source>Copy zone and its settings to:</source>
         <translation>Копировать зону и ее параметры в:</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="1098"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="1345"/>
         <source>Find and remove this zone from:</source>
         <translation>Поиск и удаление зоны из:</translation>
     </message>
     <message>
-        <location filename="../core/filters/output/OptionsWidget.cpp" line="908"/>
+        <location filename="../core/filters/output/OptionsWidget.cpp" line="1155"/>
         <source>Apply Threshold</source>
         <translation>Применить значение Ч/Б порога</translation>
     </message>
