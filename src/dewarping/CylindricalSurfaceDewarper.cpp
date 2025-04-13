@@ -34,6 +34,7 @@
 #include <QtGlobal>
 #include <QDebug>
 #include <boost/foreach.hpp>
+#include <boost/array.hpp>
 #include <algorithm>
 #include <cmath>
 #include <cassert>
@@ -391,8 +392,21 @@ CylindricalSurfaceDewarper::initArcLengthMapper(
     std::vector<QPointF> const& img_directrix2,
     BendParams const& bend_params)
 {
-    Directrix::Place const place1(m_mdl2img, img_directrix1, 0.0);
-    Directrix::Place const place2(m_mdl2img, img_directrix2, 1.0);
+    boost::array<Eigen::Matrix<double, 2, 1>, 4> const corners = {
+        Eigen::Matrix<double, 2, 1>(0.0, 0.0),
+        Eigen::Matrix<double, 2, 1>(0.0, 1.0),
+        Eigen::Matrix<double, 2, 1>(1.0, 0.0),
+        Eigen::Matrix<double, 2, 1>(0.0, 1.0)
+    };
+
+    double const default_bend = 0.15;
+    double const height = std::min(
+        default_bend,
+        0.15 * std::abs(m_mdl2img.zSingular(corners))
+    );
+
+    Directrix::Place const place1(m_mdl2img, img_directrix1, 0.0, height);
+    Directrix::Place const place2(m_mdl2img, img_directrix2, 1.0, height);
     Directrix::Place const& best_place =
         place1.quality() > place2.quality()
         ? place1

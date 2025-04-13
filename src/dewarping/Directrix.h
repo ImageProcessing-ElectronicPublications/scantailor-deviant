@@ -36,7 +36,8 @@ class Plane
 public:
     Plane(QPointF const& img_pt_00, QPointF const& img_pt_01,
           QPointF const& img_pt_10, QPointF const& img_pt_11,
-          std::vector<QPointF> const& img_directrix);
+          std::vector<QPointF> const& img_directrix,
+          double height);
 
     std::vector<QPointF> const& points() const
     {
@@ -51,7 +52,7 @@ class Place
 public:
     Place(PerspectiveTransform const& mdl2img,
         std::vector<QPointF> const& img_directrix,
-        double mdl_y);
+        double mdl_y, double height);
 
     double quality() const
     {
@@ -69,6 +70,7 @@ private:
     PerspectiveTransform const& m_mdl2img;
     std::vector<QPointF> const& m_img_directrix;
     double m_mdl_y;
+    double m_height;
     QPointF m_img_pt_01;
     QPointF m_img_pt_11;
     QLineF m_img_line;

@@ -34,3 +34,26 @@ PerspectiveTransform::operator()(ModelPoint const& from) const
     Eigen::Matrix<double, 3, 1> const hdst(m_mat * hsrc);
     return hdst.topLeftCorner(2, 1) / hdst[2];
 }
+
+double
+PerspectiveTransform::zSingular(boost::array<Eigen::Matrix<double, 2, 1>, 4> const& points) const
+{
+    double z_singular = std::numeric_limits<double>::max();
+
+    for (Eigen::Matrix<double, 2, 1> const point : points)
+    {
+        double const z_singular_i = zSingular(point);
+        if (std::abs(z_singular_i) < std::abs(z_singular))
+        {
+            z_singular = z_singular_i;
+        }
+    }
+
+    return z_singular;
+}
+
+double
+PerspectiveTransform::zSingular(Eigen::Matrix<double, 2, 1> const& point) const
+{
+    return -(m_mat(2, 0) * point(0, 0) + m_mat(2, 1) * point(1, 0) + m_mat(2, 3)) / m_mat(2, 2);
+}

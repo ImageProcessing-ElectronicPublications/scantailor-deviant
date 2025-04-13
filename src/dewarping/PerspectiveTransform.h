@@ -20,6 +20,7 @@
 #define PERSPECTIVE_TRANSFORM_H_
 
 #include <Eigen/Core>
+#include <boost/array.hpp>
 
 class PerspectiveTransform
 {
@@ -38,7 +39,12 @@ public:
     {
         return m_mat;
     }
+
+    double zSingular(boost::array<Eigen::Matrix<double, 2, 1>, 4> const& points) const;
+
 private:
+    double zSingular(Eigen::Matrix<double, 2, 1> const& point) const;
+
     Mat m_mat;
 };
 

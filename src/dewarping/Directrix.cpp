@@ -32,13 +32,14 @@ namespace Directrix
 
 Plane::Plane(QPointF const& img_pt_00, QPointF const& img_pt_01,
              QPointF const& img_pt_10, QPointF const& img_pt_11,
-             std::vector<QPointF> const& img_directrix)
+             std::vector<QPointF> const& img_directrix,
+             double height)
 {
     boost::array<std::pair<QPointF, QPointF>, 4> const img2pln_pairs = {
         std::make_pair(img_pt_00, QPointF(0, 0)),
         std::make_pair(img_pt_10, QPointF(1, 0)),
-        std::make_pair(img_pt_01, QPointF(0, 1)),
-        std::make_pair(img_pt_11, QPointF(1, 1)),
+        std::make_pair(img_pt_01, QPointF(0, height)),
+        std::make_pair(img_pt_11, QPointF(1, height)),
     };
 
     HomographicTransform<2, double> img2pln = fourPoint2DHomography(img2pln_pairs);
@@ -51,12 +52,13 @@ Plane::Plane(QPointF const& img_pt_00, QPointF const& img_pt_01,
 
 Place::Place(PerspectiveTransform const& mdl2img,
              std::vector<QPointF> const& img_directrix,
-             double mdl_y)
+             double mdl_y, double height)
     : m_mdl2img(mdl2img)
     , m_img_directrix(img_directrix)
     , m_mdl_y(mdl_y)
-    , m_img_pt_01(toPoint(mdl2img({0.0, mdl_y, 1.0})))
-    , m_img_pt_11(toPoint(mdl2img({1.0, mdl_y, 1.0})))
+    , m_height(height)
+    , m_img_pt_01(toPoint(mdl2img({0.0, mdl_y, height})))
+    , m_img_pt_11(toPoint(mdl2img({1.0, mdl_y, height})))
     , m_img_line(
         m_img_directrix.front(),
         m_img_directrix.back()
@@ -96,7 +98,7 @@ Place::createPlane() const
     return Plane(
         m_img_line.p1(), m_img_pt_01,
         m_img_line.p2(), m_img_pt_11,
-        m_img_directrix
+        m_img_directrix, m_height
     );
 }
 
@@ -111,8 +113,8 @@ Place::createRotatedPlane(double min_quality) const
     QLineF const img_offset_line_1 = m_img_line.translated(img_offset_pt_1 - m_img_line.p1());
     QLineF const img_offset_line_2 = m_img_line.translated(img_offset_pt_2 - m_img_line.p1());
 
-    Eigen::Vector3d const mdl_bound_pt_01 = { 0.0, m_mdl_y + 1.0, 1.0 };
-    Eigen::Vector3d const mdl_bound_pt_11 = { 1.0, m_mdl_y + 1.0, 1.0 };
+    Eigen::Vector3d const mdl_bound_pt_01 = { 0.0, m_mdl_y + 1.0, m_height };
+    Eigen::Vector3d const mdl_bound_pt_11 = { 1.0, m_mdl_y + 1.0, m_height };
 
     QPointF const img_bound_pt_01 = toPoint(m_mdl2img(mdl_bound_pt_01));
     QPointF const img_bound_pt_11 = toPoint(m_mdl2img(mdl_bound_pt_11));
@@ -128,8 +130,8 @@ Place::createRotatedPlane(double min_quality) const
     boost::array<std::pair<QPointF, QPointF>, 4> const img2mdl_pairs = {
         std::make_pair(m_img_pt_01, QPointF(0, 0)),
         std::make_pair(m_img_pt_11, QPointF(1, 0)),
-        std::make_pair(img_bound_pt_01, QPointF(0, 1)),
-        std::make_pair(img_bound_pt_11, QPointF(1, 1)),
+        std::make_pair(img_bound_pt_01, QPointF(0, m_height)),
+        std::make_pair(img_bound_pt_11, QPointF(1, m_height)),
     };
 
     HomographicTransform<2, double> img2mdl = fourPoint2DHomography(img2mdl_pairs);
@@ -153,8 +155,8 @@ Place::createRotatedPlane(double min_quality) const
         std::abs(mdl_offset_1) < std::abs(mdl_offset_2) ?
         mdl_offset_1 : mdl_offset_2;
 
-    Eigen::Vector3d const mdl_plane_pt_01 = { 0.0, m_mdl_y + mdl_offset, 1.0 };
-    Eigen::Vector3d const mdl_plane_pt_11 = { 1.0, m_mdl_y + mdl_offset, 1.0 };
+    Eigen::Vector3d const mdl_plane_pt_01 = { 0.0, m_mdl_y + mdl_offset, m_height };
+    Eigen::Vector3d const mdl_plane_pt_11 = { 1.0, m_mdl_y + mdl_offset, m_height };
 
     QPointF const img_plane_pt_01 = toPoint(m_mdl2img(mdl_plane_pt_01));
     QPointF const img_plane_pt_11 = toPoint(m_mdl2img(mdl_plane_pt_11));
@@ -162,7 +164,7 @@ Place::createRotatedPlane(double min_quality) const
     return Plane(
         m_img_line.p1(), img_plane_pt_01,
         m_img_line.p2(), img_plane_pt_11,
-        m_img_directrix
+        m_img_directrix, m_height
     );
 }
 
