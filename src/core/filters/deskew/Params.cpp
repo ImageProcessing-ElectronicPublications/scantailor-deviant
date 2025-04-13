@@ -120,6 +120,13 @@ Params::takeManualSettingsFrom(Params const& other)
     {
         m_perspectiveParams.setFovParams(other.perspectiveParams().fovParams());
     }
+    else
+    {
+        dewarping::FovParams& fov_pararms = m_perspectiveParams.fovParams();
+        dewarping::FovParams const& other_fov_pararms = other.perspectiveParams().fovParams();
+        fov_pararms.setFovMin(other_fov_pararms.fovMin());
+        fov_pararms.setFovMax(other_fov_pararms.fovMax());
+    }
 
     if (other.perspectiveParams().frameParams().mode() == MODE_MANUAL)
     {
@@ -158,6 +165,13 @@ Params::takeManualSettingsFrom(Params const& other)
     {
         m_dewarpingParams.setFovParams(other.dewarpingParams().fovParams());
     }
+    else
+    {
+        dewarping::FovParams& fov_pararms = m_dewarpingParams.fovParams();
+        dewarping::FovParams const& other_fov_pararms = other.dewarpingParams().fovParams();
+        fov_pararms.setFovMin(other_fov_pararms.fovMin());
+        fov_pararms.setFovMax(other_fov_pararms.fovMax());
+    }
 
     if (other.dewarpingParams().frameParams().mode() == MODE_MANUAL)
     {
@@ -167,6 +181,13 @@ Params::takeManualSettingsFrom(Params const& other)
     if (other.dewarpingParams().bendParams().mode() == MODE_MANUAL)
     {
         m_dewarpingParams.setBendParams(other.dewarpingParams().bendParams());
+    }
+    else
+    {
+        dewarping::BendParams& bend_pararms = m_dewarpingParams.bendParams();
+        dewarping::BendParams const& other_bend_pararms = other.dewarpingParams().bendParams();
+        bend_pararms.setBendMin(other_bend_pararms.bendMin());
+        bend_pararms.setBendMax(other_bend_pararms.bendMax());
     }
 
     switch (other.dewarpingParams().sizeParams().mode())

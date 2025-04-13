@@ -1169,7 +1169,7 @@ OptionsWidget::bendSliderMoved(int value)
 
     dewarping::BendParams& bend_params = m_pageParams.dewarpingParams().bendParams();
 
-    bend_params.setbend(bend);
+    bend_params.setBend(bend);
 
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
 
@@ -1201,10 +1201,10 @@ OptionsWidget::bendMinSpinBoxValueChanged(double bend_min_new)
 
     if (bend_params.bend() < bend_min_new)
     {
-        bend_params.setbend(bend_min_new);
+        bend_params.setBend(bend_min_new);
     }
 
-    bend_params.setbendMin(bend_min_new);
+    bend_params.setBendMin(bend_min_new);
 
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
 
@@ -1228,7 +1228,7 @@ OptionsWidget::bendSpinBoxValueChanged(double bend_new)
 
     dewarping::BendParams& bend_params = m_pageParams.dewarpingParams().bendParams();
 
-    bend_params.setbend(bend_new);
+    bend_params.setBend(bend_new);
 
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
 
@@ -1252,10 +1252,10 @@ OptionsWidget::bendMaxSpinBoxValueChanged(double bend_max_new)
 
     if (bend_params.bend() > bend_max_new)
     {
-        bend_params.setbend(bend_max_new);
+        bend_params.setBend(bend_max_new);
     }
 
-    bend_params.setbendMax(bend_max_new);
+    bend_params.setBendMax(bend_max_new);
 
     m_ptrSettings->setPageParams(m_pageId, m_pageParams);
 

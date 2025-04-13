@@ -54,7 +54,7 @@ public:
         return m_bendMin;
     }
 
-    void setbendMin(double bend_min)
+    void setBendMin(double bend_min)
     {
         m_bendMin = bend_min;
     }
@@ -64,7 +64,7 @@ public:
         return m_bend;
     }
 
-    void setbend(double bend)
+    void setBend(double bend)
     {
         m_bend = bend;
     }
@@ -74,7 +74,7 @@ public:
         return m_bendMax;
     }
 
-    void setbendMax(double bend_max)
+    void setBendMax(double bend_max)
     {
         m_bendMax = bend_max;
     }
