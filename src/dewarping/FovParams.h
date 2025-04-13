@@ -84,7 +84,7 @@ public:
 
     static double maxValue()
     {
-        return 1000.0;
+        return 10.0;
     }
 
     static double defaultMinValue()
