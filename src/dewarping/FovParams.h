@@ -77,6 +77,8 @@ public:
         m_fovMax = fov_max;
     }
 
+    void update(double fov);
+
     static double minValue()
     {
         return 0.001;

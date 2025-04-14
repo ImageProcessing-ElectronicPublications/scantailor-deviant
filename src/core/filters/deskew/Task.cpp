@@ -489,6 +489,7 @@ Task::processPerspectiveDistortion(
     );
 
     params.perspectiveParams().sizeParams().update(perspective_transform.imageSize());
+    params.perspectiveParams().fovParams().update(perspective_transform.fov());
 
     m_ptrSettings->setPageParams(m_pageId, params);
 
@@ -665,6 +666,7 @@ Task::processWarpDistortion(
     );
 
     params.dewarpingParams().sizeParams().update(dewarping_transform.imageSize());
+    params.dewarpingParams().fovParams().update(dewarping_transform.fov());
 
     m_ptrSettings->setPageParams(m_pageId, params);
 

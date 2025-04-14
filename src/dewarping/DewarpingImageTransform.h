@@ -84,6 +84,11 @@ public:
 
     ImageSize imageSize() const;
 
+    double fov() const
+    {
+        return m_dewarper.fov();
+    }
+
     virtual QTransform scale(qreal xscale, qreal yscale);
 
     virtual QImage materialize(QImage const& image,

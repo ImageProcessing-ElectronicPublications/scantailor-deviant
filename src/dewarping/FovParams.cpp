@@ -83,4 +83,13 @@ FovParams::toXml(QDomDocument& doc, QString const& name) const
     return el;
 }
 
+void
+FovParams::update(double fov)
+{
+    if(m_mode == MODE_AUTO)
+    {
+        m_fov = fov;
+    }
+}
+
 } // namespace dewarping
