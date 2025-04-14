@@ -2062,13 +2062,13 @@ and press [Enter] to edit the shortcut:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="52"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="54"/>
         <location filename="../core/filters/fix_orientation/Filter.cpp" line="58"/>
         <source>Natural order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="53"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="55"/>
         <location filename="../core/filters/output/Filter.cpp" line="64"/>
         <location filename="../core/filters/page_layout/Filter.cpp" line="70"/>
         <location filename="../core/filters/page_split/Filter.cpp" line="67"/>
@@ -2077,8 +2077,13 @@ and press [Enter] to edit the shortcut:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="54"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="56"/>
         <source>Order by distortion type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/Filter.cpp" line="57"/>
+        <source>Order by dewarped width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2339,6 +2344,13 @@ and press [Enter] to edit the shortcut:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/filters/deskew/OrderByDewarpedWidthProvider.cpp" line="95"/>
+        <source>Width: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/OrderByDewarpedWidthProvider.cpp" line="105"/>
+        <location filename="../core/filters/deskew/OrderByDewarpedWidthProvider.cpp" line="110"/>
         <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="90"/>
         <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="106"/>
         <location filename="../core/filters/page_split/OrderBySplitTypeProvider.cpp" line="90"/>
@@ -3915,7 +3927,7 @@ Continue?</source>
 <context>
     <name>deskew::Filter</name>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="64"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="67"/>
         <source>Distortions correction</source>
         <translation type="unfinished"></translation>
     </message>

@@ -14,6 +14,7 @@ SET(
         ImageView.cpp ImageView.h
         NoDistortionView.cpp NoDistortionView.h
         OptionsWidget.cpp OptionsWidget.h
+        OrderByDewarpedWidthProvider.cpp OrderByDewarpedWidthProvider.h
         OrderByDistortionTypeProvider.cpp OrderByDistortionTypeProvider.h
         Params.cpp Params.h
         PerspectiveParams.cpp PerspectiveParams.h

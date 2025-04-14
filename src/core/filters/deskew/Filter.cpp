@@ -26,6 +26,7 @@
 #include "ProjectWriter.h"
 #include "AbstractRelinker.h"
 #include "OrderByDistortionTypeProvider.h"
+#include "OrderByDewarpedWidthProvider.h"
 #include <QObject>
 #include <QCoreApplication>
 #include <QDomDocument>
@@ -48,10 +49,12 @@ Filter::Filter(PageSelectionAccessor const& page_selection_accessor)
 
     ProviderPtr const default_order;
     ProviderPtr const order_by_distortion_type(new OrderByDistortionTypeProvider(m_ptrSettings));
+    ProviderPtr const order_by_dewarped_width(new OrderByDewarpedWidthProvider(m_ptrSettings));
 
     m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Natural order"), default_order));
     m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Processed then unprocessed"), ProviderPtr(new OrderByReadiness())));
     m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Order by distortion type"), order_by_distortion_type));
+    m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Order by dewarped width"), order_by_dewarped_width));
 }
 
 Filter::~Filter()
