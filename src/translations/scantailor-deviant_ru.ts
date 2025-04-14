@@ -2597,13 +2597,13 @@ and press [Enter] to edit the shortcut:</source>
         <translation>y: проп.</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="54"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="56"/>
         <location filename="../core/filters/fix_orientation/Filter.cpp" line="58"/>
         <source>Natural order</source>
         <translation>Естественный порядок</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="55"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="57"/>
         <location filename="../core/filters/output/Filter.cpp" line="64"/>
         <location filename="../core/filters/page_layout/Filter.cpp" line="70"/>
         <location filename="../core/filters/page_split/Filter.cpp" line="67"/>
@@ -2612,14 +2612,19 @@ and press [Enter] to edit the shortcut:</source>
         <translation>Сначала уже обработанные</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="56"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="58"/>
         <source>Order by distortion type</source>
         <translation>Сортировка по типу искажения</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="57"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="59"/>
         <source>Order by dewarped width</source>
         <translation>Сортировка по ширине развертки</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/Filter.cpp" line="60"/>
+        <source>Order by dewarped height</source>
+        <translation>Сортировка по высоте развертки</translation>
     </message>
     <message>
         <location filename="../core/filters/output/OrderByModeProvider.cpp" line="70"/>
@@ -2691,6 +2696,13 @@ and press [Enter] to edit the shortcut:</source>
         <translation>Ширина: %1</translation>
     </message>
     <message>
+        <location filename="../core/filters/deskew/OrderByDewarpedHeightProvider.cpp" line="95"/>
+        <source>Height: %1</source>
+        <translation>Высота: %1</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/OrderByDewarpedHeightProvider.cpp" line="105"/>
+        <location filename="../core/filters/deskew/OrderByDewarpedHeightProvider.cpp" line="110"/>
         <location filename="../core/filters/deskew/OrderByDewarpedWidthProvider.cpp" line="105"/>
         <location filename="../core/filters/deskew/OrderByDewarpedWidthProvider.cpp" line="110"/>
         <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="90"/>
@@ -4040,7 +4052,7 @@ Continue?</source>
 <context>
     <name>deskew::Filter</name>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="67"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="70"/>
         <source>Distortions correction</source>
         <translation>Исправление искажений</translation>
     </message>
