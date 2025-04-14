@@ -2597,13 +2597,13 @@ and press [Enter] to edit the shortcut:</source>
         <translation>y: проп.</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="58"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="60"/>
         <location filename="../core/filters/fix_orientation/Filter.cpp" line="58"/>
         <source>Natural order</source>
         <translation>Естественный порядок</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="59"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="61"/>
         <location filename="../core/filters/output/Filter.cpp" line="64"/>
         <location filename="../core/filters/page_layout/Filter.cpp" line="70"/>
         <location filename="../core/filters/page_split/Filter.cpp" line="67"/>
@@ -2612,24 +2612,29 @@ and press [Enter] to edit the shortcut:</source>
         <translation>Сначала уже обработанные</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="60"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="62"/>
         <source>Order by distortion type</source>
         <translation>Сортировка по типу искажения</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="61"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="63"/>
         <source>Order by dewarped width</source>
         <translation>Сортировка по ширине развертки</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="62"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="64"/>
         <source>Order by dewarped height</source>
         <translation>Сортировка по высоте развертки</translation>
     </message>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="63"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="65"/>
         <source>Order by camera FOV</source>
         <translation>Сортировка по полю зрения камеры</translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/Filter.cpp" line="66"/>
+        <source>Order by paper bend</source>
+        <translation>Сортировка по выгибу бумаги</translation>
     </message>
     <message>
         <location filename="../core/filters/output/OrderByModeProvider.cpp" line="70"/>
@@ -2719,6 +2724,8 @@ and press [Enter] to edit the shortcut:</source>
         <location filename="../core/filters/deskew/OrderByDewarpedWidthProvider.cpp" line="110"/>
         <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="90"/>
         <location filename="../core/filters/deskew/OrderByDistortionTypeProvider.cpp" line="106"/>
+        <location filename="../core/filters/deskew/OrderByPaperBendProvider.cpp" line="102"/>
+        <location filename="../core/filters/deskew/OrderByPaperBendProvider.cpp" line="107"/>
         <location filename="../core/filters/page_split/OrderBySplitTypeProvider.cpp" line="90"/>
         <source>unknown</source>
         <translation>неизвестно</translation>
@@ -2816,6 +2823,11 @@ and press [Enter] to edit the shortcut:</source>
         <location filename="../core/filters/select_content/OrderBySizeProvider.cpp" line="135"/>
         <source>%1 %2 (%3 dpi)</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/filters/deskew/OrderByPaperBendProvider.cpp" line="93"/>
+        <source>Bend: %1</source>
+        <translation>Выгиб: %1</translation>
     </message>
 </context>
 <context>
@@ -4064,7 +4076,7 @@ Continue?</source>
 <context>
     <name>deskew::Filter</name>
     <message>
-        <location filename="../core/filters/deskew/Filter.cpp" line="73"/>
+        <location filename="../core/filters/deskew/Filter.cpp" line="76"/>
         <source>Distortions correction</source>
         <translation>Исправление искажений</translation>
     </message>

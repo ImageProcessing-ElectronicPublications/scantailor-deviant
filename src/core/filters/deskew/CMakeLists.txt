@@ -14,6 +14,7 @@ SET(
         ImageView.cpp ImageView.h
         NoDistortionView.cpp NoDistortionView.h
         OptionsWidget.cpp OptionsWidget.h
+        OrderByPaperBendProvider.cpp OrderByPaperBendProvider.h
         OrderByCameraFovProvider.cpp OrderByCameraFovProvider.h
         OrderByDewarpedHeightProvider.cpp OrderByDewarpedHeightProvider.h
         OrderByDewarpedWidthProvider.cpp OrderByDewarpedWidthProvider.h
