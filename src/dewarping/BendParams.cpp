@@ -91,4 +91,13 @@ BendParams::toXml(QDomDocument& doc, QString const& name) const
     return el;
 }
 
+void
+BendParams::update(double bend)
+{
+    if (m_mode == MODE_AUTO)
+    {
+        m_bend = bend;
+    }
+}
+
 } // namespace dewarping

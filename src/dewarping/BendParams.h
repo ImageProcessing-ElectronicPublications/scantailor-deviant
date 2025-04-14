@@ -79,6 +79,8 @@ public:
         m_bendMax = bend_max;
     }
 
+    void update(double bend);
+
     static double minValue()
     {
         return -1.0;

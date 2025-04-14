@@ -667,6 +667,7 @@ Task::processWarpDistortion(
 
     params.dewarpingParams().sizeParams().update(dewarping_transform.imageSize());
     params.dewarpingParams().fovParams().update(dewarping_transform.fov());
+    params.dewarpingParams().bendParams().update(dewarping_transform.bend());
 
     m_ptrSettings->setPageParams(m_pageId, params);
 

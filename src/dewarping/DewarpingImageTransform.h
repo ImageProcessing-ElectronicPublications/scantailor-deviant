@@ -89,6 +89,11 @@ public:
         return m_dewarper.fov();
     }
 
+    double bend() const
+    {
+        return m_dewarper.bend();
+    }
+
     virtual QTransform scale(qreal xscale, qreal yscale);
 
     virtual QImage materialize(QImage const& image,
