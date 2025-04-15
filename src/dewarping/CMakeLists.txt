@@ -28,6 +28,7 @@ SET(
         TextLineTracer.cpp TextLineTracer.h
         ToDouble.h
         TopBottomEdgeTracer.cpp TopBottomEdgeTracer.h
+        Value.h
 )
 SOURCE_GROUP("Sources" FILES ${sources})
 
