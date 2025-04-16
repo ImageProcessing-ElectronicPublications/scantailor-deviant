@@ -31,6 +31,7 @@
 #include "ImageView.h"
 #include "DewarpingView.h"
 #include "ThumbnailPixmapCache.h"
+#include "ThumbnailMakerBase.h"
 #include "ThumbnailVersionGenerator.h"
 #include "dewarping/DewarpingImageTransform.h"
 #include "dewarping/DistortionModelBuilder.h"
@@ -535,7 +536,8 @@ Task::processPerspectiveDistortion(
             m_pageId.subPage(), DistortionType::PERSPECTIVE
         ).generate();
 
-        m_ptrThumbnailCache->recreateThumbnail(m_pageId.imageId(), thumb_version, transformed_image);
+        m_ptrThumbnailCache->recreateThumbnail(
+            m_pageId.imageId(), thumb_version, transformed_image, ThumbnailMakerBase());
 
         return m_ptrNextTask->process(
             status, FilterData(data.origImageFilename(), transformed_image, crop_area), thumb_version
@@ -711,7 +713,8 @@ Task::processWarpDistortion(
             m_pageId.subPage(), DistortionType::WARP
         ).generate();
 
-        m_ptrThumbnailCache->recreateThumbnail(m_pageId.imageId(), thumb_version, transformed_image);
+        m_ptrThumbnailCache->recreateThumbnail(
+            m_pageId.imageId(), thumb_version, transformed_image, ThumbnailMakerBase());
 
         return m_ptrNextTask->process(
             status, FilterData(data.origImageFilename(), transformed_image, crop_area), thumb_version

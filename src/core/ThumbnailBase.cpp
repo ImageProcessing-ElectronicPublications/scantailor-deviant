@@ -18,6 +18,7 @@
 
 #include "ThumbnailBase.h"
 #include "ThumbnailPixmapCache.h"
+#include "ThumbnailMakerBase.h"
 #include "ThumbnailLoadResult.h"
 #include "NonCopyable.h"
 #include "AbstractCommand.h"
@@ -98,7 +99,9 @@ ThumbnailBase::paint(QPainter* painter,
             new LoadCompletionHandler(this)
         );
         ThumbnailPixmapCache::Status const status =
-            m_ptrThumbnailCache->loadRequest(m_imageId, m_version, pixmap, handler);
+            m_ptrThumbnailCache->loadRequest(
+                m_imageId, m_version, pixmap, handler, ThumbnailMakerBase()
+            );
         if (status == ThumbnailPixmapCache::QUEUED) {
             m_ptrCompletionHandler.swap(handler);
         }
