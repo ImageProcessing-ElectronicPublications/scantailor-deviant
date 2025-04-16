@@ -23,6 +23,7 @@
 #include "ImageId.h"
 #include "ImageTransformation.h"
 #include "ThumbnailBase.h"
+#include "ThumbnailMakerBase.h"
 #include "AbstractFilterDataCollector.h"
 #include "ThumbnailCollector.h"
 #include "PageOrientationCollector.h"
@@ -66,6 +67,7 @@ CacheDrivenTask::process(
             std::unique_ptr<QGraphicsItem>(
                 new ThumbnailBase(
                     thumb_col->thumbnailCache(),
+                    std::make_unique<ThumbnailMakerBase>(),
                     thumb_col->maxLogicalThumbSize(),
                     page_info.imageId(), QString(), xform
                 )

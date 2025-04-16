@@ -19,6 +19,7 @@
 #include "CacheDrivenTask.h"
 #include "Thumbnail.h"
 #include "IncompleteThumbnail.h"
+#include "ThumbnailMakerBase.h"
 #include "ImageTransformation.h"
 #include "Settings.h"
 #include "PageInfo.h"
@@ -27,7 +28,7 @@
 #include "ThumbnailCollector.h"
 #include "ContentBoxCollector.h"
 #include "filters/page_layout/CacheDrivenTask.h"
-
+#include <memory>
 #include <iostream>
 
 namespace select_content
@@ -72,6 +73,7 @@ CacheDrivenTask::process(
                 std::unique_ptr<QGraphicsItem>(
                     new IncompleteThumbnail(
                         thumb_col->thumbnailCache(),
+                        std::make_unique<ThumbnailMakerBase>(),
                         thumb_col->maxLogicalThumbSize(),
                         page_info.imageId(), thumb_version, xform
                     )

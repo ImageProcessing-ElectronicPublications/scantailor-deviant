@@ -17,6 +17,7 @@
 */
 
 #include "Thumbnail.h"
+#include "ThumbnailMakerBase.h"
 
 namespace output
 {
@@ -25,7 +26,9 @@ Thumbnail::Thumbnail(
     IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
     QSizeF const& max_size, ImageId const& image_id,
     QString const& version, ImageTransformation const& xform)
-    :   ThumbnailBase(thumbnail_cache, max_size, image_id, version, xform)
+    :   ThumbnailBase(
+            thumbnail_cache, std::make_unique<ThumbnailMakerBase>(),
+            max_size, image_id, version, xform)
 {
 }
 

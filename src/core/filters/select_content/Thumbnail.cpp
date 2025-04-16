@@ -17,6 +17,7 @@
 */
 
 #include "Thumbnail.h"
+#include "ThumbnailMakerBase.h"
 #include "settings/globalstaticsettings.h"
 #include <QRectF>
 #include <QSizeF>
@@ -35,7 +36,9 @@ Thumbnail::Thumbnail(
     IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
     QSizeF const& max_size, ImageId const& image_id, QString const& version,
     ImageTransformation const& xform, QRectF const& content_rect, bool deviant)
-    :   ThumbnailBase(thumbnail_cache, max_size, image_id, version, xform),
+    :   ThumbnailBase(
+            thumbnail_cache, std::make_unique<ThumbnailMakerBase>(),
+            max_size, image_id, version, xform),
         m_contentRect(content_rect), m_deviant(deviant)
 {
 }

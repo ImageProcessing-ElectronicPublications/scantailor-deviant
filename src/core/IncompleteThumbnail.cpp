@@ -17,6 +17,7 @@
 */
 
 #include "IncompleteThumbnail.h"
+#include "AbstractThumbnailMaker.h"
 #include <QRectF>
 #include <QSizeF>
 #include <QTransform>
@@ -31,9 +32,12 @@ QPainterPath IncompleteThumbnail::m_sCachedPath;
 
 IncompleteThumbnail::IncompleteThumbnail(
     IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
+    std::unique_ptr<AbstractThumbnailMaker> thumbnail_maker,
     QSizeF const& max_size, ImageId const& image_id, QString const& version,
     ImageTransformation const& image_xform)
-    :   ThumbnailBase(thumbnail_cache, max_size, image_id, version, image_xform)
+    :   ThumbnailBase(
+            thumbnail_cache, std::move(thumbnail_maker),
+            max_size, image_id, version, image_xform)
 {
 }
 

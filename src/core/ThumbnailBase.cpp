@@ -18,7 +18,7 @@
 
 #include "ThumbnailBase.h"
 #include "ThumbnailPixmapCache.h"
-#include "ThumbnailMakerBase.h"
+#include "AbstractThumbnailMaker.h"
 #include "ThumbnailLoadResult.h"
 #include "NonCopyable.h"
 #include "AbstractCommand.h"
@@ -63,9 +63,11 @@ private:
 
 ThumbnailBase::ThumbnailBase(
     IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
+    std::unique_ptr<AbstractThumbnailMaker> thumbnail_maker,
     QSizeF const& max_size, ImageId const& image_id, QString const& version,
     ImageTransformation const& image_xform)
     :   m_ptrThumbnailCache(thumbnail_cache),
+        m_ptrThumbnailMaker(std::move(thumbnail_maker)),
         m_maxSize(max_size),
         m_imageId(image_id),
         m_version(version),
@@ -100,7 +102,7 @@ ThumbnailBase::paint(QPainter* painter,
         );
         ThumbnailPixmapCache::Status const status =
             m_ptrThumbnailCache->loadRequest(
-                m_imageId, m_version, pixmap, handler, ThumbnailMakerBase()
+                m_imageId, m_version, pixmap, handler, *m_ptrThumbnailMaker
             );
         if (status == ThumbnailPixmapCache::QUEUED) {
             m_ptrCompletionHandler.swap(handler);

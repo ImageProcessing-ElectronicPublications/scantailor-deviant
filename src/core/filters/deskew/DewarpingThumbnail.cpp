@@ -17,6 +17,7 @@
 */
 
 #include "DewarpingThumbnail.h"
+#include "ThumbnailMakerBase.h"
 #include "dewarping/Curve.h"
 #include "dewarping/DistortionModel.h"
 #include "Utils.h"
@@ -39,8 +40,8 @@ DewarpingThumbnail::DewarpingThumbnail(
     dewarping::FrameParams const& frame_params,
     dewarping::BendParams const& bend_params)
 	: ThumbnailBase(
-        thumbnail_cache, max_size, 
-        image_id, version, xform
+        thumbnail_cache, std::make_unique<ThumbnailMakerBase>(),
+        max_size, image_id, version, xform
       )
     , m_topCurve(top_curve)
     , m_bottomCurve(bottom_curve)

@@ -20,6 +20,7 @@
 #include "RotationThumbnail.h"
 #include "DewarpingThumbnail.h"
 #include "IncompleteThumbnail.h"
+#include "ThumbnailMakerBase.h"
 #include "Settings.h"
 #include "PageInfo.h"
 #include "ImageTransformation.h"
@@ -29,6 +30,7 @@
 #include "filters/select_content/CacheDrivenTask.h"
 #include "dewarping/DewarpingImageTransform.h"
 #include <QString>
+#include <memory>
 
 using namespace dewarping;
 
@@ -64,6 +66,7 @@ CacheDrivenTask::process(
                 std::unique_ptr<QGraphicsItem>(
                     new IncompleteThumbnail(
                         thumb_col->thumbnailCache(),
+                        std::make_unique<ThumbnailMakerBase>(),
                         thumb_col->maxLogicalThumbSize(),
                         page_info.imageId(), QString(), xform
                     )

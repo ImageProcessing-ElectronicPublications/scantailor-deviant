@@ -17,6 +17,7 @@
 */
 
 #include "Thumbnail.h"
+#include "ThumbnailMakerBase.h"
 #include <QPolygonF>
 #include <QPointF>
 #include <QRectF>
@@ -35,7 +36,9 @@ Thumbnail::Thumbnail(
     QSizeF const& max_size, ImageId const& image_id, QString const& version,
     ImageTransformation const& xform, PageLayout const& layout,
     bool left_half_removed, bool right_half_removed)
-    :   ThumbnailBase(thumbnail_cache, max_size, image_id, version, xform),
+    :   ThumbnailBase(
+            thumbnail_cache, std::make_unique<ThumbnailMakerBase>(),
+            max_size, image_id, version, xform),
         m_layout(layout),
         m_leftHalfRemoved(left_half_removed),
         m_rightHalfRemoved(right_half_removed)

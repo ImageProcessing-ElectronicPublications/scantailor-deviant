@@ -21,6 +21,7 @@
 #include "Params.h"
 #include "Thumbnail.h"
 #include "IncompleteThumbnail.h"
+#include "ThumbnailMakerBase.h"
 #include "ImageTransformation.h"
 #include "PageInfo.h"
 #include "PageId.h"
@@ -58,24 +59,13 @@ CacheDrivenTask::process(
         m_ptrSettings->getPageParams(page_info.id())
     );
 
-//    bool need_reprocess(!params.get());
-//    if (!need_reprocess) {
-//        Params p(*params.get());
-//        Params::Regenerate val = p.getForceReprocess();
-//        need_reprocess = val & Params::RegenerateThumbnail;
-//        if (need_reprocess) {
-//            val = (Params::Regenerate) (val & ~Params::RegenerateThumbnail);
-//            p.setForceReprocess(val);
-//            m_ptrSettings->setPageParams(page_info.id(), p);
-//        }
-//    }
-
     if (!params.get() || !params->contentSizeMM().isValid()) {
         if (ThumbnailCollector* thumb_col = dynamic_cast<ThumbnailCollector*>(collector)) {
             thumb_col->processThumbnail(
                 std::unique_ptr<QGraphicsItem>(
                     new IncompleteThumbnail(
                         thumb_col->thumbnailCache(),
+                        std::make_unique<ThumbnailMakerBase>(),
                         thumb_col->maxLogicalThumbSize(),
                         page_info.imageId(), thumb_version, xform
                     )

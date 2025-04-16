@@ -24,6 +24,7 @@
 #include "Params.h"
 #include "Thumbnail.h"
 #include "IncompleteThumbnail.h"
+#include "ThumbnailMakerBase.h"
 #include "ImageTransformation.h"
 #include "PageInfo.h"
 #include "PageId.h"
@@ -38,6 +39,7 @@
 #include <QRectF>
 #include <QTransform>
 #include <QDebug>
+#include <memory>
 
 namespace output
 {
@@ -143,6 +145,7 @@ CacheDrivenTask::process(
                 std::unique_ptr<QGraphicsItem>(
                     new IncompleteThumbnail(
                         thumb_col->thumbnailCache(),
+                        std::make_unique<ThumbnailMakerBase>(),
                         thumb_col->maxLogicalThumbSize(),
                         page_info.imageId(), thumb_version,
                         new_xform
