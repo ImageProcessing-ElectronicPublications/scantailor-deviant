@@ -50,6 +50,7 @@ SET(
         DebugImageView.cpp DebugImageView.h
         TabbedDebugImages.cpp TabbedDebugImages.h
         ThumbnailLoadResult.h
+        AbstractThumbnailMaker.h
         ThumbnailPixmapCache.cpp ThumbnailPixmapCache.h
         ThumbnailBase.cpp ThumbnailBase.h
         ThumbnailFactory.cpp ThumbnailFactory.h
