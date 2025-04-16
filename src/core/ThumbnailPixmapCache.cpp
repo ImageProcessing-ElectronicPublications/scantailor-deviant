@@ -146,7 +146,7 @@ public:
     void setThumbDir(QString const& thumb_dir);
 
     Status request(
-        ThumbId const& thumb_id, QPixmap& pixmap, bool load_now = false,
+        ThumbId const& thumb_id, QPixmap& pixmap,
         boost::weak_ptr<CompletionHandler> const* completion_handler = 0);
 
     void ensureThumbnailExists(ThumbId const& thumb_id, QImage const& image);
@@ -208,10 +208,6 @@ private:
     void removeExcessLocked();
 
     void removeItemLocked(RemoveQueue::iterator const& it);
-
-    void cachePixmapUnlocked(ThumbId const& thumb_id, QPixmap const& pixmap);
-
-    void cachePixmapLocked(ThumbId const& thumb_id, QPixmap const& pixmap);
 
     mutable QMutex m_mutex;
     BackgroundLoader m_backgroundLoader;
@@ -328,7 +324,7 @@ ThumbnailPixmapCache::loadRequest(
 {
     return m_ptrImpl->request(
         ThumbId(image_id, version),
-        pixmap, false, &completion_handler);
+        pixmap, &completion_handler);
 }
 
 void
@@ -417,7 +413,7 @@ ThumbnailPixmapCache::Impl::setThumbDir(QString const& thumb_dir)
 
 ThumbnailPixmapCache::Status
 ThumbnailPixmapCache::Impl::request(
-    ThumbId const& thumb_id, QPixmap& pixmap, bool const load_now,
+    ThumbId const& thumb_id, QPixmap& pixmap,
     boost::weak_ptr<CompletionHandler> const* completion_handler)
 {
     assert(QCoreApplication::instance()->thread() == QThread::currentThread());
@@ -444,23 +440,6 @@ ThumbnailPixmapCache::Impl::request(
             pixmap = k_it->pixmap;
             return LOAD_FAILED;
         }
-    }
-
-    if (load_now) {
-        QString const thumb_dir(m_thumbDir);
-        QSize const max_thumb_size(m_maxThumbSize);
-
-        locker.unlock();
-
-        pixmap = QPixmap::fromImage(
-                     loadSaveThumbnail(thumb_id, thumb_dir, max_thumb_size)
-                 );
-        if (pixmap.isNull()) {
-            return LOAD_FAILED;
-        }
-
-        cachePixmapUnlocked(thumb_id, pixmap);
-        return LOADED;
     }
 
     if (!completion_handler) {
@@ -906,96 +885,6 @@ ThumbnailPixmapCache::Impl::removeItemLocked(
     }
 
     m_removeQueue.erase(it);
-}
-
-void
-ThumbnailPixmapCache::Impl::cachePixmapUnlocked(
-    ThumbId const& thumb_id, QPixmap const& pixmap)
-{
-    QMutexLocker const locker(&m_mutex);
-    cachePixmapLocked(thumb_id, pixmap);
-}
-
-void
-ThumbnailPixmapCache::Impl::cachePixmapLocked(
-    ThumbId const& thumb_id, QPixmap const& pixmap)
-{
-    if (m_shuttingDown) {
-        return;
-    }
-
-    Item::Status const new_status = pixmap.isNull()
-                                    ? Item::LOAD_FAILED : Item::LOADED;
-
-    // Check if such item already exists.
-    ItemsByKey::iterator const k_it(m_itemsByKey.find(thumb_id));
-    if (k_it == m_itemsByKey.end()) {
-        // Existing item not found.
-
-        // Maybe remove an older item.
-        removeExcessLocked();
-
-        // Insert our new item.
-        RemoveQueue::iterator const rq_it(
-            m_removeQueue.insert(
-                m_endOfLoadedItems,
-                Item(thumb_id, m_totalLoadAttempts, new_status)
-            ).first
-        );
-        // Our new item is now after all LOADED items in the
-        // remove queue and at the end of the load queue.
-
-        if (new_status == Item::LOAD_FAILED) {
-            --m_endOfLoadedItems;
-        }
-
-        rq_it->pixmap = pixmap;
-
-        assert(rq_it->completionHandlers.empty());
-        return;
-    }
-
-    switch (k_it->status) {
-    case Item::LOADED:
-    // There is no point in replacing LOADED items.
-    case Item::IN_PROGRESS:
-        // It's unsafe to touch IN_PROGRESS items.
-        return;
-    default:
-        break;
-    }
-
-    if (new_status == Item::LOADED && k_it->status == Item::QUEUED) {
-        // Not so fast.  We can't go from QUEUED to LOADED directly.
-        // Well, maybe we can, but we'd have to invoke the completion
-        // handlers right now.  We'd rather do it asynchronously,
-        // so let's transition it to IN_PROGRESS and send
-        // a LoadResultEvent asynchronously.
-
-        assert(!k_it->completionHandlers.empty());
-
-        LoadQueue::iterator const lq_it(
-            m_items.project<LoadQueueTag>(k_it)
-        );
-
-        lq_it->pixmap = pixmap;
-        queuedToInProgress(lq_it);
-        postLoadResult(lq_it, QImage(), ThumbnailLoadResult::LOADED);
-        return;
-    }
-
-    assert(k_it->status == Item::LOAD_FAILED);
-
-    k_it->status = new_status;
-    k_it->pixmap = pixmap;
-
-    if (new_status == Item::LOADED) {
-        RemoveQueue::iterator const rq_it(
-            m_items.project<RemoveQueueTag>(k_it)
-        );
-        m_removeQueue.relocate(m_endOfLoadedItems, rq_it);
-        ++m_numLoadedItems;
-    }
 }
 
 /*====================== ThumbnailPixmapCache::Item =========================*/
