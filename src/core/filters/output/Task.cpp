@@ -48,6 +48,7 @@
 #include "Utils.h"
 #include "ImageTransformation.h"
 #include "ThumbnailPixmapCache.h"
+#include "ThumbnailMakerBase.h"
 #include "DebugImages.h"
 #include "OutputGenerator.h"
 #include "TiffWriter.h"
@@ -499,7 +500,8 @@ Task::process(
             m_ptrSettings->setOutputParams(m_pageId, out_params);
         }
 
-        m_ptrThumbnailCache->recreateThumbnail(ImageId(out_file_path), QString(), out_img);
+        m_ptrThumbnailCache->recreateThumbnail(
+            ImageId(out_file_path), QString(), out_img, ThumbnailMakerBase());
     }
 
     DespeckleState const despeckle_state(

@@ -1,6 +1,6 @@
 /*
     Scan Tailor - Interactive post-processing tool for scanned pages.
-    Copyright (C)  Joseph Artsimovich <joseph.artsimovich@gmail.com>
+    Copyright (C) 2007-2008  Joseph Artsimovich <joseph_a@mail.ru>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,21 +16,22 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Thumbnail.h"
-#include "AbstractThumbnailMaker.h"
+#ifndef DEWARP_THUMBNAIL_MAKER_H_
+#define DEWARP_THUMBNAIL_MAKER_H_
 
-namespace output
+#include <AbstractThumbnailMaker.h>
+#include "dewarping/DewarpingImageTransform.h"
+
+class DewarpThumbnailMaker: public AbstractThumbnailMaker
 {
+public:
+    DewarpThumbnailMaker(dewarping::DewarpingImageTransform const& transform);
 
-Thumbnail::Thumbnail(
-    IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
-    std::unique_ptr<AbstractThumbnailMaker> thumb_maker,
-    QSizeF const& max_size, ImageId const& image_id,
-    QString const& version, ImageTransformation const& xform)
-    :   ThumbnailBase(
-            thumbnail_cache, std::move(thumb_maker),
-            max_size, image_id, version, xform)
-{
-}
+    virtual QImage makeThumbnail(QImage const& image, QSize const& max_thumb_size) const;
 
-} // namespace output
+    virtual std::unique_ptr<AbstractThumbnailMaker> clone() const;
+private:
+    dewarping::DewarpingImageTransform const m_transform;
+};
+
+#endif

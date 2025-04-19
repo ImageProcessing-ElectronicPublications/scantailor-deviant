@@ -21,6 +21,7 @@
 #include "Params.h"
 #include "Thumbnail.h"
 #include "IncompleteThumbnail.h"
+#include "AbstractThumbnailMaker.h"
 #include "ImageTransformation.h"
 #include "PageInfo.h"
 #include "PageId.h"
@@ -52,23 +53,12 @@ void
 CacheDrivenTask::process(
     PageInfo const& page_info, AbstractFilterDataCollector* collector,
     ImageTransformation const& xform, QRectF const& content_rect,
-    QString const& thumb_version)
+    QString const& thumb_version,
+    std::unique_ptr<AbstractThumbnailMaker> thumb_maker)
 {
     std::unique_ptr<Params> const params(
         m_ptrSettings->getPageParams(page_info.id())
     );
-
-//    bool need_reprocess(!params.get());
-//    if (!need_reprocess) {
-//        Params p(*params.get());
-//        Params::Regenerate val = p.getForceReprocess();
-//        need_reprocess = val & Params::RegenerateThumbnail;
-//        if (need_reprocess) {
-//            val = (Params::Regenerate) (val & ~Params::RegenerateThumbnail);
-//            p.setForceReprocess(val);
-//            m_ptrSettings->setPageParams(page_info.id(), p);
-//        }
-//    }
 
     if (!params.get() || !params->contentSizeMM().isValid()) {
         if (ThumbnailCollector* thumb_col = dynamic_cast<ThumbnailCollector*>(collector)) {
@@ -76,6 +66,7 @@ CacheDrivenTask::process(
                 std::unique_ptr<QGraphicsItem>(
                     new IncompleteThumbnail(
                         thumb_col->thumbnailCache(),
+                        std::move(thumb_maker),
                         thumb_col->maxLogicalThumbSize(),
                         page_info.imageId(), thumb_version, xform
                     )
@@ -101,7 +92,8 @@ CacheDrivenTask::process(
     new_xform.setPostCropArea(xform.transform().map(page_rect_phys));
 
     if (m_ptrNextTask) {
-        m_ptrNextTask->process(page_info, collector, new_xform, content_rect_phys, thumb_version);
+        m_ptrNextTask->process(page_info, collector, new_xform, content_rect_phys,
+                               thumb_version, std::move(thumb_maker));
         return;
     }
 
@@ -111,6 +103,7 @@ CacheDrivenTask::process(
             std::unique_ptr<QGraphicsItem>(
                 new Thumbnail(
                     thumb_col->thumbnailCache(),
+                    std::move(thumb_maker),
                     thumb_col->maxLogicalThumbSize(),
                     page_info.imageId(), thumb_version,
                     *params, new_xform, content_rect_phys

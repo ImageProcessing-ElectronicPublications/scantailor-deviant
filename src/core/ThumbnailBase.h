@@ -31,7 +31,9 @@
 #include <QGraphicsItem>
 #include <QSizeF>
 #include <QString>
+#include <memory>
 
+class AbstractThumbnailMaker;
 class ThumbnailLoadResult;
 
 class ThumbnailBase : public QGraphicsItem
@@ -40,6 +42,7 @@ class ThumbnailBase : public QGraphicsItem
 public:
     ThumbnailBase(
         IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
+        std::unique_ptr<AbstractThumbnailMaker> thumbnail_maker,
         QSizeF const& max_size, ImageId const& image_id, QString const& version,
         ImageTransformation const& image_xform);
 
@@ -114,6 +117,7 @@ private:
     void handleLoadResult(ThumbnailLoadResult const& result);
 
     IntrusivePtr<ThumbnailPixmapCache> m_ptrThumbnailCache;
+    std::unique_ptr<AbstractThumbnailMaker> m_ptrThumbnailMaker;
     QSizeF m_maxSize;
     ImageId m_imageId;
     QString m_version;

@@ -31,6 +31,7 @@
 #include "ImageView.h"
 #include "DewarpingView.h"
 #include "ThumbnailPixmapCache.h"
+#include "ThumbnailMakerBase.h"
 #include "ThumbnailVersionGenerator.h"
 #include "dewarping/DewarpingImageTransform.h"
 #include "dewarping/DistortionModelBuilder.h"
@@ -494,7 +495,6 @@ Task::processPerspectiveDistortion(
 
     if (m_ptrNextTask)
     {
-
         QRectF const transformed_rectF = perspective_transform.transformedCropArea().boundingRect();
         QRect const transformed_rect(
             transformed_rectF.left(),
@@ -506,7 +506,7 @@ Task::processPerspectiveDistortion(
         QImage transformed_image = perspective_transform.materialize(
             data.origImage(),
             transformed_rect,
-            QColor(255,255,255)
+            QColor(255, 255, 255, 0)
         );
 
         if (data.xform().preRotation().toDegrees() == 0)
@@ -535,7 +535,8 @@ Task::processPerspectiveDistortion(
             m_pageId.subPage(), DistortionType::PERSPECTIVE
         ).generate();
 
-        m_ptrThumbnailCache->recreateThumbnail(m_pageId.imageId(), thumb_version, transformed_image);
+        m_ptrThumbnailCache->recreateThumbnail(
+            m_pageId.imageId(), thumb_version, transformed_image, ThumbnailMakerBase());
 
         return m_ptrNextTask->process(
             status, FilterData(data.origImageFilename(), transformed_image, crop_area), thumb_version
@@ -682,7 +683,7 @@ Task::processWarpDistortion(
         QImage transformed_image = dewarping_transform.materialize(
             data.origImage(),
             transformed_rect,
-            QColor(255, 255, 255)
+            QColor(255, 255, 255, 0)
         );
 
         if (data.xform().preRotation().toDegrees() == 0)
@@ -711,7 +712,8 @@ Task::processWarpDistortion(
             m_pageId.subPage(), DistortionType::WARP
         ).generate();
 
-        m_ptrThumbnailCache->recreateThumbnail(m_pageId.imageId(), thumb_version, transformed_image);
+        m_ptrThumbnailCache->recreateThumbnail(
+            m_pageId.imageId(), thumb_version, transformed_image, ThumbnailMakerBase());
 
         return m_ptrNextTask->process(
             status, FilterData(data.origImageFilename(), transformed_image, crop_area), thumb_version

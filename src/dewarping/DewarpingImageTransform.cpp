@@ -164,6 +164,14 @@ DewarpingImageTransform::scale(qreal xscale, qreal yscale)
     return scaling_transform;
 }
 
+DewarpingImageTransform
+DewarpingImageTransform::scaled(qreal xscale, qreal yscale) const
+{
+    DewarpingImageTransform transform(*this);
+    transform.scale(xscale, yscale);
+    return transform;
+}
+
 QImage
 DewarpingImageTransform::materialize(QImage const& image,
                                      QRect const& target_rect, QColor const& outside_color) const

@@ -25,6 +25,7 @@
 #include "AbstractFilter.h"
 #include "FilterOptionsWidget.h"
 #include "ThumbnailPixmapCache.h"
+#include "ThumbnailMakerBase.h"
 #include "ProjectPages.h"
 #include "PageInfo.h"
 #include "Dpi.h"
@@ -95,7 +96,8 @@ LoadFileTask::operator()()
 
             updateImageSizeIfChanged(image);
             overrideDpi(image);
-            m_ptrThumbnailCache->ensureThumbnailExists(m_imageId, QString(), image);
+            m_ptrThumbnailCache->ensureThumbnailExists(
+                m_imageId, QString(), image, ThumbnailMakerBase());
             return m_ptrNextTask->process(*this, FilterData(m_imageId.filePath(), image));
         }
     } catch (CancelledException const&) {

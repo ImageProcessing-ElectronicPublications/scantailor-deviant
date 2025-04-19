@@ -21,12 +21,14 @@
 
 #include "ThumbnailBase.h"
 #include "IntrusivePtr.h"
+#include <memory>
 
 class ThumbnailPixmapCache;
 class ImageTransformation;
 class ImageId;
 class QSizeF;
 class QString;
+class AbstractThumbnailMaker;
 
 namespace output
 {
@@ -35,6 +37,7 @@ class Thumbnail : public ThumbnailBase
 {
 public:
     Thumbnail(IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
+              std::unique_ptr<AbstractThumbnailMaker> thumb_maker,
               QSizeF const& max_size, ImageId const& image_id,
               QString const& version, ImageTransformation const& xform);
 };

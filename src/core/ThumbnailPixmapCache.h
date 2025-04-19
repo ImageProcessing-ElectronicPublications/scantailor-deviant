@@ -29,6 +29,7 @@
 #include <memory>
 
 class ImageId;
+class AbstractThumbnailMaker;
 class QImage;
 class QPixmap;
 class QString;
@@ -105,7 +106,8 @@ public:
      */
     Status loadRequest(
         ImageId const& image_id, QString const& version, QPixmap& pixmap,
-        boost::weak_ptr<CompletionHandler> const& completion_handler);
+        boost::weak_ptr<CompletionHandler> const& completion_handler,
+        AbstractThumbnailMaker const& thumbnail_maker);
 
     /**
      * \brief If no thumbnail exists for this image, create it.
@@ -120,7 +122,8 @@ public:
      * \note This function may be called from any thread, even concurrently.
      */
     void ensureThumbnailExists(
-        ImageId const& image_id, QString const& version, QImage const& image);
+        ImageId const& image_id, QString const& version, QImage const& image,
+        AbstractThumbnailMaker const& thumbnail_maker);
 
     /**
      * \brief Re-create and replace the existing thumnail.
@@ -131,7 +134,8 @@ public:
      * \note This function may be called from any thread, even concurrently.
      */
     void recreateThumbnail(
-        ImageId const& image_id, QString const& version, QImage const& image);
+        ImageId const& image_id, QString const& version, QImage const& image,
+        AbstractThumbnailMaker const& thumbnail_maker);
 private:
     struct ThumbId;
     class Item;
