@@ -17,17 +17,18 @@
 */
 
 #include "Thumbnail.h"
-#include "ThumbnailMakerBase.h"
+#include "AbstractThumbnailMaker.h"
 
 namespace output
 {
 
 Thumbnail::Thumbnail(
     IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
+    std::unique_ptr<AbstractThumbnailMaker> thumb_maker,
     QSizeF const& max_size, ImageId const& image_id,
     QString const& version, ImageTransformation const& xform)
     :   ThumbnailBase(
-            thumbnail_cache, std::make_unique<ThumbnailMakerBase>(),
+            thumbnail_cache, std::move(thumb_maker),
             max_size, image_id, version, xform)
 {
 }

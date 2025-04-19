@@ -21,6 +21,7 @@
 #include "DewarpingThumbnail.h"
 #include "IncompleteThumbnail.h"
 #include "ThumbnailMakerBase.h"
+#include "DewarpThumbnailMaker.h"
 #include "Settings.h"
 #include "PageInfo.h"
 #include "ImageTransformation.h"
@@ -80,6 +81,7 @@ CacheDrivenTask::process(
     {
         std::shared_ptr<ImageTransformation> new_transform;
         QString thumb_version;
+        std::unique_ptr<AbstractThumbnailMaker> thumb_maker;
         
         switch (params->distortionType())
         {
@@ -87,6 +89,7 @@ CacheDrivenTask::process(
             {
                 auto none = std::make_shared<ImageTransformation>(xform);
                 new_transform = std::move(none);
+                thumb_maker = std::make_unique<ThumbnailMakerBase>();
                 break;
             }
             case DistortionType::ROTATION:
@@ -94,6 +97,7 @@ CacheDrivenTask::process(
                 auto rotated = std::make_shared<ImageTransformation>(xform);
                 rotated->setPostRotation(params->rotationParams().compensationAngleDeg());
                 new_transform = std::move(rotated);
+                thumb_maker = std::make_unique<ThumbnailMakerBase>();
                 break;
             }
             case DistortionType::PERSPECTIVE:
@@ -134,11 +138,13 @@ CacheDrivenTask::process(
                     page_info.id().subPage(), DistortionType::PERSPECTIVE
                 ).generate();
 
+                thumb_maker = std::make_unique<DewarpThumbnailMaker>(perspective_transform);
+
                 break;
             }
             case DistortionType::WARP:
             {
-                DewarpingImageTransform perspective_transform(
+                DewarpingImageTransform dewarping_transform(
                     QSize(
                         xform.origRect().width(),
                         xform.origRect().height()
@@ -153,23 +159,25 @@ CacheDrivenTask::process(
                 );
 
                 new_transform = std::make_shared<ImageTransformation>(
-                    perspective_transform.transformedCropArea().boundingRect(),
+                    dewarping_transform.transformedCropArea().boundingRect(),
                     xform.origDpi()
                 );
 
                 if (new_transform.get())
-                    new_transform->setPreCropArea(perspective_transform.transformedCropArea());
+                    new_transform->setPreCropArea(dewarping_transform.transformedCropArea());
 
                 thumb_version = ThumbnailVersionGenerator(
                     page_info.id().subPage(), DistortionType::WARP
                 ).generate();
+
+                thumb_maker = std::make_unique<DewarpThumbnailMaker>(dewarping_transform);
 
                 break;
             }
         }
 
         assert(new_transform);
-        m_ptrNextTask->process(page_info, collector, *new_transform, thumb_version);
+        m_ptrNextTask->process(page_info, collector, *new_transform, thumb_version, std::move(thumb_maker));
         return;
     }
 

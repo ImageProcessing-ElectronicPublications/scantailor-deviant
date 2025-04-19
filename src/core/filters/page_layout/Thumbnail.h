@@ -25,8 +25,10 @@
 #include "IntrusivePtr.h"
 #include <QTransform>
 #include <QRectF>
+#include <memory>
 
 class ThumbnailPixmapCache;
+class AbstractThumbnailMaker;
 class ImageId;
 class QString;
 
@@ -37,6 +39,7 @@ class Thumbnail : public ThumbnailBase
 {
 public:
     Thumbnail(IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
+              std::unique_ptr<AbstractThumbnailMaker> thumb_maker,
               QSizeF const& max_size, ImageId const& image_id,
               QString const& version, Params const& params, 
               ImageTransformation const& xform, QPolygonF const& phys_content_rect);

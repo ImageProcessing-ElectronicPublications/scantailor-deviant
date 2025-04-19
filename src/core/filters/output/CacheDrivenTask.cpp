@@ -24,7 +24,7 @@
 #include "Params.h"
 #include "Thumbnail.h"
 #include "IncompleteThumbnail.h"
-#include "ThumbnailMakerBase.h"
+#include "AbstractThumbnailMaker.h"
 #include "ImageTransformation.h"
 #include "PageInfo.h"
 #include "PageId.h"
@@ -60,7 +60,8 @@ void
 CacheDrivenTask::process(
     PageInfo const& page_info, AbstractFilterDataCollector* collector,
     ImageTransformation const& xform, QPolygonF const& content_rect_phys,
-    QString const& thumb_version)
+    QString const& thumb_version,
+    std::unique_ptr<AbstractThumbnailMaker> thumb_maker)
 {
     if (ThumbnailCollector* thumb_col = dynamic_cast<ThumbnailCollector*>(collector)) {
 
@@ -145,7 +146,7 @@ CacheDrivenTask::process(
                 std::unique_ptr<QGraphicsItem>(
                     new IncompleteThumbnail(
                         thumb_col->thumbnailCache(),
-                        std::make_unique<ThumbnailMakerBase>(),
+                        std::move(thumb_maker),
                         thumb_col->maxLogicalThumbSize(),
                         page_info.imageId(), thumb_version,
                         new_xform
@@ -161,6 +162,7 @@ CacheDrivenTask::process(
                 std::unique_ptr<QGraphicsItem>(
                     new Thumbnail(
                         thumb_col->thumbnailCache(),
+                        std::move(thumb_maker),
                         thumb_col->maxLogicalThumbSize(),
                         ImageId(out_file_path), QString(),
                         out_xform

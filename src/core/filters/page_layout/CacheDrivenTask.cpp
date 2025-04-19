@@ -21,7 +21,7 @@
 #include "Params.h"
 #include "Thumbnail.h"
 #include "IncompleteThumbnail.h"
-#include "ThumbnailMakerBase.h"
+#include "AbstractThumbnailMaker.h"
 #include "ImageTransformation.h"
 #include "PageInfo.h"
 #include "PageId.h"
@@ -53,7 +53,8 @@ void
 CacheDrivenTask::process(
     PageInfo const& page_info, AbstractFilterDataCollector* collector,
     ImageTransformation const& xform, QRectF const& content_rect,
-    QString const& thumb_version)
+    QString const& thumb_version,
+    std::unique_ptr<AbstractThumbnailMaker> thumb_maker)
 {
     std::unique_ptr<Params> const params(
         m_ptrSettings->getPageParams(page_info.id())
@@ -65,7 +66,7 @@ CacheDrivenTask::process(
                 std::unique_ptr<QGraphicsItem>(
                     new IncompleteThumbnail(
                         thumb_col->thumbnailCache(),
-                        std::make_unique<ThumbnailMakerBase>(),
+                        std::move(thumb_maker),
                         thumb_col->maxLogicalThumbSize(),
                         page_info.imageId(), thumb_version, xform
                     )
@@ -91,7 +92,8 @@ CacheDrivenTask::process(
     new_xform.setPostCropArea(xform.transform().map(page_rect_phys));
 
     if (m_ptrNextTask) {
-        m_ptrNextTask->process(page_info, collector, new_xform, content_rect_phys, thumb_version);
+        m_ptrNextTask->process(page_info, collector, new_xform, content_rect_phys,
+                               thumb_version, std::move(thumb_maker));
         return;
     }
 
@@ -101,6 +103,7 @@ CacheDrivenTask::process(
             std::unique_ptr<QGraphicsItem>(
                 new Thumbnail(
                     thumb_col->thumbnailCache(),
+                    std::move(thumb_maker),
                     thumb_col->maxLogicalThumbSize(),
                     page_info.imageId(), thumb_version,
                     *params, new_xform, content_rect_phys

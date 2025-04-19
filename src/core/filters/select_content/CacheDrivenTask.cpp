@@ -19,7 +19,7 @@
 #include "CacheDrivenTask.h"
 #include "Thumbnail.h"
 #include "IncompleteThumbnail.h"
-#include "ThumbnailMakerBase.h"
+#include "AbstractThumbnailMaker.h"
 #include "ImageTransformation.h"
 #include "Settings.h"
 #include "PageInfo.h"
@@ -49,7 +49,8 @@ CacheDrivenTask::~CacheDrivenTask()
 void
 CacheDrivenTask::process(
     PageInfo const& page_info, AbstractFilterDataCollector* collector,
-    ImageTransformation const& xform, QString const& thumb_version)
+    ImageTransformation const& xform, QString const& thumb_version,
+    std::unique_ptr<AbstractThumbnailMaker> thumb_maker)
 {
     std::unique_ptr<Params> params(m_ptrSettings->getPageParams(page_info.id()));
 
@@ -73,7 +74,7 @@ CacheDrivenTask::process(
                 std::unique_ptr<QGraphicsItem>(
                     new IncompleteThumbnail(
                         thumb_col->thumbnailCache(),
-                        std::make_unique<ThumbnailMakerBase>(),
+                        std::move(thumb_maker),
                         thumb_col->maxLogicalThumbSize(),
                         page_info.imageId(), thumb_version, xform
                     )
@@ -89,7 +90,7 @@ CacheDrivenTask::process(
     }
 
     if (m_ptrNextTask) {
-        m_ptrNextTask->process(page_info, collector, xform, params->contentRect(), thumb_version);
+        m_ptrNextTask->process(page_info, collector, xform, params->contentRect(), thumb_version, std::move(thumb_maker));
         return;
     }
 
@@ -98,6 +99,7 @@ CacheDrivenTask::process(
             std::unique_ptr<QGraphicsItem>(
                 new Thumbnail(
                     thumb_col->thumbnailCache(),
+                    std::move(thumb_maker),
                     thumb_col->maxLogicalThumbSize(),
                     page_info.imageId(), thumb_version, xform,
                     params->contentRect(),
