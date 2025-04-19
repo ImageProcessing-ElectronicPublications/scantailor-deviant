@@ -79,8 +79,7 @@ No distortion.</string>
           </property>
           <property name="icon">
            <iconset resource="../../../../app/resources/resources.qrc">
-            <normaloff>:/icons/distortion-none.png</normaloff>
-            <normalon>:/icons/distortion-none-selected.png</normalon>:/icons/distortion-none.png</iconset>
+            <normaloff>:/icons/distortion-none.png</normaloff>:/icons/distortion-none.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -107,8 +106,7 @@ Rotation correction.</string>
           </property>
           <property name="icon">
            <iconset resource="../../../../app/resources/resources.qrc">
-            <normaloff>:/icons/distortion-rotation.png</normaloff>
-            <normalon>:/icons/distortion-rotation-selected.png</normalon>:/icons/distortion-rotation.png</iconset>
+            <normaloff>:/icons/distortion-rotation.png</normaloff>:/icons/distortion-rotation.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -135,8 +133,7 @@ Perspective correction.</string>
           </property>
           <property name="icon">
            <iconset resource="../../../../app/resources/resources.qrc">
-            <normaloff>:/icons/distortion-perspective.png</normaloff>
-            <normalon>:/icons/distortion-perspective-selected.png</normalon>:/icons/distortion-perspective.png</iconset>
+            <normaloff>:/icons/distortion-perspective.png</normaloff>:/icons/distortion-perspective.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -163,8 +160,7 @@ Perspective correction.</string>
           </property>
           <property name="icon">
            <iconset resource="../../../../app/resources/resources.qrc">
-            <normaloff>:/icons/distortion-warp.png</normaloff>
-            <normalon>:/icons/distortion-warp-selected.png</normalon>:/icons/distortion-warp.png</iconset>
+            <normaloff>:/icons/distortion-warp.png</normaloff>:/icons/distortion-warp.png</iconset>
           </property>
           <property name="iconSize">
            <size>
