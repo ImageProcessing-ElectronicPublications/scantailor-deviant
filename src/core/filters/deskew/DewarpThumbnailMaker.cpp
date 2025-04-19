@@ -52,7 +52,7 @@ DewarpThumbnailMaker::makeThumbnail(QImage const& image, QSize const& max_thumb_
             downscaled_img_rect.width(),
             downscaled_img_rect.height()
         ),
-        QColor(255,255,255)
+        QColor(255,255,255, 0)
     ).convertToFormat(QImage::Format_ARGB32);
 }
 

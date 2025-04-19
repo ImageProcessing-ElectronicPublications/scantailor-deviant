@@ -495,7 +495,6 @@ Task::processPerspectiveDistortion(
 
     if (m_ptrNextTask)
     {
-
         QRectF const transformed_rectF = perspective_transform.transformedCropArea().boundingRect();
         QRect const transformed_rect(
             transformed_rectF.left(),
@@ -507,7 +506,7 @@ Task::processPerspectiveDistortion(
         QImage transformed_image = perspective_transform.materialize(
             data.origImage(),
             transformed_rect,
-            QColor(255,255,255)
+            QColor(255, 255, 255, 0)
         );
 
         if (data.xform().preRotation().toDegrees() == 0)
@@ -684,7 +683,7 @@ Task::processWarpDistortion(
         QImage transformed_image = dewarping_transform.materialize(
             data.origImage(),
             transformed_rect,
-            QColor(255, 255, 255)
+            QColor(255, 255, 255, 0)
         );
 
         if (data.xform().preRotation().toDegrees() == 0)
