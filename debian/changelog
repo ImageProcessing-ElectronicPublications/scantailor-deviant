@@ -1,4 +1,15 @@
-scantailor-deviant (0.2.14-0ubuntu1) bionic; urgency=medium
+scantailor-deviant (0.2.15-0ubuntu1) bionic; urgency=medium
+
+  * New dewarping model
+  * New Gatos threshold at output stage
+  * Independent thresholds settings
+  * Zoom all by double click
+  * New dark_blue style, fix old breeze and ubuntu styles
+
+ -- noobie-iv <noobie-iv@mail.ru>  Sat, 19 Apr 2025 16:00:00 +0300
+ -- zvezdochiot <mykaralw@yandex.ru>  Sat, 19 Apr 2025 16:00:00 +0300
+
+scantailor-universal (0.2.14-0ubuntu1) bionic; urgency=medium
 
   * New thresholds at output stage
   * Order by dewarping mode at output stage
@@ -7,7 +18,7 @@ scantailor-deviant (0.2.14-0ubuntu1) bionic; urgency=medium
 
  -- Alexander Trufanov <trufanovan@gmail.com>  Fri, 18 Aug 2023 16:00:00 +0300
 
-scantailor-deviant (0.2.13-0ubuntu1) bionic; urgency=medium
+scantailor-universal (0.2.13-0ubuntu1) bionic; urgency=medium
 
   * Settings: keep ICC profile of original image
     (off by default, req Ubuntu 19.04+, libexiv2-dev >= 0.26)
@@ -16,7 +27,7 @@ scantailor-deviant (0.2.13-0ubuntu1) bionic; urgency=medium
 
  -- Alexander Trufanov <trufanovan@gmail.com>  Sun, 17 Oct 2021 17:00:00 +0300
 
-scantailor-deviant (0.2.12-0ubuntu1) bionic; urgency=medium
+scantailor-universal (0.2.12-0ubuntu1) bionic; urgency=medium
 
   * Basic support for app styling
   * Use multithreading while exporting images
@@ -24,7 +35,7 @@ scantailor-deviant (0.2.12-0ubuntu1) bionic; urgency=medium
 
  -- Alexander Trufanov <trufanovan@gmail.com>  Tue, 20 Apr 2021 19:00:00 +0300
 
-scantailor-deviant (0.2.11-0ubuntu1) bionic; urgency=medium
+scantailor-universal (0.2.11-0ubuntu1) bionic; urgency=medium
 
   * Fix a bug
   * Experimental support of importing JPEG 2000 (*.jp2) images via libopenjp2
@@ -32,7 +43,7 @@ scantailor-deviant (0.2.11-0ubuntu1) bionic; urgency=medium
 
  -- Alexander Trufanov <trufanovan@gmail.com>  Sat, 27 Feb 2021 13:15:00 +0300
 
-scantailor-deviant (0.2.10-0ubuntu1) bionic; urgency=medium
+scantailor-universal (0.2.10-0ubuntu1) bionic; urgency=medium
 
   * Multiple bugfixes
   * Separate settings for b/w and color tiff compression methods
@@ -40,7 +51,7 @@ scantailor-deviant (0.2.10-0ubuntu1) bionic; urgency=medium
 
  -- Alexander Trufanov <trufanovan@gmail.com>  Sat, 6 Feb 2021 10:00:00 +0300
 
-scantailor-deviant (0.2.9-0ubuntu1) bionic; urgency=medium
+scantailor-universal (0.2.9-0ubuntu1) bionic; urgency=medium
 
   * Ellipse zones in Output processing stage
   * Allow to optionally remove input files too in pages remove dialog
@@ -49,7 +60,7 @@ scantailor-deviant (0.2.9-0ubuntu1) bionic; urgency=medium
 
  -- Alexander Trufanov <trufanovan@gmail.com>  Fri, 14 Nov 2020 22:50:00 +0300
 
-scantailor-deviant (0.2.8-0ubuntu1) bionic; urgency=medium
+scantailor-universal (0.2.8-0ubuntu1) bionic; urgency=medium
 
   * First release on launchpad
 
