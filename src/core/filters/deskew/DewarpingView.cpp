@@ -35,7 +35,9 @@ DewarpingView::DewarpingView(
     QImage const& image, QImage const& downscaled_image,
     ImageTransformation const& xform,
     dewarping::DistortionModel const& distortion_model,
-    dewarping::DepthPerception const& depth_perception,
+    dewarping::FovParams const& fov_params,
+    dewarping::FrameParams const& frame_params,
+    dewarping::BendParams const& bend_params,
     bool fixed_number_of_control_points)
     : ImageViewBase(
         image, downscaled_image,
@@ -46,7 +48,9 @@ DewarpingView::DewarpingView(
         Margins(5.0, 5.0, 5.0, 5.0)
       )
     , m_distortionModel(distortion_model)
-    , m_depthPerception(depth_perception)
+    , m_fovParams(fov_params)
+    , m_frameParams(frame_params)
+    , m_bendParams(bend_params)
     , m_dragHandler(*this)
     , m_zoomHandler(*this)
 {
@@ -126,7 +130,7 @@ DewarpingView::~DewarpingView()
 void
 DewarpingView::initNewSpline(XSpline& spline, QPointF const& p1, QPointF const& p2)
 {
-    int const num_points = 4;
+    int const num_points = QSettings().value(_key_dewarping_spline_points, _key_dewarping_spline_points_def).toInt();
     QLineF const line(p1, p2);
     spline.appendControlPoint(line.p1(), 0);
     if (num_points > 2)
@@ -226,9 +230,23 @@ DewarpingView::curvatureAwareControlPointPositioning(
 }
 
 void
-DewarpingView::depthPerceptionChanged(double val)
+DewarpingView::fovParamsChanged(dewarping::FovParams const& fov_params)
 {
-    m_depthPerception.setValue(val);
+    m_fovParams = fov_params;
+    update();
+}
+
+void
+DewarpingView::frameParamsChanged(dewarping::FrameParams const& frame_params)
+{
+    m_frameParams = frame_params;
+    update();
+}
+
+void
+DewarpingView::bendParamsChanged(dewarping::BendParams const& bend_params)
+{
+    m_bendParams = bend_params;
     update();
 }
 
@@ -261,7 +279,7 @@ DewarpingView::onPaint(QPainter& painter, InteractionState const& interaction)
             Utils::buildWarpVisualization(
                 m_distortionModel.topCurve().polyline(),
                 m_distortionModel.bottomCurve().polyline(),
-                m_depthPerception,
+                m_fovParams, m_frameParams, m_bendParams,
                 num_horizontal_curves, num_vertical_lines,
                 horizontal_curves, vertical_lines
             );

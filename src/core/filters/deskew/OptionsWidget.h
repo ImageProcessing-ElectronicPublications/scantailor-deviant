@@ -19,7 +19,7 @@
 #ifndef DESKEW_OPTIONSWIDGET_H_
 #define DESKEW_OPTIONSWIDGET_H_
 
-#include "ui_DeskewOptionsWidget.h"
+#include "ui/ui_DeskewOptionsWidget.h"
 #include "FilterOptionsWidget.h"
 #include "DistortionType.h"
 #include "IntrusivePtr.h"
@@ -49,7 +49,14 @@ public:
 signals:
     void manualDeskewAngleSet(double degrees);
 
-    void depthPerceptionSetByUser(double depth_perception);
+    void fovParamsSetByUser(dewarping::FovParams const& params);
+
+    void frameParamsSetByUser(dewarping::FrameParams const& params);
+
+    void bendParamsSetByUser(dewarping::BendParams const& params);
+
+    void sizeParamsSetByUser(dewarping::SizeParams const& params);
+
 public slots:
     void manualDeskewAngleSetExternally(double degrees);
 
@@ -68,33 +75,116 @@ private slots:
 
     void warpDistortionToggled(bool checked);
 
-    void spinBoxValueChanged(double skew_degrees);
+    void angleSpinBoxValueChanged(double skew_degrees);
 
     void modeChanged(bool auto_mode);
 
-    void depthPerceptionSliderMoved(int value);
-
-    void depthPerceptionSliderReleased();
-
     void showApplyDistortionTypeDialog();
+
+    void showApplyModeDialog();
+
+    void showApplyFovParamsDialog();
+
+    void showApplyFrameParamsDialog();
+
+    void showApplyBendParamsDialog();
+
+    void showApplySizeParamsDialog();
 
     void distortionTypeAppliedTo(std::set<PageId> const& pages);
 
     void distortionTypeAppliedToAllPages(std::set<PageId> const& pages);
 
-    void showApplyDepthPerceptionDialog();
+    void modeAppliedTo(std::set<PageId> const& pages);
 
-    void depthPerceptionAppliedTo(std::set<PageId> const& pages);
+    void modeAppliedToAllPages(std::set<PageId> const& pages);
 
-    void depthPerceptionAppliedToAllPages(std::set<PageId> const& pages);
+    void fovParamsAppliedTo(std::set<PageId> const& pages);
+
+    void fovParamsAppliedToAllPages(std::set<PageId> const& pages);
+
+    void frameParamsAppliedTo(std::set<PageId> const& pages);
+
+    void frameParamsAppliedToAllPages(std::set<PageId> const& pages);
+
+    void bendParamsAppliedTo(std::set<PageId> const& pages);
+
+    void bendParamsAppliedToAllPages(std::set<PageId> const& pages);
+
+    void sizeParamsAppliedTo(std::set<PageId> const& pages);
+
+    void sizeParamsAppliedToAllPages(std::set<PageId> const& pages);
+
+    void fovAutoManualModeChanged(bool auto_mode);
+
+    void fovSliderMoved(int value);
+
+    void fovSliderReleased();
+
+    void fovMinSpinBoxValueChanged(double fov_min_new);
+
+    void fovSpinBoxValueChanged(double fov_new);
+
+    void fovMaxSpinBoxValueChanged(double fov_max_new);
+
+    void frameAutoManualModeChanged(bool auto_mode);
+
+    void frameWidthSpinBoxValueChanged(double width_new);
+
+    void frameHeightSpinBoxValueChanged(double height_new);
+
+    void frameCenterXSpinBoxValueChanged(double center_x_new);
+
+    void frameCenterYSpinBoxValueChanged(double center_y_new);
+
+    void bendAutoManualModeChanged(bool auto_mode);
+
+    void bendSliderMoved(int value);
+
+    void bendSliderReleased();
+
+    void bendMinSpinBoxValueChanged(double bend_min_new);
+
+    void bendSpinBoxValueChanged(double bend_new);
+
+    void bendMaxSpinBoxValueChanged(double bend_max_new);
+
+    void sizeModeComboBoxIndexChanged(int idx);
+
+    void sizeWidthSpinBoxValueChanged(double width_new);
+
+    void sizeHeightSpinBoxValueChanged(double height_new);
+
+    void sizeDistanceSpinBoxValueChanged(double distance_new);
+
 private:
     void setupDistortionTypeButtons();
 
-    void hideDistortionDependentUiElements();
+    void disableDistortionDependentUiElements();
+
+    void enableDistortionDependentUiElements();
 
     void setupUiForDistortionType(DistortionType::Type type);
 
     void updateModeIndication(AutoManualMode mode);
+
+    void preUpdateFovPanel(dewarping::FovParams const& fov_params);
+
+    void postUpdateFovPanel(dewarping::FovParams const& fov_params);
+
+    void preUpdateFramePanel(dewarping::FrameParams const& frame_params);
+
+    void postUpdateFramePanel(dewarping::FrameParams const& frame_params);
+
+    void preUpdateBendPanel(dewarping::BendParams const& bend_params);
+
+    void postUpdateBendPanel(dewarping::BendParams const& bend_params);
+
+    void preUpdateSizePanel(dewarping::SizeParams const& size_params);
+
+    void postUpdateSizePanel(dewarping::SizeParams const& size_params);
+
+    void updateAutoValuesOnPanels();
 
     void setSpinBoxUnknownState();
 
@@ -104,9 +194,13 @@ private:
 
     static double degreesToSpinBox(double degrees);
 
-    static int depthPerceptionToSlider(double depth_perception);
+    static int fovToSlider(double fov);
 
-    static double sliderToDepthPerception(int slider_value);
+    static double sliderToFov(int slider_value);
+
+    static int bendToSlider(double bend);
+
+    static double sliderToBend(int slider_value);
 
     static double const MAX_ANGLE;
 

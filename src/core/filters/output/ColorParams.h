@@ -64,6 +64,11 @@ public:
         m_colorGrayscaleOptions = opt;
     }
 
+    BlackWhiteOptions& blackWhiteOptions()
+    {
+        return m_bwOptions;
+    }
+
     BlackWhiteOptions const& blackWhiteOptions() const
     {
         return m_bwOptions;

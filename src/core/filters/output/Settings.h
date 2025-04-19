@@ -32,6 +32,7 @@
 #include <QMutex>
 #include <map>
 #include <memory>
+#include <vector>
 //begin of modified by monday2000
 //Picture_Shape
 #include "Params.h"
@@ -61,6 +62,8 @@ public:
     void setParams(PageId const& page_id, Params const& params);
 
     void setColorParams(PageId const& page_id, ColorParams const& prms, ColorParamsApplyFilter const& filter = ColorParamsApplyFilter::CopyAll);
+
+    void setColorParams(PageId const& page_id, ColorParams const& prms, std::vector<ThresholdFilter> const& thresholds, bool set_foreground);
 
     void setDpi(PageId const& page_id, Dpi const& dpi);
 

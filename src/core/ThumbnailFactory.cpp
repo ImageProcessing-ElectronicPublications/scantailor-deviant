@@ -61,7 +61,7 @@ ThumbnailFactory::get(PageInfo const& page_info)
 {
     Collector collector(m_ptrPixmapCache, m_maxSize);
     m_ptrTask->process(page_info, &collector);
-    return std::move(collector.retrieveThumbnail());
+    return collector.retrieveThumbnail();
 }
 
 /*======================= ThumbnailFactory::Collector ======================*/

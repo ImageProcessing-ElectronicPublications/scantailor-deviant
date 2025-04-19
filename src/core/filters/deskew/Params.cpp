@@ -105,7 +105,113 @@ Params::takeManualSettingsFrom(Params const& other)
     // These settings are specified manually even in automatic mode,
     // so we want to preserve them after a dependency mismatch.
     m_distortionType = other.distortionType();
-    m_dewarpingParams.setDepthPerception(other.dewarpingParams().depthPerception());
+
+    if (other.rotationParams().mode() == MODE_MANUAL)
+    {
+        m_rotationParams.setMode(MODE_MANUAL);
+    }
+
+    if (other.perspectiveParams().mode() == MODE_MANUAL)
+    {
+        m_perspectiveParams.setMode(MODE_MANUAL);
+    }
+
+    if (other.perspectiveParams().fovParams().mode() == MODE_MANUAL)
+    {
+        m_perspectiveParams.setFovParams(other.perspectiveParams().fovParams());
+    }
+    else
+    {
+        dewarping::FovParams& fov_pararms = m_perspectiveParams.fovParams();
+        dewarping::FovParams const& other_fov_pararms = other.perspectiveParams().fovParams();
+        fov_pararms.setFovMin(other_fov_pararms.fovMin());
+        fov_pararms.setFovMax(other_fov_pararms.fovMax());
+    }
+
+    if (other.perspectiveParams().frameParams().mode() == MODE_MANUAL)
+    {
+        m_perspectiveParams.setFrameParams(other.perspectiveParams().frameParams());
+    }
+
+    switch (other.perspectiveParams().sizeParams().mode())
+    {
+    case dewarping::SizeMode::BY_AREA:
+        break;
+    case dewarping::SizeMode::FIT:
+        m_perspectiveParams.sizeParams().setMode(dewarping::SizeMode::FIT);
+        m_perspectiveParams.sizeParams().setWidth(other.perspectiveParams().sizeParams().width());
+        m_perspectiveParams.sizeParams().setHeight(other.perspectiveParams().sizeParams().height());
+        break;
+    case dewarping::SizeMode::STRETCH:
+        m_perspectiveParams.sizeParams().setMode(dewarping::SizeMode::STRETCH);
+        m_perspectiveParams.sizeParams().setWidth(other.perspectiveParams().sizeParams().width());
+        m_perspectiveParams.sizeParams().setHeight(other.perspectiveParams().sizeParams().height());
+        break;
+    case dewarping::SizeMode::BY_DISTANCE:
+        m_perspectiveParams.sizeParams().setMode(dewarping::SizeMode::BY_DISTANCE);
+        m_perspectiveParams.sizeParams().setDistance(other.perspectiveParams().sizeParams().distance());
+        break;
+    default:
+        assert(!"Unreachable");
+        break;
+    }
+
+    if (other.dewarpingParams().mode() == MODE_MANUAL)
+    {
+        m_dewarpingParams.setMode(MODE_MANUAL);
+    }
+
+    if (other.dewarpingParams().fovParams().mode() == MODE_MANUAL)
+    {
+        m_dewarpingParams.setFovParams(other.dewarpingParams().fovParams());
+    }
+    else
+    {
+        dewarping::FovParams& fov_pararms = m_dewarpingParams.fovParams();
+        dewarping::FovParams const& other_fov_pararms = other.dewarpingParams().fovParams();
+        fov_pararms.setFovMin(other_fov_pararms.fovMin());
+        fov_pararms.setFovMax(other_fov_pararms.fovMax());
+    }
+
+    if (other.dewarpingParams().frameParams().mode() == MODE_MANUAL)
+    {
+        m_dewarpingParams.setFrameParams(other.dewarpingParams().frameParams());
+    }
+
+    if (other.dewarpingParams().bendParams().mode() == MODE_MANUAL)
+    {
+        m_dewarpingParams.setBendParams(other.dewarpingParams().bendParams());
+    }
+    else
+    {
+        dewarping::BendParams& bend_pararms = m_dewarpingParams.bendParams();
+        dewarping::BendParams const& other_bend_pararms = other.dewarpingParams().bendParams();
+        bend_pararms.setBendMin(other_bend_pararms.bendMin());
+        bend_pararms.setBendMax(other_bend_pararms.bendMax());
+    }
+
+    switch (other.dewarpingParams().sizeParams().mode())
+    {
+    case dewarping::SizeMode::BY_AREA:
+        break;
+    case dewarping::SizeMode::FIT:
+        m_dewarpingParams.sizeParams().setMode(dewarping::SizeMode::FIT);
+        m_dewarpingParams.sizeParams().setWidth(other.dewarpingParams().sizeParams().width());
+        m_dewarpingParams.sizeParams().setHeight(other.dewarpingParams().sizeParams().height());
+        break;
+    case dewarping::SizeMode::STRETCH:
+        m_dewarpingParams.sizeParams().setMode(dewarping::SizeMode::STRETCH);
+        m_dewarpingParams.sizeParams().setWidth(other.dewarpingParams().sizeParams().width());
+        m_dewarpingParams.sizeParams().setHeight(other.dewarpingParams().sizeParams().height());
+        break;
+    case dewarping::SizeMode::BY_DISTANCE:
+        m_dewarpingParams.sizeParams().setMode(dewarping::SizeMode::BY_DISTANCE);
+        m_dewarpingParams.sizeParams().setDistance(other.dewarpingParams().sizeParams().distance());
+        break;
+    default:
+        assert(!"Unreachable");
+        break;
+    }
 }
 
 } // namespace deskew

@@ -52,7 +52,10 @@ public:
         return -1;
     }
 
-    virtual void selectPageOrder(int option) {}
+    virtual void selectPageOrder(int option)
+    {
+        Q_UNUSED(option);
+    }
 
     virtual std::vector<PageOrderOption> pageOrderOptions() const
     {
@@ -71,7 +74,10 @@ public:
     virtual void loadSettings(
         ProjectReader const& reader, QDomElement const& filters_el) = 0;
 
-    virtual void invalidateSetting(PageId const& page) {}
+    virtual void invalidateSetting(PageId const& page)
+    {
+        Q_UNUSED(page);
+    }
 };
 
 #endif

@@ -86,10 +86,10 @@
 #include "LoadFileTask.h"
 #include "CompositeCacheDrivenTask.h"
 #include "ScopedIncDec.h"
-#include "ui_AboutDialog.h"
-#include "ui_RemovePagesDialog.h"
-#include "ui_BatchProcessingLowerPanel.h"
-#include "ui_StartBatchProcessingDialog.h"
+#include "ui/ui_AboutDialog.h"
+#include "ui/ui_RemovePagesDialog.h"
+#include "ui/ui_BatchProcessingLowerPanel.h"
+#include "ui/ui_StartBatchProcessingDialog.h"
 #include "config.h"
 #include "version.h"
 #include "settings/globalstaticsettings.h"
@@ -1999,6 +1999,7 @@ MainWindow::ExportOutput(exporting::ExportSettings settings)
 // Checking whether all the output thumbnails don't have a question mark on them
 
     m_ptrThumbSequence_export.reset(new ThumbnailSequence(m_maxLogicalThumbSize));
+    m_ptrThumbSequence_export->setThumbnailViewStyle(thumbView->qssStyle());
 
     if (m_ptrThumbnailCache.get()) {
         IntrusivePtr<CompositeCacheDrivenTask> const task(

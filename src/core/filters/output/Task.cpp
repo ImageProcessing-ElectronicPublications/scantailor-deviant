@@ -48,6 +48,7 @@
 #include "Utils.h"
 #include "ImageTransformation.h"
 #include "ThumbnailPixmapCache.h"
+#include "ThumbnailMakerBase.h"
 #include "DebugImages.h"
 #include "OutputGenerator.h"
 #include "TiffWriter.h"
@@ -187,6 +188,8 @@ Task::process(
     TaskStatus const& status, FilterData const& data,
     QPolygonF const& content_rect_phys, QString const& thumb_version)
 {
+    Q_UNUSED(thumb_version);
+
     status.throwIfCancelled();
 
     Params params(m_ptrSettings->getParams(m_pageId));
@@ -497,7 +500,8 @@ Task::process(
             m_ptrSettings->setOutputParams(m_pageId, out_params);
         }
 
-        m_ptrThumbnailCache->recreateThumbnail(ImageId(out_file_path), QString(), out_img);
+        m_ptrThumbnailCache->recreateThumbnail(
+            ImageId(out_file_path), QString(), out_img, ThumbnailMakerBase());
     }
 
     DespeckleState const despeckle_state(
@@ -625,7 +629,7 @@ Task::UiUpdater::updateUI(FilterUiInterface* ui)
     if (QSettings().value(_key_output_show_orig_on_space, _key_output_show_orig_on_space_def).toBool()) {
         alt_image_ptr.reset(getAlternativeImage());
         if (alt_image_ptr) {
-            image_view->setAlternativeImage(alt_image_ptr, shared_ptr<QPixmap>());
+            image_view->setAlternativeImage(alt_image_ptr, std::shared_ptr<QPixmap>());
             alt_downscaled_pixmap_ptr = image_view->getAlternativePixmap();
         }
     }

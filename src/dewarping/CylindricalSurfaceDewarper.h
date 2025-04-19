@@ -19,9 +19,11 @@
 #ifndef DEWARPING_CYLINDRICAL_SURFACE_DEWARPER_H_
 #define DEWARPING_CYLINDRICAL_SURFACE_DEWARPER_H_
 
-#include "STEX_HomographicTransform.h"
+#include "HomographicTransform.h"
+#include "PerspectiveTransform.h"
 #include "PolylineIntersector.h"
 #include "ArcLengthMapper.h"
+#include "ImageSize.h"
 #include <boost/array.hpp>
 #include <vector>
 #include <utility>
@@ -30,6 +32,11 @@
 
 namespace dewarping
 {
+
+class FovParams;
+class FrameParams;
+class BendParams;
+class SizeParams;
 
 /**
  * @brief A model for mapping a curved quadrilateral into a rectangle.
@@ -59,16 +66,12 @@ public:
             : imgLine(img_line), pln2img(H) {}
     };
 
-    /**
-     * \param depth_perception The distance from the camera to the plane formed
-     *        by two outer generatrixes, in some unknown units :)
-     *        This model assumes that plane is perpendicular to the camera direction.
-     *        In practice, just use values between 1 and 3.
-     */
     CylindricalSurfaceDewarper(
         std::vector<QPointF> const& img_directrix1,
         std::vector<QPointF> const& img_directrix2,
-        double depth_perception);
+        FovParams const& fov_params,
+        FrameParams const& frame_params,
+        BendParams const& bend_params);
 
     /**
      * \brief Returns the arc length of a directrix, assuming its
@@ -78,6 +81,21 @@ public:
     {
         return m_directrixArcLength;
     }
+
+    double fov() const
+    {
+        return m_fov;
+    }
+
+    double bend() const
+    {
+        return m_bend;
+    }
+
+    ImageSize imageSize(
+        std::vector<QPointF> const& img_directrix1,
+        std::vector<QPointF> const& img_directrix2,
+        SizeParams const& size_params) const;
 
     Generatrix mapGeneratrix(double crv_x, State& state) const;
 
@@ -103,32 +121,27 @@ public:
      */
     QPointF mapToWarpedSpace(QPointF const& crv_pt) const;
 private:
-    class CoupledPolylinesIterator;
-
     static HomographicTransform<2, double> calcPlnToImgHomography(
         std::vector<QPointF> const& img_directrix1,
         std::vector<QPointF> const& img_directrix2);
 
-    static double calcPlnStraightLineY(
-        std::vector<QPointF> const& img_directrix1,
-        std::vector<QPointF> const& img_directrix2,
-        HomographicTransform<2, double> pln2img,
-        HomographicTransform<2, double> img2pln);
-
-    static HomographicTransform<2, double> fourPoint2DHomography(
-        boost::array<std::pair<QPointF, QPointF>, 4> const& pairs);
-
-    static HomographicTransform<1, double> threePoint1DHomography(
-        boost::array<std::pair<double, double>, 3> const& pairs);
+    PerspectiveTransform calcMdlToImgTransform(
+        HomographicTransform<2, double> const& pln2img,
+        FovParams const& fov_params,
+        FrameParams const& frame_params);
 
     void initArcLengthMapper(
         std::vector<QPointF> const& img_directrix1,
-        std::vector<QPointF> const& img_directrix2);
+        std::vector<QPointF> const& img_directrix2,
+        BendParams const& bend_params);
 
     HomographicTransform<2, double> m_pln2img;
     HomographicTransform<2, double> m_img2pln;
-    double m_depthPerception;
-    double m_plnStraightLineY;
+    PerspectiveTransform m_mdl2img;
+    double m_fov;
+    double m_bend;
+    double m_Sx;
+    double m_Sy;
     double m_directrixArcLength;
     ArcLengthMapper m_arcLengthMapper;
     PolylineIntersector m_imgDirectrix1Intersector;

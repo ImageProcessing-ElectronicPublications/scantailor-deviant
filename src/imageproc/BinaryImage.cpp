@@ -579,7 +579,7 @@ static const int MultiplyDeBruijnBitPosition2[32] = {
     8, 12, 20, 28, 15, 17, 24, 7, 19, 27, 23, 6, 26, 5, 4, 31
 };
 
-inline const int countConsecutiveZeroBitsTrailing(uint32_t v)
+inline int countConsecutiveZeroBitsTrailing(uint32_t v)
 {
     /* aka "Count the consecutive zero bits (trailing) on the right with multiply and lookup"
        from Bit Twiddling Hacks By Sean Eron Anderson
@@ -588,7 +588,7 @@ inline const int countConsecutiveZeroBitsTrailing(uint32_t v)
     return MultiplyDeBruijnBitPosition[((uint32_t)((v & -signed(v)) * 0x077CB531U)) >> 27];
 }
 
-inline const int findPositionOfTheHighestBitSet(uint32_t v)
+inline int findPositionOfTheHighestBitSet(uint32_t v)
 {
     /* aka "Find the log base 2 of an N-bit integer in O(lg(N)) operations with multiply and lookup"
        from Bit Twiddling Hacks By Sean Eron Anderson

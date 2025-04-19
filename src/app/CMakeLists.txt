@@ -82,7 +82,6 @@ IF (WIN32)
                 scantailor-deviant WIN32 ${gui_only_sources} ${resource_sources} ${win32_resource_file}
         )
 ELSEIF(APPLE)
-
         set( ICON_NAME "ScanTailorDeviant.icns" )
         set( ICON_PATH "${PROJECT_SOURCE_DIR}/src/packaging/osx/${ICON_NAME}" )
         set_source_files_properties( ${ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
@@ -90,10 +89,10 @@ ELSEIF(APPLE)
         ADD_EXECUTABLE(
                 scantailor-deviant MACOSX_BUNDLE ${gui_only_sources} ${resource_sources} ${ICON_PATH}
         )
-        set_target_properties(scantailor-deviant PROPERTIES MACOSX_BUNDLE_INFO_PLIST
-                                  ${PROJECT_SOURCE_DIR}/src/packaging/osx/Info.plist.in)
-
-
+        set_target_properties(scantailor-deviant PROPERTIES
+                MACOSX_BUNDLE_INFO_PLIST ${PROJECT_SOURCE_DIR}/src/packaging/osx/Info.plist.in
+                INSTALL_RPATH "@executable_path/../Frameworks"
+        )
 ELSE()
         ADD_EXECUTABLE(
                 scantailor-deviant ${gui_only_sources} ${resource_sources} ${win32_resource_file}
@@ -106,18 +105,22 @@ TARGET_LINK_LIBRARIES(
         dewarping zones interaction imageproc math foundation exporting
 )
 
+IF(OPENMP_FOUND)
+        TARGET_LINK_LIBRARIES(scantailor-deviant OpenMP::OpenMP_CXX)
+ENDIF()
+
 ADD_DEPENDENCIES(scantailor-deviant fix_orientation page_split deskew select_content page_layout output stcore
         dewarping zones interaction imageproc math foundation)
 
 
-QT5_USE_MODULES(scantailor-deviant Widgets Xml Svg ${MAYBE_QT_OPENGL_MODULE})
+TARGET_LINK_LIBRARIES(scantailor-deviant Qt5::Widgets Qt5::Xml Qt5::Svg ${MAYBE_QT_OPENGL_MODULE})
 
 IF(EXTRA_LIBS)
         TARGET_LINK_LIBRARIES(scantailor-deviant ${EXTRA_LIBS})
 ENDIF()
 
 IF(APPLE)
-        INSTALL(TARGETS scantailor-deviant BUNDLE DESTINATION . RUNTIME DESTINATION bin)
+        INSTALL(TARGETS scantailor-deviant BUNDLE DESTINATION .)
 ELSEIF(WIN32)
         INSTALL(TARGETS scantailor-deviant RUNTIME DESTINATION .)
 ELSE(APPLE)

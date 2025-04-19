@@ -97,12 +97,16 @@ DewarpingImageTransform::DewarpingImageTransform(
     QPolygonF const& orig_crop_area,
     std::vector<QPointF> const& top_curve,
     std::vector<QPointF> const& bottom_curve,
-    DepthPerception const& depth_perception)
+    FovParams const& fov_params,
+    FrameParams const& frame_params,
+    BendParams const& bend_params,
+    SizeParams const& size_params)
     :	m_origSize(orig_size)
     ,	m_topPolyline(top_curve)
     ,	m_bottomPolyline(bottom_curve)
-    ,	m_depthPerception(depth_perception)
-    ,	m_dewarper(top_curve, bottom_curve, depth_perception.value())
+    ,   m_sizeParams(size_params)
+    ,	m_dewarper(top_curve, bottom_curve,
+                   fov_params, frame_params, bend_params)
     ,	m_intrinsicScaleX(1.0)
     ,	m_intrinsicScaleY(1.0)
     ,	m_userScaleX(1.0)
@@ -115,30 +119,6 @@ DewarpingImageTransform::DewarpingImageTransform(
 
 DewarpingImageTransform::~DewarpingImageTransform()
 {
-}
-
-QString
-DewarpingImageTransform::fingerprint() const
-{
-    RoundingHasher hash(QCryptographicHash::Sha1);
-
-    hash << "DewarpingImageTransform";
-    hash << m_origSize << m_origCropArea << m_depthPerception.value();
-
-    for (QPointF const& pt : m_topPolyline)
-    {
-        hash << pt;
-    }
-
-    for (QPointF const& pt : m_bottomPolyline)
-    {
-        hash << pt;
-    }
-
-    hash << INTRINSIC_SCALE_ALGO_VERSION;
-    hash << m_userScaleX << m_userScaleY;
-
-    return QString::fromUtf8(hash.result().toHex());
 }
 
 std::unique_ptr<AbstractImageTransform>
@@ -163,6 +143,16 @@ DewarpingImageTransform::transformedCropArea() const
     return poly;
 }
 
+ImageSize
+DewarpingImageTransform::imageSize() const
+{
+    return m_dewarper.imageSize(
+        m_topPolyline,
+        m_bottomPolyline,
+        m_sizeParams
+    );
+}
+
 QTransform
 DewarpingImageTransform::scale(qreal xscale, qreal yscale)
 {
@@ -174,59 +164,12 @@ DewarpingImageTransform::scale(qreal xscale, qreal yscale)
     return scaling_transform;
 }
 
-AffineTransformedImage
-DewarpingImageTransform::toAffine(
-    QImage const& image, QColor const& outside_color) const
+DewarpingImageTransform
+DewarpingImageTransform::scaled(qreal xscale, qreal yscale) const
 {
-    assert(!image.isNull());
-
-    QPolygonF const transformed_crop_area(transformedCropArea());
-    QRectF const dewarped_rect(transformed_crop_area.boundingRect());
-    QSize const dst_size(dewarped_rect.toRect().size());
-    QRectF const model_domain(
-        -dewarped_rect.topLeft(),
-        QSizeF(m_intrinsicScaleX * m_userScaleX, m_intrinsicScaleY * m_userScaleY)
-    );
-    auto const minmax_densities = calcMinMaxDensities();
-
-    QImage const dewarped_image = RasterDewarper::dewarp(
-                                      image, dst_size, m_dewarper, model_domain, outside_color,
-                                      minmax_densities.first, minmax_densities.second
-                                  );
-
-    AffineImageTransform affine_transform(dst_size);
-    affine_transform.setOrigCropArea(
-        transformed_crop_area.translated(-dewarped_rect.topLeft())
-    );
-
-    // Translation is necessary to ensure that
-    // transformedCropArea() == toAffine().transformedCropArea()
-    affine_transform.setTransform(
-        QTransform().translate(dewarped_rect.x(), dewarped_rect.y())
-    );
-
-    return AffineTransformedImage(dewarped_image, affine_transform);
-}
-
-AffineImageTransform
-DewarpingImageTransform::toAffine() const
-{
-    QPolygonF const transformed_crop_area(transformedCropArea());
-    QRectF const dewarped_rect(transformed_crop_area.boundingRect());
-    QSize const dst_size(dewarped_rect.toRect().size());
-
-    AffineImageTransform affine_transform(dst_size);
-    affine_transform.setOrigCropArea(
-        transformed_crop_area.translated(-dewarped_rect.topLeft())
-    );
-
-    // Translation is necessary to ensure that
-    // transformedCropArea() == toAffine().transformedCropArea()
-    affine_transform.setTransform(
-        QTransform().translate(dewarped_rect.x(), dewarped_rect.y())
-    );
-
-    return affine_transform;
+    DewarpingImageTransform transform(*this);
+    transform.scale(xscale, yscale);
+    return transform;
 }
 
 QImage
@@ -238,11 +181,9 @@ DewarpingImageTransform::materialize(QImage const& image,
 
     QRectF model_domain(0, 0, m_intrinsicScaleX * m_userScaleX, m_intrinsicScaleY * m_userScaleY);
     model_domain.translate(-target_rect.topLeft());
-    auto const minmax_densities = calcMinMaxDensities();
 
     return RasterDewarper::dewarp(
-               image, target_rect.size(), m_dewarper, model_domain, outside_color,
-               minmax_densities.first, minmax_densities.second
+               image, target_rect.size(), m_dewarper, model_domain, outside_color
            );
 }
 
@@ -283,16 +224,6 @@ DewarpingImageTransform::postScale(QPointF const& pt) const
 }
 
 /**
- * m_intrinsicScale[XY] factors don't participate in transform fingerprint calculation
- * due to them being derived from the distortion model and associated problems with
- * RoundingHasher. Still, the way we derive them from the distortion model may change
- * in the future and we'd like to reflect such changes in transform fingerprint.
- * This value is to be incremented each time we change the algorithm used to calculate
- * the intrinsic scale factors.
- */
-int const DewarpingImageTransform::INTRINSIC_SCALE_ALGO_VERSION = 1;
-
-/**
  * Initializes m_intrinsicScaleX and m_intrinsicScaleY in such a way that pixel
  * density near the "closest to the camera" corner of dewarping quadrilateral matches
  * the corresponding pixel density in a transformed image. Since we don't know
@@ -308,86 +239,11 @@ int const DewarpingImageTransform::INTRINSIC_SCALE_ALGO_VERSION = 1;
 void
 DewarpingImageTransform::setupIntrinsicScale()
 {
-    // Fraction of width or height of dewarping quardilateral.
-    double const epsilon = 0.01;
+    ImageSize const image_size =
+        m_dewarper.imageSize(m_topPolyline, m_bottomPolyline, m_sizeParams);
 
-    Vector2d const top_left_p1(toVec(m_topPolyline.front()));
-    Vector2d const top_left_p2(toVec(m_dewarper.mapToWarpedSpace(QPointF(epsilon, 0))));
-    Vector2d const top_left_p3(toVec(m_dewarper.mapToWarpedSpace(QPointF(0, epsilon))));
-
-    Vector2d const top_right_p1(toVec(m_topPolyline.back()));
-    Vector2d const top_right_p2(toVec(m_dewarper.mapToWarpedSpace(QPointF(1 - epsilon, 0))));
-    Vector2d const top_right_p3(toVec(m_dewarper.mapToWarpedSpace(QPointF(1, epsilon))));
-
-    Vector2d const bottom_left_p1(toVec(m_bottomPolyline.front()));
-    Vector2d const bottom_left_p2(toVec(m_dewarper.mapToWarpedSpace(QPointF(epsilon, 1))));
-    Vector2d const bottom_left_p3(toVec(m_dewarper.mapToWarpedSpace(QPointF(0, 1 - epsilon))));
-
-    Vector2d const bottom_right_p1(toVec(m_bottomPolyline.back()));
-    Vector2d const bottom_right_p2(toVec(m_dewarper.mapToWarpedSpace(QPointF(1 - epsilon, 1))));
-    Vector2d const bottom_right_p3(toVec(m_dewarper.mapToWarpedSpace(QPointF(1, 1 - epsilon))));
-
-    Matrix2d corners[4];
-    corners[0] << top_left_p2 - top_left_p1, top_left_p3 - top_left_p1;
-    corners[1] << top_right_p2 - top_right_p1, top_right_p3 - top_right_p1;
-    corners[2] << bottom_left_p2 - bottom_left_p1, bottom_left_p3 - bottom_left_p1;
-    corners[3] << bottom_right_p2 - bottom_right_p1, bottom_right_p3 - bottom_right_p1;
-
-    // We assume a small square at a corner of a dewarped image maps
-    // to a lozenge-shaped area in warped coordinates. That's not necessarily
-    // the case, but let's assume it is. First of all, let's select a corner
-    // with the highest lozenge area.
-    int best_corner = 0;
-    double largest_area = -1;
-    for (int i = 0; i < 4; ++i)
-    {
-        double const area = fabs(corners[i].determinant());
-        if (area > largest_area)
-        {
-            largest_area = area;
-            best_corner = i;
-        }
-    }
-
-    // See the comments in the beginning of the function on how
-    // we define pixel densities.
-    double const warped_h_density = corners[best_corner].col(0).norm();
-    double const warped_v_density = corners[best_corner].col(1).norm();
-
-    // CylindricalSurfaceDewarper maps a curved quadrilateral into a unit square.
-    // Therefore, without post scaling, dewarped pixel density is exactly
-    // epsilon x epsilon.
-    double const dewarped_h_density = epsilon;
-    double const dewarped_v_density = epsilon;
-
-    // Now we are ready to calculate the initial scale.
-    // We still need to normalize the area though.
-    m_intrinsicScaleX = warped_h_density / dewarped_h_density;
-    m_intrinsicScaleY = warped_v_density / dewarped_v_density;
-
-    // Area of convex polygon formula taken from:
-    // http://mathworld.wolfram.com/PolygonArea.html
-    double area = 0.0;
-    QPointF prev_pt = m_bottomPolyline.front();
-
-    for (QPointF const pt : m_topPolyline)
-    {
-        area += prev_pt.x() * pt.y() - pt.x() * prev_pt.y();
-        prev_pt = pt;
-    }
-
-    for (QPointF const pt : boost::adaptors::reverse(m_bottomPolyline))
-    {
-        area += prev_pt.x() * pt.y() - pt.x() * prev_pt.y();
-        prev_pt = pt;
-    }
-
-    area = 0.5 * std::abs(area);
-
-    // m_intrinsicScaleX * s * m_intrinsicScaleY * s = area
-    double const s = std::sqrt(area / (m_intrinsicScaleX * m_intrinsicScaleY));
-    m_intrinsicScaleX *= s;
-    m_intrinsicScaleY *= s;
+    m_intrinsicScaleX = image_size.width;
+    m_intrinsicScaleY = image_size.height;
 }
 
 QPolygonF

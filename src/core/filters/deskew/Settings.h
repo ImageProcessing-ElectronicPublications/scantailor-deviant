@@ -31,11 +31,6 @@
 
 class AbstractRelinker;
 
-namespace dewarping
-{
-    class DepthPerception;
-}
-
 namespace deskew
 {
 
@@ -62,8 +57,45 @@ public:
     void setDistortionType(
         std::set<PageId> const& pages, DistortionType const& distortion_type);
 
-    void setDepthPerception(
-        std::set<PageId> const& pages, dewarping::DepthPerception const& depth_perception);
+    void setRotationMode(
+        std::set<PageId> const& pages,
+        AutoManualMode const& mode);
+
+    void setPerspectiveMode(
+        std::set<PageId> const& pages,
+        AutoManualMode const& mode);
+
+    void setPerspectiveFovParams(
+        std::set<PageId> const& pages,
+        dewarping::FovParams const& fov_params);
+
+    void setPerspectiveFrameParams(
+        std::set<PageId> const& pages,
+        dewarping::FrameParams const& frame_params);
+
+    void setPerspectiveSizeParams(
+        std::set<PageId> const& pages,
+        dewarping::SizeParams const& size_params);
+
+    void setDewarpingMode(
+        std::set<PageId> const& pages,
+        AutoManualMode const& mode);
+
+    void setDewarpingFovParams(
+        std::set<PageId> const& pages,
+        dewarping::FovParams const& fov_params);
+
+    void setDewarpingFrameParams(
+        std::set<PageId> const& pages,
+        dewarping::FrameParams const& frame_params);
+
+    void setDewarpingBendParams(
+        std::set<PageId> const& pages,
+        dewarping::BendParams const& bend_params);
+
+    void setDewarpingSizeParams(
+        std::set<PageId> const& pages,
+        dewarping::SizeParams const& size_params);
 private:
     typedef std::map<PageId, Params> PerPageParams;
 

@@ -18,7 +18,7 @@
 
 #include "OptionsWidget.h"
 
-#include "ChangeDpiWidget.h"
+#include "ChangeDpiDialog.h"
 #include "ApplyToDialog.h"
 #include "Settings.h"
 #include "Params.h"
@@ -31,6 +31,7 @@
 #include "config.h"
 #include "StatusBarProvider.h"
 #include "VirtualZoneProperty.h"
+#include "ThresholdsApplyWidget.h"
 #include <QtGlobal>
 #include <QVariant>
 #include <QColorDialog>
@@ -62,35 +63,41 @@ OptionsWidget::OptionsWidget(
     setupUi(this);
 
     thresholdMethodSelector->addItem(tr("Otsu"), OTSU);
-    thresholdMethodSelector->addItem(tr("Mean"), MEANDELTA);
-    thresholdMethodSelector->addItem(tr("Niblack"), NIBLACK);
-    thresholdMethodSelector->addItem(tr("Gatos"), GATOS);
     thresholdMethodSelector->addItem(tr("Sauvola"), SAUVOLA);
     thresholdMethodSelector->addItem(tr("Wolf"), WOLF);
-    thresholdMethodSelector->addItem(tr("Bradley"), BRADLEY);
-    thresholdMethodSelector->addItem(tr("EdgePlus"), EDGEPLUS);
-    thresholdMethodSelector->addItem(tr("BlurDiv"), BLURDIV);
-    thresholdMethodSelector->addItem(tr("EdgeDiv"), EDGEDIV);
-    thresholdMethodSelector->addItem(tr("MultiScale"), MSCALE);
+    thresholdMethodSelector->addItem(tr("Gatos"), GATOS);
 
     setDespeckleLevel(DESPECKLE_NORMAL);
 
-    thresholdSlider->setToolTip(QString::number(thresholdSlider->value()));
-    thresholdSlider->addAction(actionReset_to_default_value);
+    void on_thresholdOtsuSlider_valueChanged();
+
+    void on_thresholdSauvolaSlider_valueChanged();
+
+    void on_thresholdWolfSlider_valueChanged();
+
+    void on_thresholdGatosSlider_valueChanged();
+
+    thresholdOtsuSlider->setToolTip(QString::number(thresholdOtsuSlider->value()));
+    thresholdSauvolaSlider->setToolTip(QString::number(thresholdSauvolaSlider->value()));
+    thresholdWolfSlider ->setToolTip(QString::number(thresholdWolfSlider->value()));
+    thresholdGatosSlider->setToolTip(QString::number(thresholdGatosSlider->value()));
+
+    thresholdOtsuSlider->addAction(actionReset_to_default_value_otsu);
+    thresholdSauvolaSlider->addAction(actionReset_to_default_value_sauvola);
+    thresholdWolfSlider->addAction(actionReset_to_default_value_wolf);
+    thresholdGatosSlider->addAction(actionReset_to_default_value_gatos);
+
     QSettings _settings;
     bwForegroundOptions->setVisible(_settings.value(_key_output_foreground_layer_control_threshold, _key_output_foreground_layer_control_threshold_def).toBool());
     thresholdForegroundSlider->setToolTip(QString::number(thresholdForegroundSlider->value()));
-    thresholdForegroundSlider->addAction(actionReset_to_default_value_foeground);
+    thresholdForegroundSlider->addAction(actionReset_to_default_value_foreground);
     m_ignore_system_wheel_settings = _settings.value(_key_mouse_ignore_system_wheel_settings, _key_mouse_ignore_system_wheel_settings_def).toBool();
-    thresholdSlider->installEventFilter(this);
-    thresholdForegroundSlider->installEventFilter(this);
-    if (m_ignore_system_wheel_settings) {
-        despeckleSlider->installEventFilter(this);
-    }
 
-    m_menuMode.addAction(actionModeBW);
-    m_menuMode.addAction(actionModeColorOrGrayscale);
-    m_menuMode.addAction(actionModeMixed);
+    thresholdOtsuSlider->installEventFilter(this);
+    thresholdSauvolaSlider->installEventFilter(this);
+    thresholdWolfSlider->installEventFilter(this);
+    thresholdGatosSlider->installEventFilter(this);
+    thresholdForegroundSlider->installEventFilter(this);
 
     updateDpiDisplay();
     updateColorsDisplay();
@@ -102,8 +109,13 @@ OptionsWidget::OptionsWidget(
     );
 
     connect(
-        modeValue, SIGNAL(clicked(bool)),
-        this, SLOT(modeValueClicked())
+        applyDpiButton, SIGNAL(clicked(bool)),
+        this, SLOT(applyDpiButtonClicked())
+    );
+
+    connect(
+        modeSelector, SIGNAL(currentIndexChanged(int)),
+        this, SLOT(modeSelectorIndexChanged(int))
     );
 
     connect(
@@ -135,7 +147,6 @@ OptionsWidget::OptionsWidget(
         this, SLOT(equalizeIlluminationToggled(bool))
     );
 
-    despeckleSliderPanel->setVisible(false);
     connect(
         despeckleOffBtn, SIGNAL(clicked()),
         this, SLOT(despeckleOffSelected())
@@ -159,8 +170,20 @@ OptionsWidget::OptionsWidget(
     );
 
     connect(
-        thresholdSlider, &QSlider::sliderReleased,
-        this, &OptionsWidget::on_thresholdSlider_valueChanged
+        thresholdOtsuSlider, &QSlider::sliderReleased,
+        this, &OptionsWidget::on_thresholdOtsuSlider_valueChanged
+    );
+    connect(
+        thresholdSauvolaSlider, &QSlider::sliderReleased,
+        this, &OptionsWidget::on_thresholdSauvolaSlider_valueChanged
+    );
+    connect(
+        thresholdWolfSlider, &QSlider::sliderReleased,
+        this, &OptionsWidget::on_thresholdWolfSlider_valueChanged
+    );
+    connect(
+        thresholdGatosSlider, &QSlider::sliderReleased,
+        this, &OptionsWidget::on_thresholdGatosSlider_valueChanged
     );
 
     connect(
@@ -169,12 +192,34 @@ OptionsWidget::OptionsWidget(
     );
 
    connect(
-        thresholdWindowSize, SIGNAL(valueChanged(int)),
-        this, SLOT(thresholdWindowSizeChanged(int))
+        thresholdSauvolaWindowSize, SIGNAL(valueChanged(int)),
+        this, SLOT(thresholdSauvolaWindowSizeChanged(int))
     );
     connect(
-        thresholdCoef, SIGNAL(valueChanged(double)),
-        this, SLOT(thresholdCoefChanged(double))
+        thresholdSauvolaCoef, SIGNAL(valueChanged(double)),
+        this, SLOT(thresholdSauvolaCoefChanged(double))
+    );
+
+    connect(
+        thresholdWolfWindowSize, SIGNAL(valueChanged(int)),
+        this, SLOT(thresholdWolfWindowSizeChanged(int))
+    );
+    connect(
+        thresholdWolfCoef, SIGNAL(valueChanged(double)),
+        this, SLOT(thresholdWolfCoefChanged(double))
+    );
+    
+    connect(
+        thresholdGatosWindowSize, SIGNAL(valueChanged(int)),
+        this, SLOT(thresholdGatosWindowSizeChanged(int))
+    );
+    connect(
+        thresholdGatosCoef, SIGNAL(valueChanged(double)),
+        this, SLOT(thresholdGatosCoefChanged(double))
+    );
+    connect(
+        thresholdGatosScale, SIGNAL(valueChanged(double)),
+        this, SLOT(thresholdGatosScaleChanged(double))
     );
 
     addAction(actionactionDespeckleOff);
@@ -190,9 +235,31 @@ void
 OptionsWidget::settingsChanged()
 {
     QSettings settings;
-    thresholdSlider->setMinimum(settings.value(_key_output_bin_threshold_min, _key_output_bin_threshold_min_def).toInt());
-    thresholdSlider->setMaximum(settings.value(_key_output_bin_threshold_max, _key_output_bin_threshold_max_def).toInt());
-    thresholdLabel->setText(QString::number(thresholdSlider->value()));
+    thresholdOtsuSlider->setMinimum(settings.value(_key_output_bin_threshold_min, _key_output_bin_threshold_min_def).toInt());
+    thresholdSauvolaSlider->setMinimum(settings.value(_key_output_bin_threshold_min, _key_output_bin_threshold_min_def).toInt());
+    thresholdWolfSlider->setMinimum(settings.value(_key_output_bin_threshold_min, _key_output_bin_threshold_min_def).toInt());
+    thresholdGatosSlider->setMinimum(settings.value(_key_output_bin_threshold_min, _key_output_bin_threshold_min_def).toInt());
+
+    thresholdOtsuSlider->setMaximum(settings.value(_key_output_bin_threshold_max, _key_output_bin_threshold_max_def).toInt());
+    thresholdSauvolaSlider->setMaximum(settings.value(_key_output_bin_threshold_max, _key_output_bin_threshold_max_def).toInt());
+    thresholdWolfSlider->setMaximum(settings.value(_key_output_bin_threshold_max, _key_output_bin_threshold_max_def).toInt());
+    thresholdGatosSlider->setMaximum(settings.value(_key_output_bin_threshold_max, _key_output_bin_threshold_max_def).toInt());
+
+    switch (m_colorParams.blackWhiteOptions().thresholdMethod())
+    {
+    case OTSU:
+        thresholdLabel->setText(QString::number(thresholdOtsuSlider->value()));
+        break;
+    case SAUVOLA:
+        thresholdLabel->setText(QString::number(thresholdSauvolaSlider->value()));
+        break;
+    case WOLF:
+        thresholdLabel->setText(QString::number(thresholdWolfSlider->value()));
+        break;
+    case GATOS:
+        thresholdLabel->setText(QString::number(thresholdGatosSlider->value()));
+        break;
+    }
 
     thresholdForegroundSlider->setMinimum(settings.value(_key_output_bin_threshold_min, _key_output_bin_threshold_min_def).toInt());
     thresholdForegroundSlider->setMaximum(settings.value(_key_output_bin_threshold_max, _key_output_bin_threshold_max_def).toInt());
@@ -250,10 +317,98 @@ OptionsWidget::tabChanged(ImageViewTab const tab)
 }
 
 void
-OptionsWidget::changeColorMode(ColorParams::ColorMode const mode)
+OptionsWidget::thresholdMethodChanged(int idx)
 {
-    setModeValue(mode);
-    m_colorParams.setColorMode((ColorParams::ColorMode)mode);
+    ThresholdFilter const method = (ThresholdFilter) thresholdMethodSelector->itemData(idx).toInt();
+    BlackWhiteOptions blackWhiteOptions(m_colorParams.blackWhiteOptions());
+    blackWhiteOptions.setThresholdMethod(method);
+    m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
+    m_ptrSettings->setColorParams(m_pageId, m_colorParams);
+    emit reloadRequested();
+}
+
+void
+OptionsWidget::thresholdSauvolaWindowSizeChanged(int value)
+{
+    BlackWhiteOptions blackWhiteOptions(m_colorParams.blackWhiteOptions());
+    blackWhiteOptions.setThresholdSauvolaWindowSize(value);
+    m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
+    m_ptrSettings->setColorParams(m_pageId, m_colorParams);
+    if (blackWhiteOptions.thresholdMethod() != OTSU)
+        emit reloadRequested();
+}
+
+void
+OptionsWidget::thresholdSauvolaCoefChanged(double value)
+{
+    BlackWhiteOptions blackWhiteOptions(m_colorParams.blackWhiteOptions());
+    blackWhiteOptions.setThresholdSauvolaCoef(value);
+    m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
+    m_ptrSettings->setColorParams(m_pageId, m_colorParams);
+    if (blackWhiteOptions.thresholdMethod() != OTSU)
+        emit reloadRequested();
+}
+
+void
+OptionsWidget::thresholdWolfWindowSizeChanged(int value)
+{
+    BlackWhiteOptions blackWhiteOptions(m_colorParams.blackWhiteOptions());
+    blackWhiteOptions.setThresholdWolfWindowSize(value);
+    m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
+    m_ptrSettings->setColorParams(m_pageId, m_colorParams);
+    if (blackWhiteOptions.thresholdMethod() != OTSU)
+        emit reloadRequested();
+}
+
+void
+OptionsWidget::thresholdWolfCoefChanged(double value)
+{
+    BlackWhiteOptions blackWhiteOptions(m_colorParams.blackWhiteOptions());
+    blackWhiteOptions.setThresholdWolfCoef(value);
+    m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
+    m_ptrSettings->setColorParams(m_pageId, m_colorParams);
+    if (blackWhiteOptions.thresholdMethod() != OTSU)
+        emit reloadRequested();
+}
+
+void
+OptionsWidget::thresholdGatosWindowSizeChanged(int value)
+{
+    BlackWhiteOptions blackWhiteOptions(m_colorParams.blackWhiteOptions());
+    blackWhiteOptions.setThresholdGatosWindowSize(value);
+    m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
+    m_ptrSettings->setColorParams(m_pageId, m_colorParams);
+    if (blackWhiteOptions.thresholdMethod() != OTSU)
+        emit reloadRequested();
+}
+
+void
+OptionsWidget::thresholdGatosCoefChanged(double value)
+{
+    BlackWhiteOptions blackWhiteOptions(m_colorParams.blackWhiteOptions());
+    blackWhiteOptions.setThresholdGatosCoef(value);
+    m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
+    m_ptrSettings->setColorParams(m_pageId, m_colorParams);
+    if (blackWhiteOptions.thresholdMethod() != OTSU)
+        emit reloadRequested();
+}
+
+void
+OptionsWidget::thresholdGatosScaleChanged(double value)
+{
+    BlackWhiteOptions blackWhiteOptions(m_colorParams.blackWhiteOptions());
+    blackWhiteOptions.setThresholdGatosScale(value);
+    m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
+    m_ptrSettings->setColorParams(m_pageId, m_colorParams);
+    if (blackWhiteOptions.thresholdMethod() != OTSU)
+        emit reloadRequested();
+}
+
+void
+OptionsWidget::modeSelectorIndexChanged(int idx)
+{
+    m_currentMode = static_cast<ColorParams::ColorMode>(idx);
+    m_colorParams.setColorMode(static_cast<ColorParams::ColorMode>(idx));
 
     ColorGrayscaleOptions opt = m_colorParams.colorGrayscaleOptions();
     if (opt.foregroundLayerEnabled()) {
@@ -268,37 +423,6 @@ OptionsWidget::changeColorMode(ColorParams::ColorMode const mode)
     updateColorsDisplay();
     updateLayersDisplay();
     emit reloadRequested();
-}
-
-void
-OptionsWidget::thresholdMethodChanged(int idx)
-{
-    ThresholdFilter const method = (ThresholdFilter) thresholdMethodSelector->itemData(idx).toInt();
-    BlackWhiteOptions blackWhiteOptions(m_colorParams.blackWhiteOptions());
-    blackWhiteOptions.setThresholdMethod(method);
-    m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
-    m_ptrSettings->setColorParams(m_pageId, m_colorParams);
-    emit reloadRequested();
-}
-
-void
-OptionsWidget::thresholdWindowSizeChanged(int value) {
-    BlackWhiteOptions blackWhiteOptions(m_colorParams.blackWhiteOptions());
-    blackWhiteOptions.setThresholdWindowSize(value);
-    m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
-    m_ptrSettings->setColorParams(m_pageId, m_colorParams);
-    if (blackWhiteOptions.thresholdMethod() != OTSU && blackWhiteOptions.thresholdMethod() != MEANDELTA)
-        emit reloadRequested();
-}
-
-void
-OptionsWidget::thresholdCoefChanged(double value) {
-    BlackWhiteOptions blackWhiteOptions(m_colorParams.blackWhiteOptions());
-    blackWhiteOptions.setThresholdCoef(value);
-    m_colorParams.setBlackWhiteOptions(blackWhiteOptions);
-    m_ptrSettings->setColorParams(m_pageId, m_colorParams);
-    if (blackWhiteOptions.thresholdMethod() != OTSU && blackWhiteOptions.thresholdMethod() != MEANDELTA)
-        emit reloadRequested();
 }
 
 void
@@ -456,21 +580,6 @@ OptionsWidget::updateDpiDisplay()
 }
 
 void
-OptionsWidget::updateModeValueText()
-{
-    switch (m_currentMode) {
-    case ColorParams::BLACK_AND_WHITE:
-        modeValue->setText(actionModeBW->toolTip());
-        break;
-    case ColorParams::COLOR_GRAYSCALE:
-        modeValue->setText(actionModeColorOrGrayscale->toolTip());
-        break;
-    case ColorParams::MIXED:
-        modeValue->setText(actionModeMixed->toolTip());
-        break;
-    }
-}
-void
 OptionsWidget::updateLayersDisplay()
 {
     QSettings settings;
@@ -506,7 +615,8 @@ OptionsWidget::updateLayersDisplay()
 void
 OptionsWidget::updateColorsDisplay()
 {
-    setModeValue(m_colorParams.colorMode());
+    m_currentMode = m_colorParams.colorMode();
+    modeSelector->setCurrentIndex(m_currentMode);
 
     bool color_grayscale_options_visible = false;
     bool bw_options_visible = false;
@@ -539,28 +649,64 @@ OptionsWidget::updateColorsDisplay()
         equalizeIlluminationCB->setEnabled(opt.whiteMargins());
     }
 
-    modePanel->setVisible(m_lastTab != TAB_DEWARPING);
     layersPanel->setVisible(m_currentMode == ColorParams::MIXED);
     bwOptions->setVisible(bw_options_visible);
-    despecklingPanel->setVisible(despeckle_controls_enbled && m_lastTab != TAB_DEWARPING);
+    despecklingPanel->setVisible(despeckle_controls_enbled);
 
     if (bw_options_visible) {
         ScopedIncDec<int> const guard(m_ignoreThresholdChanges);
 
         BlackWhiteOptions blackWhiteOptions(m_colorParams.blackWhiteOptions());
         thresholdMethodSelector->setCurrentIndex((int) blackWhiteOptions.thresholdMethod());
-        thresholdSlider->setValue(blackWhiteOptions.thresholdAdjustment());
-        thresholdWindowSize->setValue(blackWhiteOptions.thresholdWindowSize());
-        thresholdCoef->setValue(blackWhiteOptions.thresholdCoef());
-        if (blackWhiteOptions.thresholdMethod() == OTSU || blackWhiteOptions.thresholdMethod() == MEANDELTA)
+        switch (blackWhiteOptions.thresholdMethod())
         {
-            thresholdWindowSize->setEnabled( false );
-            thresholdCoef->setEnabled( false );
-        }
-        else
-        {
-            thresholdWindowSize->setEnabled( true );
-            thresholdCoef->setEnabled( true );
+        case OTSU:
+            bwOtsuOptionsPanel->setVisible(true);
+            bwSauvolaOptionsPanel->setVisible(false);
+            bwWolfOptionsPanel->setVisible(false);
+            bwGatosOptionsPanel->setVisible(false);
+
+            thresholdLabel->setNum(thresholdOtsuSlider->value());
+            thresholdOtsuSlider->setValue(blackWhiteOptions.thresholdOtsuAdjustment());
+
+            break;
+        case SAUVOLA:
+            bwOtsuOptionsPanel->setVisible(false);
+            bwSauvolaOptionsPanel->setVisible(true);
+            bwWolfOptionsPanel->setVisible(false);
+            bwGatosOptionsPanel->setVisible(false);
+
+            thresholdLabel->setNum(thresholdSauvolaSlider->value());
+            thresholdSauvolaSlider->setValue(blackWhiteOptions.thresholdSauvolaAdjustment());
+            thresholdSauvolaWindowSize->setValue(blackWhiteOptions.thresholdSauvolaWindowSize());
+            thresholdSauvolaCoef->setValue(blackWhiteOptions.thresholdSauvolaCoef());
+
+            break;
+        case WOLF:
+            bwOtsuOptionsPanel->setVisible(false);
+            bwSauvolaOptionsPanel->setVisible(false);
+            bwWolfOptionsPanel->setVisible(true);
+            bwGatosOptionsPanel->setVisible(false);
+
+            thresholdLabel->setNum(thresholdWolfSlider->value());
+            thresholdWolfSlider->setValue(blackWhiteOptions.thresholdWolfAdjustment());
+            thresholdWolfWindowSize->setValue(blackWhiteOptions.thresholdWolfWindowSize());
+            thresholdWolfCoef->setValue(blackWhiteOptions.thresholdWolfCoef());
+
+            break;
+        case GATOS:
+            bwOtsuOptionsPanel->setVisible(false);
+            bwSauvolaOptionsPanel->setVisible(false);
+            bwWolfOptionsPanel->setVisible(false);
+            bwGatosOptionsPanel->setVisible(true);
+
+            thresholdLabel->setNum(thresholdGatosSlider->value());
+            thresholdGatosSlider->setValue(blackWhiteOptions.thresholdGatosAdjustment());
+            thresholdGatosWindowSize->setValue(blackWhiteOptions.thresholdGatosWindowSize());
+            thresholdGatosCoef->setValue(blackWhiteOptions.thresholdGatosCoef());
+            thresholdGatosScale->setValue(blackWhiteOptions.thresholdGatosScale());
+
+            break;
         }
     }
 
@@ -636,44 +782,6 @@ void output::OptionsWidget::applyColorsButtonClicked()
     dialog->show();
 }
 
-void output::OptionsWidget::modeValueClicked()
-{
-    m_menuMode.popup(modeValue->mapToGlobal(QPoint(0, modeValue->geometry().height())));
-}
-
-void output::OptionsWidget::on_actionModeBW_triggered()
-{
-    modeValue->setText(actionModeBW->toolTip());
-    changeColorMode(ColorParams::BLACK_AND_WHITE);
-    emit invalidateThumbnail(m_pageId);
-}
-
-void output::OptionsWidget::on_actionModeColorOrGrayscale_triggered()
-{
-    modeValue->setText(actionModeColorOrGrayscale->toolTip());
-    changeColorMode(ColorParams::COLOR_GRAYSCALE);
-    emit invalidateThumbnail(m_pageId);
-}
-
-void output::OptionsWidget::on_actionModeMixed_triggered()
-{
-    modeValue->setText(actionModeMixed->toolTip());
-    changeColorMode(ColorParams::MIXED);
-    emit invalidateThumbnail(m_pageId);
-}
-
-void output::OptionsWidget::on_despeckleSlider_valueChanged(int value)
-{
-    switch (value) {
-    case 0: handleDespeckleLevelChange(DESPECKLE_OFF); break;
-    case 1: handleDespeckleLevelChange(DESPECKLE_CAUTIOUS); break;
-    case 2: handleDespeckleLevelChange(DESPECKLE_NORMAL); break;
-    case 3: handleDespeckleLevelChange(DESPECKLE_AGGRESSIVE); break;
-    default: ;
-    }
-    emit invalidateThumbnail(m_pageId);
-}
-
 int sum_y = 0;
 
 bool output::OptionsWidget::eventFilter(QObject* obj, QEvent* event)
@@ -719,11 +827,11 @@ bool output::OptionsWidget::eventFilter(QObject* obj, QEvent* event)
     return false;
 }
 
-void output::OptionsWidget::on_thresholdSlider_valueChanged()
+void output::OptionsWidget::on_thresholdOtsuSlider_valueChanged()
 {
-    int value = thresholdSlider->value();
+    int value = thresholdOtsuSlider->value();
     QString const tooltip_text(QString::number(value));
-    thresholdSlider->setToolTip(tooltip_text);
+    thresholdOtsuSlider->setToolTip(tooltip_text);
 
     thresholdLabel->setNum(value);
 
@@ -732,14 +840,14 @@ void output::OptionsWidget::on_thresholdSlider_valueChanged()
     }
 
     // Show the tooltip immediately.
-    QPoint const center(thresholdSlider->rect().center());
-    QPoint tooltip_pos(thresholdSlider->mapFromGlobal(QCursor::pos()));
+    QPoint const center(thresholdOtsuSlider->rect().center());
+    QPoint tooltip_pos(thresholdOtsuSlider->mapFromGlobal(QCursor::pos()));
     tooltip_pos.setY(center.y());
-    tooltip_pos.setX(qBound(0, tooltip_pos.x(), thresholdSlider->width()));
-    tooltip_pos = thresholdSlider->mapToGlobal(tooltip_pos);
-    QToolTip::showText(tooltip_pos, tooltip_text, thresholdSlider);
+    tooltip_pos.setX(qBound(0, tooltip_pos.x(), thresholdOtsuSlider->width()));
+    tooltip_pos = thresholdOtsuSlider->mapToGlobal(tooltip_pos);
+    QToolTip::showText(tooltip_pos, tooltip_text, thresholdOtsuSlider);
 
-    if (thresholdSlider->isSliderDown()) {
+    if (thresholdOtsuSlider->isSliderDown()) {
         // Wait for it to be released.
         // We could have just disabled tracking, but in that case we wouldn't
         // be able to show tooltips with a precise value.
@@ -747,17 +855,161 @@ void output::OptionsWidget::on_thresholdSlider_valueChanged()
     }
 
     BlackWhiteOptions opt(m_colorParams.blackWhiteOptions());
-    if (opt.thresholdAdjustment() == value) {
+    if (opt.thresholdOtsuAdjustment() == value) {
         // Didn't change.
         return;
     }
 
-    opt.setThresholdAdjustment(value);
+    opt.setThresholdOtsuAdjustment(value);
     if (!bwForegroundOptions->isVisible()) {
         opt.setThresholdForegroundAdjustment(value);
         m_colorParams.setBlackWhiteOptions(opt);
         m_ptrSettings->setColorParams(m_pageId, m_colorParams, ColorParamsApplyFilter::CopyAllThresholds);
     } else {
+        m_colorParams.setBlackWhiteOptions(opt);
+        m_ptrSettings->setColorParams(m_pageId, m_colorParams, ColorParamsApplyFilter::CopyThreshold);
+    }
+
+    emit reloadRequested();
+    emit invalidateThumbnail(m_pageId);
+}
+
+void output::OptionsWidget::on_thresholdSauvolaSlider_valueChanged()
+{
+    int value = thresholdSauvolaSlider->value();
+    QString const tooltip_text(QString::number(value));
+    thresholdSauvolaSlider->setToolTip(tooltip_text);
+
+    thresholdLabel->setNum(value);
+
+    if (m_ignoreThresholdChanges) {
+        return;
+    }
+
+    // Show the tooltip immediately.
+    QPoint const center(thresholdSauvolaSlider->rect().center());
+    QPoint tooltip_pos(thresholdSauvolaSlider->mapFromGlobal(QCursor::pos()));
+    tooltip_pos.setY(center.y());
+    tooltip_pos.setX(qBound(0, tooltip_pos.x(), thresholdSauvolaSlider->width()));
+    tooltip_pos = thresholdSauvolaSlider->mapToGlobal(tooltip_pos);
+    QToolTip::showText(tooltip_pos, tooltip_text, thresholdSauvolaSlider);
+
+    if (thresholdSauvolaSlider->isSliderDown()) {
+        // Wait for it to be released.
+        // We could have just disabled tracking, but in that case we wouldn't
+        // be able to show tooltips with a precise value.
+        return;
+    }
+
+    BlackWhiteOptions opt(m_colorParams.blackWhiteOptions());
+    if (opt.thresholdSauvolaAdjustment() == value) {
+        // Didn't change.
+        return;
+    }
+
+    opt.setThresholdSauvolaAdjustment(value);
+    if (!bwForegroundOptions->isVisible()) {
+        opt.setThresholdForegroundAdjustment(value);
+        m_colorParams.setBlackWhiteOptions(opt);
+        m_ptrSettings->setColorParams(m_pageId, m_colorParams, ColorParamsApplyFilter::CopyAllThresholds);
+    }
+    else {
+        m_colorParams.setBlackWhiteOptions(opt);
+        m_ptrSettings->setColorParams(m_pageId, m_colorParams, ColorParamsApplyFilter::CopyThreshold);
+    }
+
+    emit reloadRequested();
+    emit invalidateThumbnail(m_pageId);
+}
+
+void output::OptionsWidget::on_thresholdWolfSlider_valueChanged()
+{
+    int value = thresholdWolfSlider->value();
+    QString const tooltip_text(QString::number(value));
+    thresholdWolfSlider->setToolTip(tooltip_text);
+
+    thresholdLabel->setNum(value);
+
+    if (m_ignoreThresholdChanges) {
+        return;
+    }
+
+    // Show the tooltip immediately.
+    QPoint const center(thresholdWolfSlider->rect().center());
+    QPoint tooltip_pos(thresholdWolfSlider->mapFromGlobal(QCursor::pos()));
+    tooltip_pos.setY(center.y());
+    tooltip_pos.setX(qBound(0, tooltip_pos.x(), thresholdWolfSlider->width()));
+    tooltip_pos = thresholdWolfSlider->mapToGlobal(tooltip_pos);
+    QToolTip::showText(tooltip_pos, tooltip_text, thresholdWolfSlider);
+
+    if (thresholdWolfSlider->isSliderDown()) {
+        // Wait for it to be released.
+        // We could have just disabled tracking, but in that case we wouldn't
+        // be able to show tooltips with a precise value.
+        return;
+    }
+
+    BlackWhiteOptions opt(m_colorParams.blackWhiteOptions());
+    if (opt.thresholdWolfAdjustment() == value) {
+        // Didn't change.
+        return;
+    }
+
+    opt.setThresholdWolfAdjustment(value);
+    if (!bwForegroundOptions->isVisible()) {
+        opt.setThresholdForegroundAdjustment(value);
+        m_colorParams.setBlackWhiteOptions(opt);
+        m_ptrSettings->setColorParams(m_pageId, m_colorParams, ColorParamsApplyFilter::CopyAllThresholds);
+    }
+    else {
+        m_colorParams.setBlackWhiteOptions(opt);
+        m_ptrSettings->setColorParams(m_pageId, m_colorParams, ColorParamsApplyFilter::CopyThreshold);
+    }
+
+    emit reloadRequested();
+    emit invalidateThumbnail(m_pageId);
+}
+
+void output::OptionsWidget::on_thresholdGatosSlider_valueChanged()
+{
+    int value = thresholdGatosSlider->value();
+    QString const tooltip_text(QString::number(value));
+    thresholdGatosSlider->setToolTip(tooltip_text);
+
+    thresholdLabel->setNum(value);
+
+    if (m_ignoreThresholdChanges) {
+        return;
+    }
+
+    // Show the tooltip immediately.
+    QPoint const center(thresholdGatosSlider->rect().center());
+    QPoint tooltip_pos(thresholdGatosSlider->mapFromGlobal(QCursor::pos()));
+    tooltip_pos.setY(center.y());
+    tooltip_pos.setX(qBound(0, tooltip_pos.x(), thresholdGatosSlider->width()));
+    tooltip_pos = thresholdGatosSlider->mapToGlobal(tooltip_pos);
+    QToolTip::showText(tooltip_pos, tooltip_text, thresholdGatosSlider);
+
+    if (thresholdGatosSlider->isSliderDown()) {
+        // Wait for it to be released.
+        // We could have just disabled tracking, but in that case we wouldn't
+        // be able to show tooltips with a precise value.
+        return;
+    }
+
+    BlackWhiteOptions opt(m_colorParams.blackWhiteOptions());
+    if (opt.thresholdGatosAdjustment() == value) {
+        // Didn't change.
+        return;
+    }
+
+    opt.setThresholdGatosAdjustment(value);
+    if (!bwForegroundOptions->isVisible()) {
+        opt.setThresholdForegroundAdjustment(value);
+        m_colorParams.setBlackWhiteOptions(opt);
+        m_ptrSettings->setColorParams(m_pageId, m_colorParams, ColorParamsApplyFilter::CopyAllThresholds);
+    }
+    else {
         m_colorParams.setBlackWhiteOptions(opt);
         m_ptrSettings->setColorParams(m_pageId, m_colorParams, ColorParamsApplyFilter::CopyThreshold);
     }
@@ -809,35 +1061,82 @@ void output::OptionsWidget::on_thresholdForegroundSlider_valueChanged()
 
 void output::OptionsWidget::dpiValueClicked()
 {
-    ApplyToDialog* dialog = new ApplyToDialog(
-        this, m_pageId, m_pageSelectionAccessor
+    ChangeDpiDialog* dialog = new ChangeDpiDialog(this, m_outputDpi);
+    connect(dialog, &ApplyToDialog::accepted, this, [=]()
+        {
+            const int dpi = dialog->dpi();
+            m_outputDpi = Dpi(dpi, dpi);
+            m_ptrSettings->setDpi(m_pageId, m_outputDpi);
+
+            updateDpiDisplay();
+
+            emit reloadRequested();
+            emit invalidateAllThumbnails();
+        }
     );
+    dialog->show();
+}
 
-    ChangeDpiWidget* options = new ChangeDpiWidget(this, m_outputDpi);
-    dialog->registerValidator(options);
+void
+output::OptionsWidget::applyDpiButtonClicked()
+{
+    ApplyToDialog* dialog = new ApplyToDialog(this, m_pageId, m_pageSelectionAccessor);
     dialog->setWindowTitle(tr("Apply Output Resolution"));
-    dialog->initNewTopSettingsPanel().addWidget(options);
-
-    connect(dialog, &ApplyToDialog::accepted, this, [ = ]() {
-        std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
-        std::set<PageId> pages(vec.begin(), vec.end());
-        const int dpi = options->dpi();
-        dpiChanged(pages, Dpi(dpi, dpi));
-    });
+    connect(
+        dialog, &ApplyToDialog::accepted,
+        this, [=]() {
+            std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
+            std::set<PageId> pages(vec.begin(), vec.end());
+            dpiChanged(pages, m_outputDpi);
+        }
+    );
 
     dialog->show();
 }
 
-void output::OptionsWidget::on_actionReset_to_default_value_triggered()
+void output::OptionsWidget::on_actionReset_to_default_value_otsu_triggered()
 {
     int def = QSettings().value(_key_output_bin_threshold_default, _key_output_bin_threshold_default_def).toInt();
-    thresholdSlider->setValue(def);
+    thresholdOtsuSlider->setValue(def);
 }
 
-void output::OptionsWidget::applyThresholdConfirmed(std::set<PageId> const& pages, ColorParamsApplyFilter const& paramFilter)
+void output::OptionsWidget::on_actionReset_to_default_value_sauvola_triggered()
+{
+    int def = QSettings().value(_key_output_bin_threshold_default, _key_output_bin_threshold_default_def).toInt();
+    thresholdSauvolaSlider->setValue(def);
+}
+
+void output::OptionsWidget::on_actionReset_to_default_value_wolf_triggered()
+{
+    int def = QSettings().value(_key_output_bin_threshold_default, _key_output_bin_threshold_default_def).toInt();
+    thresholdWolfSlider->setValue(def);
+}
+
+void output::OptionsWidget::on_actionReset_to_default_value_gatos_triggered()
+{
+    int def = QSettings().value(_key_output_bin_threshold_default, _key_output_bin_threshold_default_def).toInt();
+    thresholdGatosSlider->setValue(def);
+}
+
+void output::OptionsWidget::applyThresholdConfirmed(std::set<PageId> const& pages, std::vector<ThresholdFilter> const& thresholds)
+{
+    bool const set_foreground = !bwForegroundOptions->isVisible();
+
+    for (PageId const& page_id : pages) {
+        m_ptrSettings->setColorParams(page_id, m_colorParams, thresholds, set_foreground);
+    }
+
+    emit invalidateAllThumbnails();
+
+    if (pages.find(m_pageId) != pages.end()) {
+        emit reloadRequested();
+    }
+}
+
+void output::OptionsWidget::applyForegroundThresholdConfirmed(std::set<PageId> const& pages)
 {
     for (PageId const& page_id : pages) {
-        m_ptrSettings->setColorParams(page_id, m_colorParams, paramFilter);
+        m_ptrSettings->setColorParams(page_id, m_colorParams, ColorParamsApplyFilter::CopyForegroundThreshold);
     }
 
     emit invalidateAllThumbnails();
@@ -850,13 +1149,16 @@ void output::OptionsWidget::applyThresholdConfirmed(std::set<PageId> const& page
 void output::OptionsWidget::applyThresholdButtonClicked()
 {
     ApplyToDialog* dialog = new ApplyToDialog(this, m_pageId, m_pageSelectionAccessor);
+    ThresholdsWidget* options = new ThresholdsWidget(dialog, m_colorParams.blackWhiteOptions().thresholdMethod());
+    QLayout& layout = dialog->initNewTopSettingsPanel();
+    layout.addWidget(options);
     dialog->setWindowTitle(tr("Apply Threshold"));
     connect(
         dialog, &ApplyToDialog::accepted,
     this, [ = ]() {
         std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
         std::set<PageId> pages(vec.begin(), vec.end());
-        applyThresholdConfirmed(pages, ColorParamsApplyFilter::CopyThreshold);
+        applyThresholdConfirmed(pages, options->thresholdsChecked());
     }
     );
 
@@ -926,14 +1228,14 @@ void output::OptionsWidget::applyForegroundThresholdButtonClicked()
     this, [ = ]() {
         std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
         std::set<PageId> pages(vec.begin(), vec.end());
-        applyThresholdConfirmed(pages, ColorParamsApplyFilter::CopyForegroundThreshold);
+        applyForegroundThresholdConfirmed(pages);
     }
     );
 
     dialog->show();
 }
 
-void output::OptionsWidget::on_actionReset_to_default_value_foeground_triggered()
+void output::OptionsWidget::on_actionReset_to_default_value_foreground_triggered()
 {
     int def = QSettings().value(_key_output_bin_threshold_default, _key_output_bin_threshold_default_def).toInt();
     thresholdForegroundSlider->setValue(def);

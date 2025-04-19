@@ -32,6 +32,8 @@ public:
 
     RegenParams(Regenerate val = RegenerateNone): m_forceReprocess(val) {}
 
+    virtual ~RegenParams(){}
+
     virtual void setForceReprocess(Regenerate val)
     {
         m_forceReprocess = val;

@@ -6,62 +6,142 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>279</width>
-    <height>871</height>
+    <width>161</width>
+    <height>906</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string notr="true">Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_8">
+  <layout class="QVBoxLayout" name="verticalLayout_15">
+   <property name="spacing">
+    <number>4</number>
+   </property>
+   <property name="leftMargin">
+    <number>4</number>
+   </property>
+   <property name="topMargin">
+    <number>4</number>
+   </property>
+   <property name="rightMargin">
+    <number>4</number>
+   </property>
+   <property name="bottomMargin">
+    <number>4</number>
+   </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_15">
-     <item>
-      <widget class="QLabel" name="dpiLabel">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="contextMenuPolicy">
-        <enum>Qt::NoContextMenu</enum>
-       </property>
-       <property name="text">
-        <string>Output Resolution:</string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::RichText</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="dpiValue">
-       <property name="text">
-        <string>value</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="Line" name="line_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
+    <widget class="QWidget" name="outputResolutionPanel" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_11">
+      <property name="spacing">
+       <number>4</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QGroupBox" name="outputResolutionGroupBox">
+        <property name="title">
+         <string>Output Resolution</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_12">
+         <property name="spacing">
+          <number>4</number>
+         </property>
+         <property name="leftMargin">
+          <number>4</number>
+         </property>
+         <property name="topMargin">
+          <number>4</number>
+         </property>
+         <property name="rightMargin">
+          <number>4</number>
+         </property>
+         <property name="bottomMargin">
+          <number>4</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_15">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="dpiLabel">
+             <property name="font">
+              <font>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="contextMenuPolicy">
+              <enum>Qt::NoContextMenu</enum>
+             </property>
+             <property name="text">
+              <string>Resolution:</string>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::RichText</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>4</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="dpiValue">
+             <property name="text">
+              <string>value</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <item>
+         <spacer name="horizontalSpacer_7">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>4</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="applyDpiButton">
+          <property name="text">
+           <string>Apply To...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
@@ -86,7 +166,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_6">
       <property name="spacing">
-       <number>6</number>
+       <number>4</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -101,117 +181,123 @@
        <number>0</number>
       </property>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QLabel" name="modeLabel">
-          <property name="font">
-           <font>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>Mode:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_10">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="modeValue">
-          <property name="text">
-           <string>value</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QWidget" name="illuminationPanel" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_3">
+       <widget class="QGroupBox" name="outputModeGroupBox">
+        <property name="title">
+         <string>Mode</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_10">
          <property name="spacing">
-          <number>3</number>
+          <number>4</number>
          </property>
          <property name="leftMargin">
-          <number>6</number>
+          <number>4</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="whiteMarginsCB">
-           <property name="text">
-            <string>White margins</string>
-           </property>
+          <widget class="QComboBox" name="modeSelector">
+           <item>
+            <property name="text">
+             <string>Black and White</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Color / Grayscale</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Mixed</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="equalizeIlluminationCB">
-           <property name="text">
-            <string>Equalize illumination</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="layersPanel" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_111">
-         <property name="spacing">
-          <number>3</number>
-         </property>
-         <property name="leftMargin">
-          <number>6</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QCheckBox" name="autoLayerCB">
-           <property name="text">
-            <string>Auto layer</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
+          <widget class="QWidget" name="illuminationPanel" native="true">
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <property name="spacing">
+             <number>3</number>
+            </property>
+            <property name="leftMargin">
+             <number>6</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="whiteMarginsCB">
+              <property name="text">
+               <string>White margins</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="equalizeIlluminationCB">
+              <property name="text">
+               <string>Equalize illumination</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="pictureZonesLayerCB">
-           <property name="text">
-            <string>Picture Zones layer</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="foregroundLayerCB">
-           <property name="text">
-            <string>Foreground layer</string>
-           </property>
+          <widget class="QWidget" name="layersPanel" native="true">
+           <layout class="QVBoxLayout" name="verticalLayout_111">
+            <property name="spacing">
+             <number>3</number>
+            </property>
+            <property name="leftMargin">
+             <number>6</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="autoLayerCB">
+              <property name="text">
+               <string>Auto layer</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="pictureZonesLayerCB">
+              <property name="text">
+               <string>Picture Zones layer</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="foregroundLayerCB">
+              <property name="text">
+               <string>Foreground layer</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
@@ -226,7 +312,7 @@
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
+            <width>4</width>
             <height>20</height>
            </size>
           </property>
@@ -239,54 +325,16 @@
           </property>
          </widget>
         </item>
-        <item>
-         <spacer name="horizontalSpacer_9">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>0</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
        </layout>
-      </item>
-      <item>
-       <widget class="Line" name="line">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
       </item>
      </layout>
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="widget" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_7">
+    <widget class="QWidget" name="bwOptions" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
-       <number>0</number>
+       <number>4</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -301,22 +349,25 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QWidget" name="bwOptions" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout">
+       <widget class="QGroupBox" name="bwOptionsGroupBox">
+        <property name="title">
+         <string>B/W options</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_7">
          <property name="spacing">
-          <number>6</number>
+          <number>4</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <item>
           <widget class="QComboBox" name="thresholdMethodSelector">
@@ -331,12 +382,12 @@
             <widget class="QLabel" name="label">
              <property name="font">
               <font>
-               <weight>75</weight>
-               <bold>true</bold>
+               <weight>50</weight>
+               <bold>false</bold>
               </font>
              </property>
              <property name="text">
-              <string>Binarisation threshold:</string>
+              <string>Threshold:</string>
              </property>
             </widget>
            </item>
@@ -347,7 +398,7 @@
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
+               <width>4</width>
                <height>20</height>
               </size>
              </property>
@@ -357,8 +408,8 @@
             <widget class="QLabel" name="thresholdLabel">
              <property name="font">
               <font>
-               <weight>75</weight>
-               <bold>true</bold>
+               <weight>50</weight>
+               <bold>false</bold>
               </font>
              </property>
              <property name="text">
@@ -369,144 +420,426 @@
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QSlider" name="thresholdSlider">
-             <property name="contextMenuPolicy">
-              <enum>Qt::ActionsContextMenu</enum>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="minimum">
-              <number>-30</number>
-             </property>
-             <property name="maximum">
-              <number>30</number>
-             </property>
-             <property name="singleStep">
-              <number>1</number>
-             </property>
-             <property name="pageStep">
-              <number>5</number>
-             </property>
-             <property name="tracking">
-              <bool>true</bool>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="invertedAppearance">
-              <bool>false</bool>
-             </property>
-             <property name="invertedControls">
-              <bool>false</bool>
-             </property>
-             <property name="tickPosition">
-              <enum>QSlider::TicksBelow</enum>
-             </property>
-             <property name="tickInterval">
-              <number>3</number>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QWidget" name="bwOtsuOptionsPanel" native="true">
+           <layout class="QVBoxLayout" name="verticalLayout_16">
+            <property name="spacing">
+             <number>4</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QSlider" name="thresholdOtsuSlider">
+              <property name="contextMenuPolicy">
+               <enum>Qt::ActionsContextMenu</enum>
+              </property>
+              <property name="minimum">
+               <number>-30</number>
+              </property>
+              <property name="maximum">
+               <number>30</number>
+              </property>
+              <property name="singleStep">
+               <number>1</number>
+              </property>
+              <property name="pageStep">
+               <number>5</number>
+              </property>
+              <property name="tracking">
+               <bool>true</bool>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="invertedAppearance">
+               <bool>false</bool>
+              </property>
+              <property name="invertedControls">
+               <bool>false</bool>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksBelow</enum>
+              </property>
+              <property name="tickInterval">
+               <number>3</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </item>
          <item>
-          <layout class="QGridLayout" name="gridLayout">
-           <item row="0" column="0">
-            <widget class="QLabel" name="thresholdWindowSizeLabel">
-             <property name="text">
-              <string>Window size:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QSpinBox" name="thresholdWindowSize">
-             <property name="toolTip">
-              <string>The dimensions of a pixel neighborhood to consider.</string>
-             </property>
-             <property name="minimum">
-              <number>3</number>
-             </property>
-             <property name="maximum">
-              <number>9999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QDoubleSpinBox" name="thresholdCoef">
-             <property name="toolTip">
-              <string>Default value is 0.34.</string>
-             </property>
-             <property name="minimum">
-              <double>0.010000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>9.990000000000000</double>
-             </property>
-             <property name="singleStep">
-              <double>0.010000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="thresholdCoefLabel">
-             <property name="text">
-              <string>Coef:</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QWidget" name="bwSauvolaOptionsPanel" native="true">
+           <layout class="QVBoxLayout" name="verticalLayout_8">
+            <property name="spacing">
+             <number>4</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QSlider" name="thresholdSauvolaSlider">
+              <property name="contextMenuPolicy">
+               <enum>Qt::ActionsContextMenu</enum>
+              </property>
+              <property name="minimum">
+               <number>-30</number>
+              </property>
+              <property name="maximum">
+               <number>30</number>
+              </property>
+              <property name="singleStep">
+               <number>1</number>
+              </property>
+              <property name="pageStep">
+               <number>5</number>
+              </property>
+              <property name="tracking">
+               <bool>true</bool>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="invertedAppearance">
+               <bool>false</bool>
+              </property>
+              <property name="invertedControls">
+               <bool>false</bool>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksBelow</enum>
+              </property>
+              <property name="tickInterval">
+               <number>3</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="bwSauvolaGridLayout">
+              <property name="spacing">
+               <number>4</number>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="thresholdSauvolaWindowSizeLabel">
+                <property name="text">
+                 <string>Window size:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QSpinBox" name="thresholdSauvolaWindowSize">
+                <property name="toolTip">
+                 <string>The dimensions of a pixel neighborhood to consider.</string>
+                </property>
+                <property name="minimum">
+                 <number>3</number>
+                </property>
+                <property name="maximum">
+                 <number>9999</number>
+                </property>
+                <property name="value">
+                 <number>200</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="thresholdSauvolaCoefLabel">
+                <property name="text">
+                 <string>Coef:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QDoubleSpinBox" name="thresholdSauvolaCoef">
+                <property name="toolTip">
+                 <string>Default value is 0.3.</string>
+                </property>
+                <property name="minimum">
+                 <double>0.010000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>9.990000000000000</double>
+                </property>
+                <property name="singleStep">
+                 <double>0.010000000000000</double>
+                </property>
+                <property name="value">
+                 <double>0.300000000000000</double>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_7">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <item>
-            <spacer name="horizontalSpacer_5">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QPushButton" name="applyThresholdButton">
-             <property name="text">
-              <string>Apply To...</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_7">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
+          <widget class="QWidget" name="bwWolfOptionsPanel" native="true">
+           <layout class="QVBoxLayout" name="verticalLayout_13">
+            <property name="spacing">
+             <number>4</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QSlider" name="thresholdWolfSlider">
+              <property name="contextMenuPolicy">
+               <enum>Qt::ActionsContextMenu</enum>
+              </property>
+              <property name="minimum">
+               <number>-30</number>
+              </property>
+              <property name="maximum">
+               <number>30</number>
+              </property>
+              <property name="singleStep">
+               <number>1</number>
+              </property>
+              <property name="pageStep">
+               <number>5</number>
+              </property>
+              <property name="tracking">
+               <bool>true</bool>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="invertedAppearance">
+               <bool>false</bool>
+              </property>
+              <property name="invertedControls">
+               <bool>false</bool>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksBelow</enum>
+              </property>
+              <property name="tickInterval">
+               <number>3</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="bwWolfGridLayout">
+              <property name="spacing">
+               <number>4</number>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="thresholdWolfWindowSizeLabel">
+                <property name="text">
+                 <string>Window size:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QSpinBox" name="thresholdWolfWindowSize">
+                <property name="toolTip">
+                 <string>The dimensions of a pixel neighborhood to consider.</string>
+                </property>
+                <property name="minimum">
+                 <number>3</number>
+                </property>
+                <property name="maximum">
+                 <number>9999</number>
+                </property>
+                <property name="value">
+                 <number>200</number>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="thresholdWolfCoefLabel">
+                <property name="text">
+                 <string>Coef:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QDoubleSpinBox" name="thresholdWolfCoef">
+                <property name="toolTip">
+                 <string>Default value is 0.3.</string>
+                </property>
+                <property name="minimum">
+                 <double>0.010000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>9.990000000000000</double>
+                </property>
+                <property name="singleStep">
+                 <double>0.010000000000000</double>
+                </property>
+                <property name="value">
+                 <double>0.300000000000000</double>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
          </item>
          <item>
-          <widget class="Line" name="line_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
+          <widget class="QWidget" name="bwGatosOptionsPanel" native="true">
+           <layout class="QVBoxLayout" name="verticalLayout_14">
+            <property name="spacing">
+             <number>4</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QSlider" name="thresholdGatosSlider">
+              <property name="contextMenuPolicy">
+               <enum>Qt::ActionsContextMenu</enum>
+              </property>
+              <property name="minimum">
+               <number>-30</number>
+              </property>
+              <property name="maximum">
+               <number>30</number>
+              </property>
+              <property name="singleStep">
+               <number>1</number>
+              </property>
+              <property name="pageStep">
+               <number>5</number>
+              </property>
+              <property name="tracking">
+               <bool>true</bool>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="invertedAppearance">
+               <bool>false</bool>
+              </property>
+              <property name="invertedControls">
+               <bool>false</bool>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksBelow</enum>
+              </property>
+              <property name="tickInterval">
+               <number>3</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="bwGatosGridLayout">
+              <item row="1" column="1">
+               <widget class="QSpinBox" name="thresholdGatosWindowSize">
+                <property name="toolTip">
+                 <string>The dimensions of a pixel neighborhood to consider.</string>
+                </property>
+                <property name="minimum">
+                 <number>3</number>
+                </property>
+                <property name="maximum">
+                 <number>9999</number>
+                </property>
+                <property name="value">
+                 <number>200</number>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="thresholdGatosCoefLabel">
+                <property name="text">
+                 <string>Coef:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QDoubleSpinBox" name="thresholdGatosCoef">
+                <property name="toolTip">
+                 <string>Default value is 0.3.</string>
+                </property>
+                <property name="minimum">
+                 <double>0.010000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>9.990000000000000</double>
+                </property>
+                <property name="singleStep">
+                 <double>0.010000000000000</double>
+                </property>
+                <property name="value">
+                 <double>0.300000000000000</double>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="thresholdGatosScaleLabel">
+                <property name="text">
+                 <string>Scale:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QDoubleSpinBox" name="thresholdGatosScale">
+                <property name="toolTip">
+                 <string>Default value is 0.3.</string>
+                </property>
+                <property name="minimum">
+                 <double>0.010000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>1.000000000000000</double>
+                </property>
+                <property name="singleStep">
+                 <double>0.010000000000000</double>
+                </property>
+                <property name="value">
+                 <double>0.600000000000000</double>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="thresholdGatosWindowSizeLabel">
+                <property name="text">
+                 <string>Window size:</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
@@ -516,10 +849,37 @@
     </widget>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_7">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <spacer name="horizontalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>4</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="applyThresholdButton">
+       <property name="text">
+        <string>Apply To...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <widget class="QWidget" name="bwForegroundOptions" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <property name="spacing">
-       <number>6</number>
+       <number>4</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -534,94 +894,108 @@
        <number>0</number>
       </property>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_13">
-        <item>
-         <widget class="QLabel" name="label_2">
-          <property name="font">
-           <font>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>Foreground layer threshold:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_16">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QLabel" name="thresholdForegroundLabel">
-          <property name="font">
-           <font>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string notr="true">value</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_8">
-        <property name="spacing">
-         <number>0</number>
+       <widget class="QGroupBox" name="foregroundOptionsGroupBox">
+        <property name="title">
+         <string>Foreground options</string>
         </property>
-        <item>
-         <widget class="QSlider" name="thresholdForegroundSlider">
-          <property name="contextMenuPolicy">
-           <enum>Qt::ActionsContextMenu</enum>
-          </property>
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-          <property name="minimum">
-           <number>-30</number>
-          </property>
-          <property name="maximum">
-           <number>30</number>
-          </property>
-          <property name="singleStep">
-           <number>1</number>
-          </property>
-          <property name="pageStep">
-           <number>5</number>
-          </property>
-          <property name="tracking">
-           <bool>true</bool>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="invertedAppearance">
-           <bool>false</bool>
-          </property>
-          <property name="invertedControls">
-           <bool>false</bool>
-          </property>
-          <property name="tickPosition">
-           <enum>QSlider::TicksBelow</enum>
-          </property>
-          <property name="tickInterval">
-           <number>3</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
+        <layout class="QVBoxLayout" name="verticalLayout_9">
+         <property name="spacing">
+          <number>4</number>
+         </property>
+         <property name="leftMargin">
+          <number>4</number>
+         </property>
+         <property name="topMargin">
+          <number>4</number>
+         </property>
+         <property name="rightMargin">
+          <number>4</number>
+         </property>
+         <property name="bottomMargin">
+          <number>4</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_13">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="font">
+              <font>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Threshold:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_16">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>4</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="thresholdForegroundLabel">
+             <property name="font">
+              <font>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string notr="true">value</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QSlider" name="thresholdForegroundSlider">
+           <property name="contextMenuPolicy">
+            <enum>Qt::ActionsContextMenu</enum>
+           </property>
+           <property name="minimum">
+            <number>-30</number>
+           </property>
+           <property name="maximum">
+            <number>30</number>
+           </property>
+           <property name="singleStep">
+            <number>1</number>
+           </property>
+           <property name="pageStep">
+            <number>5</number>
+           </property>
+           <property name="tracking">
+            <bool>true</bool>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="invertedAppearance">
+            <bool>false</bool>
+           </property>
+           <property name="invertedControls">
+            <bool>false</bool>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksBelow</enum>
+           </property>
+           <property name="tickInterval">
+            <number>3</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_14">
@@ -635,7 +1009,7 @@
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
+            <width>4</width>
             <height>20</height>
            </size>
           </property>
@@ -648,27 +1022,7 @@
           </property>
          </widget>
         </item>
-        <item>
-         <spacer name="horizontalSpacer_18">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
        </layout>
-      </item>
-      <item>
-       <widget class="Line" name="line_6">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
       </item>
      </layout>
     </widget>
@@ -677,7 +1031,7 @@
     <widget class="QWidget" name="despecklingPanel" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_5">
       <property name="spacing">
-       <number>6</number>
+       <number>4</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -692,183 +1046,207 @@
        <number>0</number>
       </property>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_6">
-        <item>
-         <widget class="QLabel" name="despeckleLabel">
-          <property name="font">
-           <font>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>Despeckling:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QLabel" name="despeckleValue">
-          <property name="font">
-           <font>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string notr="true">value</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <property name="spacing">
-         <number>6</number>
+       <widget class="QGroupBox" name="despecklingGroupBox">
+        <property name="title">
+         <string>Despeckling</string>
         </property>
-        <item>
-         <spacer name="horizontalSpacer_11">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QToolButton" name="despeckleOffBtn">
-          <property name="statusTip">
-           <string>No despeckling</string>
-          </property>
-          <property name="text">
-           <string notr="true"/>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>16</width>
-            <height>16</height>
-           </size>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-          <property name="autoExclusive">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="despeckleCautiousBtn">
-          <property name="statusTip">
-           <string>Cautious despeckling</string>
-          </property>
-          <property name="text">
-           <string notr="true">...</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../../../../app/resources/resources.qrc">
-            <normaloff>:/icons/despeckle-cautious.png.png</normaloff>:/icons/despeckle-cautious.png.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>16</width>
-            <height>16</height>
-           </size>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="autoExclusive">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="despeckleNormalBtn">
-          <property name="statusTip">
-           <string>Normal despeckling</string>
-          </property>
-          <property name="text">
-           <string notr="true">...</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../../../../app/resources/resources.qrc">
-            <normaloff>:/icons/despeckle-normal.png.png</normaloff>:/icons/despeckle-normal.png.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>16</width>
-            <height>16</height>
-           </size>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="autoExclusive">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="despeckleAggressiveBtn">
-          <property name="statusTip">
-           <string>Aggressive despeckling</string>
-          </property>
-          <property name="text">
-           <string notr="true">...</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../../../../app/resources/resources.qrc">
-            <normaloff>:/icons/despeckle-aggressive.png.png</normaloff>:/icons/despeckle-aggressive.png.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>16</width>
-            <height>16</height>
-           </size>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="autoExclusive">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_12">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>4</number>
+         </property>
+         <property name="leftMargin">
+          <number>4</number>
+         </property>
+         <property name="topMargin">
+          <number>4</number>
+         </property>
+         <property name="rightMargin">
+          <number>4</number>
+         </property>
+         <property name="bottomMargin">
+          <number>4</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <item>
+            <spacer name="horizontalSpacer_11">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>4</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QToolButton" name="despeckleOffBtn">
+             <property name="statusTip">
+              <string>No despeckling</string>
+             </property>
+             <property name="text">
+              <string notr="true"/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+             <property name="autoExclusive">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="despeckleCautiousBtn">
+             <property name="statusTip">
+              <string>Cautious despeckling</string>
+             </property>
+             <property name="text">
+              <string notr="true">...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../app/resources/resources.qrc">
+               <normaloff>:/icons/despeckle-cautious.png.png</normaloff>:/icons/despeckle-cautious.png.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="autoExclusive">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="despeckleNormalBtn">
+             <property name="statusTip">
+              <string>Normal despeckling</string>
+             </property>
+             <property name="text">
+              <string notr="true">...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../app/resources/resources.qrc">
+               <normaloff>:/icons/despeckle-normal.png.png</normaloff>:/icons/despeckle-normal.png.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="autoExclusive">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="despeckleAggressiveBtn">
+             <property name="statusTip">
+              <string>Aggressive despeckling</string>
+             </property>
+             <property name="text">
+              <string notr="true">...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../app/resources/resources.qrc">
+               <normaloff>:/icons/despeckle-aggressive.png.png</normaloff>:/icons/despeckle-aggressive.png.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="autoExclusive">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_12">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>4</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>4</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="despeckleValue">
+             <property name="font">
+              <font>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string notr="true">value</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>4</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -879,7 +1257,7 @@
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
+            <width>4</width>
             <height>20</height>
            </size>
           </property>
@@ -892,51 +1270,7 @@
           </property>
          </widget>
         </item>
-        <item>
-         <spacer name="horizontalSpacer_15">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>0</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
        </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="despeckleSliderPanel" native="true">
-     <property name="contextMenuPolicy">
-      <enum>Qt::ActionsContextMenu</enum>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QSlider" name="despeckleSlider">
-        <property name="minimum">
-         <number>0</number>
-        </property>
-        <property name="maximum">
-         <number>3</number>
-        </property>
-        <property name="pageStep">
-         <number>1</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="tickPosition">
-         <enum>QSlider::TicksBelow</enum>
-        </property>
-        <property name="tickInterval">
-         <number>1</number>
-        </property>
-       </widget>
       </item>
      </layout>
     </widget>
@@ -949,33 +1283,33 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>41</height>
+       <height>20</height>
       </size>
      </property>
     </spacer>
    </item>
   </layout>
-  <action name="actionModeBW">
-   <property name="text">
-    <string>&amp;Black and White</string>
-   </property>
-  </action>
-  <action name="actionModeColorOrGrayscale">
-   <property name="text">
-    <string>&amp;Color / Grayscale</string>
-   </property>
-  </action>
-  <action name="actionModeMixed">
-   <property name="text">
-    <string>&amp;Mixed</string>
-   </property>
-  </action>
-  <action name="actionReset_to_default_value">
+  <action name="actionReset_to_default_value_otsu">
    <property name="text">
     <string>&amp;Reset to default value</string>
    </property>
   </action>
-  <action name="actionReset_to_default_value_foeground">
+  <action name="actionReset_to_default_value_sauvola">
+   <property name="text">
+    <string>&amp;Reset to default value</string>
+   </property>
+  </action>
+  <action name="actionReset_to_default_value_wolf">
+   <property name="text">
+    <string>&amp;Reset to default value</string>
+   </property>
+  </action>
+  <action name="actionReset_to_default_value_gatos">
+   <property name="text">
+    <string>&amp;Reset to default value</string>
+   </property>
+  </action>
+  <action name="actionReset_to_default_value_foreground">
    <property name="text">
     <string>&amp;Reset to default value</string>
    </property>
@@ -1003,7 +1337,8 @@
  </widget>
  <tabstops>
   <tabstop>dpiValue</tabstop>
-  <tabstop>modeValue</tabstop>
+  <tabstop>applyDpiButton</tabstop>
+  <tabstop>modeSelector</tabstop>
   <tabstop>whiteMarginsCB</tabstop>
   <tabstop>equalizeIlluminationCB</tabstop>
   <tabstop>autoLayerCB</tabstop>
@@ -1011,9 +1346,6 @@
   <tabstop>foregroundLayerCB</tabstop>
   <tabstop>applyColorsButton</tabstop>
   <tabstop>thresholdMethodSelector</tabstop>
-  <tabstop>thresholdSlider</tabstop>
-  <tabstop>thresholdWindowSize</tabstop>
-  <tabstop>thresholdCoef</tabstop>
   <tabstop>applyThresholdButton</tabstop>
   <tabstop>thresholdForegroundSlider</tabstop>
   <tabstop>applyForegroundThresholdButton</tabstop>
@@ -1022,7 +1354,6 @@
   <tabstop>despeckleNormalBtn</tabstop>
   <tabstop>despeckleAggressiveBtn</tabstop>
   <tabstop>applyDespeckleButton</tabstop>
-  <tabstop>despeckleSlider</tabstop>
  </tabstops>
  <resources>
   <include location="../../../../app/resources/resources.qrc"/>

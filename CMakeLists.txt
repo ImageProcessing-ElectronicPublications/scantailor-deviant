@@ -1,29 +1,18 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.21)
 
-IF(POLICY CMP0043)
-        # Don't ignore COMPILE_DEFINITIONS_{CONFIG} directives, as these are used
-	# by Qt.
-	CMAKE_POLICY(SET CMP0043 OLD)
-ENDIF()
-
-IF (POLICY CMP0071)
-        CMAKE_POLICY(SET CMP0071 OLD)
-ENDIF()
+PROJECT("Scan Tailor Deviant" LANGUAGES CXX)
 
 IF (POLICY CMP0072)
-        CMAKE_POLICY(SET CMP0072 OLD)
+        CMAKE_POLICY(SET CMP0072 NEW)
 ENDIF()
 
-SET(
-        CMAKE_USER_MAKE_RULES_OVERRIDE
-        "${CMAKE_SOURCE_DIR}/cmake/default_cflags.cmake"
-)
 SET(
         CMAKE_USER_MAKE_RULES_OVERRIDE_CXX
         "${CMAKE_SOURCE_DIR}/cmake/default_cxxflags.cmake"
 )
 
-PROJECT("Scan Tailor Deviant")
+SET(CMAKE_CXX_STANDARD 11)
+SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 IF(MSVC)
         # Disable checked iterators for extra performance.
@@ -79,7 +68,6 @@ INCLUDE_DIRECTORIES("${CMAKE_CURRENT_BINARY_DIR}")
 INCLUDE(CheckIncludeFile)
 INCLUDE(CheckIncludeFileCXX)
 INCLUDE(TestCXXAcceptsFlag)
-INCLUDE(cmake/FindPthreads.cmake)
 IF(UNIX AND NOT APPLE)
 INCLUDE(cmake/FindCanberra.cmake)
 ENDIF(UNIX AND NOT APPLE)
@@ -106,10 +94,12 @@ ENDIF()
 OPTION(ENABLE_OPENGL "OpenGL may be used for UI acceleration" ${use_opengl})
 
 SET(CMAKE_AUTOMOC ON)
+SET(CMAKE_AUTOUIC ON)
+
 SET(Qt_MIN_VERSION 5.7.0)
 IF(APPLE)
-   # hardcoded path to Qt5CoreConfig.cmake etc. [truf]
-   SET(CMAKE_PREFIX_PATH "/Users/robert/build/Qt/5.8/clang_64/")
+   # Not used but required for loading cocoa plugin
+   FIND_PACKAGE(Qt5PrintSupport ${Qt_MIN_VERSION} REQUIRED)
 ENDIF(APPLE)
 FIND_PACKAGE(Qt5Core ${Qt_MIN_VERSION} REQUIRED)
 FIND_PACKAGE(Qt5Gui ${Qt_MIN_VERSION} REQUIRED)
@@ -125,33 +115,33 @@ ENDIF()
 SET(EXTRA_LIBS "")
 
 FIND_PACKAGE(JPEG REQUIRED)
-INCLUDE_DIRECTORIES("${JPEG_INCLUDE_DIR}")
-LIST(APPEND EXTRA_LIBS ${JPEG_LIBRARY})
+INCLUDE_DIRECTORIES("${JPEG_INCLUDE_DIRS}")
+LIST(APPEND EXTRA_LIBS ${JPEG_LIBRARIES})
 
 OPTION(ENABLE_OPENJPEG "OpenJPEG library may be used to support JPEG 2000 (.jp2) images." ON)
 IF (ENABLE_OPENJPEG)
         find_package(OPENJPEG REQUIRED)
-        INCLUDE_DIRECTORIES("${OPENJPEG_INCLUDE_DIR}")
-        LIST(APPEND EXTRA_LIBS ${OPENJPEG_LIBRARY})
+        INCLUDE_DIRECTORIES("${OPENJPEG_INCLUDE_DIRS}")
+        LIST(APPEND EXTRA_LIBS ${OPENJPEG_LIBRARIES})
 ENDIF(ENABLE_OPENJPEG)
 
 FIND_PACKAGE(ZLIB REQUIRED)
-INCLUDE_DIRECTORIES("${ZLIB_INCLUDE_DIR}")
-LIST(APPEND EXTRA_LIBS ${ZLIB_LIBRARY})
+INCLUDE_DIRECTORIES("${ZLIB_INCLUDE_DIRS}")
+LIST(APPEND EXTRA_LIBS ${ZLIB_LIBRARIES})
 
 FIND_PACKAGE(PNG REQUIRED)
-INCLUDE_DIRECTORIES("${PNG_INCLUDE_DIR}")
-LIST(APPEND EXTRA_LIBS ${PNG_LIBRARY})
+INCLUDE_DIRECTORIES("${PNG_INCLUDE_DIRS}")
+LIST(APPEND EXTRA_LIBS ${PNG_LIBRARIES})
 
 FIND_PACKAGE(TIFF REQUIRED)
-INCLUDE_DIRECTORIES("${TIFF_INCLUDE_DIR}")
-LIST(APPEND EXTRA_LIBS ${TIFF_LIBRARY})
+INCLUDE_DIRECTORIES("${TIFF_INCLUDE_DIRS}")
+LIST(APPEND EXTRA_LIBS ${TIFF_LIBRARIES})
 IF(WIN32)
         ADD_DEFINITIONS(-DUSE_LIBTIFF_DLL)
 ENDIF()
 
 FIND_PACKAGE(Eigen3 REQUIRED)
-INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(SYSTEM ${EIGEN3_INCLUDE_DIR})
 ADD_COMPILE_OPTIONS(-DEIGEN_MPL2_ONLY)
 ADD_DEFINITIONS(-DEIGEN_DONT_ALIGN_STATICALLY)
 
@@ -166,11 +156,19 @@ ADD_DEFINITIONS(-DBOOST_BIND_GLOBAL_PLACEHOLDERS)
 
 SET(Boost_USE_MULTITHREADED ON)
 IF(ENABLE_TESTS)
-        FIND_PACKAGE(Boost 1.35.0 COMPONENTS unit_test_framework prg_exec_monitor REQUIRED)
+        IF(POLICY CMP0167)
+                FIND_PACKAGE(Boost 1.70.0 COMPONENTS unit_test_framework prg_exec_monitor REQUIRED CONFIG)
+        ELSE()
+                FIND_PACKAGE(Boost 1.35.0 COMPONENTS unit_test_framework prg_exec_monitor REQUIRED)
+        ENDIF()
 ELSE()
-        FIND_PACKAGE(Boost 1.35.0 REQUIRED)
+        IF(POLICY CMP0167)
+                FIND_PACKAGE(Boost 1.70.0 REQUIRED CONFIG)
+        ELSE()
+                FIND_PACKAGE(Boost 1.35.0 REQUIRED)
+        ENDIF()
 ENDIF()
-INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(SYSTEM ${Boost_INCLUDE_DIRS})
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 
 find_package(OpenMP)
@@ -178,28 +176,20 @@ if (OPENMP_FOUND)
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
     set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
+    include_directories(${OpenMP_CXX_INCLUDE_DIRS})
 endif()
 
 OPTION(ENABLE_EXIV2 "Exiv2 library may be used to manage image metadata." ON)
 IF (ENABLE_EXIV2)
         find_package(EXIV2 REQUIRED)
-        INCLUDE_DIRECTORIES("${EXIV2_INCLUDE_DIR}")
-        LIST(APPEND EXTRA_LIBS ${EXIV2_LIBRARY})
+        INCLUDE_DIRECTORIES(SYSTEM "${EXIV2_INCLUDE_DIRS}")
+        LIST(APPEND EXTRA_LIBS ${EXIV2_LIBRARIES})
         ADD_DEFINITIONS(-DHAVE_EXIV2)
 ENDIF()
 
 IF(UNIX)
-        FindPthreads()
-	IF(PTHREADS_FOUND)
-	        ADD_DEFINITIONS(${PTHREADS_CFLAGS})
-		LINK_LIBRARIES(${PTHREADS_LIBS})
-		ELSE(PTHREADS_FOUND)
-		MESSAGE(
-		        FATAL_ERROR
-			"Could not detect threading flags.\n"
-			"Try specifying them manually in PTHREADS_CFLAGS and PTHREADS_LIBS."
-			)
-	ENDIF(PTHREADS_FOUND)
+        find_package(Threads REQUIRED)
+        LINK_LIBRARIES(Threads::Threads)
 ELSEIF(WIN32)
         ADD_DEFINITIONS(-DNOMINMAX)
 ENDIF(UNIX)
@@ -210,16 +200,6 @@ IF(CANBERRA_FOUND)
         LIST(APPEND EXTRA_LIBS ${CANBERRA_LIBRARIES})
 ENDIF(CANBERRA_FOUND)
 
-
-CHECK_INCLUDE_FILE(stdint.h HAVE_STDINT_H)
-IF(NOT HAVE_STDINT_H)
-        CONFIGURE_FILE(compat/pstdint.h "${CMAKE_CURRENT_BINARY_DIR}/stdint.h" COPYONLY)
-        INCLUDE_DIRECTORIES("${CMAKE_CURRENT_BINARY_DIR}")
-ELSE(NOT HAVE_STDINT_H)
-        FILE(REMOVE "${CMAKE_CURRENT_BINARY_DIR}/stdint.h")
-ENDIF(NOT HAVE_STDINT_H)
-
-
 IF(WIN32)
    LIST(APPEND EXTRA_LIBS "ws2_32.lib")
 ENDIF(WIN32)
@@ -228,7 +208,7 @@ ENDIF(WIN32)
 SET(MAYBE_QT_OPENGL_MODULE "")
 IF(ENABLE_OPENGL)
         LIST(APPEND EXTRA_LIBS ${OPENGL_LIBRARIES})
-        SET(MAYBE_QT_OPENGL_MODULE OpenGL)
+        SET(MAYBE_QT_OPENGL_MODULE Qt5::OpenGL)
 ENDIF()
 
 # Prepare config.h
@@ -284,35 +264,43 @@ IF(WIN32)
         CMAKE_PATH(APPEND Qt5_DIR "plugins" OUTPUT_VARIABLE PLUGINS_DIR)
 
         # Install system plugin
-        install(FILES "${PLUGINS_DIR}/platforms/qwindows.dll"  DESTINATION ./platforms CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
-        install(FILES "${PLUGINS_DIR}/platforms/qwindowsd.dll" DESTINATION ./platforms CONFIGURATIONS Debug)
+        install(FILES "${PLUGINS_DIR}/platforms/qwindows.dll"  DESTINATION platforms CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/platforms/qwindowsd.dll" DESTINATION platforms CONFIGURATIONS Debug)
 
         # Install style plugin
-        install(FILES "${PLUGINS_DIR}/styles/qwindowsvistastyle.dll"  DESTINATION ./styles CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
-        install(FILES "${PLUGINS_DIR}/styles/qwindowsvistastyled.dll" DESTINATION ./styles CONFIGURATIONS Debug)
+        install(FILES "${PLUGINS_DIR}/styles/qwindowsvistastyle.dll"  DESTINATION styles CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/styles/qwindowsvistastyled.dll" DESTINATION styles CONFIGURATIONS Debug)
         
         # Install accessibility plugin
         IF (Qt5Widgets_VERSION VERSION_LESS 5.4.0)
-                install(FILES "${PLUGINS_DIR}/accessible/qtaccessiblewidgets.dll"  DESTINATION ./accessible CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
-                install(FILES "${PLUGINS_DIR}/accessible/qtaccessiblewidgetsd.dll" DESTINATION ./accessible CONFIGURATIONS Debug)
+                install(FILES "${PLUGINS_DIR}/accessible/qtaccessiblewidgets.dll"  DESTINATION accessible CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+                install(FILES "${PLUGINS_DIR}/accessible/qtaccessiblewidgetsd.dll" DESTINATION accessible CONFIGURATIONS Debug)
         ENDIF()
 
         # Install image format plugins
-        install(FILES "${PLUGINS_DIR}/imageformats/qjpeg.dll"  DESTINATION ./imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
-        install(FILES "${PLUGINS_DIR}/imageformats/qjpegd.dll" DESTINATION ./imageformats CONFIGURATIONS Debug)
+        install(FILES "${PLUGINS_DIR}/imageformats/qjpeg.dll"  DESTINATION imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/imageformats/qjpegd.dll" DESTINATION imageformats CONFIGURATIONS Debug)
 
-        install(FILES "${PLUGINS_DIR}/imageformats/qtiff.dll"  DESTINATION ./imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
-        install(FILES "${PLUGINS_DIR}/imageformats/qtiffd.dll" DESTINATION ./imageformats CONFIGURATIONS Debug)
+        install(FILES "${PLUGINS_DIR}/imageformats/qtiff.dll"  DESTINATION imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/imageformats/qtiffd.dll" DESTINATION imageformats CONFIGURATIONS Debug)
 
         # Install image format plugins required to display images in stylesheets
-        install(FILES "${PLUGINS_DIR}/imageformats/qico.dll"   DESTINATION ./imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
-        install(FILES "${PLUGINS_DIR}/imageformats/qicod.dll"  DESTINATION ./imageformats CONFIGURATIONS Debug)
+        install(FILES "${PLUGINS_DIR}/imageformats/qico.dll"   DESTINATION imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/imageformats/qicod.dll"  DESTINATION imageformats CONFIGURATIONS Debug)
 
-        install(FILES "${PLUGINS_DIR}/imageformats/qsvg.dll"   DESTINATION ./imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
-        install(FILES "${PLUGINS_DIR}/imageformats/qsvgd.dll"  DESTINATION ./imageformats CONFIGURATIONS Debug)
+        install(FILES "${PLUGINS_DIR}/imageformats/qsvg.dll"   DESTINATION imageformats CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/imageformats/qsvgd.dll"  DESTINATION imageformats CONFIGURATIONS Debug)
 
-        install(FILES "${PLUGINS_DIR}/iconengines/qsvgicon.dll"  DESTINATION ./iconengines CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
-        install(FILES "${PLUGINS_DIR}/iconengines/qsvgicond.dll" DESTINATION ./iconengines CONFIGURATIONS Debug)
+        install(FILES "${PLUGINS_DIR}/iconengines/qsvgicon.dll"  DESTINATION iconengines CONFIGURATIONS Release MinSizeRel RelWithDebInfo)
+        install(FILES "${PLUGINS_DIR}/iconengines/qsvgicond.dll" DESTINATION iconengines CONFIGURATIONS Debug)
+
+        # Install Qt's translations
+        FOREACH(qm_file ${QM_FILES})
+                STRING(REGEX REPLACE "^.*scantailor-deviant_" "${Qt5_DIR}translations/qtbase_" qtbase_qm_file "${qm_file}")
+                IF(EXISTS "${qtbase_qm_file}")
+                        INSTALL(FILES "${qtbase_qm_file}" DESTINATION translations)
+                ENDIF()
+        ENDFOREACH()
 
         # Install stylesheets
         install(DIRECTORY "${CMAKE_SOURCE_DIR}/src/stylesheets"
@@ -334,7 +322,7 @@ IF(WIN32)
 
         # Install libjpeg
         FIND_FILE(LIBJPEG_DLL
-                NAMES libjpeg.dll jpeg.dll jpeg62.dll
+                NAMES libjpeg.dll jpeg.dll jpeg62.dll libjpeg-62.dll
                 PATHS ${CMAKE_PREFIX_PATH}
                 PATH_SUFFIXES bin lib
                 NO_DEFAULT_PATH)
@@ -356,7 +344,7 @@ IF(WIN32)
 
         # Install zlib
         FIND_FILE(ZLIB_DLL
-                NAMES zdll.dll zlib.dll zlib1.dll z.dll
+                NAMES zdll.dll zlib.dll zlib1.dll z.dll libzlib.dll
                 PATHS ${CMAKE_PREFIX_PATH}
                 PATH_SUFFIXES bin lib
                 NO_DEFAULT_PATH)
@@ -368,7 +356,7 @@ IF(WIN32)
         # Install openjpeg
         IF(ENABLE_OPENJPEG)
                 FIND_FILE(OPENJPEG_DLL
-                        NAMES openjp2.dll
+                        NAMES openjp2.dll libopenjp2.dll
                         PATHS ${CMAKE_PREFIX_PATH}
                         PATH_SUFFIXES bin lib
                         NO_DEFAULT_PATH)
@@ -381,7 +369,7 @@ IF(WIN32)
         # Install exiv
         IF(ENABLE_EXIV2)
                 FIND_FILE(EXIV2_DLL
-                        NAMES exiv2.dll
+                        NAMES exiv2.dll libexiv2.dll
                         PATHS ${CMAKE_PREFIX_PATH}
                         PATH_SUFFIXES bin lib
                         NO_DEFAULT_PATH)
@@ -391,6 +379,42 @@ IF(WIN32)
                 install(FILES "${EXIV2_DLL}"  DESTINATION .)
         ENDIF()
 ELSEIF(APPLE)
+        INSTALL(IMPORTED_RUNTIME_ARTIFACTS scantailor-deviant
+                RUNTIME_DEPENDENCY_SET runtime
+                BUNDLE DESTINATION .
+        )
+
+        INSTALL(RUNTIME_DEPENDENCY_SET runtime
+                DESTINATION scantailor-deviant.app/Contents/Frameworks
+                PRE_EXCLUDE_REGEXES "^/System" "^/Library" "^/usr/lib"
+                POST_EXCLUDE_REGEXES ""
+        )
+
+        install(DIRECTORY "${CMAKE_SOURCE_DIR}/src/stylesheets"
+                DESTINATION scantailor-deviant.app/Contents/Resources)
+
+        CMAKE_PATH(SET QT5_PLUGINS_DIR NORMALIZE ${Qt5Core_DIR}/../../../plugins)
+        set(PLUGINS_DESTINATION scantailor-deviant.app/Contents/PlugIns)
+
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/platforms/libqcocoa.dylib    DESTINATION ${PLUGINS_DESTINATION}/platforms)
+
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/styles/libqmacstyle.dylib    DESTINATION ${PLUGINS_DESTINATION}/styles)
+
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/imageformats/libqico.dylib   DESTINATION ${PLUGINS_DESTINATION}/imageformats)
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/imageformats/libqjpeg.dylib  DESTINATION ${PLUGINS_DESTINATION}/imageformats)
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/imageformats/libqsvg.dylib   DESTINATION ${PLUGINS_DESTINATION}/imageformats)
+        INSTALL(FILES ${QT5_PLUGINS_DIR}/imageformats/libqtiff.dylib  DESTINATION ${PLUGINS_DESTINATION}/imageformats)
+
+        CMAKE_PATH(SET Qt5_DIR NORMALIZE "${Qt5Core_DIR}/../../..")
+
+        FOREACH(qm_file ${QM_FILES})
+                STRING(REGEX REPLACE "^.*scantailor-deviant_" "${Qt5_DIR}translations/qtbase_" qtbase_qm_file "${qm_file}")
+                IF(EXISTS "${qtbase_qm_file}")
+                        INSTALL(FILES "${qtbase_qm_file}" DESTINATION "scantailor-deviant.app/Contents/Resources/translations")
+                ENDIF()
+                STRING(REGEX REPLACE "^.*scantailor-deviant_(.*)\.qm" "\\1" qtbase_qm_name "${qm_file}")
+                INSTALL(DIRECTORY DESTINATION "scantailor-deviant.app/Contents/Resources/${qtbase_qm_name}.lproj")
+        ENDFOREACH()
 ELSE()
         INSTALL(DIRECTORY "${CMAKE_SOURCE_DIR}/src/stylesheets" DESTINATION "share/scantailor-deviant")
 
@@ -438,6 +462,8 @@ IF(WIN32)
         SET(CPACK_NSIS_INSTALLED_ICON_NAME "scantailor-deviant.exe")
         SET(CPACK_NSIS_EXECUTABLES_DIRECTORY .)
 ELSEIF(APPLE)
+        SET(CPACK_SOURCE_GENERATOR TGZ)
+        SET(CPACK_GENERATOR DragNDrop)
 ELSE()
         SET(CPACK_DEBIAN_PACKAGE_DESCRIPTION 
                 "Scan Tailor is an interactive post-processing tool for scanned pages.\n"

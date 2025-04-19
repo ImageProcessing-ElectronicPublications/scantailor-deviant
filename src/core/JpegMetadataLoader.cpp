@@ -112,6 +112,8 @@ JpegSourceManager::JpegSourceManager(QIODevice& io_device)
 void
 JpegSourceManager::initSource(j_decompress_ptr cinfo)
 {
+    Q_UNUSED(cinfo);
+
     // No-op.
 }
 
@@ -161,6 +163,8 @@ JpegSourceManager::skipInputDataImpl(long num_bytes)
 void
 JpegSourceManager::termSource(j_decompress_ptr cinfo)
 {
+    Q_UNUSED(cinfo);
+
     // No-op.
 }
 

@@ -33,4 +33,9 @@ inline Eigen::Vector2d toVec(QPointF const& pt)
     return Eigen::Vector2d(pt.x(), pt.y());
 }
 
+inline Eigen::Matrix<double, 1, 1> toVec(double pt)
+{
+    return Eigen::Matrix<double, 1, 1>(pt);
+}
+
 #endif

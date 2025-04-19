@@ -173,6 +173,8 @@ PictureZoneEditor::~PictureZoneEditor()
 void
 PictureZoneEditor::onPaint(QPainter& painter, InteractionState const& interaction)
 {
+    Q_UNUSED(interaction);
+
     painter.setWorldTransform(QTransform());
     painter.setRenderHint(QPainter::Antialiasing);
 

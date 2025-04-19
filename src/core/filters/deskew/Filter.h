@@ -25,6 +25,7 @@
 #include "IntrusivePtr.h"
 #include "FilterResult.h"
 #include "SafeDeletingQObjectPtr.h"
+#include "PageOrderOption.h"
 
 class PageId;
 class QString;
@@ -84,6 +85,10 @@ public:
     {
         return m_ptrSettings.get();
     };
+
+    virtual std::vector<PageOrderOption> pageOrderOptions() const;
+    virtual int selectedPageOrder() const;
+    virtual void selectPageOrder(int option);
 private:
     void writePageSettings(
         QDomDocument& doc, QDomElement& filter_el,
@@ -91,6 +96,8 @@ private:
 
     IntrusivePtr<Settings> m_ptrSettings;
     SafeDeletingQObjectPtr<OptionsWidget> m_ptrOptionsWidget;
+    std::vector<PageOrderOption> m_pageOrderOptions;
+    int m_selectedPageOrder;
 };
 
 } // namespace deskew

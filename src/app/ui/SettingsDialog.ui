@@ -171,7 +171,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>27</number>
+       <number>13</number>
       </property>
       <widget class="QWidget" name="pageEmpty">
        <layout class="QVBoxLayout" name="verticalLayout_2"/>
@@ -1627,6 +1627,110 @@ The dividing line can also be determined/moved automatically or specified manual
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="pageDistortionsCorrection">
+       <layout class="QVBoxLayout" name="verticalLayout_99">
+        <item>
+         <widget class="QGroupBox" name="groupBox_20">
+          <property name="title">
+           <string>Description</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_98">
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <property name="leftMargin">
+            <number>6</number>
+           </property>
+           <property name="topMargin">
+            <number>6</number>
+           </property>
+           <property name="rightMargin">
+            <number>6</number>
+           </property>
+           <property name="bottomMargin">
+            <number>6</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="lblDockingDescr_2">
+             <property name="text">
+              <string>At this stage, you can correct distortions caused by rotating the paper in the scanner, or perspective distortions in the photo.</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="textInteractionFlags">
+              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="pageDeviantDeskew">
+       <layout class="QVBoxLayout" name="verticalLayout_62">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <property name="leftMargin">
+         <number>6</number>
+        </property>
+        <property name="topMargin">
+         <number>9</number>
+        </property>
+        <property name="rightMargin">
+         <number>9</number>
+        </property>
+        <property name="bottomMargin">
+         <number>9</number>
+        </property>
+        <item>
+         <widget class="QGroupBox" name="groupBox_11">
+          <property name="title">
+           <string>Description</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_61">
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <property name="leftMargin">
+            <number>6</number>
+           </property>
+           <property name="topMargin">
+            <number>6</number>
+           </property>
+           <property name="rightMargin">
+            <number>6</number>
+           </property>
+           <property name="bottomMargin">
+            <number>6</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="lblDeviantDeskewDescr">
+             <property name="text">
+              <string>If enabled - marks deviant pages with red asterisks in Thumbnails panel.
+The Deviant page on this stage is defined as a page which absolute deskew angle value is bigger than specified in command line (5 degrees by default) or differs from average angle more than 1.5 standard deviations. Average angle and standard deviation are statistical measurements calculated based on all pages.</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="textInteractionFlags">
+              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="pageDeskew">
        <layout class="QVBoxLayout" name="verticalLayout_39">
         <property name="spacing">
@@ -1785,8 +1889,8 @@ Images can be rotated by dragging the round handles at the edges. You can also e
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="pageDeviantDeskew">
-       <layout class="QVBoxLayout" name="verticalLayout_62">
+      <widget class="QWidget" name="pageDewarping">
+       <layout class="QVBoxLayout" name="verticalLayout_54">
         <property name="spacing">
          <number>6</number>
         </property>
@@ -1803,11 +1907,11 @@ Images can be rotated by dragging the round handles at the edges. You can also e
          <number>9</number>
         </property>
         <item>
-         <widget class="QGroupBox" name="groupBox_11">
+         <widget class="QGroupBox" name="groupBox_42">
           <property name="title">
            <string>Description</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_61">
+          <layout class="QVBoxLayout" name="verticalLayout_31">
            <property name="spacing">
             <number>6</number>
            </property>
@@ -1824,21 +1928,106 @@ Images can be rotated by dragging the round handles at the edges. You can also e
             <number>6</number>
            </property>
            <item>
-            <widget class="QLabel" name="lblDeviantDeskewDescr">
-             <property name="text">
-              <string>If enabled - marks deviant pages with red asterisks in Thumbnails panel.
-The Deviant page on this stage is defined as a page which absolute deskew angle value is bigger than specified in command line (5 degrees by default) or differs from average angle more than 1.5 standard deviations. Average angle and standard deviation are statistical measurements calculated based on all pages.</string>
+            <widget class="QScrollArea" name="scrollArea_19">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
              </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-             </property>
-             <property name="wordWrap">
+             <property name="widgetResizable">
               <bool>true</bool>
              </property>
-             <property name="textInteractionFlags">
-              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-             </property>
+             <widget class="QWidget" name="scrollAreaWidgetContents_19">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>396</width>
+                <height>350</height>
+               </rect>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_92">
+               <property name="leftMargin">
+                <number>6</number>
+               </property>
+               <property name="topMargin">
+                <number>6</number>
+               </property>
+               <property name="rightMargin">
+                <number>6</number>
+               </property>
+               <property name="bottomMargin">
+                <number>6</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="lblDewarpingDescr">
+                 <property name="text">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dewarping tries to detect and fix distortion of page surface by analyzing lines of text on it. It assumes that the lines should be horizontal.&lt;/p&gt;&lt;p&gt;Automatic and manual modes are supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                 <property name="textInteractionFlags">
+                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="optDewarping">
+          <property name="title">
+           <string>Options</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="0" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_17">
+             <item>
+              <widget class="QLabel" name="lblDewarpingSplinePoints">
+               <property name="text">
+                <string>Dewarping spline points:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_24">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="sbDewarpingSplinePoints">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimum">
+                <number>3</number>
+               </property>
+               <property name="maximum">
+                <number>15</number>
+               </property>
+               <property name="value">
+                <number>5</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
@@ -4030,107 +4219,6 @@ As Foreground layer is using binarization to separate content from background it
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="pageDewarping">
-       <layout class="QVBoxLayout" name="verticalLayout_54">
-        <property name="spacing">
-         <number>6</number>
-        </property>
-        <property name="leftMargin">
-         <number>6</number>
-        </property>
-        <property name="topMargin">
-         <number>9</number>
-        </property>
-        <property name="rightMargin">
-         <number>9</number>
-        </property>
-        <property name="bottomMargin">
-         <number>9</number>
-        </property>
-        <item>
-         <widget class="QGroupBox" name="groupBox_42">
-          <property name="title">
-           <string>Description</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_31">
-           <property name="spacing">
-            <number>6</number>
-           </property>
-           <property name="leftMargin">
-            <number>6</number>
-           </property>
-           <property name="topMargin">
-            <number>6</number>
-           </property>
-           <property name="rightMargin">
-            <number>6</number>
-           </property>
-           <property name="bottomMargin">
-            <number>6</number>
-           </property>
-           <item>
-            <widget class="QScrollArea" name="scrollArea_19">
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
-             </property>
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents_19">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>396</width>
-                <height>372</height>
-               </rect>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_92">
-               <property name="leftMargin">
-                <number>6</number>
-               </property>
-               <property name="topMargin">
-                <number>6</number>
-               </property>
-               <property name="rightMargin">
-                <number>6</number>
-               </property>
-               <property name="bottomMargin">
-                <number>6</number>
-               </property>
-               <item>
-                <widget class="QLabel" name="lblDewarpingDescr">
-                 <property name="text">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dewarping tries to detect and fix distortion of page surface by analyzing lines of text on it. It assumes that the lines should be horizontal.&lt;/p&gt;&lt;p&gt;Automatic and manual modes are supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                 </property>
-                 <property name="wordWrap">
-                  <bool>true</bool>
-                 </property>
-                 <property name="textInteractionFlags">
-                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="optDewarping">
-          <property name="title">
-           <string>Options</string>
-          </property>
-          <layout class="QFormLayout" name="formLayout_17"/>
-         </widget>
-        </item>
-       </layout>
-      </widget>
       <widget class="QWidget" name="pageDespeckling">
        <layout class="QVBoxLayout" name="verticalLayout_33">
         <property name="spacing">
@@ -4472,6 +4560,8 @@ Debug images are saved as png in temporary folder with unique filenames. These f
   <tabstop>scrollArea_21</tabstop>
   <tabstop>btnColorDeskew</tabstop>
   <tabstop>btnColorDeskewReset</tabstop>
+  <tabstop>scrollArea_19</tabstop>
+  <tabstop>sbDewarpingSplinePoints</tabstop>
   <tabstop>scrollArea_5</tabstop>
   <tabstop>btnColorSelectedContent</tabstop>
   <tabstop>btnColorSelectedContentReset</tabstop>
@@ -4514,7 +4604,6 @@ Debug images are saved as png in temporary folder with unique filenames. These f
   <tabstop>rectangularAreasSensitivityValue</tabstop>
   <tabstop>scrollArea_10</tabstop>
   <tabstop>cbForegroundLayerSeparateControl</tabstop>
-  <tabstop>scrollArea_19</tabstop>
   <tabstop>despecklingDefaultsValue</tabstop>
   <tabstop>cbCopyICCProfile</tabstop>
   <tabstop>scrollArea_3</tabstop>

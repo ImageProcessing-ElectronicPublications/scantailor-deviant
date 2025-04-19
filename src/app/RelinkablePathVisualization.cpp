@@ -190,6 +190,8 @@ RelinkablePathVisualization::stylePathComponentButton(QAbstractButton* btn, bool
 void
 RelinkablePathVisualization::paintEvent(QPaintEvent* evt)
 {
+    Q_UNUSED(evt);
+
     int const total_items = m_pLayout->count(); // Note that there is an extra stretch item.
     for (int i = 0; i < total_items; ++i) {
         QWidget* widget = m_pLayout->itemAt(i)->widget();
@@ -298,6 +300,8 @@ RelinkablePathVisualization::checkForExistence(std::vector<PathComponent>& compo
 void
 RelinkablePathVisualization::ComponentButton::paintEvent(QPaintEvent* evt)
 {
+    Q_UNUSED(evt);
+
     QStyleOptionButton option;
     option.initFrom(this);
     option.text = text();

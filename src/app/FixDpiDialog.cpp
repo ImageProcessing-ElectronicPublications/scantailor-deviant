@@ -650,6 +650,8 @@ FixDpiDialog::TreeModel::applyDpiToSelection(
 int
 FixDpiDialog::TreeModel::columnCount(QModelIndex const& parent) const
 {
+    Q_UNUSED(parent);
+
     return 1;
 }
 

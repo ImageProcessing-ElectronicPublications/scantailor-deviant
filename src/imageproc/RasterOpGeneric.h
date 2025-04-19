@@ -335,6 +335,7 @@ namespace rop_generic
 
     inline void validateDimensions(std::tuple<int, int> const& reference_dims)
     {
+        Q_UNUSED(reference_dims);
     }
 
     template<typename FirstImage, typename... Images>

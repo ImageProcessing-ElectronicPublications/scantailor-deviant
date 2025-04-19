@@ -16,46 +16,41 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "DepthPerception.h"
-#include "Utils.h"
+#ifndef OUTPUT_CHANGEDPIDIALOG_H_
+#define OUTPUT_CHANGEDPIDIALOG_H_
 
-namespace dewarping
+#include "ui/ui_OutputChangeDpiDialog.h"
+#include <QDialog>
+#include <QString>
+
+class Dpi;
+
+namespace output
 {
 
-DepthPerception::DepthPerception()
-    :	m_value(defaultValue())
+class ChangeDpiDialog : public QDialog, public Ui_OutputChangeDpiDialog
 {
-}
+    Q_OBJECT
+public:
+    ChangeDpiDialog(QWidget* parent, Dpi const& dpi);
 
-DepthPerception::DepthPerception(double value)
-    :	m_value(qBound(minValue(), value, maxValue()))
-{
-}
-
-DepthPerception::DepthPerception(QString const& from_string)
-{
-    bool ok = false;
-    m_value = from_string.toDouble(&ok);
-    if (!ok)
+    int dpi() const
     {
-        m_value = defaultValue();
+        return dpiSelector->currentText().toInt();
     }
-    else
-    {
-        m_value = qBound(minValue(), m_value, maxValue());
-    }
-}
+public slots:
+    virtual void accept();
+private slots:
+    void dpiSelectionChanged(int index);
 
-QString
-DepthPerception::toString() const
-{
-    return Utils::doubleToString(m_value);
-}
+    void dpiEditTextChanged(QString const& text);
+private:
+    bool validate();
 
-void
-DepthPerception::setValue(double value)
-{
-    m_value = qBound(minValue(), value, maxValue());
-}
+    int m_customItemIdx;
+    QString m_customDpiString;
+};
 
-} // namespace dewarping
+} // namespace output
+
+#endif

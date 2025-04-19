@@ -41,13 +41,15 @@
 #include <assert.h>
 
 ProjectPages::ProjectPages(Qt::LayoutDirection const layout_direction)
+    : m_refCounter(0)
 {
     initSubPagesInOrder(layout_direction);
 }
 
 ProjectPages::ProjectPages(
-    std::vector<ImageInfo> const& info,
+    std::vector<ImageInfo> const &info,
     Qt::LayoutDirection const layout_direction)
+    : m_refCounter(0)
 {
     initSubPagesInOrder(layout_direction);
 
@@ -70,8 +72,9 @@ ProjectPages::ProjectPages(
 }
 
 ProjectPages::ProjectPages(
-    std::vector<ImageFileInfo> const& files,
+    std::vector<ImageFileInfo> const &files,
     Pages const pages, Qt::LayoutDirection const layout_direction)
+    : m_refCounter(0)
 {
     initSubPagesInOrder(layout_direction);
 
@@ -628,7 +631,6 @@ ProjectPages::removePagesImpl(std::set<PageId> const& to_remove, bool& modified)
 
     std::vector<ImageDesc> new_images;
     new_images.reserve(m_images.size());
-    int new_total_logical_pages = 0;
 
     int const num_old_images = m_images.size();
     for (int i = 0; i < num_old_images; ++i) {
@@ -652,7 +654,6 @@ ProjectPages::removePagesImpl(std::set<PageId> const& to_remove, bool& modified)
 
         if (image.numLogicalPages > 0) {
             new_images.push_back(image);
-            new_total_logical_pages += new_images.back().numLogicalPages;
         }
     }
 
@@ -662,6 +663,8 @@ ProjectPages::removePagesImpl(std::set<PageId> const& to_remove, bool& modified)
 PageInfo
 ProjectPages::unremovePageImpl(PageId const& page_id, bool& modified)
 {
+    Q_UNUSED(modified);
+
     if (page_id.subPage() == PageId::SINGLE_PAGE) {
         // These can't be unremoved.
         return PageInfo();

@@ -222,7 +222,7 @@ ImageViewBase::ImageViewBase(
     updateWidgetTransformAndFixFocalPoint(CENTER_IF_FITS);
     QString plus_minus = GlobalStaticSettings::getShortcutText(PageViewZoomIn) + "/" +
                          GlobalStaticSettings::getShortcutText(PageViewZoomOut);
-    QString default_tooltip = tr("Use the mouse wheel or %1 to zoom. When zoomed, dragging is possible.").arg(plus_minus);
+    QString default_tooltip = tr("Use the mouse wheel or %1 to zoom. When zoomed, dragging is possible. Double click to zoom all.").arg(plus_minus);
 
     if (!QSettings().value(_key_output_show_orig_on_space, _key_output_show_orig_on_space_def).toBool()) {
         interactionState().setDefaultStatusTip(default_tooltip);
@@ -487,6 +487,8 @@ ImageViewBase::ensureStatusTip(QString const& status_tip)
 void
 ImageViewBase::paintEvent(QPaintEvent* event)
 {
+    Q_UNUSED(event);
+
     QPainter painter(viewport());
     painter.save();
 
@@ -711,7 +713,17 @@ ImageViewBase::resizeEvent(QResizeEvent* event)
 
     if (maximumViewportSize() != m_lastMaximumViewportSize) {
         m_lastMaximumViewportSize = maximumViewportSize();
-        m_widgetFocalPoint = centeredWidgetFocalPoint();
+
+        // Since the the value of maximumViewportSize() changed,
+        // we need to call updateWidgetTransform(). This has to
+        // go before getIdealWidgetFocalPoint(), as it updates
+        // the transform getIdealWidgetFocalPoint() relies on.
+        updateWidgetTransform();
+
+        m_widgetFocalPoint = getIdealWidgetFocalPoint(CENTER_IF_FITS);
+
+        // Having updated m_widgetFocalPoint, we need to update
+        // the virtual <-> widget transforms again.
         updateWidgetTransform();
     } else {
         TransformChangeWatcher const watcher(*this);
@@ -1195,7 +1207,7 @@ ImageViewBase::backgroundExecutor()
 }
 
 void
-ImageViewBase::setAlternativeImage(shared_ptr<QImage> image, shared_ptr<QPixmap> pixmap)
+ImageViewBase::setAlternativeImage(std::shared_ptr<QImage> image, std::shared_ptr<QPixmap> pixmap)
 {
     m_alternativeImage = image;
     if (m_alternativeImage) {

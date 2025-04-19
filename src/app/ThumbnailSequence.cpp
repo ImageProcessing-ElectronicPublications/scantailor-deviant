@@ -17,7 +17,6 @@
 */
 
 #include "ThumbnailSequence.h"
-#include "ThumbnailView.h"
 #include "ThumbnailFactory.h"
 #include "IncompleteThumbnail.h"
 #include "PageSequence.h"
@@ -151,6 +150,8 @@ public:
     void setThumbnailFactory(IntrusivePtr<ThumbnailFactory> const& factory);
 
     void attachView(ThumbnailView* view);
+
+    void setThumbnailViewStyle(ThumbnailView::QssStyle const* style);
 
     void reset(PageSequence const& pages,
                SelectionAction const selection_action,
@@ -449,6 +450,12 @@ ThumbnailSequence::attachView(ThumbnailView* const view)
 }
 
 void
+ThumbnailSequence::setThumbnailViewStyle(ThumbnailView::QssStyle const* style)
+{
+    m_ptrImpl->setThumbnailViewStyle(style);
+}
+
+void
 ThumbnailSequence::reset(
     PageSequence const& pages,
     SelectionAction const selection_action,
@@ -632,6 +639,12 @@ ThumbnailSequence::Impl::attachView(ThumbnailView* const view)
 {
     view->setScene(&m_graphicsScene);
     m_ptrQssStyle = view->qssStyle();
+}
+
+void
+ThumbnailSequence::Impl::setThumbnailViewStyle(ThumbnailView::QssStyle const* style)
+{
+    m_ptrQssStyle = style;
 }
 
 void

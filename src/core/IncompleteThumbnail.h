@@ -22,7 +22,9 @@
 #include "ThumbnailBase.h"
 #include "IntrusivePtr.h"
 #include <QPainterPath>
+#include <memory>
 
+class AbstractThumbnailMaker;
 class ThumbnailPixmapCache;
 class QSizeF;
 class QRectF;
@@ -45,6 +47,7 @@ class IncompleteThumbnail : public ThumbnailBase
 public:
     IncompleteThumbnail(
         IntrusivePtr<ThumbnailPixmapCache> const& thumbnail_cache,
+        std::unique_ptr<AbstractThumbnailMaker> thumbnail_maker,
         QSizeF const& max_size, ImageId const& image_id, QString const& version,
         ImageTransformation const& image_xform);
 

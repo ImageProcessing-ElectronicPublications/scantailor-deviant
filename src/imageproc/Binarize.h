@@ -38,12 +38,6 @@ class GrayImage;
 BinaryImage binarizeOtsu(QImage const& src, int delta = 0);
 
 /**
- * \brief Image binarization using DeltaMean global thresholding method.
- */
-BinaryImage binarizeMean(
-    QImage const& src, int const delta = 0);
-
-/**
  * \brief Image binarization using Mokji's global thresholding method.
  *
  * M. M. Mokji, S. A. R. Abu-Bakar: Adaptive Thresholding Based on
@@ -84,9 +78,9 @@ BinaryImage binarizeNiblack(
  */
 BinaryImage binarizeGatosCleaner(
     GrayImage& wiener, BinaryImage const& niblack,
-    QSize const window_size);
+    QSize const window_size, double scale);
 BinaryImage binarizeGatos(
-    QImage const& src, QSize window_size,
+    QImage const& src, QSize window_size, double scale = 0.6,
     double noise_sigma = 3.0, double k = 0.2, int delta = 0);
 
 /**
@@ -120,39 +114,7 @@ BinaryImage binarizeWolf(
     unsigned char lower_bound = 1, unsigned char upper_bound = 254,
     double k = 0.30, int delta = 0);
 
-/**
- * \brief Image binarization using Bradley's adaptive thresholding method.
- *
- * Derek Bradley, Gerhard Roth. 2005. "Adaptive Thresholding Using the Integral Image".
- * http://www.scs.carleton.ca/~roth/iit-publications-iti/docs/gerh-50002.pdf
- */
-GrayImage binarizeBradleyMap(
-    GrayImage const& src, QSize const window_size, double k = 0.15);
-BinaryImage binarizeBradley(
-    QImage const& src, QSize window_size,
-    double k = 0.15, int delta = 0);
-
-/**
- * \brief Image binarization using EdgeDiv (EdgePlus & BlurDiv) local/global thresholding method.
- *
- * EdgeDiv, zvezdochiot 2023. "Adaptive/global document image binarization".
- */
-BinaryImage binarizeEdgeDiv(
-    QImage const& src, QSize window_size,
-    double kep = 0.5, double kdb = 0.5, int delta = 0);
-
 BinaryImage peakThreshold(QImage const& image);
-
-/**
- * \brief Image binarization using MultiScale thresholding method.
- *
- * MultiScale thresholding method.
- */
-GrayImage binarizeMScaleMap(
-    GrayImage const& src, QSize window_size, double coef = 0.5);
-BinaryImage binarizeMScale(
-    QImage const& src, QSize window_size,
-    double coef = 0.5, int delta = 0);
 
 } // namespace imageproc
 

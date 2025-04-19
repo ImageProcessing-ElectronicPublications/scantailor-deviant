@@ -30,6 +30,7 @@
 #ifndef Q_MOC_RUN
 #include <boost/scoped_array.hpp>
 #endif
+#include <cmath>
 
 namespace imageproc
 {

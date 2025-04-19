@@ -17,6 +17,7 @@
 */
 
 #include "DewarpingThumbnail.h"
+#include "ThumbnailMakerBase.h"
 #include "dewarping/Curve.h"
 #include "dewarping/DistortionModel.h"
 #include "Utils.h"
@@ -35,14 +36,18 @@ DewarpingThumbnail::DewarpingThumbnail(
     QString const& version,	ImageTransformation const& xform,
 	std::vector<QPointF> const& top_curve,
 	std::vector<QPointF> const& bottom_curve,
-	dewarping::DepthPerception const& depth_perception)
+    dewarping::FovParams const& fov_params,
+    dewarping::FrameParams const& frame_params,
+    dewarping::BendParams const& bend_params)
 	: ThumbnailBase(
-        thumbnail_cache, max_size, 
-        image_id, version, xform
+        thumbnail_cache, std::unique_ptr<ThumbnailMakerBase>(new ThumbnailMakerBase),
+        max_size, image_id, version, xform
       )
     , m_topCurve(top_curve)
     , m_bottomCurve(bottom_curve)
-    , m_depthPerception(depth_perception)
+    , m_fovParams(fov_params)
+    , m_frameParams(frame_params)
+    , m_bendParams(bend_params)
 {
     dewarping::DistortionModel distortion_model;
     distortion_model.setTopCurve(Curve(m_topCurve));
@@ -56,6 +61,9 @@ DewarpingThumbnail::paintOverImage(
     QTransform const& image_to_display,
     QTransform const& thumb_to_display)
 {
+    Q_UNUSED(image_to_display);
+    Q_UNUSED(thumb_to_display);
+
     if (!m_isValidModel)
     {
         return;
@@ -77,7 +85,8 @@ DewarpingThumbnail::paintOverImage(
     try
     {
         Utils::buildWarpVisualization(
-            m_topCurve, m_bottomCurve, m_depthPerception,
+            m_topCurve, m_bottomCurve,
+            m_fovParams, m_frameParams, m_bendParams,
             num_horizontal_curves, num_vertical_lines,
             horizontal_curves, vertical_lines
         );

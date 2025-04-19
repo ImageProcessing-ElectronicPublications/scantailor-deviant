@@ -124,7 +124,7 @@ TextLineTracer::trace(
 
     status.throwIfCancelled();
 
-    downscaled_image = GrayImage(binarizeGatos(downscaled_image, QSize(21, 21), 3.0).toQImage());
+    downscaled_image = GrayImage(binarizeGatos(downscaled_image, QSize(21, 21)).toQImage());
 
     status.throwIfCancelled();
 
@@ -273,6 +273,8 @@ Grid<Vec2f>
 TextLineTracer::calcGradient(
     imageproc::GrayImage const& image, DebugImages* dbg)
 {
+    Q_UNUSED(dbg);
+
     int const width = image.width();
     int const height = image.height();
     Grid<Vec2f> grad(width, height, 0);

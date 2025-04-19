@@ -50,6 +50,8 @@ SET(
         DebugImageView.cpp DebugImageView.h
         TabbedDebugImages.cpp TabbedDebugImages.h
         ThumbnailLoadResult.h
+        AbstractThumbnailMaker.h
+        ThumbnailMakerBase.cpp ThumbnailMakerBase.h
         ThumbnailPixmapCache.cpp ThumbnailPixmapCache.h
         ThumbnailBase.cpp ThumbnailBase.h
         ThumbnailFactory.cpp ThumbnailFactory.h
@@ -117,7 +119,7 @@ SET(
         settings/globalstaticsettings.cpp settings/globalstaticsettings.h
         settings/hotkeysmanager.cpp settings/hotkeysmanager.h
         settings/TiffCompressionInfo.cpp settings/TiffCompressionInfo.h
-        settings/ini_keys.h
+        settings/ini_keys.cpp settings/ini_keys.h
 )
 
 IF (ENABLE_OPENJPEG)
@@ -135,7 +137,13 @@ SOURCE_GROUP("Generated" FILES ${core_resource_sources})
 SOURCE_GROUP("Resources" FILES ${core_resource_sources})
 
 ADD_LIBRARY(stcore STATIC ${core_resource_sources} ${common_sources} ${core_ui_sources})
-QT5_USE_MODULES(stcore Widgets Xml ${MAYBE_QT_OPENGL_MODULE})
+
+IF(APPLE)
+        TARGET_LINK_LIBRARIES(stcore Qt5::Widgets Qt5::Xml Qt5::PrintSupport ${MAYBE_QT_OPENGL_MODULE})
+ELSE()
+        TARGET_LINK_LIBRARIES(stcore Qt5::Widgets Qt5::Xml ${MAYBE_QT_OPENGL_MODULE})
+ENDIF()
+
 ADD_DEPENDENCIES(stcore core_ui_sources) 
 
 TRANSLATION_SOURCES(

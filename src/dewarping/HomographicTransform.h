@@ -21,11 +21,15 @@
 
 #include <Eigen/Core>
 #include <Eigen/LU>
+#include <boost/array.hpp>
 #include <cstddef>
 #include <cmath>
 #include <stdexcept>
 #include <string>
 #include <limits>
+#include <utility>
+
+class QPointF;
 
 template<size_t N, typename T> class HomographicTransform;
 
@@ -205,5 +209,11 @@ HomographicTransform<1, T>::solveForDeriv(T deriv, F&& sink) const
         sink((-b - sqrt_d) / (T(2.0) * a));
     }
 }
+
+HomographicTransform<2, double> fourPoint2DHomography(
+    boost::array<std::pair<QPointF, QPointF>, 4> const& pairs);
+
+HomographicTransform<1, double> threePoint1DHomography(
+    boost::array<std::pair<double, double>, 3> const& pairs);
 
 #endif

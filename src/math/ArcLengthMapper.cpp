@@ -34,7 +34,6 @@ ArcLengthMapper::Hint::update(int new_segment)
 }
 
 ArcLengthMapper::ArcLengthMapper()
-    :   m_prevFX()
 {
 }
 
@@ -45,13 +44,12 @@ ArcLengthMapper::addSample(double x, double fx)
 
     if (!m_samples.empty()) {
         double const dx = x - m_samples.back().x;
-        double const dy = fx - m_prevFX;
+        double const dy = fx - m_samples.back().fx;
         assert(dx > 0);
         arc_len = m_samples.back().arcLen + sqrt(dx * dx + dy * dy);
     }
 
-    m_samples.push_back(Sample(x, arc_len));
-    m_prevFX = fx;
+    m_samples.push_back(Sample(x, fx, arc_len));
 }
 
 double
@@ -76,36 +74,36 @@ ArcLengthMapper::normalizeRange(double total_arc_len)
     }
 }
 
-double
-ArcLengthMapper::arcLenToX(double arc_len, Hint& hint) const
+ArcLengthMapper::XSample
+ArcLengthMapper::arcLenToXSample(double arc_len, Hint& hint) const
 {
     switch (m_samples.size()) {
     case 0:
-        return 0;
+        return { 0, 0 };
     case 1:
-        return m_samples.front().x;
+        return { m_samples.front().x, m_samples.front().fx };
     }
 
     if (arc_len < 0) {
         // Beyond the first sample.
         hint.update(0);
-        return interpolateArcLenInSegment(arc_len, 0);
+        return interpolateXSampleInSegment(arc_len, 0);
     } else if (arc_len > m_samples.back().arcLen) {
         // Beyond the last sample.
         hint.update(m_samples.size() - 2);
-        return interpolateArcLenInSegment(arc_len, hint.m_lastSegment);
+        return interpolateXSampleInSegment(arc_len, hint.m_lastSegment);
     }
 
     // Check in the answer is in the segment provided by hint,
     // or in an adjacent one.
     if (checkSegmentForArcLen(arc_len, hint.m_lastSegment)) {
-        return interpolateArcLenInSegment(arc_len, hint.m_lastSegment);
+        return interpolateXSampleInSegment(arc_len, hint.m_lastSegment);
     } else if (checkSegmentForArcLen(arc_len, hint.m_lastSegment + hint.m_direction)) {
         hint.update(hint.m_lastSegment + hint.m_direction);
-        return interpolateArcLenInSegment(arc_len, hint.m_lastSegment);
+        return interpolateXSampleInSegment(arc_len, hint.m_lastSegment);
     } else if (checkSegmentForArcLen(arc_len, hint.m_lastSegment - hint.m_direction)) {
         hint.update(hint.m_lastSegment - hint.m_direction);
-        return interpolateArcLenInSegment(arc_len, hint.m_lastSegment);
+        return interpolateXSampleInSegment(arc_len, hint.m_lastSegment);
     }
 
     // Do a binary search.
@@ -126,39 +124,39 @@ ArcLengthMapper::arcLenToX(double arc_len, Hint& hint) const
     }
 
     hint.update(left_idx);
-    return interpolateArcLenInSegment(arc_len, left_idx);
+    return interpolateXSampleInSegment(arc_len, left_idx);
 }
 
-double
-ArcLengthMapper::xToArcLen(double x, Hint& hint) const
+ArcLengthMapper::ArcLenSample
+ArcLengthMapper::xToArcLenSample(double x, Hint& hint) const
 {
     switch (m_samples.size()) {
     case 0:
-        return 0;
+        return { 0 ,0 };
     case 1:
-        return m_samples.front().arcLen;
+        return { m_samples.front().arcLen, m_samples.front().fx };
     }
 
     if (x < m_samples.front().x) {
         // Beyond the first sample.
         hint.update(0);
-        return interpolateXInSegment(x, 0);
+        return interpolateArcLenSampleInSegment(x, 0);
     } else if (x > m_samples.back().x) {
         // Beyond the last sample.
         hint.update(m_samples.size() - 2);
-        return interpolateXInSegment(x, hint.m_lastSegment);
+        return interpolateArcLenSampleInSegment(x, hint.m_lastSegment);
     }
 
     // Check in the answer is in the segment provided by hint,
     // or in an adjacent one.
     if (checkSegmentForX(x, hint.m_lastSegment)) {
-        return interpolateXInSegment(x, hint.m_lastSegment);
+        return interpolateArcLenSampleInSegment(x, hint.m_lastSegment);
     } else if (checkSegmentForX(x, hint.m_lastSegment + hint.m_direction)) {
         hint.update(hint.m_lastSegment + hint.m_direction);
-        return interpolateXInSegment(x, hint.m_lastSegment);
+        return interpolateArcLenSampleInSegment(x, hint.m_lastSegment);
     } else if (checkSegmentForX(x, hint.m_lastSegment - hint.m_direction)) {
         hint.update(hint.m_lastSegment - hint.m_direction);
-        return interpolateXInSegment(x, hint.m_lastSegment);
+        return interpolateArcLenSampleInSegment(x, hint.m_lastSegment);
     }
 
     // Do a binary search.
@@ -179,7 +177,7 @@ ArcLengthMapper::xToArcLen(double x, Hint& hint) const
     }
 
     hint.update(left_idx);
-    return interpolateXInSegment(x, left_idx);
+    return interpolateArcLenSampleInSegment(x, left_idx);
 }
 
 bool
@@ -210,8 +208,8 @@ ArcLengthMapper::checkSegmentForX(double x, int segment) const
     return (x - left_x) * (x - right_x) <= 0;
 }
 
-double
-ArcLengthMapper::interpolateArcLenInSegment(double arc_len, int segment) const
+ArcLengthMapper::XSample
+ArcLengthMapper::interpolateXSampleInSegment(double arc_len, int segment) const
 {
     // a - a0   a1 - a0
     // ------ = -------
@@ -220,15 +218,19 @@ ArcLengthMapper::interpolateArcLenInSegment(double arc_len, int segment) const
     // x = x0 + (a - a0) * (x1 - x0) / (a1 - a0)
 
     double const x0 = m_samples[segment].x;
+    double const f0 = m_samples[segment].fx;
     double const a0 = m_samples[segment].arcLen;
     double const x1 = m_samples[segment + 1].x;
+    double const f1 = m_samples[segment + 1].fx;
     double const a1 = m_samples[segment + 1].arcLen;
-    double const x = x0 + (arc_len - a0) * (x1 - x0) / (a1 - a0);
-    return x;
+    double const k = (arc_len - a0) / (a1 - a0);
+    double const x = x0 + k * (x1 - x0);
+    double const f = f0 + k * (f1 - f0);
+    return { x, f };
 }
 
-double
-ArcLengthMapper::interpolateXInSegment(double x, int segment) const
+ArcLengthMapper::ArcLenSample
+ArcLengthMapper::interpolateArcLenSampleInSegment(double x, int segment) const
 {
     // a - a0   a1 - a0
     // ------ = -------
@@ -237,9 +239,13 @@ ArcLengthMapper::interpolateXInSegment(double x, int segment) const
     // a = a0 + (a1 - a0) * (x - x0) / (x1 - x0)
 
     double const x0 = m_samples[segment].x;
+    double const f0 = m_samples[segment].fx;
     double const a0 = m_samples[segment].arcLen;
     double const x1 = m_samples[segment + 1].x;
+    double const f1 = m_samples[segment + 1].fx;
     double const a1 = m_samples[segment + 1].arcLen;
-    double const a = a0 + (a1 - a0) * (x - x0) / (x1 - x0);
-    return a;
+    double const k = (x - x0) / (x1 - x0);
+    double const a = a0 + k * (a1 - a0);
+    double const f = f0 + k * (f1 - f0);
+    return { a, f };
 }

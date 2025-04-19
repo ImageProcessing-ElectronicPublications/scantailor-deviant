@@ -28,7 +28,7 @@ class PageSequence;
 class PageId;
 class PageRange;
 
-class PageSelectionProvider : public QObject, public RefCountable
+class PageSelectionProvider : public RefCountable, public QObject
 {
 public:
     virtual PageSequence allPages() const = 0;

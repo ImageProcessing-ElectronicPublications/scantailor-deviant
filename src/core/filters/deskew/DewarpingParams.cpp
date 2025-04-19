@@ -18,7 +18,6 @@
 
 #include "DewarpingParams.h"
 #include "dewarping/DistortionModel.h"
-#include "dewarping/DepthPerception.h"
 #include <QDomDocument>
 #include <QDomElement>
 #include <QString>
@@ -32,9 +31,12 @@ DewarpingParams::DewarpingParams()
 }
 
 DewarpingParams::DewarpingParams(QDomElement const& el)
-    :	m_distortionModel(el.namedItem("distortion-model").toElement())
-    ,	m_depthPerception(el.attribute("depthPerception"))
-    ,	m_mode(el.attribute("mode") == QLatin1String("manual") ? MODE_MANUAL : MODE_AUTO)
+    : m_distortionModel(el.namedItem("distortion-model").toElement())
+    , m_fovParams(el.namedItem("fov-params").toElement())
+    , m_frameParams(el.namedItem("frame-params").toElement())
+    , m_bendParams(el.namedItem("bend-params").toElement())
+    , m_sizeParams(el.namedItem("size-params").toElement())
+    , m_mode(el.attribute("mode") == QLatin1String("manual") ? MODE_MANUAL : MODE_AUTO)
 {
 }
 
@@ -64,7 +66,10 @@ DewarpingParams::toXml(QDomDocument& doc, QString const& name) const
 
     QDomElement el(doc.createElement(name));
     el.appendChild(m_distortionModel.toXml(doc, "distortion-model"));
-    el.setAttribute("depthPerception", m_depthPerception.toString());
+    el.appendChild(m_fovParams.toXml(doc, "fov-params"));
+    el.appendChild(m_frameParams.toXml(doc, "frame-params"));
+    el.appendChild(m_bendParams.toXml(doc, "bend-params"));
+    el.appendChild(m_sizeParams.toXml(doc, "size-params"));
     el.setAttribute("mode", m_mode == MODE_MANUAL ? "manual" : "auto");
     return el;
 }

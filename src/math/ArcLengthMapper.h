@@ -48,6 +48,16 @@ public:
         int m_direction;
     };
 
+    struct XSample {
+        double x;
+        double fx;
+    };
+
+    struct ArcLenSample {
+        double arcLen;
+        double fx;
+    };
+
     ArcLengthMapper();
 
     /**
@@ -81,27 +91,27 @@ public:
      * If no samples are present, zero is returned.  Providing the same
      * hint on consecutive calls to this function improves performance.
      */
-    double arcLenToX(double arc_len, Hint& hint) const;
+    XSample arcLenToXSample(double arc_len, Hint& hint) const;
 
-    double xToArcLen(double x, Hint& hint) const;
+    ArcLenSample xToArcLenSample(double x, Hint& hint) const;
 private:
     struct Sample {
         double x;
+        double fx;
         double arcLen;
 
-        Sample(double x, double arc_len) : x(x), arcLen(arc_len) {}
+        Sample(double x, double fx, double arc_len) : x(x), fx(fx), arcLen(arc_len) {}
     };
 
     bool checkSegmentForArcLen(double arc_len, int segment) const;
 
     bool checkSegmentForX(double x, int segment) const;
 
-    double interpolateArcLenInSegment(double arc_len, int segment) const;
+    XSample interpolateXSampleInSegment(double arc_len, int segment) const;
 
-    double interpolateXInSegment(double x, int segment) const;
+    ArcLenSample interpolateArcLenSampleInSegment(double x, int segment) const;
 
     std::vector<Sample> m_samples;
-    double m_prevFX;
 };
 
 #endif

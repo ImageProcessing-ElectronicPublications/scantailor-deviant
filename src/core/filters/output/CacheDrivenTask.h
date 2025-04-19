@@ -23,12 +23,14 @@
 #include "RefCountable.h"
 #include "IntrusivePtr.h"
 #include "OutputFileNameGenerator.h"
+#include <memory>
 
 class QPolygonF;
 class QString;
 class PageInfo;
 class AbstractFilterDataCollector;
 class ImageTransformation;
+class AbstractThumbnailMaker;
 
 namespace output
 {
@@ -48,7 +50,8 @@ public:
     void process(
         PageInfo const& page_info, AbstractFilterDataCollector* collector,
         ImageTransformation const& xform, QPolygonF const& content_rect_phys,
-        QString const& thumb_version);
+        QString const& thumb_version,
+        std::unique_ptr<AbstractThumbnailMaker> thumb_maker);
 private:
     IntrusivePtr<Settings> m_ptrSettings;
     OutputFileNameGenerator m_outFileNameGen;

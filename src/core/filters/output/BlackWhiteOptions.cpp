@@ -26,29 +26,77 @@
 namespace output
 {
 
-BlackWhiteOptions::BlackWhiteOptions():
-    m_thresholdAdjustment(GlobalStaticSettings::m_binrization_threshold_control_default),
-    m_thresholdForegroundAdjustment(m_thresholdAdjustment),
-    m_thresholdMethod(OTSU),
-    m_thresholdWindowSize(200),
-    m_thresholdCoef(0.3)
+BlackWhiteOptions::BlackWhiteOptions()
+    : m_thresholdMethod(OTSU)
+
+    , m_thresholdOtsuAdjustment(GlobalStaticSettings::m_binrization_threshold_control_default)
+
+    , m_thresholdSauvolaAdjustment(GlobalStaticSettings::m_binrization_threshold_control_default)
+    , m_thresholdSauvolaWindowSize(200)
+    , m_thresholdSauvolaCoef(0.3)
+
+    , m_thresholdWolfAdjustment(GlobalStaticSettings::m_binrization_threshold_control_default)
+    , m_thresholdWolfWindowSize(200)
+    , m_thresholdWolfCoef(0.3)
+
+    , m_thresholdGatosAdjustment(GlobalStaticSettings::m_binrization_threshold_control_default)
+    , m_thresholdGatosWindowSize(200)
+    , m_thresholdGatosCoef(0.3)
+    , m_thresholdGatosScale(0.6)
+
+    , m_thresholdForegroundAdjustment(GlobalStaticSettings::m_binrization_threshold_control_default)
 {
 }
 
 BlackWhiteOptions::BlackWhiteOptions(QDomElement const& el)
-    :   m_thresholdAdjustment(el.attribute("thresholdAdj").toInt()),
-        m_thresholdForegroundAdjustment(el.attribute("thresholdForegAdj").toInt()),
-        m_thresholdMethod(parseThresholdMethod(el.attribute("thresholdMethod"))),
-        m_thresholdWindowSize(el.attribute("thresholdWinSize").toInt()),
-        m_thresholdCoef(el.attribute("thresholdCoef").toDouble())
+    : m_thresholdMethod(parseThresholdMethod(el.attribute("thresholdMethod")))
+
+    , m_thresholdOtsuAdjustment(el.attribute("thresholdOtsuAdj").toInt())
+
+    , m_thresholdSauvolaAdjustment(el.attribute("thresholdSauvolaAdj").toInt())
+    , m_thresholdSauvolaWindowSize(el.attribute("thresholdSauvolaWinSize").toInt())
+    , m_thresholdSauvolaCoef(el.attribute("thresholdSauvolaCoef").toDouble())
+
+    , m_thresholdWolfAdjustment(el.attribute("thresholdWolfAdj").toInt())
+    , m_thresholdWolfWindowSize(el.attribute("thresholdWolfWinSize").toInt())
+    , m_thresholdWolfCoef(el.attribute("thresholdWolfCoef").toDouble())
+
+    , m_thresholdGatosAdjustment(el.attribute("thresholdGatosAdj").toInt())
+    , m_thresholdGatosWindowSize(el.attribute("thresholdGatosWinSize").toInt())
+    , m_thresholdGatosCoef(el.attribute("thresholdGatosCoef").toDouble())
+    , m_thresholdGatosScale(el.attribute("thresholdGatosScale").toDouble())
+
+    , m_thresholdForegroundAdjustment(el.attribute("thresholdForegAdj").toInt())
 {
-   if (m_thresholdWindowSize <= 0)
+    if (m_thresholdSauvolaWindowSize < 1 || m_thresholdSauvolaWindowSize > 9999)
     {
-        m_thresholdWindowSize = 200;
+        m_thresholdSauvolaWindowSize = 200;
     }
-    if (m_thresholdCoef < 0.0)
+    if (m_thresholdSauvolaCoef < 0.01 || m_thresholdSauvolaCoef > 9.99)
     {
-        m_thresholdCoef = 0.0;
+        m_thresholdSauvolaCoef = 0.3;
+    }
+
+    if (m_thresholdWolfWindowSize < 1 || m_thresholdWolfWindowSize > 9999)
+    {
+        m_thresholdWolfWindowSize = 200;
+    }
+    if (m_thresholdWolfCoef < 0.01 || m_thresholdWolfCoef > 9.99)
+    {
+        m_thresholdWolfCoef = 0.3;
+    }
+
+    if (m_thresholdGatosWindowSize < 1 || m_thresholdGatosWindowSize > 9999)
+    {
+        m_thresholdGatosWindowSize = 200;
+    }
+    if (m_thresholdGatosCoef < 0.01 || m_thresholdGatosCoef > 9.99)
+    {
+        m_thresholdGatosCoef = 0.3;
+    }
+    if (m_thresholdGatosScale < 0.01 || m_thresholdGatosScale > 1.0)
+    {
+        m_thresholdGatosScale = 0.6;
     }
 }
 
@@ -56,34 +104,100 @@ QDomElement
 BlackWhiteOptions::toXml(QDomDocument& doc, QString const& name) const
 {
     QDomElement el(doc.createElement(name));
-    el.setAttribute("thresholdAdj", m_thresholdAdjustment);
-    el.setAttribute("thresholdForegAdj", m_thresholdForegroundAdjustment);
     el.setAttribute("thresholdMethod", formatThresholdMethod(m_thresholdMethod));
-    el.setAttribute("thresholdWinSize", m_thresholdWindowSize);
-    el.setAttribute("thresholdCoef", m_thresholdCoef);
+
+    el.setAttribute("thresholdOtsuAdj", m_thresholdOtsuAdjustment);
+
+    el.setAttribute("thresholdSauvolaAdj", m_thresholdSauvolaAdjustment);
+    el.setAttribute("thresholdSauvolaWinSize", m_thresholdSauvolaWindowSize);
+    el.setAttribute("thresholdSauvolaCoef", m_thresholdSauvolaCoef);
+
+    el.setAttribute("thresholdWolfAdj", m_thresholdWolfAdjustment);
+    el.setAttribute("thresholdWolfWinSize", m_thresholdWolfWindowSize);
+    el.setAttribute("thresholdWolfCoef", m_thresholdWolfCoef);
+
+    el.setAttribute("thresholdGatosAdj", m_thresholdGatosAdjustment);
+    el.setAttribute("thresholdGatosWinSize", m_thresholdGatosWindowSize);
+    el.setAttribute("thresholdGatosCoef", m_thresholdGatosCoef);
+    el.setAttribute("thresholdGatosScale", m_thresholdGatosScale);
+
+    el.setAttribute("thresholdForegAdj", m_thresholdForegroundAdjustment);
 
     return el;
+}
+
+int
+BlackWhiteOptions::thresholdAdjustment() const
+{
+    switch (m_thresholdMethod)
+    {
+    case OTSU:
+        return m_thresholdOtsuAdjustment;
+    case SAUVOLA:
+        return m_thresholdSauvolaAdjustment;
+    case WOLF:
+        return m_thresholdSauvolaAdjustment;
+    case GATOS:
+        return m_thresholdGatosAdjustment;
+    default:
+        assert(!"Unreachable");
+        return m_thresholdOtsuAdjustment;
+    }
 }
 
 bool
 BlackWhiteOptions::operator==(BlackWhiteOptions const& other) const
 {
-    if (m_thresholdAdjustment != other.m_thresholdAdjustment) {
-        return false;
-    }
-    if (m_thresholdForegroundAdjustment != other.m_thresholdForegroundAdjustment) {
-        return false;
-    }
     if (m_thresholdMethod != other.m_thresholdMethod)
     {
         return false;
     }
-    if (m_thresholdWindowSize != other.m_thresholdWindowSize)
+
+    if (m_thresholdOtsuAdjustment != other.m_thresholdOtsuAdjustment) {
+        return false;
+    }
+
+    if (m_thresholdSauvolaAdjustment != other.m_thresholdSauvolaAdjustment) {
+        return false;
+    }
+    if (m_thresholdSauvolaWindowSize != other.m_thresholdSauvolaWindowSize)
     {
         return false;
     }
-    if (m_thresholdCoef != other.m_thresholdCoef)
+    if (m_thresholdSauvolaCoef != other.m_thresholdSauvolaCoef)
     {
+        return false;
+    }
+
+    if (m_thresholdWolfAdjustment != other.m_thresholdWolfAdjustment) {
+        return false;
+    }
+    if (m_thresholdWolfWindowSize != other.m_thresholdWolfWindowSize)
+    {
+        return false;
+    }
+    if (m_thresholdWolfCoef != other.m_thresholdWolfCoef)
+    {
+        return false;
+    }
+
+    if (m_thresholdGatosAdjustment != other.m_thresholdGatosAdjustment) {
+        return false;
+    }
+    if (m_thresholdGatosWindowSize != other.m_thresholdGatosWindowSize)
+    {
+        return false;
+    }
+    if (m_thresholdGatosCoef != other.m_thresholdGatosCoef)
+    {
+        return false;
+    }
+    if (m_thresholdGatosScale != other.m_thresholdGatosScale)
+    {
+        return false;
+    }
+
+    if (m_thresholdForegroundAdjustment != other.m_thresholdForegroundAdjustment) {
         return false;
     }
 
@@ -99,19 +213,7 @@ BlackWhiteOptions::operator!=(BlackWhiteOptions const& other) const
 ThresholdFilter
 BlackWhiteOptions::parseThresholdMethod(QString const& str)
 {
-    if (str == "mean")
-    {
-        return MEANDELTA;
-    }
-    else if (str == "niblack")
-    {
-        return NIBLACK;
-    }
-    else if (str == "gatos")
-    {
-        return GATOS;
-    }
-    else if (str == "sauvola")
+    if (str == "sauvola")
     {
         return SAUVOLA;
     }
@@ -119,25 +221,9 @@ BlackWhiteOptions::parseThresholdMethod(QString const& str)
     {
         return WOLF;
     }
-    else if (str == "bradley")
+    else if (str == "gatos")
     {
-        return BRADLEY;
-    }
-    else if (str == "edgeplus")
-    {
-        return EDGEPLUS;
-    }
-    else if (str == "blurdiv")
-    {
-        return BLURDIV;
-    }
-    else if (str == "edgediv")
-    {
-        return EDGEDIV;
-    }
-    else if (str == "multiscale")
-    {
-        return MSCALE;
+        return GATOS;
     }
     else
     {
@@ -154,35 +240,14 @@ BlackWhiteOptions::formatThresholdMethod(ThresholdFilter type)
     case OTSU:
         str = "otsu";
         break;
-    case MEANDELTA:
-        str = "mean";
-        break;
-    case NIBLACK:
-        str = "niblack";
-        break;
-    case GATOS:
-        str = "gatos";
-        break;
     case SAUVOLA:
         str = "sauvola";
         break;
     case WOLF:
         str = "wolf";
         break;
-    case BRADLEY:
-        str = "bradley";
-        break;
-    case EDGEPLUS:
-        str = "edgeplus";
-        break;
-    case BLURDIV:
-        str = "blurdiv";
-        break;
-    case EDGEDIV:
-        str = "edgediv";
-        break;
-    case MSCALE:
-        str = "multiscale";
+    case GATOS:
+        str = "gatos";
         break;
     }
     return str;

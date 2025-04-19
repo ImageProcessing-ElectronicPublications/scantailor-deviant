@@ -70,12 +70,8 @@
         <file>icons/gimp-reset.png</file>
         <file>images/empty-page.png</file>
         <file>icons/distortion-none.png</file>
-        <file>icons/distortion-none-selected.png</file>
         <file>icons/distortion-perspective.png</file>
-        <file>icons/distortion-perspective-selected.png</file>
         <file>icons/distortion-rotation.png</file>
-        <file>icons/distortion-rotation-selected.png</file>
         <file>icons/distortion-warp.png</file>
-        <file>icons/distortion-warp-selected.png</file>
     </qresource>
 </RCC>

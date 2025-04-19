@@ -105,7 +105,6 @@ CommandLine::parseCli(QStringList const& argv)
     opts << "threshold";
     opts << "despeckle";
     opts << "dewarping";
-    opts << "depth-perception";
     opts << "start-filter";
     opts << "end-filter";
     opts << "output-project";
@@ -393,7 +392,6 @@ CommandLine::printHelp()
     std::cout << "\t--threshold=<n>\t\t\t\t-- n<0 thinner, n>0 thicker; default: 0" << std::endl;
     std::cout << "\t--despeckle=<off|cautious|normal|aggressive>\n\t\t\t\t\t\t-- default: normal" << std::endl;
     std::cout << "\t--dewarping=<off|auto>\t\t\t-- default: off" << std::endl;
-    std::cout << "\t--depth-perception=<1.0...3.0>\t\t-- default: 2.0" << std::endl;
     std::cout << "\t--start-filter=<1...6>\t\t\t-- default: 4" << std::endl;
     std::cout << "\t--end-filter=<1...6>\t\t\t-- default: 6" << std::endl;
     std::cout << "\t--output-project=, -o=<project_name>" << std::endl;

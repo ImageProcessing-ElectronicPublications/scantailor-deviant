@@ -44,6 +44,7 @@ PropertySet::PropertySet(QDomElement const& el, PropertyFactory const& factory)
 }
 
 PropertySet::PropertySet(PropertySet const& other)
+    : RefCountable(other)
 {
     m_props.reserve(other.m_props.size());
 

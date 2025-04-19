@@ -146,6 +146,8 @@ public:
     virtual void dragContinuation(QPointF const& mouse_pos, Qt::KeyboardModifiers mask)
     {
 //end of modified by monday2000
+        Q_UNUSED(mask);
+
         m_dragContinuationCallback(mouse_pos);
     }
 

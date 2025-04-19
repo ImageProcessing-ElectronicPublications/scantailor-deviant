@@ -560,6 +560,8 @@ OutputGenerator::processAsIs(
     ZoneSet const& fill_zones,
     DebugImages* const dbg) const
 {
+    Q_UNUSED(dbg);
+
     uint8_t const dominant_gray = reserveBlackAndWhite<uint8_t>(
                                       calcDominantBackgroundGrayLevel(input.grayImage())
                                   );
@@ -1225,10 +1227,6 @@ OutputGenerator::binarize(QImage const& image, BinaryImage const& mask, const in
     BlackWhiteOptions const& black_white_options = m_colorParams.blackWhiteOptions();
     ThresholdFilter const thresholdMethod = black_white_options.thresholdMethod();
 
-    int const threshold_delta = black_white_options.thresholdAdjustment();
-    QSize const window_size = QSize(black_white_options.thresholdWindowSize(), black_white_options.thresholdWindowSize());
-    double const threshold_coef = black_white_options.thresholdCoef();
-
     BinaryImage binarized;
     if ((image.format() == QImage::Format_Mono) || (image.format() == QImage::Format_MonoLSB))
     {
@@ -1245,58 +1243,32 @@ OutputGenerator::binarize(QImage const& image, BinaryImage const& mask, const in
             binarized = BinaryImage(image, adjustThreshold(bw_thresh, adjustment));
             break;
         }
-        case MEANDELTA:
-        {
-            binarized = binarizeMean(image, threshold_delta);
-            break;
-        }
-        case NIBLACK:
-        {
-            binarized = binarizeNiblack(image, window_size, threshold_coef, threshold_delta);
-            break;
-        }
-        case GATOS:
-        {
-            binarized = binarizeGatos(image, window_size, 3.0, threshold_coef, threshold_delta);
-            break;
-        }
         case SAUVOLA:
         {
+            int const threshold_delta = black_white_options.thresholdSauvolaAdjustment();
+            QSize const window_size = QSize(black_white_options.thresholdSauvolaWindowSize(), black_white_options.thresholdSauvolaWindowSize());
+            double const threshold_coef = black_white_options.thresholdSauvolaCoef();
             binarized = binarizeSauvola(image, window_size, threshold_coef, threshold_delta);
             break;
         }
         case WOLF:
         {
+            int const threshold_delta = black_white_options.thresholdWolfAdjustment();
+            QSize const window_size = QSize(black_white_options.thresholdWolfWindowSize(), black_white_options.thresholdWolfWindowSize());
+            double const threshold_coef = black_white_options.thresholdWolfCoef();
             binarized = binarizeWolf(image, window_size, 1, 254, threshold_coef, threshold_delta);
             break;
         }
-        case BRADLEY:
+        case GATOS:
         {
-            binarized = binarizeBradley(image, window_size, threshold_coef, threshold_delta);
-            break;
-        }
-        case EDGEPLUS:
-        {
-            binarized = binarizeEdgeDiv(image, window_size, threshold_coef, 0.0, threshold_delta);
-            break;
-        }
-        case BLURDIV:
-        {
-            binarized = binarizeEdgeDiv(image, window_size, 0.0, threshold_coef, threshold_delta);
-            break;
-        }
-        case EDGEDIV:
-        {
-            binarized = binarizeEdgeDiv(image, window_size, threshold_coef, threshold_coef, threshold_delta);
-            break;
-        }
-        case MSCALE:
-        {
-            binarized = binarizeMScale(image, window_size, threshold_coef, threshold_delta);
+            int const threshold_delta = black_white_options.thresholdGatosAdjustment();
+            QSize const window_size = QSize(black_white_options.thresholdGatosWindowSize(), black_white_options.thresholdGatosWindowSize());
+            double const threshold_coef = black_white_options.thresholdGatosCoef();
+            double const threshold_scale = black_white_options.thresholdGatosScale();
+            binarized = binarizeGatos(image, window_size, threshold_scale, 3.0, threshold_coef, threshold_delta);
             break;
         }
         }
-
     }
 
     // Fill masked out areas with white.
@@ -1309,23 +1281,15 @@ BinaryImage
 OutputGenerator::binarize(QImage const& image,
                           QPolygonF const& crop_area, BinaryImage const* mask, const int* adjustment) const
 {
-    QPainterPath path;
-    path.addPolygon(crop_area);
+    BinaryImage modified_mask(image.size(), BLACK);
+    PolygonRasterizer::fillExcept(modified_mask, WHITE, crop_area, Qt::WindingFill);
+    modified_mask = erodeBrick(modified_mask, QSize(3, 3), WHITE);
 
-    if (path.contains(image.rect()) && !mask) {
-        BinaryThreshold const bw_thresh(BinaryThreshold::otsuThreshold(image));
-        return BinaryImage(image, adjustThreshold(bw_thresh, adjustment));
-    } else {
-        BinaryImage modified_mask(image.size(), BLACK);
-        PolygonRasterizer::fillExcept(modified_mask, WHITE, crop_area, Qt::WindingFill);
-        modified_mask = erodeBrick(modified_mask, QSize(3, 3), WHITE);
-
-        if (mask) {
-            rasterOp<RopAnd<RopSrc, RopDst> >(modified_mask, *mask);
-        }
-
-        return binarize(image, modified_mask, adjustment);
+    if (mask) {
+        rasterOp<RopAnd<RopSrc, RopDst> >(modified_mask, *mask);
     }
+
+    return binarize(image, modified_mask, adjustment);
 }
 
 /**

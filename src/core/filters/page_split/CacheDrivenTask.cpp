@@ -19,6 +19,7 @@
 #include "CacheDrivenTask.h"
 #include "Thumbnail.h"
 #include "IncompleteThumbnail.h"
+#include "ThumbnailMakerBase.h"
 #include "Settings.h"
 #include "ProjectPages.h"
 #include "PageInfo.h"
@@ -108,6 +109,7 @@ CacheDrivenTask::process(
                     std::unique_ptr<QGraphicsItem>(
                         new IncompleteThumbnail(
                             thumb_col->thumbnailCache(),
+                            std::unique_ptr<ThumbnailMakerBase>(new ThumbnailMakerBase),
                             thumb_col->maxLogicalThumbSize(),
                             page_info.imageId(), QString(), xform
                         )

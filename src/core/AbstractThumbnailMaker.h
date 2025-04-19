@@ -1,6 +1,6 @@
 /*
     Scan Tailor - Interactive post-processing tool for scanned pages.
-    Copyright (C)  Joseph Artsimovich <joseph.artsimovich@gmail.com>
+    Copyright (C) 2007-2008  Joseph Artsimovich <joseph_a@mail.ru>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,43 +16,22 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "DewarpingMode.h"
-#include <assert.h>
+#ifndef ABSTRACT_THUMBNAIL_MAKER_H_
+#define ABSTRACT_THUMBNAIL_MAKER_H_
 
-namespace deskew
+#include <memory>
+
+class QImage;
+class QSize;
+
+class AbstractThumbnailMaker
 {
+public:
+    virtual ~AbstractThumbnailMaker(){}
 
-DewarpingMode::DewarpingMode(QString const& str)
-{
-    if (str == "auto")
-    {
-        m_mode = AUTO;
-    }
-    else if (str == "manual")
-    {
-        m_mode = MANUAL;
-    }
-    else
-    {
-        m_mode = OFF;
-    }
-}
+    virtual QImage makeThumbnail(QImage const& image, QSize const& max_thumb_size) const = 0;
 
-QString
-DewarpingMode::toString() const
-{
-    switch (m_mode)
-    {
-    case OFF:
-        return "off";
-    case AUTO:
-        return "auto";
-    case MANUAL:
-        return "manual";
-    }
+    virtual std::unique_ptr<AbstractThumbnailMaker> clone() const = 0;
+};
 
-    assert(!"Unreachable");
-    return QString();
-}
-
-} // namespace output
+#endif

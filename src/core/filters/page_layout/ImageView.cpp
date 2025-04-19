@@ -267,6 +267,8 @@ ImageView::aggregateHardSizeChanged()
 void
 ImageView::onPaint(QPainter& painter, InteractionState const& interaction)
 {
+    Q_UNUSED(interaction);
+
     QColor bg_color;
     QColor fg_color;
     if (m_alignment.isNull()) {

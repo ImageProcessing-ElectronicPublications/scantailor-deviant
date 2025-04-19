@@ -30,12 +30,12 @@ class RefCountable
 public:
     RefCountable() : m_refCounter(0) {}
 
-    RefCountable(RefCountable const& other)
+    RefCountable(RefCountable const&)
     {
         // don't copy the reference counter!
     }
 
-    void operator=(RefCountable const& other)
+    void operator=(RefCountable const&)
     {
         // don't copy the reference counter!
     }

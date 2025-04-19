@@ -22,12 +22,14 @@
 #include "NonCopyable.h"
 #include "RefCountable.h"
 #include "IntrusivePtr.h"
+#include <memory>
 
 class QSizeF;
 class QString;
 class PageInfo;
 class AbstractFilterDataCollector;
 class ImageTransformation;
+class AbstractThumbnailMaker;
 
 namespace page_layout
 {
@@ -50,7 +52,8 @@ public:
 
     void process(
         PageInfo const& page_info, AbstractFilterDataCollector* collector,
-        ImageTransformation const& xform, QString const& thumb_version);
+        ImageTransformation const& xform, QString const& thumb_version,
+        std::unique_ptr<AbstractThumbnailMaker> thumb_maker);
 private:
     IntrusivePtr<Settings> m_ptrSettings;
     IntrusivePtr<page_layout::CacheDrivenTask> m_ptrNextTask;

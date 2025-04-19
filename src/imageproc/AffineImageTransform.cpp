@@ -42,17 +42,6 @@ AffineImageTransform::~AffineImageTransform()
 {
 }
 
-QString
-AffineImageTransform::fingerprint() const
-{
-    RoundingHasher hash(QCryptographicHash::Sha1);
-    hash << "AffineImageTransform";
-    hash << m_origSize << m_origCropArea;
-    hash << m_transform.m11() << m_transform.m21() << m_transform.dx();
-    hash << m_transform.m12() << m_transform.m22() << m_transform.dy();
-    return QString::fromUtf8(hash.result().toHex());
-}
-
 std::unique_ptr<AbstractImageTransform>
 AffineImageTransform::clone() const
 {
@@ -125,20 +114,6 @@ void
 AffineImageTransform::rotate(qreal degrees)
 {
     m_transform *= QTransform().rotate(degrees);
-}
-
-AffineTransformedImage
-AffineImageTransform::toAffine(QImage const& image, QColor const& /*outside_color*/) const
-{
-    assert(!image.isNull());
-    assert(image.size() == m_origSize);
-    return AffineTransformedImage(image, *this);
-}
-
-AffineImageTransform
-AffineImageTransform::toAffine() const
-{
-    return *this;
 }
 
 QImage

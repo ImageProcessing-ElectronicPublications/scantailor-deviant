@@ -9,11 +9,12 @@ ENDIF()
 
 SET(
         sources
-        ChangeDpiWidget.cpp ChangeDpiWidget.h
+        ChangeDpiDialog.cpp ChangeDpiDialog.h
         ImageView.cpp ImageView.h
         ImageViewTab.h
         TabbedImageView.cpp TabbedImageView.h
         Filter.cpp Filter.h
+        ThresholdsApplyWidget.cpp ThresholdsApplyWidget.h
         OptionsWidget.cpp OptionsWidget.h
         Task.cpp Task.h
         CacheDrivenTask.cpp CacheDrivenTask.h
@@ -54,13 +55,11 @@ SOURCE_GROUP("Sources" FILES ${sources})
 FILE(GLOB ui_files "ui/*.ui")
 SOURCE_GROUP("UI Files" FILES ${ui_files})
 
-QT5_WRAP_UI(ui_sources ${ui_files})
-
 SET(output_filter_resource_files resources/output_filter_resources.qrc)
 SOURCE_GROUP("OutputFilterResources" FILES ${resource_files})
 
 ADD_LIBRARY(output STATIC ${sources} ${ui_sources})
-QT5_USE_MODULES(output Widgets Xml)
+TARGET_LINK_LIBRARIES(output Qt5::Widgets Qt5::Xml)
 ADD_DEPENDENCIES(output toplevel_ui_sources)
 
 TRANSLATION_SOURCES(scantailor-deviant ${sources} ${ui_files})

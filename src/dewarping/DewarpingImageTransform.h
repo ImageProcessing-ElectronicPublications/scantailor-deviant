@@ -20,8 +20,8 @@
 #define DEWARPING_DEWARPING_IMAGE_TRANSFORM_H_
 
 #include "CylindricalSurfaceDewarper.h"
-#include "DepthPerception.h"
 #include "imageproc/AbstractImageTransform.h"
+#include "SizeParams.h"
 #include <QSize>
 #include <QPolygonF>
 #include <vector>
@@ -39,6 +39,10 @@ class AffineTransformedImage;
 namespace dewarping
 {
 
+class FovParams;
+class FrameParams;
+class BendParams;
+
 class DewarpingImageTransform : public imageproc::AbstractImageTransform
 {
     // Member-wise copying is OK.
@@ -52,7 +56,10 @@ public:
         QPolygonF const& orig_crop_area,
         std::vector<QPointF> const& top_curve,
         std::vector<QPointF> const& bottom_curve,
-        DepthPerception const& depth_perception);
+        FovParams const& fov_params,
+        FrameParams const& frame_params,
+        BendParams const& bend_params,
+        SizeParams const& size_params);
 
     virtual ~DewarpingImageTransform();
 
@@ -62,8 +69,6 @@ public:
     {
         return false;
     }
-
-    virtual QString fingerprint() const;
 
     virtual QSize const& origSize() const
     {
@@ -77,12 +82,11 @@ public:
 
     virtual QPolygonF transformedCropArea() const;
 
+    ImageSize imageSize() const;
+
     virtual QTransform scale(qreal xscale, qreal yscale);
 
-    virtual imageproc::AffineTransformedImage toAffine(
-        QImage const& image, QColor const& outside_color) const;
-
-    virtual imageproc::AffineImageTransform toAffine() const;
+    virtual DewarpingImageTransform scaled(qreal xscale, qreal yscale) const;
 
     virtual QImage materialize(QImage const& image,
                                QRect const& target_rect, QColor const& outside_color) const;
@@ -101,13 +105,11 @@ private:
 
     QPointF postScale(QPointF const& pt) const;
 
-    static int const INTRINSIC_SCALE_ALGO_VERSION;
-
     QSize m_origSize;
     QPolygonF m_origCropArea;
     std::vector<QPointF> m_topPolyline;
     std::vector<QPointF> m_bottomPolyline;
-    DepthPerception m_depthPerception;
+    SizeParams m_sizeParams;
     CylindricalSurfaceDewarper m_dewarper;
 
     /**

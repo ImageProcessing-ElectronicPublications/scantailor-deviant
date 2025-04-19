@@ -26,7 +26,9 @@ class QLineF;
 
 namespace dewarping
 {
-class DepthPerception;
+class FovParams;
+class FrameParams;
+class BendParams;
 }
 
 namespace deskew
@@ -41,7 +43,6 @@ public:
      *
      * @param top_curve Top curve, left to right.
      * @param bottom_curve Bottom curve, left to right.
-     * @param depth_perception Affects density of vertical lines in curved areas.
      * @param num_horizontal_curves The number of horizontal curves to generate.
      *        Has to be > 1.
      * @param num_vertical_lines The number of vertical lines to generate.
@@ -54,7 +55,9 @@ public:
     static void buildWarpVisualization(
         std::vector<QPointF> const& top_curve,
         std::vector<QPointF> const& bottom_curve,
-        dewarping::DepthPerception const& depth_perception,
+        dewarping::FovParams const& fov_params,
+        dewarping::FrameParams const& frame_params,
+        dewarping::BendParams const& bend_params,
         unsigned num_horizontal_curves, unsigned num_vertical_lines,
         std::vector<std::vector<QPointF>>& out_horizontal_curves,
         std::vector<QLineF>& out_vertical_lines);

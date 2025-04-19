@@ -19,7 +19,7 @@
 #ifndef OUTPUT_OPTIONSWIDGET_H_
 #define OUTPUT_OPTIONSWIDGET_H_
 
-#include "ui_OutputOptionsWidget.h"
+#include "ui/ui_OutputOptionsWidget.h"
 #include "FilterOptionsWidget.h"
 #include "IntrusivePtr.h"
 #include "PageId.h"
@@ -76,6 +76,8 @@ public slots:
     void deleteZoneFromPagesDlgRequest(void* zone);
 private slots:
 
+    void modeSelectorIndexChanged(int idx);
+
     void whiteMarginsToggled(bool checked);
 
     void equalizeIlluminationToggled(bool checked);
@@ -92,29 +94,43 @@ private slots:
 
     void applyColorsButtonClicked();
 
-    void modeValueClicked();
+    void on_thresholdOtsuSlider_valueChanged();
 
-    void on_actionModeBW_triggered();
+    void on_thresholdSauvolaSlider_valueChanged();
 
-    void on_actionModeColorOrGrayscale_triggered();
+    void on_thresholdWolfSlider_valueChanged();
 
-    void on_actionModeMixed_triggered();
-
-    void on_despeckleSlider_valueChanged(int value);
-
-    void on_thresholdSlider_valueChanged();
+    void on_thresholdGatosSlider_valueChanged();
 
     void on_thresholdForegroundSlider_valueChanged();
 
     void thresholdMethodChanged(int idx);
 
-    void thresholdWindowSizeChanged(int value);
+    void thresholdSauvolaWindowSizeChanged(int value);
 
-    void thresholdCoefChanged(double value);
+    void thresholdSauvolaCoefChanged(double value);
+
+    void thresholdWolfWindowSizeChanged(int value);
+
+    void thresholdWolfCoefChanged(double value);
+
+    void thresholdGatosWindowSizeChanged(int value);
+
+    void thresholdGatosCoefChanged(double value);
+
+    void thresholdGatosScaleChanged(double value);
 
     void dpiValueClicked();
 
-    void on_actionReset_to_default_value_triggered();
+    void applyDpiButtonClicked();
+
+    void on_actionReset_to_default_value_otsu_triggered();
+
+    void on_actionReset_to_default_value_sauvola_triggered();
+
+    void on_actionReset_to_default_value_wolf_triggered();
+
+    void on_actionReset_to_default_value_gatos_triggered();
 
     void applyThresholdButtonClicked();
 
@@ -126,7 +142,7 @@ private slots:
 
     void applyForegroundThresholdButtonClicked();
 
-    void on_actionReset_to_default_value_foeground_triggered();
+    void on_actionReset_to_default_value_foreground_triggered();
 
     void on_actionactionDespeckleOff_triggered();
 
@@ -142,11 +158,11 @@ private:
 
     void applyColorsConfirmed(std::set<PageId> const& pages);
 
-    void applyThresholdConfirmed(std::set<PageId> const& pages, ColorParamsApplyFilter const& paramFilter);
+    void applyThresholdConfirmed(std::set<PageId> const& pages, std::vector<ThresholdFilter> const& thresholds);
+    
+    void applyForegroundThresholdConfirmed(std::set<PageId> const& pages);
 
     void applyDespeckleConfirmed(std::set<PageId> const& pages);
-
-    void changeColorMode(ColorParams::ColorMode const mode);
 
     bool eventFilter(QObject* obj, QEvent* event);
 
@@ -160,22 +176,11 @@ private:
 
     void updateLayersDisplay();
 
-    void updateModeValueText();
-
     void updateDespeckleValueText();
-
-    void setModeValue(ColorParams::ColorMode v)
-    {
-        m_currentMode = v;
-        updateModeValueText();
-    }
 
     void setDespeckleLevel(DespeckleLevel v)
     {
         m_despeckleLevel = v;
-        if (despeckleSlider->value() != (int)v) {
-            despeckleSlider->setValue((int)v);
-        }
         updateDespeckleValueText();
     }
 

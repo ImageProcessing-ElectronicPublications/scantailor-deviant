@@ -19,7 +19,7 @@
 #ifndef SETTINGS_DIALOG_H_
 #define SETTINGS_DIALOG_H_
 
-#include "ui_SettingsDialog.h"
+#include "ui/ui_SettingsDialog.h"
 #include "settings/hotkeysmanager.h"
 #include "filters/page_layout/Alignment.h"
 #include "settings/ini_keys.h"
@@ -154,6 +154,8 @@ private slots:
     void on_btnColorDeskew_clicked();
 
     void on_btnColorDeskewReset_released();
+
+    void on_sbDewarpingSplinePoints_valueChanged(int arg1);
 
     void on_cbStyle_currentIndexChanged(const QString &arg1);
 

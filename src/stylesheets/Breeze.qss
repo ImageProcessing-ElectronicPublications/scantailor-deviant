@@ -373,8 +373,9 @@ QGroupBox
 {
     border: 1px solid #BAB9B8;
     border-radius: 0.2ex;
-    padding-top: 1ex;
-    margin-top: 1ex;
+    padding-top: 2.25ex;
+    padding-bottom: 1.25ex;
+    margin-top: 2.25ex;
 }
 
 QGroupBox::title
@@ -1673,4 +1674,67 @@ ThumbnailView
     qproperty-targetedBackgroundColor: #00508F;
     qproperty-selectedBackgroundColor: #0078D7;
     qproperty-leaderBackgroundColor: #43ACFF;
+}
+
+QGroupBox#pageRotateGroupBox,
+QGroupBox#pageRotateGroupBox > QLabel,
+QGroupBox#pageLayoutGroupBox,
+QGroupBox#pageLayoutGroupBox > QLabel,
+QGroupBox#pageSplitLineGroup,
+QGroupBox#distortionTypePanel,
+QGroupBox#distortionModeGroupGox,
+QGroupBox#rotationPanel,
+QGroupBox#fovGroupBox,
+QGroupBox#fovGroupBox > QLabel,
+QGroupBox#fovGroupBox > QSlider,
+QGroupBox#frameGroupBox,
+QGroupBox#frameGroupBox > QLabel,
+QGroupBox#bendGroupBox,
+QGroupBox#bendGroupBox > QLabel,
+QGroupBox#bendGroupBox > QSlider,
+QGroupBox#sizeGroupBox,
+QGroupBox#sizeGroupBox > QLabel,
+QGroupBox#gbPageBox,
+QGroupBox#contentGroupBox,
+QGroupBox#marginsGroup,
+QGroupBox#alignmentGroup,
+QCheckBox#alignWithOthersCB,
+QCheckBox#fineTuneBtn,
+QGroupBox#gbBordersPanel,
+QGroupBox#gbBordersPanel > QLabel,
+QWidget#panelFineTuneCorners,
+QCheckBox#autoMargins,
+QWidget#panelAlignment,
+QWidget#panelMarginsControls,
+QWidget#panelMarginsControls > QLabel,
+QLabel#lblCurrentAlignment,
+QWidget#panelAdvancedAlignment,
+QGroupBox#outputModeGroupBox,
+QWidget#illuminationPanel,
+QWidget#illuminationPanel > QCheckBox,
+QWidget#layersPanel,
+QWidget#layersPanel > QCheckBox,
+QWidget#autoMarginsLayout_2,
+QGroupBox#bwOptionsGroupBox,
+QGroupBox#bwOptionsGroupBox > QLabel,
+QGroupBox#foregroundOptionsGroupBox,
+QGroupBox#foregroundOptionsGroupBox > QLabel,
+QGroupBox#foregroundOptionsGroupBox > QSlider,
+QGroupBox#despecklingGroupBox,
+QGroupBox#despecklingGroupBox > QLabel,
+QGroupBox#outputResolutionGroupBox > QLabel,
+QGroupBox#outputResolutionGroupBox,
+QWidget#bwOtsuOptionsPanel,
+QWidget#bwOtsuOptionsPanel > QSlider,
+QWidget#bwSauvolaOptionsPanel,
+QWidget#bwSauvolaOptionsPanel > QLabel,
+QWidget#bwSauvolaOptionsPanel > QSlider,
+QWidget#bwWolfOptionsPanel,
+QWidget#bwWolfOptionsPanel > QLabel,
+QWidget#bwWolfOptionsPanel > QSlider,
+QWidget#bwGatosOptionsPanel,
+QWidget#bwGatosOptionsPanel > QLabel,
+QWidget#bwGatosOptionsPanel > QSlider
+{
+    background-color: #F7F8F9;
 }

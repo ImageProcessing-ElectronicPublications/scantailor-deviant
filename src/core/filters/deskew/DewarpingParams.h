@@ -21,7 +21,10 @@
 
 #include "AutoManualMode.h"
 #include "dewarping/DistortionModel.h"
-#include "dewarping/DepthPerception.h"
+#include "dewarping/FovParams.h"
+#include "dewarping/FrameParams.h"
+#include "dewarping/BendParams.h"
+#include "dewarping/SizeParams.h"
 
 class QDomDocument;
 class QDomElement;
@@ -67,18 +70,72 @@ public:
         m_distortionModel = distortion_model;
     }
 
-    dewarping::DepthPerception const& depthPerception() const
+    dewarping::FovParams& fovParams()
     {
-        return m_depthPerception;
+        return m_fovParams;
     }
 
-    void setDepthPerception(dewarping::DepthPerception const& depth_perception)
+    dewarping::FovParams const& fovParams() const
     {
-        m_depthPerception = depth_perception;
+        return m_fovParams;
     }
+
+    void setFovParams(dewarping::FovParams const& fov_params)
+    {
+        m_fovParams = fov_params;
+    }
+
+    dewarping::FrameParams& frameParams()
+    {
+        return m_frameParams;
+    }
+
+    dewarping::FrameParams const& frameParams() const
+    {
+        return m_frameParams;
+    }
+
+    void setFrameParams(dewarping::FrameParams const& frame_params)
+    {
+        m_frameParams = frame_params;
+    }
+
+    dewarping::BendParams& bendParams()
+    {
+        return m_bendParams;
+    }
+
+    dewarping::BendParams const& bendParams() const
+    {
+        return m_bendParams;
+    }
+
+    void setBendParams(dewarping::BendParams const& bend_params)
+    {
+        m_bendParams = bend_params;
+    }
+
+    dewarping::SizeParams& sizeParams()
+    {
+        return m_sizeParams;
+    }
+
+    dewarping::SizeParams const& sizeParams() const
+    {
+        return m_sizeParams;
+    }
+
+    void setSizeParams(dewarping::SizeParams const& size_params)
+    {
+        m_sizeParams = size_params;
+    }
+
 private:
     dewarping::DistortionModel m_distortionModel;
-    dewarping::DepthPerception m_depthPerception;
+    dewarping::FovParams m_fovParams;
+    dewarping::FrameParams m_frameParams;
+    dewarping::BendParams m_bendParams;
+    dewarping::SizeParams m_sizeParams;
     AutoManualMode m_mode;
 };
 

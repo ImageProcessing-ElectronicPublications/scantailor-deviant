@@ -49,15 +49,6 @@ public:
     virtual bool isAffine() const = 0;
 
     /**
-     * @brief Produces a hash of the transform.
-     *
-     * The hash has to be resistent to loss of accuracy of floating point
-     * values that happens when saving a project to an XML based format.
-     * Implementations should use RoundingHasher to address this problem.
-     */
-    virtual QString fingerprint() const = 0;
-
-    /**
      * @brief Dimensions of original image.
      */
     virtual QSize const& origSize() const = 0;
@@ -81,24 +72,6 @@ public:
      * to corresponding points after scaling.
      */
     virtual QTransform scale(qreal xscale, qreal yscale) = 0;
-
-    /**
-     * If the concrete class implementing this interface is AffineImageTransform,
-     * the image and the transform are wrapped into AffineTransformedImage
-     * as they are. Otherwise, the transform is applied on the image provided,
-     * resulting in a new image and a new affine transform. The new transform
-     * will be a translation-only transform, to ensure that:
-     * @code
-     * transform.transformedCropArea() == transform.toAffine().transformedCropArea()
-     * @endcode
-     */
-    virtual AffineTransformedImage toAffine(
-        QImage const& image, QColor const& outside_color) const = 0;
-
-    /**
-     * This version of toAffine() can be viewed as a dry run for the full version.
-     */
-    virtual AffineImageTransform toAffine() const = 0;
 
     /**
      * Similar to a full version of toAffine(), except instead of producing some

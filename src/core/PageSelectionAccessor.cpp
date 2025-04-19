@@ -20,6 +20,7 @@
 #include "PageSequence.h"
 
 PageSelectionAccessor::PageSelectionAccessor(const PageSelectionAccessor& src)
+    : QObject(src.parent())
 {
     m_ptrProvider = src.m_ptrProvider;
     if (m_ptrProvider.get()) {

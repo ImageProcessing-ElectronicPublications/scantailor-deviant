@@ -31,6 +31,7 @@
 #include "ImageView.h"
 #include "DewarpingView.h"
 #include "ThumbnailPixmapCache.h"
+#include "ThumbnailMakerBase.h"
 #include "ThumbnailVersionGenerator.h"
 #include "dewarping/DewarpingImageTransform.h"
 #include "dewarping/DistortionModelBuilder.h"
@@ -234,6 +235,9 @@ Task::process(
         }
     }
 
+    params->perspectiveParams().frameParams().update(data.xform().origRect());
+    params->dewarpingParams().frameParams().update(data.xform().origRect());
+
     switch (params->distortionType().get())
     {
     case DistortionType::NONE:
@@ -374,45 +378,76 @@ Task::processPerspectiveDistortion(
 
     if (!params.perspectiveParams().isValid())
     {
-
-        DistortionModelBuilder model_builder(
-            orig_image_transform.transform().inverted().map(QPointF(0, 1))
-        );
-
-        TextLineTracer::trace(
-            AffineTransformedImage(data.grayImage(), orig_image_transform),
-            model_builder, status, m_ptrDbg.get()
-        );
-
-        TopBottomEdgeTracer::trace(
-            data.grayImage(), model_builder.verticalBounds(),
-            model_builder, status, m_ptrDbg.get()
-        );
-
-        DistortionModel distortion_model(
-            model_builder.tryBuildModel(m_ptrDbg.get(), &data.origImage())
-        );
-
-        if (distortion_model.isValid())
+        switch (params.perspectiveParams().mode())
         {
-            params.perspectiveParams().setCorner(
-                PerspectiveParams::TOP_LEFT,
-                distortion_model.topCurve().polyline().front()
+        case MODE_AUTO:
+        {
+            DistortionModelBuilder model_builder(
+                orig_image_transform.transform().inverted().map(QPointF(0, 1))
             );
-            params.perspectiveParams().setCorner(
-                PerspectiveParams::TOP_RIGHT,
-                distortion_model.topCurve().polyline().back()
+
+            TextLineTracer::trace(
+                AffineTransformedImage(data.grayImage(), orig_image_transform),
+                model_builder, status, m_ptrDbg.get()
             );
-            params.perspectiveParams().setCorner(
-                PerspectiveParams::BOTTOM_LEFT,
-                distortion_model.bottomCurve().polyline().front()
+
+            TopBottomEdgeTracer::trace(
+                data.grayImage(), model_builder.verticalBounds(),
+                model_builder, status, m_ptrDbg.get()
             );
-            params.perspectiveParams().setCorner(
-                PerspectiveParams::BOTTOM_RIGHT,
-                distortion_model.bottomCurve().polyline().back()
+
+            DistortionModel distortion_model(
+                model_builder.tryBuildModel(
+                    params.perspectiveParams().fovParams(),
+                    params.perspectiveParams().frameParams(),
+                    BendParams(MODE_MANUAL, 0.0, 0.0, 0.0),
+                    m_ptrDbg.get(), &data.origImage()
+                )
             );
+
+            if (distortion_model.isValid())
+            {
+                params.perspectiveParams().setCorner(
+                    PerspectiveParams::TOP_LEFT,
+                    distortion_model.topCurve().polyline().front()
+                );
+                params.perspectiveParams().setCorner(
+                    PerspectiveParams::TOP_RIGHT,
+                    distortion_model.topCurve().polyline().back()
+                );
+                params.perspectiveParams().setCorner(
+                    PerspectiveParams::BOTTOM_LEFT,
+                    distortion_model.bottomCurve().polyline().front()
+                );
+                params.perspectiveParams().setCorner(
+                    PerspectiveParams::BOTTOM_RIGHT,
+                    distortion_model.bottomCurve().polyline().back()
+                );
+            }
+            else
+            {
+                // Set up a trivial transformation.
+
+                QTransform const to_orig(data.xform().transformBack());
+                QRectF const transformed_box(data.xform().resultingPostCropArea().boundingRect());
+
+                params.perspectiveParams().setCorner(
+                    PerspectiveParams::TOP_LEFT, to_orig.map(transformed_box.topLeft())
+                );
+                params.perspectiveParams().setCorner(
+                    PerspectiveParams::TOP_RIGHT, to_orig.map(transformed_box.topRight())
+                );
+                params.perspectiveParams().setCorner(
+                    PerspectiveParams::BOTTOM_LEFT, to_orig.map(transformed_box.bottomLeft())
+                );
+                params.perspectiveParams().setCorner(
+                    PerspectiveParams::BOTTOM_RIGHT, to_orig.map(transformed_box.bottomRight())
+                );
+            }
+
+            break;
         }
-        else
+        default:
         {
             // Set up a trivial transformation.
 
@@ -431,31 +466,35 @@ Task::processPerspectiveDistortion(
             params.perspectiveParams().setCorner(
                 PerspectiveParams::BOTTOM_RIGHT, to_orig.map(transformed_box.bottomRight())
             );
+
+            break;
         }
-
-        params.perspectiveParams().setMode(MODE_AUTO);
-
-        m_ptrSettings->setPageParams(m_pageId, params);
+        }
     } // if (!params.isValid())
+
+    std::vector<QPointF> top_curve;
+    std::vector<QPointF> bottom_curve;
+    top_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::TOP_LEFT));
+    top_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::TOP_RIGHT));
+    bottom_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::BOTTOM_LEFT));
+    bottom_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT));
+
+    DewarpingImageTransform perspective_transform(
+        orig_image_transform.origSize(),
+        orig_image_transform.origCropArea(),
+        top_curve, bottom_curve,
+        params.perspectiveParams().fovParams(),
+        params.perspectiveParams().frameParams(),
+        BendParams(MODE_MANUAL, 0.0, 0.0, 0.0),
+        params.perspectiveParams().sizeParams()
+    );
+
+    params.perspectiveParams().sizeParams().update(perspective_transform.imageSize());
+
+    m_ptrSettings->setPageParams(m_pageId, params);
 
     if (m_ptrNextTask)
     {
-        // DewarpingImageTransform can handle perspective distortion
-        // as well, so we just use that.
-        std::vector<QPointF> top_curve;
-        std::vector<QPointF> bottom_curve;
-        top_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::TOP_LEFT));
-        top_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::TOP_RIGHT));
-        bottom_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::BOTTOM_LEFT));
-        bottom_curve.push_back(params.perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT));
-
-        DewarpingImageTransform perspective_transform(
-            orig_image_transform.origSize(),
-            orig_image_transform.origCropArea(),
-            top_curve, bottom_curve,
-            dewarping::DepthPerception() // Doesn't matter when curves are flat.
-        );
-
         QRectF const transformed_rectF = perspective_transform.transformedCropArea().boundingRect();
         QRect const transformed_rect(
             transformed_rectF.left(),
@@ -467,7 +506,7 @@ Task::processPerspectiveDistortion(
         QImage transformed_image = perspective_transform.materialize(
             data.origImage(),
             transformed_rect,
-            QColor(255,255,255)
+            QColor(255, 255, 255, 0)
         );
 
         if (data.xform().preRotation().toDegrees() == 0)
@@ -496,7 +535,8 @@ Task::processPerspectiveDistortion(
             m_pageId.subPage(), DistortionType::PERSPECTIVE
         ).generate();
 
-        m_ptrThumbnailCache->recreateThumbnail(m_pageId.imageId(), thumb_version, transformed_image);
+        m_ptrThumbnailCache->recreateThumbnail(
+            m_pageId.imageId(), thumb_version, transformed_image, ThumbnailMakerBase());
 
         return m_ptrNextTask->process(
             status, FilterData(data.origImageFilename(), transformed_image, crop_area), thumb_version
@@ -525,72 +565,114 @@ Task::processWarpDistortion(
 
     if (!params.dewarpingParams().isValid())
     {
+        switch (params.dewarpingParams().mode())
+        {
+        case MODE_AUTO:
+        {
+            DistortionModelBuilder model_builder(
+                orig_image_transform.transform().inverted().map(QPointF(0, 1))
+            );
 
-        DistortionModelBuilder model_builder(
-            orig_image_transform.transform().inverted().map(QPointF(0, 1))
-        );
+            TextLineTracer::trace(
+                AffineTransformedImage(data.grayImage(), orig_image_transform),
+                model_builder, status, m_ptrDbg.get()
+            );
 
-        TextLineTracer::trace(
-            AffineTransformedImage(data.grayImage(), orig_image_transform),
-            model_builder, status, m_ptrDbg.get()
-        );
+            TopBottomEdgeTracer::trace(
+                data.grayImage(), model_builder.verticalBounds(),
+                model_builder, status, m_ptrDbg.get()
+            );
 
-        TopBottomEdgeTracer::trace(
-            data.grayImage(), model_builder.verticalBounds(),
-            model_builder, status, m_ptrDbg.get()
-        );
+            DistortionModel distortion_model(
+                model_builder.tryBuildModel(
+                    params.dewarpingParams().fovParams(),
+                    params.dewarpingParams().frameParams(),
+                    params.dewarpingParams().bendParams(),
+                    m_ptrDbg.get(), &data.origImage())
+            );
 
-        DistortionModel distortion_model(
-            model_builder.tryBuildModel(m_ptrDbg.get(), &data.origImage())
-        );
+            if (!distortion_model.isValid())
+            {
+                // Set up a trivial transformation.
 
-        if (!distortion_model.isValid())
+                QTransform const to_orig(data.xform().transformBack());
+                QRectF const transformed_box(data.xform().resultingPostCropArea().boundingRect());
+
+                distortion_model.setTopCurve(
+                    std::vector<QPointF>
+                    {
+                        to_orig.map(transformed_box.topLeft()),
+                        to_orig.map(transformed_box.topRight())
+                    }
+                );
+
+                distortion_model.setBottomCurve(
+                    std::vector<QPointF>
+                    {
+                        to_orig.map(transformed_box.bottomLeft()),
+                        to_orig.map(transformed_box.bottomRight())
+                    }
+                );
+
+                assert(distortion_model.isValid());
+            }
+
+            params.dewarpingParams().setDistortionModel(distortion_model);
+
+            break;
+        }
+        default:
         {
             // Set up a trivial transformation.
+            DistortionModel distortion_model;
 
             QTransform const to_orig(data.xform().transformBack());
             QRectF const transformed_box(data.xform().resultingPostCropArea().boundingRect());
 
             distortion_model.setTopCurve(
                 std::vector<QPointF>
-                {
-                    to_orig.map(transformed_box.topLeft()),
-                        to_orig.map(transformed_box.topRight())
-                }
+            {
+                to_orig.map(transformed_box.topLeft()),
+                    to_orig.map(transformed_box.topRight())
+            }
             );
 
             distortion_model.setBottomCurve(
                 std::vector<QPointF>
-                {
-                    to_orig.map(transformed_box.bottomLeft()),
-                        to_orig.map(transformed_box.bottomRight())
-                }
+            {
+                to_orig.map(transformed_box.bottomLeft()),
+                    to_orig.map(transformed_box.bottomRight())
+            }
             );
 
             assert(distortion_model.isValid());
+
+            params.dewarpingParams().setDistortionModel(distortion_model);
+
+            break;
         }
-
-        params.dewarpingParams().setDistortionModel(distortion_model);
-
-        // Note that we don't reset depth perception, as it's a manual parameter
-        // that's usually the same for all pictures in a project.
-
-        params.dewarpingParams().setMode(MODE_AUTO);
-
-        m_ptrSettings->setPageParams(m_pageId, params);
+        }
     } // if (!params.isValid())
+
+    DewarpingImageTransform dewarping_transform(
+        orig_image_transform.origSize(),
+        orig_image_transform.origCropArea(),
+        params.dewarpingParams().distortionModel().topCurve().polyline(),
+        params.dewarpingParams().distortionModel().bottomCurve().polyline(),
+        params.dewarpingParams().fovParams(),
+        params.dewarpingParams().frameParams(),
+        params.dewarpingParams().bendParams(),
+        params.dewarpingParams().sizeParams()
+    );
+
+    params.dewarpingParams().sizeParams().update(dewarping_transform.imageSize());
+
+    m_ptrSettings->setPageParams(m_pageId, params);
 
     if (m_ptrNextTask)
     {
-        DewarpingImageTransform perspective_transform(
-            orig_image_transform.origSize(),
-            orig_image_transform.origCropArea(),
-            params.dewarpingParams().distortionModel().topCurve().polyline(),
-            params.dewarpingParams().distortionModel().bottomCurve().polyline(),
-            params.dewarpingParams().depthPerception()
-        );
 
-        QRectF const transformed_rectF = perspective_transform.transformedCropArea().boundingRect();
+        QRectF const transformed_rectF = dewarping_transform.transformedCropArea().boundingRect();
         QRect const transformed_rect(
             transformed_rectF.left(),
             transformed_rectF.top(),
@@ -598,10 +680,10 @@ Task::processWarpDistortion(
             transformed_rectF.height()
         );
 
-        QImage transformed_image = perspective_transform.materialize(
+        QImage transformed_image = dewarping_transform.materialize(
             data.origImage(),
             transformed_rect,
-            QColor(255, 255, 255)
+            QColor(255, 255, 255, 0)
         );
 
         if (data.xform().preRotation().toDegrees() == 0)
@@ -623,14 +705,15 @@ Task::processWarpDistortion(
         );
 
         QPolygonF const crop_area = crop_area_transform.map(
-            perspective_transform.transformedCropArea()
+            dewarping_transform.transformedCropArea()
         );
 
         QString const thumb_version = ThumbnailVersionGenerator(
             m_pageId.subPage(), DistortionType::WARP
         ).generate();
 
-        m_ptrThumbnailCache->recreateThumbnail(m_pageId.imageId(), thumb_version, transformed_image);
+        m_ptrThumbnailCache->recreateThumbnail(
+            m_pageId.imageId(), thumb_version, transformed_image, ThumbnailMakerBase());
 
         return m_ptrNextTask->process(
             status, FilterData(data.origImageFilename(), transformed_image, crop_area), thumb_version
@@ -836,9 +919,9 @@ Task::PerspectiveUiUpdater::updateUI(FilterUiInterface* ui)
 
     DewarpingView* view = new DewarpingView(
         m_image, m_downscaledImage, m_xform, distortion_model,
-
-        // Doesn't matter when curves are flat.
-        DepthPerception(),
+        m_pageParams.perspectiveParams().fovParams(),
+        m_pageParams.perspectiveParams().frameParams(),
+        dewarping::BendParams(MODE_MANUAL, 0.0, 0.0, 0.0),
 
         // Prevent the user from introducing curvature.
         /*fixed_number_of_control_points*/true
@@ -848,6 +931,14 @@ Task::PerspectiveUiUpdater::updateUI(FilterUiInterface* ui)
     QObject::connect(
         view, SIGNAL(distortionModelChanged(dewarping::DistortionModel const&)),
         opt_widget, SLOT(manualDistortionModelSetExternally(dewarping::DistortionModel const&))
+    );
+    QObject::connect(
+        opt_widget, SIGNAL(fovParamsSetByUser(dewarping::FovParams const&)),
+        view, SLOT(fovParamsChanged(dewarping::FovParams const&))
+    );
+    QObject::connect(
+        opt_widget, SIGNAL(frameParamsSetByUser(dewarping::FrameParams const&)),
+        view, SLOT(frameParamsChanged(dewarping::FrameParams const&))
     );
 }
 
@@ -892,7 +983,9 @@ Task::DewarpingUiUpdater::updateUI(FilterUiInterface* ui)
     DewarpingView* view = new DewarpingView(
         m_image, m_downscaledImage, m_xform,
         m_pageParams.dewarpingParams().distortionModel(),
-        m_pageParams.dewarpingParams().depthPerception(),
+        m_pageParams.dewarpingParams().fovParams(),
+        m_pageParams.dewarpingParams().frameParams(),
+        m_pageParams.dewarpingParams().bendParams(),
         /*fixed_number_of_control_points*/false
     );
     ui->setImageWidget(view, ui->TRANSFER_OWNERSHIP, m_ptrDbg.get());
@@ -902,8 +995,16 @@ Task::DewarpingUiUpdater::updateUI(FilterUiInterface* ui)
         opt_widget, SLOT(manualDistortionModelSetExternally(dewarping::DistortionModel const&))
     );
     QObject::connect(
-        opt_widget, SIGNAL(depthPerceptionSetByUser(double)),
-        view, SLOT(depthPerceptionChanged(double))
+        opt_widget, SIGNAL(fovParamsSetByUser(dewarping::FovParams const&)),
+        view, SLOT(fovParamsChanged(dewarping::FovParams const&))
+    );
+    QObject::connect(
+        opt_widget, SIGNAL(frameParamsSetByUser(dewarping::FrameParams const&)),
+        view, SLOT(frameParamsChanged(dewarping::FrameParams const&))
+    );
+    QObject::connect(
+        opt_widget, SIGNAL(bendParamsSetByUser(dewarping::BendParams const&)),
+        view, SLOT(bendParamsChanged(dewarping::BendParams const&))
     );
 }
 
