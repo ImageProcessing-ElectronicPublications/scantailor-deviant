@@ -40,7 +40,7 @@ PerspectiveTransform::zSingular(boost::array<Eigen::Matrix<double, 2, 1>, 4> con
 {
     double z_singular = std::numeric_limits<double>::max();
 
-    for (Eigen::Matrix<double, 2, 1> const point : points)
+    for (Eigen::Matrix<double, 2, 1> const& point : points)
     {
         double const z_singular_i = zSingular(point);
         if (std::abs(z_singular_i) < std::abs(z_singular))
