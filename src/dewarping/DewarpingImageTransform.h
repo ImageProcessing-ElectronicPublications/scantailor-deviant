@@ -86,6 +86,8 @@ public:
 
     virtual QTransform scale(qreal xscale, qreal yscale);
 
+    virtual DewarpingImageTransform scaled(qreal xscale, qreal yscale) const;
+
     virtual QImage materialize(QImage const& image,
                                QRect const& target_rect, QColor const& outside_color) const;
 
