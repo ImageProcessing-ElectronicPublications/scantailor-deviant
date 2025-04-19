@@ -1238,7 +1238,6 @@ OutputGenerator::binarize(QImage const& image, BinaryImage const& mask, const in
         {
         case OTSU:
         {
-            int const threshold_delta = black_white_options.thresholdOtsuAdjustment();
             GrayscaleHistogram hist(image, mask);
             BinaryThreshold const bw_thresh(BinaryThreshold::otsuThreshold(hist));
             binarized = BinaryImage(image, adjustThreshold(bw_thresh, adjustment));
