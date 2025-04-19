@@ -40,7 +40,7 @@ DewarpingThumbnail::DewarpingThumbnail(
     dewarping::FrameParams const& frame_params,
     dewarping::BendParams const& bend_params)
 	: ThumbnailBase(
-        thumbnail_cache, std::make_unique<ThumbnailMakerBase>(),
+        thumbnail_cache, std::unique_ptr<ThumbnailMakerBase>(new ThumbnailMakerBase),
         max_size, image_id, version, xform
       )
     , m_topCurve(top_curve)

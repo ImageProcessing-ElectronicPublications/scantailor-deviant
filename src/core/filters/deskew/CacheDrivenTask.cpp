@@ -67,7 +67,7 @@ CacheDrivenTask::process(
                 std::unique_ptr<QGraphicsItem>(
                     new IncompleteThumbnail(
                         thumb_col->thumbnailCache(),
-                        std::make_unique<ThumbnailMakerBase>(),
+                        std::unique_ptr<ThumbnailMakerBase>(new ThumbnailMakerBase),
                         thumb_col->maxLogicalThumbSize(),
                         page_info.imageId(), QString(), xform
                     )
@@ -89,7 +89,7 @@ CacheDrivenTask::process(
             {
                 auto none = std::make_shared<ImageTransformation>(xform);
                 new_transform = std::move(none);
-                thumb_maker = std::make_unique<ThumbnailMakerBase>();
+                thumb_maker = std::unique_ptr<ThumbnailMakerBase>(new ThumbnailMakerBase);
                 break;
             }
             case DistortionType::ROTATION:
@@ -97,7 +97,7 @@ CacheDrivenTask::process(
                 auto rotated = std::make_shared<ImageTransformation>(xform);
                 rotated->setPostRotation(params->rotationParams().compensationAngleDeg());
                 new_transform = std::move(rotated);
-                thumb_maker = std::make_unique<ThumbnailMakerBase>();
+                thumb_maker = std::unique_ptr<ThumbnailMakerBase>(new ThumbnailMakerBase);
                 break;
             }
             case DistortionType::PERSPECTIVE:
@@ -138,7 +138,9 @@ CacheDrivenTask::process(
                     page_info.id().subPage(), DistortionType::PERSPECTIVE
                 ).generate();
 
-                thumb_maker = std::make_unique<DewarpThumbnailMaker>(perspective_transform);
+                thumb_maker = std::unique_ptr<DewarpThumbnailMaker>(
+                    new DewarpThumbnailMaker(perspective_transform)
+                );
 
                 break;
             }
@@ -170,7 +172,9 @@ CacheDrivenTask::process(
                     page_info.id().subPage(), DistortionType::WARP
                 ).generate();
 
-                thumb_maker = std::make_unique<DewarpThumbnailMaker>(dewarping_transform);
+                thumb_maker = std::unique_ptr<DewarpThumbnailMaker>(
+                    new DewarpThumbnailMaker(dewarping_transform)
+                );
 
                 break;
             }

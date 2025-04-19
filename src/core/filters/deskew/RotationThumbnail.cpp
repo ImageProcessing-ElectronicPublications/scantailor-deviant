@@ -45,7 +45,7 @@ RotationThumbnail::RotationThumbnail(
     QString const& version, ImageTransformation const& xform,
 	double compensation_angle_deg, bool draw_grid)
 	: ThumbnailBase(
-		thumbnail_cache, std::make_unique<ThumbnailMakerBase>(), 
+		thumbnail_cache, std::unique_ptr<ThumbnailMakerBase>(new ThumbnailMakerBase), 
         max_size, image_id, version,
 		rotateXform(xform, compensation_angle_deg)
 	)

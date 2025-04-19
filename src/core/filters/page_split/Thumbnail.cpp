@@ -37,7 +37,7 @@ Thumbnail::Thumbnail(
     ImageTransformation const& xform, PageLayout const& layout,
     bool left_half_removed, bool right_half_removed)
     :   ThumbnailBase(
-            thumbnail_cache, std::make_unique<ThumbnailMakerBase>(),
+            thumbnail_cache, std::unique_ptr<ThumbnailMakerBase>(new ThumbnailMakerBase),
             max_size, image_id, version, xform),
         m_layout(layout),
         m_leftHalfRemoved(left_half_removed),

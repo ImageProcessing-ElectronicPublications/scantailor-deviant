@@ -109,7 +109,7 @@ CacheDrivenTask::process(
                     std::unique_ptr<QGraphicsItem>(
                         new IncompleteThumbnail(
                             thumb_col->thumbnailCache(),
-                            std::make_unique<ThumbnailMakerBase>(),
+                            std::unique_ptr<ThumbnailMakerBase>(new ThumbnailMakerBase),
                             thumb_col->maxLogicalThumbSize(),
                             page_info.imageId(), QString(), xform
                         )
