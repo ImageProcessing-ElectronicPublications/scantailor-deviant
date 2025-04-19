@@ -116,6 +116,8 @@ ZoomHandler::onKeyPressEvent(QKeyEvent* event, InteractionState& interaction)
 void 
 ZoomHandler::onMouseDoubleClickEvent(QMouseEvent* event, InteractionState& interaction)
 {
+    Q_UNUSED(event);
+
     if (!m_interactionPermitter(interaction)) {
         return;
     }
