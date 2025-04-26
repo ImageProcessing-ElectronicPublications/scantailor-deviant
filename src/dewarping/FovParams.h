@@ -78,7 +78,7 @@ public:
         m_fovMax = fov_max;
     }
 
-    void update(double fov);
+    void maybeUpdate(double fov);
 
     void maybeInvalidate();
 

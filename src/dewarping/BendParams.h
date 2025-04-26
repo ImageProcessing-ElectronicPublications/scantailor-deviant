@@ -80,7 +80,7 @@ public:
         m_bendMax = bend_max;
     }
 
-    void update(double bend);
+    void maybeUpdate(double bend);
 
     void maybeInvalidate();
 

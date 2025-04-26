@@ -234,8 +234,8 @@ Task::process(
         }
     }
 
-    params->perspectiveParams().frameParams().update(data.xform().origRect());
-    params->dewarpingParams().frameParams().update(data.xform().origRect());
+    params->perspectiveParams().frameParams().maybeUpdate(data.xform().origRect());
+    params->dewarpingParams().frameParams().maybeUpdate(data.xform().origRect());
 
     switch (params->distortionType().get())
     {
@@ -488,8 +488,8 @@ Task::processPerspectiveDistortion(
         params.perspectiveParams().sizeParams()
     );
 
-    params.perspectiveParams().sizeParams().update(perspective_transform.imageSize());
-    params.perspectiveParams().fovParams().update(perspective_transform.fov());
+    params.perspectiveParams().sizeParams().maybeUpdate(perspective_transform.imageSize());
+    params.perspectiveParams().fovParams().maybeUpdate(perspective_transform.fov());
 
     m_ptrSettings->setPageParams(m_pageId, params);
 
@@ -665,9 +665,9 @@ Task::processWarpDistortion(
         params.dewarpingParams().sizeParams()
     );
 
-    params.dewarpingParams().sizeParams().update(dewarping_transform.imageSize());
-    params.dewarpingParams().fovParams().update(dewarping_transform.fov());
-    params.dewarpingParams().bendParams().update(dewarping_transform.bend());
+    params.dewarpingParams().sizeParams().maybeUpdate(dewarping_transform.imageSize());
+    params.dewarpingParams().fovParams().maybeUpdate(dewarping_transform.fov());
+    params.dewarpingParams().bendParams().maybeUpdate(dewarping_transform.bend());
 
     m_ptrSettings->setPageParams(m_pageId, params);
 

@@ -92,7 +92,7 @@ BendParams::toXml(QDomDocument& doc, QString const& name) const
 }
 
 void
-BendParams::update(double bend)
+BendParams::maybeUpdate(double bend)
 {
     if (m_mode == MODE_AUTO)
     {

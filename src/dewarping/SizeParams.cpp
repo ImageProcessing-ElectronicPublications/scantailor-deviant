@@ -77,7 +77,7 @@ SizeParams::toXml(QDomDocument& doc, QString const& name) const
 }
 
 void
-SizeParams::update(ImageSize const& image_size)
+SizeParams::maybeUpdate(ImageSize const& image_size)
 {
     switch (m_mode)
     {

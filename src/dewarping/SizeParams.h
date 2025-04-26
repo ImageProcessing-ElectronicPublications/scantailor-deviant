@@ -80,7 +80,7 @@ public:
         m_distance = distance;
     }
 
-    void update(ImageSize const& image_size);
+    void maybeUpdate(ImageSize const& image_size);
 
     void maybeInvalidate();
 

@@ -84,7 +84,7 @@ FovParams::toXml(QDomDocument& doc, QString const& name) const
 }
 
 void
-FovParams::update(double fov)
+FovParams::maybeUpdate(double fov)
 {
     if(m_mode == MODE_AUTO)
     {
