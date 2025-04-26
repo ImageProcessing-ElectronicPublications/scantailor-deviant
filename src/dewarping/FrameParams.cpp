@@ -89,7 +89,7 @@ FrameParams::toXml(QDomDocument& doc, QString const& name) const
 }
 
 void
-FrameParams::update(QRectF const& image_rect)
+FrameParams::maybeUpdate(QRectF const& image_rect)
 {
     if (m_mode == MODE_AUTO)
     {

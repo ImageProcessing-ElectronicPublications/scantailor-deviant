@@ -38,7 +38,7 @@ static char const BEND_MAX[] = "bend_max";
 BendParams::BendParams()
     : m_mode(MODE_AUTO)
     , m_bendMin(defaultMinValue())
-    , m_bend(defaultValue())
+    , m_bend()
     , m_bendMax(defaultMaxValue())
 {
 }
@@ -75,7 +75,9 @@ BendParams::BendParams(QDomElement const& el)
     if (m_bendMin > m_bendMax)
         std::swap(m_bendMin, m_bendMax);
 
-    m_bend = qBound(m_bendMin, m_bend, m_bendMax);
+    m_bend = qBound(m_bendMin, m_bend.toDouble(), m_bendMax);
+
+    maybeInvalidate();
 }
 
 QDomElement
@@ -89,6 +91,32 @@ BendParams::toXml(QDomDocument& doc, QString const& name) const
     el.setAttribute(str::BEND, m_bend);
     el.setAttribute(str::BEND_MAX, m_bendMax);
     return el;
+}
+
+void
+BendParams::maybeUpdate(double bend)
+{
+    if (m_mode == MODE_AUTO)
+    {
+        m_bend = bend;
+    }
+}
+
+void
+BendParams::maybeInvalidate()
+{
+    if (m_mode == MODE_AUTO)
+    {
+        m_bend.invalidate();
+    }
+}
+
+BendParams
+BendParams::maybeInvalidated() const
+{
+    BendParams params(*this);
+    params.maybeInvalidate();
+    return params;
 }
 
 } // namespace dewarping

@@ -84,6 +84,16 @@ public:
 
     ImageSize imageSize() const;
 
+    double fov() const
+    {
+        return m_dewarper.fov();
+    }
+
+    double bend() const
+    {
+        return m_dewarper.bend();
+    }
+
     virtual QTransform scale(qreal xscale, qreal yscale);
 
     virtual DewarpingImageTransform scaled(qreal xscale, qreal yscale) const;

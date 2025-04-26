@@ -22,6 +22,7 @@
 #include "DistortionType.h"
 #include "ScopedIncDec.h"
 #include "dewarping/CylindricalSurfaceDewarper.h"
+#include <algorithm>
 
 namespace deskew
 {
@@ -198,14 +199,18 @@ OptionsWidget::showApplyDistortionTypeDialog()
 
     connect(dialog, &ApplyToDialog::accepted, this, [=]() {
         std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
-        std::set<PageId> pages(vec.begin(), vec.end());
-        if (!dialog->getPageRangeSelectorWidget().allPagesSelected()) {
-            distortionTypeAppliedTo(pages);
-        }
-        else {
-            distortionTypeAppliedToAllPages(pages);
-        }
-        });
+        std::set<PageId> pages;
+        std::copy_if(
+            vec.begin(),
+            vec.end(),
+            std::inserter(pages, pages.end()),
+            [this](PageId const& page_id)
+            {
+                return this->m_pageId != page_id;
+            }
+        );
+        distortionTypeAppliedTo(pages);
+    });
 
     dialog->show();
 }
@@ -221,14 +226,18 @@ OptionsWidget::showApplyModeDialog()
 
     connect(dialog, &ApplyToDialog::accepted, this, [=]() {
         std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
-        std::set<PageId> pages(vec.begin(), vec.end());
-        if (!dialog->getPageRangeSelectorWidget().allPagesSelected()) {
-            modeAppliedTo(pages);
-        }
-        else {
-            modeAppliedToAllPages(pages);
-        }
-        });
+        std::set<PageId> pages;
+        std::copy_if(
+            vec.begin(),
+            vec.end(),
+            std::inserter(pages, pages.end()),
+            [this](PageId const& page_id)
+            {
+                return this->m_pageId != page_id;
+            }
+        );
+        modeAppliedTo(pages);
+    });
 
     dialog->show();
 }
@@ -244,14 +253,18 @@ OptionsWidget::showApplyFovParamsDialog()
 
     connect(dialog, &ApplyToDialog::accepted, this, [=]() {
         std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
-        std::set<PageId> pages(vec.begin(), vec.end());
-        if (!dialog->getPageRangeSelectorWidget().allPagesSelected()) {
-            fovParamsAppliedTo(pages);
-        }
-        else {
-            fovParamsAppliedToAllPages(pages);
-        }
-        });
+        std::set<PageId> pages;
+        std::copy_if(
+            vec.begin(),
+            vec.end(),
+            std::inserter(pages, pages.end()),
+            [this](PageId const& page_id)
+            {
+                return this->m_pageId != page_id;
+            }
+        );
+        fovParamsAppliedTo(pages);
+    });
 
     dialog->show();
 }
@@ -267,14 +280,18 @@ OptionsWidget::showApplyFrameParamsDialog()
 
     connect(dialog, &ApplyToDialog::accepted, this, [=]() {
         std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
-        std::set<PageId> pages(vec.begin(), vec.end());
-        if (!dialog->getPageRangeSelectorWidget().allPagesSelected()) {
-            frameParamsAppliedTo(pages);
-        }
-        else {
-            frameParamsAppliedToAllPages(pages);
-        }
-        });
+        std::set<PageId> pages;
+        std::copy_if(
+            vec.begin(),
+            vec.end(),
+            std::inserter(pages, pages.end()),
+            [this](PageId const& page_id)
+            {
+                return this->m_pageId != page_id;
+            }
+        );
+        frameParamsAppliedTo(pages);
+    });
 
     dialog->show();
 }
@@ -290,14 +307,18 @@ OptionsWidget::showApplyBendParamsDialog()
 
     connect(dialog, &ApplyToDialog::accepted, this, [=]() {
         std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
-        std::set<PageId> pages(vec.begin(), vec.end());
-        if (!dialog->getPageRangeSelectorWidget().allPagesSelected()) {
-            bendParamsAppliedTo(pages);
-        }
-        else {
-            bendParamsAppliedToAllPages(pages);
-        }
-        });
+        std::set<PageId> pages;
+        std::copy_if(
+            vec.begin(),
+            vec.end(),
+            std::inserter(pages, pages.end()),
+            [this](PageId const& page_id)
+            {
+                return this->m_pageId != page_id;
+            }
+        );
+        bendParamsAppliedTo(pages);
+    });
 
     dialog->show();
 }
@@ -313,14 +334,18 @@ OptionsWidget::showApplySizeParamsDialog()
 
     connect(dialog, &ApplyToDialog::accepted, this, [=]() {
         std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
-        std::set<PageId> pages(vec.begin(), vec.end());
-        if (!dialog->getPageRangeSelectorWidget().allPagesSelected()) {
-            sizeParamsAppliedTo(pages);
-        }
-        else {
-            sizeParamsAppliedToAllPages(pages);
-        }
-        });
+        std::set<PageId> pages;
+        std::copy_if(
+            vec.begin(),
+            vec.end(),
+            std::inserter(pages, pages.end()),
+            [this](PageId const& page_id)
+            {
+                return this->m_pageId != page_id;
+            }
+        );
+        sizeParamsAppliedTo(pages);
+    });
 
     dialog->show();
 }
@@ -339,19 +364,6 @@ OptionsWidget::distortionTypeAppliedTo(std::set<PageId> const& pages)
     {
         emit invalidateThumbnail(page_id);
     }
-}
-
-void
-OptionsWidget::distortionTypeAppliedToAllPages(std::set<PageId> const& pages)
-{
-    if (pages.empty())
-    {
-        return;
-    }
-
-    m_ptrSettings->setDistortionType(pages, m_pageParams.distortionType());
-
-    emit invalidateAllThumbnails();
 }
 
 void
@@ -384,32 +396,6 @@ OptionsWidget::modeAppliedTo(std::set<PageId> const& pages)
 }
 
 void
-OptionsWidget::modeAppliedToAllPages(std::set<PageId> const& pages)
-{
-    if (pages.empty())
-    {
-        return;
-    }
-
-    switch (m_pageParams.distortionType())
-    {
-    case DistortionType::ROTATION:
-        m_ptrSettings->setRotationMode(pages, m_pageParams.rotationParams().mode());
-        break;
-    case DistortionType::PERSPECTIVE:
-        m_ptrSettings->setPerspectiveMode(pages, m_pageParams.perspectiveParams().mode());
-        break;
-    case DistortionType::WARP:
-        m_ptrSettings->setDewarpingMode(pages, m_pageParams.dewarpingParams().mode());
-        break;
-    default:
-        break;
-    }
-
-    emit invalidateAllThumbnails();
-}
-
-void
 OptionsWidget::fovParamsAppliedTo(std::set<PageId> const& pages)
 {
     if (pages.empty())
@@ -433,29 +419,6 @@ OptionsWidget::fovParamsAppliedTo(std::set<PageId> const& pages)
     {
         emit invalidateThumbnail(page_id);
     }
-}
-
-void
-OptionsWidget::fovParamsAppliedToAllPages(std::set<PageId> const& pages)
-{
-    if (pages.empty())
-    {
-        return;
-    }
-
-    switch (m_pageParams.distortionType())
-    {
-    case DistortionType::PERSPECTIVE:
-        m_ptrSettings->setPerspectiveFovParams(pages, m_pageParams.perspectiveParams().fovParams());
-        break;
-    case DistortionType::WARP:
-        m_ptrSettings->setDewarpingFovParams(pages, m_pageParams.dewarpingParams().fovParams());
-        break;
-    default:
-        break;
-    }
-
-    emit invalidateAllThumbnails();
 }
 
 void
@@ -485,29 +448,6 @@ OptionsWidget::frameParamsAppliedTo(std::set<PageId> const& pages)
 }
 
 void
-OptionsWidget::frameParamsAppliedToAllPages(std::set<PageId> const& pages)
-{
-    if (pages.empty())
-    {
-        return;
-    }
-
-    switch (m_pageParams.distortionType())
-    {
-    case DistortionType::PERSPECTIVE:
-        m_ptrSettings->setPerspectiveFrameParams(pages, m_pageParams.perspectiveParams().frameParams());
-        break;
-    case DistortionType::WARP:
-        m_ptrSettings->setDewarpingFrameParams(pages, m_pageParams.dewarpingParams().frameParams());
-        break;
-    default:
-        break;
-    }
-
-    emit invalidateAllThumbnails();
-}
-
-void
 OptionsWidget::bendParamsAppliedTo(std::set<PageId> const& pages)
 {
     if (pages.empty())
@@ -521,19 +461,6 @@ OptionsWidget::bendParamsAppliedTo(std::set<PageId> const& pages)
     {
         emit invalidateThumbnail(page_id);
     }
-}
-
-void
-OptionsWidget::bendParamsAppliedToAllPages(std::set<PageId> const& pages)
-{
-    if (pages.empty())
-    {
-        return;
-    }
-
-    m_ptrSettings->setDewarpingBendParams(pages, m_pageParams.dewarpingParams().bendParams());
-
-    emit invalidateAllThumbnails();
 }
 
 void
@@ -561,30 +488,6 @@ OptionsWidget::sizeParamsAppliedTo(std::set<PageId> const& pages)
     {
         emit invalidateThumbnail(page_id);
     }
-}
-
-void
-OptionsWidget::sizeParamsAppliedToAllPages(std::set<PageId> const& pages)
-{
-    if (pages.empty())
-    {
-        return;
-    }
-
-    switch (m_pageParams.distortionType())
-    {
-    case DistortionType::PERSPECTIVE:
-        m_ptrSettings->setPerspectiveSizeParams(pages, m_pageParams.perspectiveParams().sizeParams());
-        break;
-    case DistortionType::WARP:
-        m_ptrSettings->setDewarpingSizeParams(pages, m_pageParams.dewarpingParams().sizeParams());
-        break;
-    default:
-        assert(!"Unreachable");
-        break;
-    }
-
-    emit invalidateAllThumbnails();
 }
 
 void

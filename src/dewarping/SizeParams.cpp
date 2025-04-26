@@ -37,8 +37,8 @@ namespace str
 
 SizeParams::SizeParams()
     : m_mode(SizeMode::BY_AREA)
-    , m_width(defaultSizeValue())
-    , m_height(defaultSizeValue())
+    , m_width()
+    , m_height()
     , m_distance(defaultDistanceValue())
 {
 }
@@ -61,6 +61,7 @@ SizeParams::SizeParams(QDomElement const& el)
         defaultDistanceValue()
       )
 {
+    maybeInvalidate();
 }
 
 QDomElement
@@ -77,7 +78,7 @@ SizeParams::toXml(QDomDocument& doc, QString const& name) const
 }
 
 void
-SizeParams::update(ImageSize const& image_size)
+SizeParams::maybeUpdate(ImageSize const& image_size)
 {
     switch (m_mode)
     {
@@ -100,6 +101,25 @@ SizeParams::update(ImageSize const& image_size)
         assert(!"Unreachable");
         break;
     }
+}
+
+void SizeParams::maybeInvalidate()
+{
+    using namespace dewarping;
+
+    if (m_mode == SizeMode::BY_AREA || m_mode == SizeMode::BY_DISTANCE)
+    {
+        m_width.invalidate();
+        m_height.invalidate();
+    }
+}
+
+SizeParams
+SizeParams::maybeInvalidated() const
+{
+    SizeParams params(*this);
+    params.maybeInvalidate();
+    return params;
 }
 
 } // namespace dewarping

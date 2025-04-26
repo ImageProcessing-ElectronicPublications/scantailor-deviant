@@ -88,7 +88,7 @@ public:
         m_centerY = center_y;
     }
 
-    void update(QRectF const& image_rect);
+    void maybeUpdate(QRectF const& image_rect);
 
     static double minSizeValue()
     {

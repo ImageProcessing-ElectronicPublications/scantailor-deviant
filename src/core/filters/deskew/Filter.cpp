@@ -26,6 +26,10 @@
 #include "ProjectWriter.h"
 #include "AbstractRelinker.h"
 #include "OrderByDistortionTypeProvider.h"
+#include "OrderByDewarpedWidthProvider.h"
+#include "OrderByDewarpedHeightProvider.h"
+#include "OrderByCameraFovProvider.h"
+#include "OrderByPaperBendProvider.h"
 #include <QObject>
 #include <QCoreApplication>
 #include <QDomDocument>
@@ -48,10 +52,18 @@ Filter::Filter(PageSelectionAccessor const& page_selection_accessor)
 
     ProviderPtr const default_order;
     ProviderPtr const order_by_distortion_type(new OrderByDistortionTypeProvider(m_ptrSettings));
+    ProviderPtr const order_by_dewarped_width(new OrderByDewarpedWidthProvider(m_ptrSettings));
+    ProviderPtr const order_by_dewarped_height(new OrderByDewarpedHeightProvider(m_ptrSettings));
+    ProviderPtr const order_by_camera_fov(new OrderByCameraFovProvider(m_ptrSettings));
+    ProviderPtr const order_by_paper_bend(new OrderByPaperBendProvider(m_ptrSettings));
 
     m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Natural order"), default_order));
     m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Processed then unprocessed"), ProviderPtr(new OrderByReadiness())));
     m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Order by distortion type"), order_by_distortion_type));
+    m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Order by dewarped width"), order_by_dewarped_width));
+    m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Order by dewarped height"), order_by_dewarped_height));
+    m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Order by camera FOV"), order_by_camera_fov));
+    m_pageOrderOptions.push_back(PageOrderOption(QObject::tr("Order by paper bend"), order_by_paper_bend));
 }
 
 Filter::~Filter()
