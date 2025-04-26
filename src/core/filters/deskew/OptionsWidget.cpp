@@ -589,13 +589,24 @@ OptionsWidget::sizeParamsAppliedTo(std::set<PageId> const& pages)
         return;
     }
 
+    std::set<PageId>  pages_to_apply;
+    std::copy_if(
+        pages.begin(),
+        pages.end(),
+        std::inserter(pages_to_apply, pages_to_apply.end()),
+        [this](PageId const& page_id)
+        {
+            return this->m_pageId != page_id;
+        }
+    );
+
     switch (m_pageParams.distortionType())
     {
     case DistortionType::PERSPECTIVE:
-        m_ptrSettings->setPerspectiveSizeParams(pages, m_pageParams.perspectiveParams().sizeParams());
+        m_ptrSettings->setPerspectiveSizeParams(pages_to_apply, m_pageParams.perspectiveParams().sizeParams());
         break;
     case DistortionType::WARP:
-        m_ptrSettings->setDewarpingSizeParams(pages, m_pageParams.dewarpingParams().sizeParams());
+        m_ptrSettings->setDewarpingSizeParams(pages_to_apply, m_pageParams.dewarpingParams().sizeParams());
         break;
     default:
         assert(!"Unreachable");
@@ -616,13 +627,24 @@ OptionsWidget::sizeParamsAppliedToAllPages(std::set<PageId> const& pages)
         return;
     }
 
+    std::set<PageId>  pages_to_apply;
+    std::copy_if(
+        pages.begin(),
+        pages.end(),
+        std::inserter(pages_to_apply, pages_to_apply.end()),
+        [this](PageId const& page_id)
+        {
+            return this->m_pageId != page_id;
+        }
+    );
+
     switch (m_pageParams.distortionType())
     {
     case DistortionType::PERSPECTIVE:
-        m_ptrSettings->setPerspectiveSizeParams(pages, m_pageParams.perspectiveParams().sizeParams());
+        m_ptrSettings->setPerspectiveSizeParams(pages_to_apply, m_pageParams.perspectiveParams().sizeParams());
         break;
     case DistortionType::WARP:
-        m_ptrSettings->setDewarpingSizeParams(pages, m_pageParams.dewarpingParams().sizeParams());
+        m_ptrSettings->setDewarpingSizeParams(pages_to_apply, m_pageParams.dewarpingParams().sizeParams());
         break;
     default:
         assert(!"Unreachable");

@@ -228,7 +228,7 @@ Settings::setPerspectiveSizeParams(
         PerPageParams::iterator it = m_perPageParams.find(page_id);
         if (it != m_perPageParams.end())
         {
-            it->second.perspectiveParams().setSizeParams(size_params);
+            it->second.perspectiveParams().setSizeParams(size_params.maybeInvalidated());
         }
         else
         {
@@ -347,7 +347,7 @@ Settings::setDewarpingSizeParams(
         PerPageParams::iterator it = m_perPageParams.find(page_id);
         if (it != m_perPageParams.end())
         {
-            it->second.dewarpingParams().setSizeParams(size_params);
+            it->second.dewarpingParams().setSizeParams(size_params.maybeInvalidated());
         }
         else
         {

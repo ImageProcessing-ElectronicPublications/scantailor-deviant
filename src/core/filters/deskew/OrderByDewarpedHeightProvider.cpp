@@ -33,14 +33,34 @@ OrderByDewarpedHeightProvider::OrderByDewarpedHeightProvider(IntrusivePtr<Settin
 {
 }
 
-static double height(std::unique_ptr<Params> const& params)
+static double getHeight(std::unique_ptr<Params> const& params)
 {
     switch (params->distortionType())
     {
     case DistortionType::PERSPECTIVE:
-        return params->perspectiveParams().sizeParams().height();
+    {
+        Value const height = params->perspectiveParams().sizeParams().height();
+        if (height.isValid())
+        {
+            return height;
+        }
+        else
+        {
+            return std::numeric_limits<double>::max();
+        }
+    }
     case DistortionType::WARP:
-        return params->dewarpingParams().sizeParams().height();
+    {
+        Value const height = params->dewarpingParams().sizeParams().height();
+        if (height.isValid())
+        {
+            return height;
+        }
+        else
+        {
+            return std::numeric_limits<double>::max();
+        }
+    }
     default:
         return std::numeric_limits<double>::max();
     }
@@ -70,13 +90,13 @@ OrderByDewarpedHeightProvider::precedes(
     double lhs_height = 0.0;
     if (lhs_params)
     {
-        lhs_height = height(lhs_params);
+        lhs_height = getHeight(lhs_params);
     }
 
     double rhs_height = 0.0;
     if (rhs_params)
     {
-        rhs_height = height(rhs_params);
+        rhs_height = getHeight(rhs_params);
     }
 
     if (lhs_height == rhs_height)
@@ -99,8 +119,29 @@ OrderByDewarpedHeightProvider::hint(PageId const& page) const
         switch (page_params->distortionType())
         {
         case DistortionType::PERSPECTIVE:
+        {
+            Value const height = page_params->perspectiveParams().sizeParams().height();
+            if (height.isValid())
+            {
+                return res.arg(height, 0, 'f', 0);
+            }
+            else
+            {
+                return res.arg(QObject::tr("unknown"));
+            }
+        }
         case DistortionType::WARP:
-            return res.arg(height(page_params), 0, 'f', 0);
+        {
+            Value const height = page_params->dewarpingParams().sizeParams().height();
+            if (height.isValid())
+            {
+                return res.arg(height, 0, 'f', 0);
+            }
+            else
+            {
+                return res.arg(QObject::tr("unknown"));
+            }
+        }
         default:
             return res.arg(QObject::tr("unknown"));
         }

@@ -33,14 +33,26 @@ OrderByDewarpedWidthProvider::OrderByDewarpedWidthProvider(IntrusivePtr<Settings
 {
 }
 
-static double width(std::unique_ptr<Params> const& params)
+static double getWidth(std::unique_ptr<Params> const& params)
 {
     switch (params->distortionType())
     {
     case DistortionType::PERSPECTIVE:
-        return params->perspectiveParams().sizeParams().width();
+    {
+        Value const width = params->perspectiveParams().sizeParams().width();
+        if(width.isValid())
+            return width;
+        else
+            return std::numeric_limits<double>::max();
+    }
     case DistortionType::WARP:
-        return params->dewarpingParams().sizeParams().width();
+    {
+        Value const width = params->dewarpingParams().sizeParams().width();
+        if(width.isValid())
+            return width;
+        else
+            return std::numeric_limits<double>::max();
+    }
     default:
         return std::numeric_limits<double>::max();
     }
@@ -70,13 +82,13 @@ OrderByDewarpedWidthProvider::precedes(
     double lhs_width = 0.0;
     if (lhs_params)
     {
-        lhs_width = width(lhs_params);
+        lhs_width = getWidth(lhs_params);
     }
 
     double rhs_width = 0.0;
     if (rhs_params)
     {
-        rhs_width = width(rhs_params);
+        rhs_width = getWidth(rhs_params);
     }
 
     if (lhs_width == rhs_width)
@@ -99,8 +111,21 @@ OrderByDewarpedWidthProvider::hint(PageId const& page) const
         switch (page_params->distortionType())
         {
         case DistortionType::PERSPECTIVE:
+        {
+            Value const width = page_params->perspectiveParams().sizeParams().width();
+            if(width.isValid())
+                return res.arg(width, 0, 'f', 0);
+            else
+                return res.arg(QObject::tr("unknown"));
+        }
         case DistortionType::WARP:
-            return res.arg(width(page_params), 0, 'f', 0);
+        {
+            Value const width = page_params->dewarpingParams().sizeParams().width();
+            if (width.isValid())
+                return res.arg(width, 0, 'f', 0);
+            else
+                return res.arg(QObject::tr("unknown"));
+        }
         default:
             return res.arg(QObject::tr("unknown"));
         }

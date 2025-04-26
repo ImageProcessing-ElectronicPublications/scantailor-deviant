@@ -20,6 +20,7 @@
 #define DESKEW_SIZE_PARAMS_H_
 
 #include "SizeMode.h"
+#include "Value.h"
 
 class QDomDocument;
 class QDomElement;
@@ -49,7 +50,7 @@ public:
         m_mode = mode;
     }
 
-    double width() const
+    Value width() const
     {
         return m_width;
     }
@@ -59,7 +60,7 @@ public:
         m_width = width;
     }
 
-    double height() const
+    Value height() const
     {
         return m_height;
     }
@@ -80,6 +81,10 @@ public:
     }
 
     void update(ImageSize const& image_size);
+
+    void maybeInvalidate();
+
+    SizeParams maybeInvalidated() const;
 
     static double minSizeValue()
     {
@@ -112,8 +117,8 @@ public:
     }
 private:
     SizeMode m_mode;
-    double m_width;
-    double m_height;
+    Value m_width;
+    Value m_height;
     double m_distance;
 };
 
