@@ -68,6 +68,8 @@ FovParams::FovParams(QDomElement const& el)
         std::swap(m_fovMin, m_fovMax);
 
     m_fov = qBound(m_fovMin, m_fov.toDouble(), m_fovMax);
+
+    maybeInvalidate();
 }
 
 QDomElement

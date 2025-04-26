@@ -61,6 +61,7 @@ SizeParams::SizeParams(QDomElement const& el)
         defaultDistanceValue()
       )
 {
+    maybeInvalidate();
 }
 
 QDomElement

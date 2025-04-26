@@ -76,6 +76,8 @@ BendParams::BendParams(QDomElement const& el)
         std::swap(m_bendMin, m_bendMax);
 
     m_bend = qBound(m_bendMin, m_bend.toDouble(), m_bendMax);
+
+    maybeInvalidate();
 }
 
 QDomElement
