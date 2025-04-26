@@ -336,7 +336,9 @@ Settings::setDewarpingBendParams(
         PerPageParams::iterator it = m_perPageParams.find(page_id);
         if (it != m_perPageParams.end())
         {
-            it->second.dewarpingParams().setBendParams(bend_params.maybeInvalidated());
+            DewarpingParams& dewarping_params = it->second.dewarpingParams();
+            dewarping_params.setBendParams(bend_params.maybeInvalidated());
+            dewarping_params.sizeParams().maybeInvalidate();
         }
         else
         {
