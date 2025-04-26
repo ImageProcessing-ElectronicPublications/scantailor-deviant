@@ -447,7 +447,7 @@ CylindricalSurfaceDewarper::initArcLengthMapper(
     double const dst_bend = 
         bend_params.mode() == MODE_AUTO
         ? qBound(bend_params.bendMin(), src_bend, bend_params.bendMax())
-        : bend_params.bend();
+        : bend_params.bend().toDouble();
 
     double const k = dst_bend / src_bend;
 
