@@ -207,7 +207,10 @@ Settings::setPerspectiveFrameParams(
         PerPageParams::iterator it = m_perPageParams.find(page_id);
         if (it != m_perPageParams.end())
         {
-            it->second.perspectiveParams().setFrameParams(frame_params);
+            PerspectiveParams& perspective_params = it->second.perspectiveParams();
+            perspective_params.setFrameParams(frame_params);
+            perspective_params.fovParams().maybeInvalidate();
+            perspective_params.sizeParams().maybeInvalidate();
         }
         else
         {
@@ -306,7 +309,11 @@ Settings::setDewarpingFrameParams(
         PerPageParams::iterator it = m_perPageParams.find(page_id);
         if (it != m_perPageParams.end())
         {
-            it->second.dewarpingParams().setFrameParams(frame_params);
+            DewarpingParams& dewarping_params = it->second.dewarpingParams();
+            dewarping_params.setFrameParams(frame_params);
+            dewarping_params.fovParams().maybeInvalidate();
+            dewarping_params.bendParams().maybeInvalidate();
+            dewarping_params.sizeParams().maybeInvalidate();
         }
         else
         {

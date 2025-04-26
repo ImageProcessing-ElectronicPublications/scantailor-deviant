@@ -489,13 +489,24 @@ OptionsWidget::frameParamsAppliedTo(std::set<PageId> const& pages)
         return;
     }
 
+    std::set<PageId>  pages_to_apply;
+    std::copy_if(
+        pages.begin(),
+        pages.end(),
+        std::inserter(pages_to_apply, pages_to_apply.end()),
+        [this](PageId const& page_id)
+        {
+            return this->m_pageId != page_id;
+        }
+    );
+
     switch (m_pageParams.distortionType())
     {
     case DistortionType::PERSPECTIVE:
-        m_ptrSettings->setPerspectiveFrameParams(pages, m_pageParams.perspectiveParams().frameParams());
+        m_ptrSettings->setPerspectiveFrameParams(pages_to_apply, m_pageParams.perspectiveParams().frameParams());
         break;
     case DistortionType::WARP:
-        m_ptrSettings->setDewarpingFrameParams(pages, m_pageParams.dewarpingParams().frameParams());
+        m_ptrSettings->setDewarpingFrameParams(pages_to_apply, m_pageParams.dewarpingParams().frameParams());
         break;
     default:
         break;
@@ -515,13 +526,24 @@ OptionsWidget::frameParamsAppliedToAllPages(std::set<PageId> const& pages)
         return;
     }
 
+    std::set<PageId>  pages_to_apply;
+    std::copy_if(
+        pages.begin(),
+        pages.end(),
+        std::inserter(pages_to_apply, pages_to_apply.end()),
+        [this](PageId const& page_id)
+        {
+            return this->m_pageId != page_id;
+        }
+    );
+
     switch (m_pageParams.distortionType())
     {
     case DistortionType::PERSPECTIVE:
-        m_ptrSettings->setPerspectiveFrameParams(pages, m_pageParams.perspectiveParams().frameParams());
+        m_ptrSettings->setPerspectiveFrameParams(pages_to_apply, m_pageParams.perspectiveParams().frameParams());
         break;
     case DistortionType::WARP:
-        m_ptrSettings->setDewarpingFrameParams(pages, m_pageParams.dewarpingParams().frameParams());
+        m_ptrSettings->setDewarpingFrameParams(pages_to_apply, m_pageParams.dewarpingParams().frameParams());
         break;
     default:
         break;
