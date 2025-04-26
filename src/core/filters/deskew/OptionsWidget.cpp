@@ -22,6 +22,7 @@
 #include "DistortionType.h"
 #include "ScopedIncDec.h"
 #include "dewarping/CylindricalSurfaceDewarper.h"
+#include <algorithm>
 
 namespace deskew
 {
@@ -417,19 +418,30 @@ OptionsWidget::fovParamsAppliedTo(std::set<PageId> const& pages)
         return;
     }
 
+    std::set<PageId>  pages_to_apply;
+    std::copy_if(
+        pages.begin(),
+        pages.end(),
+        std::inserter(pages_to_apply, pages_to_apply.end()),
+        [this](PageId const& page_id)
+        {
+            return this->m_pageId != page_id;
+        }
+    );
+
     switch (m_pageParams.distortionType())
     {
     case DistortionType::PERSPECTIVE:
-        m_ptrSettings->setPerspectiveFovParams(pages, m_pageParams.perspectiveParams().fovParams());
+        m_ptrSettings->setPerspectiveFovParams(pages_to_apply, m_pageParams.perspectiveParams().fovParams());
         break;
     case DistortionType::WARP:
-        m_ptrSettings->setDewarpingFovParams(pages, m_pageParams.dewarpingParams().fovParams());
+        m_ptrSettings->setDewarpingFovParams(pages_to_apply, m_pageParams.dewarpingParams().fovParams());
         break;
     default:
         break;
     }
 
-    for (PageId const& page_id : pages)
+    for (PageId const& page_id : pages_to_apply)
     {
         emit invalidateThumbnail(page_id);
     }
@@ -443,13 +455,24 @@ OptionsWidget::fovParamsAppliedToAllPages(std::set<PageId> const& pages)
         return;
     }
 
+    std::set<PageId>  pages_to_apply;
+    std::copy_if(
+        pages.begin(),
+        pages.end(),
+        std::inserter(pages_to_apply, pages_to_apply.end()),
+        [this](PageId const& page_id)
+        {
+            return this->m_pageId != page_id;
+        }
+    );
+
     switch (m_pageParams.distortionType())
     {
     case DistortionType::PERSPECTIVE:
-        m_ptrSettings->setPerspectiveFovParams(pages, m_pageParams.perspectiveParams().fovParams());
+        m_ptrSettings->setPerspectiveFovParams(pages_to_apply, m_pageParams.perspectiveParams().fovParams());
         break;
     case DistortionType::WARP:
-        m_ptrSettings->setDewarpingFovParams(pages, m_pageParams.dewarpingParams().fovParams());
+        m_ptrSettings->setDewarpingFovParams(pages_to_apply, m_pageParams.dewarpingParams().fovParams());
         break;
     default:
         break;

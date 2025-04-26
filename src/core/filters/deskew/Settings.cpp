@@ -182,7 +182,7 @@ Settings::setPerspectiveFovParams(
         PerPageParams::iterator it = m_perPageParams.find(page_id);
         if (it != m_perPageParams.end())
         {
-            it->second.perspectiveParams().setFovParams(fov_params);
+            it->second.perspectiveParams().setFovParams(fov_params.maybeInvalidated());
         }
         else
         {
@@ -278,7 +278,7 @@ Settings::setDewarpingFovParams(
         PerPageParams::iterator it = m_perPageParams.find(page_id);
         if (it != m_perPageParams.end())
         {
-            it->second.dewarpingParams().setFovParams(fov_params);
+            it->second.dewarpingParams().setFovParams(fov_params.maybeInvalidated());
         }
         else
         {

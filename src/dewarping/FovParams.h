@@ -20,6 +20,7 @@
 #define DESKEW_FOV_PARAMS_H_
 
 #include "AutoManualMode.h"
+#include "Value.h"
 
 class QDomDocument;
 class QDomElement;
@@ -57,7 +58,7 @@ public:
         m_fovMin = fov_min;
     }
 
-    double fov() const
+    Value fov() const
     {
         return m_fov;
     }
@@ -78,6 +79,10 @@ public:
     }
 
     void update(double fov);
+
+    void maybeInvalidate();
+
+    FovParams maybeInvalidated() const;
 
     static double minValue()
     {
@@ -106,7 +111,7 @@ public:
 private:
     AutoManualMode m_mode;
     double m_fovMin;
-    double m_fov;
+    Value m_fov;
     double m_fovMax;
 };
 

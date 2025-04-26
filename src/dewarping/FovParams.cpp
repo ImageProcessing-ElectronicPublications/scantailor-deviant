@@ -38,7 +38,7 @@ static char const FOV_MAX[] = "fov_max";
 FovParams::FovParams()
     : m_mode(MODE_AUTO)
     , m_fovMin(defaultMinValue())
-    , m_fov(defaultValue())
+    , m_fov()
     , m_fovMax(defaultMaxValue())
 {
 }
@@ -67,7 +67,7 @@ FovParams::FovParams(QDomElement const& el)
     if (m_fovMin > m_fovMax)
         std::swap(m_fovMin, m_fovMax);
 
-    m_fov = qBound(m_fovMin, m_fov, m_fovMax);
+    m_fov = qBound(m_fovMin, m_fov.toDouble(), m_fovMax);
 }
 
 QDomElement
@@ -90,6 +90,23 @@ FovParams::update(double fov)
     {
         m_fov = fov;
     }
+}
+
+void
+FovParams::maybeInvalidate()
+{
+    if(m_mode == MODE_AUTO)
+    {
+        m_fov.invalidate();
+    }
+}
+
+FovParams
+FovParams::maybeInvalidated() const
+{
+    FovParams params(*this);
+    params.maybeInvalidate();
+    return params;
 }
 
 } // namespace dewarping

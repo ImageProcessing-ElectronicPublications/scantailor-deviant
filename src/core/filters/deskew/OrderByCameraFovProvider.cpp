@@ -33,14 +33,27 @@ OrderByCameraFovProvider::OrderByCameraFovProvider(IntrusivePtr<Settings> const&
 {
 }
 
-static double fov(std::unique_ptr<Params> const& params)
+static double getFov(std::unique_ptr<Params> const& params)
 {
     switch (params->distortionType())
     {
     case DistortionType::PERSPECTIVE:
-        return params->perspectiveParams().fovParams().fov();
+    {
+        Value const fov = params->perspectiveParams().fovParams().fov();
+        if(fov.isValid())
+            return fov;
+        else
+            return std::numeric_limits<double>::max();
+    }
     case DistortionType::WARP:
-        return params->dewarpingParams().fovParams().fov();
+    {
+        Value const fov = params->dewarpingParams().fovParams().fov();
+        if(fov.isValid())
+            return fov;
+        else
+            return std::numeric_limits<double>::max();
+
+    }
     default:
         return std::numeric_limits<double>::max();
     }
@@ -70,13 +83,13 @@ OrderByCameraFovProvider::precedes(
     double lhs_fov = 0.0;
     if (lhs_params)
     {
-        lhs_fov = fov(lhs_params);
+        lhs_fov = getFov(lhs_params);
     }
 
     double rhs_fov = 0.0;
     if (rhs_params)
     {
-        rhs_fov = fov(rhs_params);
+        rhs_fov = getFov(rhs_params);
     }
 
     if (lhs_fov == rhs_fov)
@@ -99,8 +112,21 @@ OrderByCameraFovProvider::hint(PageId const& page) const
         switch (page_params->distortionType())
         {
         case DistortionType::PERSPECTIVE:
+        {
+            Value const fov = page_params->perspectiveParams().fovParams().fov();
+            if(fov.isValid())
+                return res.arg(fov, 0, 'f', 3);
+            else
+                return res.arg(QObject::tr("unknown"));
+        }
         case DistortionType::WARP:
-            return res.arg(fov(page_params), 0, 'f', 3);
+        {
+            Value const fov = page_params->dewarpingParams().fovParams().fov();
+            if(fov.isValid())
+                return res.arg(fov, 0, 'f', 3);
+            else
+                return res.arg(QObject::tr("unknown"));
+        }
         default:
             return res.arg(QObject::tr("unknown"));
         }
