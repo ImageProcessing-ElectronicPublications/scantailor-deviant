@@ -538,7 +538,18 @@ OptionsWidget::bendParamsAppliedTo(std::set<PageId> const& pages)
         return;
     }
 
-    m_ptrSettings->setDewarpingBendParams(pages, m_pageParams.dewarpingParams().bendParams());
+    std::set<PageId>  pages_to_apply;
+    std::copy_if(
+        pages.begin(),
+        pages.end(),
+        std::inserter(pages_to_apply, pages_to_apply.end()),
+        [this](PageId const& page_id)
+        {
+            return this->m_pageId != page_id;
+        }
+    );
+
+    m_ptrSettings->setDewarpingBendParams(pages_to_apply, m_pageParams.dewarpingParams().bendParams());
 
     for (PageId const& page_id : pages)
     {
@@ -554,7 +565,18 @@ OptionsWidget::bendParamsAppliedToAllPages(std::set<PageId> const& pages)
         return;
     }
 
-    m_ptrSettings->setDewarpingBendParams(pages, m_pageParams.dewarpingParams().bendParams());
+    std::set<PageId>  pages_to_apply;
+    std::copy_if(
+        pages.begin(),
+        pages.end(),
+        std::inserter(pages_to_apply, pages_to_apply.end()),
+        [this](PageId const& page_id)
+        {
+            return this->m_pageId != page_id;
+        }
+    );
+
+    m_ptrSettings->setDewarpingBendParams(pages_to_apply, m_pageParams.dewarpingParams().bendParams());
 
     emit invalidateAllThumbnails();
 }

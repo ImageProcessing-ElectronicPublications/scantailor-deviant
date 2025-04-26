@@ -20,6 +20,7 @@
 #define DESKEW_BEND_PARAMS_H_
 
 #include "AutoManualMode.h"
+#include "Value.h"
 
 class QDomDocument;
 class QDomElement;
@@ -59,7 +60,7 @@ public:
         m_bendMin = bend_min;
     }
 
-    double bend() const
+    Value bend() const
     {
         return m_bend;
     }
@@ -80,6 +81,10 @@ public:
     }
 
     void update(double bend);
+
+    void maybeInvalidate();
+
+    BendParams maybeInvalidated() const;
 
     static double minValue()
     {
@@ -108,7 +113,7 @@ public:
 private:
     AutoManualMode m_mode;
     double m_bendMin;
-    double m_bend;
+    Value m_bend;
     double m_bendMax;
 };
 

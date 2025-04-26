@@ -33,12 +33,22 @@ OrderByPaperBendProvider::OrderByPaperBendProvider(IntrusivePtr<Settings> const&
 {
 }
 
-static double bend(std::unique_ptr<Params> const& params)
+static double getBend(std::unique_ptr<Params> const& params)
 {
     switch (params->distortionType())
     {
     case DistortionType::WARP:
-        return params->dewarpingParams().bendParams().bend();
+    {
+        Value const bend = params->dewarpingParams().bendParams().bend();
+        if (bend.isValid())
+        {
+            return bend;
+        }
+        else
+        {
+            return std::numeric_limits<double>::max();
+        }
+    }
     default:
         return std::numeric_limits<double>::max();
     }
@@ -68,13 +78,13 @@ OrderByPaperBendProvider::precedes(
     double lhs_bend = 0.0;
     if (lhs_params)
     {
-        lhs_bend = bend(lhs_params);
+        lhs_bend = getBend(lhs_params);
     }
 
     double rhs_bend = 0.0;
     if (rhs_params)
     {
-        rhs_bend = bend(rhs_params);
+        rhs_bend = getBend(rhs_params);
     }
 
     if (lhs_bend == rhs_bend)
@@ -97,7 +107,17 @@ OrderByPaperBendProvider::hint(PageId const& page) const
         switch (page_params->distortionType())
         {
         case DistortionType::WARP:
-            return res.arg(bend(page_params), 0, 'f', 3);
+        {
+            Value const bend = page_params->dewarpingParams().bendParams().bend();
+            if (bend.isValid())
+            {
+                return res.arg(bend, 0, 'f', 3);
+            }
+            else
+            {
+                return res.arg(QObject::tr("unknown"));
+            }
+        }
         default:
             return res.arg(QObject::tr("unknown"));
         }
