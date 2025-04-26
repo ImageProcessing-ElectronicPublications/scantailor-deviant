@@ -93,27 +93,15 @@ private slots:
 
     void distortionTypeAppliedTo(std::set<PageId> const& pages);
 
-    void distortionTypeAppliedToAllPages(std::set<PageId> const& pages);
-
     void modeAppliedTo(std::set<PageId> const& pages);
-
-    void modeAppliedToAllPages(std::set<PageId> const& pages);
 
     void fovParamsAppliedTo(std::set<PageId> const& pages);
 
-    void fovParamsAppliedToAllPages(std::set<PageId> const& pages);
-
     void frameParamsAppliedTo(std::set<PageId> const& pages);
-
-    void frameParamsAppliedToAllPages(std::set<PageId> const& pages);
 
     void bendParamsAppliedTo(std::set<PageId> const& pages);
 
-    void bendParamsAppliedToAllPages(std::set<PageId> const& pages);
-
     void sizeParamsAppliedTo(std::set<PageId> const& pages);
-
-    void sizeParamsAppliedToAllPages(std::set<PageId> const& pages);
 
     void fovAutoManualModeChanged(bool auto_mode);
 
