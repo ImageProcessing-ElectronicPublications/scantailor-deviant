@@ -105,7 +105,7 @@ Here are the versions with which the 2023 release was built:
     Dependencies will be installed into these subfolders.
     You should get a directory structure like this:
 
-    ~~~ text
+    ~~~less
     D:\
     └─ Prog\
         ├─ boost\
@@ -132,7 +132,7 @@ Here are the versions with which the 2023 release was built:
     Unpack boost to his install subfolder.
     You should get the following folder structure:
 
-    ~~~ text
+    ~~~less
     D:\
     └─ Prog\
         └─ boost\
@@ -147,7 +147,7 @@ Here are the versions with which the 2023 release was built:
 
     Go to \boost\1.83.0 directory and run commands:
 
-    ~~~ text
+    ~~~less
     bootstrap.bat
     b2.exe variant=release
     ~~~
@@ -166,7 +166,7 @@ Here are the versions with which the 2023 release was built:
 
     In the build subfolder, create a build.cmd file with the following contents:
 
-    ~~~ text
+    ~~~less
     @EM Set paths
     SET PATH=%CD%\qtbase\bin;%CD%\gnuwin32\bin;%PATH%
 
@@ -194,7 +194,7 @@ Here are the versions with which the 2023 release was built:
 
     You should get the following folder structure:
 
-    ~~~ text
+    ~~~less
     D:\
     └─ Prog\
         └─ Qt\
@@ -218,7 +218,7 @@ Here are the versions with which the 2023 release was built:
     When the developer console opens, 
     go to the Qt build folder and run the batch file.
 
-    ~~~ text
+    ~~~less
     D:
     CD D:\Prog\Qt\5.12.12\build\
     build.cmd
@@ -226,7 +226,7 @@ Here are the versions with which the 2023 release was built:
 
     When finished, the folder structure will look like this:
 
-    ~~~ text
+    ~~~less
     D:\
     └─ Prog\
         └─ Qt\
@@ -254,7 +254,7 @@ Here are the versions with which the 2023 release was built:
 
     You should get the following folder structure:
 
-    ~~~ text
+    ~~~less
     D:\
     └─ Prog\
         └─ zlib\
@@ -270,14 +270,14 @@ Here are the versions with which the 2023 release was built:
 
     From \zlib\1.3 folder folder run commands:
 
-    ~~~ text
+    ~~~less
     cmake -S .\src -B .\build -DCMAKE_INSTALL_PREFIX:PATH=%CD%
     cmake --build .\build --config Release --target install --parallel 4
     ~~~
 
     When finished, the folder structure will look like this:
 
-    ~~~ text
+    ~~~less
     D:\
     └─ Prog\
         └─ zlib\
@@ -303,7 +303,7 @@ Here are the versions with which the 2023 release was built:
 
     You should get the following folder structure:
 
-    ~~~ text
+    ~~~less
     D:\
     └─ Prog\
         └─ libjpeg-turbo\
@@ -319,14 +319,14 @@ Here are the versions with which the 2023 release was built:
 
     From libjpeg-turbo\3.0.0 folder run commands:
 
-    ~~~ text
+    ~~~less
     cmake -S .\src -B .\build -DCMAKE_INSTALL_PREFIX:PATH=%CD%
     cmake --build .\build --config Release --target install --parallel 4
     ~~~
 
     When finished, the folder structure will look like this:
 
-    ~~~ text
+    ~~~less
     D:\
     └─ Prog\
         └─ libjpeg-turbo\
@@ -353,7 +353,7 @@ Here are the versions with which the 2023 release was built:
 
     You should get the following folder structure:
 
-    ~~~ text
+    ~~~less
     D:\
     └─ Prog\
         └─ libpng\
@@ -369,14 +369,14 @@ Here are the versions with which the 2023 release was built:
 
     From \libpng\1.6.40 folder run commands:
 
-    ~~~ text
+    ~~~less
     cmake -S .\src -B .\build -DCMAKE_INSTALL_PREFIX:PATH=%CD% -DCMAKE_PREFIX_PATH:PATH="d:\Prog\zlib\1.3"
     cmake --build .\build --config Release --target install --parallel 4
     ~~~
 
     When finished, the folder structure will look like this:
 
-    ~~~ text
+    ~~~less
     D:\
     └─ Prog\
         └─ libpng
@@ -403,7 +403,7 @@ Here are the versions with which the 2023 release was built:
 
     You should get the following folder structure:
 
-    ~~~ text
+    ~~~less
     D:\
     └─ Prog\
         └─ tiff\
@@ -419,14 +419,14 @@ Here are the versions with which the 2023 release was built:
 
     From \tiff\4.6.0 folder run commands:
 
-    ~~~ text
+    ~~~less
     cmake -S .\src -B .\build -DCMAKE_INSTALL_PREFIX:PATH=%CD% -DCMAKE_PREFIX_PATH:PATH="d:\Prog\zlib\1.3;d:\Prog\libjpeg-turbo\3.0.0"
     cmake --build .\build --config Release --target install --parallel 4
     ~~~
 
     When finished, the folder structure will look like this:
 
-    ~~~ text
+    ~~~less
     D:\
     └─ Prog\
         └─ tiff\
@@ -453,7 +453,7 @@ Here are the versions with which the 2023 release was built:
 
     You should get the following folder structure:
 
-    ~~~ text
+    ~~~less
     D:\
     └─ Prog\
         └─ openjpeg\
@@ -469,14 +469,14 @@ Here are the versions with which the 2023 release was built:
 
     From \openjpeg\2.5.0 folder run commands:
 
-    ~~~ text
+    ~~~less
     cmake -S .\src -B .\build -DCMAKE_INSTALL_PREFIX:PATH=%CD% -DBUILD_CODEC:BOOL=FALSE -DCMAKE_PREFIX_PATH:PATH="d:\Prog\zlib\1.3;d:\Prog\libpng\1.6.40;d:\Prog\tiff\4.6.0"
     cmake --build .\build --config Release --target install --parallel 4
     ~~~
 
     When finished, the folder structure will look like this:
 
-    ~~~ text
+    ~~~less
     D:\
     └─ Prog\
         └─ openjpeg\
@@ -503,7 +503,7 @@ Here are the versions with which the 2023 release was built:
 
     You should get the following folder structure:
 
-    ~~~ text
+    ~~~less
     D:\
     └─ Prog\
         └─ exiv2\
@@ -519,14 +519,14 @@ Here are the versions with which the 2023 release was built:
 
     From \exiv2\0.27.7 folder run commands:
 
-    ~~~ text
+    ~~~less
     cmake -S .\src -B .\build -DCMAKE_INSTALL_PREFIX:PATH=%CD% -DEXIV2_ENABLE_WIN_UNICODE:BOOL=ON -DEXIV2_ENABLE_XMP:BOOL=OFF -DEXIV2_ENABLE_PRINTUCS2=OFF -DEXIV2_ENABLE_LENSDATA=OFF -DCMAKE_PREFIX_PATH:PATH="d:\Prog\zlib\1.3"
     cmake --build .\build --config Release --target install --parallel 4
     ~~~
 
     When finished, the folder structure will look like this:
 
-    ~~~ text
+    ~~~less
     D:\
     └─ Prog\
         └─ exiv2\
@@ -556,7 +556,7 @@ Unpack scantailor archive to \src subfolder.
 
 You should get the following folder structure:
 
-~~~ text
+~~~less
 D:\
 └─ Prog\
     └─ scantailor\
@@ -575,51 +575,89 @@ From \scantailor folder run commands:
 
 Configure if all libraries were installed:
 
-~~~ text
-cmake -S .\src -B .\build -DCMAKE_INSTALL_PREFIX:PATH=%CD%\install -DENABLE_EXIV2:BOOL=ON -DENABLE_OPENGL:BOOL=ON -DENABLE_OPENJPEG:BOOL=ON -DCMAKE_PREFIX_PATH:PATH="d:\Prog\boost\1.83.0;d:\Prog\exiv2\0.27.7;d:\Prog\libjpeg-turbo\3.0.0;d:\Prog\libpng\1.6.40;d:\Prog\openjpeg\2.5.0;d:\Prog\Qt\5.12.12;d:\Prog\tiff\4.6.0;d:\Prog\zlib\1.3"
+~~~less
+set DEPS=^
+d:\Lib\Eigen\3.4.0;^
+d:\Prog\boost\1.83.0;^
+d:\Prog\exiv2\0.27.7;^
+d:\Prog\libjpeg-turbo\3.0.0;^
+d:\Prog\libpng\1.6.40;^
+d:\Prog\openjpeg\2.5.0;^
+d:\Prog\Qt\5.12.12;^
+d:\Prog\tiff\4.6.0;^
+d:\Prog\zlib\1.3
+
+cmake ^
+ -S .\src^
+ -B .\build^
+ -D CMAKE_PREFIX_PATH:PATH=%DEPS%^
+ -D CMAKE_INSTALL_PREFIX:PATH=%CD%\install^
+ -D CPACK_GENERATOR:STRING="NSIS;ZIP;7Z"^
+ -D ENABLE_EXIV2:BOOL=ON^
+ -D ENABLE_OPENJPEG:BOOL=ON^
+ -D ENABLE_OPENGL:BOOL=ON
 ~~~
 
 Configure if optional libraries were not installed:
 
-~~~ text
-cmake -S .\src -B .\build -DCMAKE_INSTALL_PREFIX:PATH=%CD%\install -DENABLE_EXIV2:BOOL=OFF -DENABLE_OPENGL:BOOL=ON -DENABLE_OPENJPEG:BOOL=OFF -DCMAKE_PREFIX_PATH:PATH="d:\Prog\boost\1.83.0;d:\Prog\libjpeg-turbo\3.0.0;d:\Prog\libpng\1.6.40;d:\Prog\Qt\5.12.12;d:\Prog\tiff\4.6.0;d:\Prog\zlib\1.3"
+~~~less
+set DEPS=^
+d:\Prog\boost\1.83.0;^
+d:\Prog\libjpeg-turbo\3.0.0;^
+d:\Prog\libpng\1.6.40;^
+d:\Prog\Qt\5.12.12;^
+d:\Prog\tiff\4.6.0;^
+d:\Prog\zlib\1.3
+
+cmake^
+ -S .\src^
+ -B .\build^
+ -DCMAKE_PREFIX_PATH:PATH=%DEPS%^
+ -D CMAKE_INSTALL_PREFIX:PATH=%CD%\install^
+ -D CPACK_GENERATOR:STRING="ZIP"^
+ -DENABLE_EXIV2:BOOL=OFF^
+ -DENABLE_OPENJPEG:BOOL=OFF^
+ -DENABLE_OPENGL:BOOL=ON
 ~~~
 
 ### Build
 
-~~~ text
-cmake --build .\build --config Release --target scantailor-deviant --parallel 4
-cmake --build .\build --config Release --target scantailor-deviant-cli --parallel 4
+~~~less
+cmake^
+ --build .\build^
+ --config Release^
+ --parallel
 ~~~
 
 ### Install
 
-~~~ text
-cmake --build .\build --config Release --target install --parallel 4
+~~~less
+cmake^
+ --build .\build^
+ --config Release^
+ --target install^
+ --parallel
 ~~~
 
 When finished, the ready-to-use program will be located in the \install folder.
 
 ### Build installation packages
 
-If NSIS was installed:
-
-~~~ text
-cpack -G "NSIS;ZIP;7Z" --config ./build/CPackConfig.cmake -B %CD%\pkg
-~~~
-
-If NSIS was not installed:
-
-~~~ text
-cpack -G "ZIP;7Z" --config ./build/CPackConfig.cmake -B %CD%\pkg
+~~~less
+cpack^
+ -B %CD%\pkg^
+ --config ./build/CPackConfig.cmake
 ~~~
 
 When finished, packages will be located in the \pkg folder.
 
 ### Build source package
 
-~~~ text
-cpack -G "ZIP" --config ./build/CPackSourceConfig.cmake -B %CD%\pkg
+~~~less
+cpack^
+ -G "ZIP"^
+ -B %CD%\pkg^
+ --config ./build/CPackSourceConfig.cmake
 ~~~
 
 When finished, source archive will be located in the \pkg folder.

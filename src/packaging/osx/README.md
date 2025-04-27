@@ -153,10 +153,11 @@ export CMAKE_PREFIX_PATH=\
 cmake\
  -S scantailor-deviant\
  -B build\
+ -D CPACK_GENERATOR="DragNDrop;TGZ"\
  -D ENABLE_OPENGL=ON\
  -D ENABLE_EXIV2=OFF\
  -D ENABLE_OPENJPEG=OFF
- ```
+```
 
 ### Build
 
@@ -195,7 +196,8 @@ scantailor-deviant
 ├───install
 │   └───scantailor-deviant.app
 ├───pkg
-│   └───scantailor-deviant-0.2.14-Darwin.dmg
+│   └───scantailor-deviant-0.2.15-Darwin.dmg
+│   └───scantailor-deviant-0.2.15-Darwin.tar.gz
 └───scantailor-deviant
     │   CMakeLists.txt
     │   config.h.in
