@@ -286,11 +286,20 @@ OptionsWidget::showApplyToDialog()
 
     connect(
         dialog, &ApplyToDialog::accepted, this,
-    [ = ]() {
-        std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
-        std::set<PageId> pages(vec.begin(), vec.end());
-        applySelection(pages, applyContentBoxOption->isChecked());
-    }
+        [ = ]() {
+            std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
+            std::set<PageId> pages;
+            std::copy_if(
+                vec.begin(),
+                vec.end(),
+                std::inserter(pages, pages.end()),
+                [this](PageId const& page_id)
+                {
+                    return this->m_pageId != page_id;
+                }
+            );
+            applySelection(pages, applyContentBoxOption->isChecked());
+        }
     );
     dialog->show();
 }
@@ -321,10 +330,8 @@ OptionsWidget::applySelection(std::set<PageId> const& pages, bool apply_content_
         params.setPageBorders(Margins(leftBorder->value(), topBorder->value(), rightBorder->value(), bottomBorder->value()));
 
         m_ptrSettings->setPageParams(page_id, params);
-        //emit invalidateThumbnail(page_id);
     }
     emit invalidateAllThumbnails();
-    emit reloadRequested();
 }
 
 /*========================= OptionsWidget::UiData ======================*/
