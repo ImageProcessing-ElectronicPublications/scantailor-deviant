@@ -457,12 +457,6 @@ OptionsWidget::dpiChanged(std::set<PageId> const& pages, Dpi const& dpi)
         m_ptrSettings->setDpi(page_id, dpi);
     }
     emit invalidateAllThumbnails();
-
-    if (pages.find(m_pageId) != pages.end()) {
-        m_outputDpi = dpi;
-        updateDpiDisplay();
-        emit reloadRequested();
-    }
 }
 
 void
@@ -473,10 +467,6 @@ OptionsWidget::applyColorsConfirmed(std::set<PageId> const& pages)
     }
 
     emit invalidateAllThumbnails();
-
-    if (pages.find(m_pageId) != pages.end()) {
-        emit reloadRequested();
-    }
 }
 
 void
@@ -527,10 +517,6 @@ OptionsWidget::applyDespeckleConfirmed(std::set<PageId> const& pages)
         m_ptrSettings->setDespeckleLevel(page_id, m_despeckleLevel);
     }
     emit invalidateAllThumbnails();
-
-    if (pages.find(m_pageId) != pages.end()) {
-        emit reloadRequested();
-    }
 }
 
 void
@@ -756,11 +742,20 @@ void output::OptionsWidget::applyDespeckleButtonClicked()
     dialog->setWindowTitle(tr("Apply Despeckling Level"));
     connect(
         dialog, &ApplyToDialog::accepted,
-    this, [ = ]() {
-        std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
-        std::set<PageId> pages(vec.begin(), vec.end());
-        applyDespeckleConfirmed(pages);
-    }
+        this, [ = ]() {
+            std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
+            std::set<PageId> pages;
+            std::copy_if(
+                vec.begin(),
+                vec.end(),
+                std::inserter(pages, pages.end()),
+                [this](PageId const& page_id)
+                {
+                    return this->m_pageId != page_id;
+                }
+            );
+            applyDespeckleConfirmed(pages);
+        }
     );
 
     dialog->show();
@@ -772,11 +767,20 @@ void output::OptionsWidget::applyColorsButtonClicked()
     dialog->setWindowTitle(tr("Apply Mode"));
     connect(
         dialog, &ApplyToDialog::accepted,
-    this, [ = ]() {
-        std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
-        std::set<PageId> pages(vec.begin(), vec.end());
-        applyColorsConfirmed(pages);
-    }
+        this, [ = ]() {
+            std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
+            std::set<PageId> pages;
+            std::copy_if(
+                vec.begin(),
+                vec.end(),
+                std::inserter(pages, pages.end()),
+                [this](PageId const& page_id)
+                {
+                    return this->m_pageId != page_id;
+                }
+            );
+            applyColorsConfirmed(pages);
+        }
     );
 
     dialog->show();
@@ -1086,7 +1090,16 @@ output::OptionsWidget::applyDpiButtonClicked()
         dialog, &ApplyToDialog::accepted,
         this, [=]() {
             std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
-            std::set<PageId> pages(vec.begin(), vec.end());
+            std::set<PageId> pages;
+            std::copy_if(
+                vec.begin(),
+                vec.end(),
+                std::inserter(pages, pages.end()),
+                [this](PageId const& page_id)
+                {
+                    return this->m_pageId != page_id;
+                }
+            );
             dpiChanged(pages, m_outputDpi);
         }
     );
@@ -1127,10 +1140,6 @@ void output::OptionsWidget::applyThresholdConfirmed(std::set<PageId> const& page
     }
 
     emit invalidateAllThumbnails();
-
-    if (pages.find(m_pageId) != pages.end()) {
-        emit reloadRequested();
-    }
 }
 
 void output::OptionsWidget::applyForegroundThresholdConfirmed(std::set<PageId> const& pages)
@@ -1140,10 +1149,6 @@ void output::OptionsWidget::applyForegroundThresholdConfirmed(std::set<PageId> c
     }
 
     emit invalidateAllThumbnails();
-
-    if (pages.find(m_pageId) != pages.end()) {
-        emit reloadRequested();
-    }
 }
 
 void output::OptionsWidget::applyThresholdButtonClicked()
@@ -1155,11 +1160,20 @@ void output::OptionsWidget::applyThresholdButtonClicked()
     dialog->setWindowTitle(tr("Apply Threshold"));
     connect(
         dialog, &ApplyToDialog::accepted,
-    this, [ = ]() {
-        std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
-        std::set<PageId> pages(vec.begin(), vec.end());
-        applyThresholdConfirmed(pages, options->thresholdsChecked());
-    }
+        this, [ = ]() {
+            std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
+            std::set<PageId> pages;
+            std::copy_if(
+                vec.begin(),
+                vec.end(),
+                std::inserter(pages, pages.end()),
+                [this](PageId const& page_id)
+                {
+                    return this->m_pageId != page_id;
+                }
+            );
+            applyThresholdConfirmed(pages, options->thresholdsChecked());
+        }
     );
 
     dialog->show();
@@ -1225,11 +1239,20 @@ void output::OptionsWidget::applyForegroundThresholdButtonClicked()
     dialog->setWindowTitle(tr("Apply Foreground layer threshold"));
     connect(
         dialog, &ApplyToDialog::accepted,
-    this, [ = ]() {
-        std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
-        std::set<PageId> pages(vec.begin(), vec.end());
-        applyForegroundThresholdConfirmed(pages);
-    }
+        this, [ = ]() {
+            std::vector<PageId> vec = dialog->getPageRangeSelectorWidget().result();
+            std::set<PageId> pages;
+            std::copy_if(
+                vec.begin(),
+                vec.end(),
+                std::inserter(pages, pages.end()),
+                [this](PageId const& page_id)
+                {
+                    return this->m_pageId != page_id;
+                }
+            );
+            applyForegroundThresholdConfirmed(pages);
+        }
     );
 
     dialog->show();
