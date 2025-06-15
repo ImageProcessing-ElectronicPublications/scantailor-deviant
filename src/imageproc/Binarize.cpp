@@ -124,8 +124,16 @@ BinaryImage binarizeFromMap(GrayImage const& src, GrayImage const& threshold,
     return bw_img;
 }
 
+/*
+ * niblack = mean - k * stderr, k = 0.2
+ * modification by zvezdochiot:
+ * niblack = mean - k * (stderr - delta), k = 0.2, delta = 0
+ */
 GrayImage binarizeNiblackMap(
-    GrayImage const& src, QSize const window_size, double const k)
+    GrayImage const& src,
+    QSize const window_size,
+    double const k,
+    int const delta)
 {
     if (window_size.isEmpty())
     {
@@ -195,7 +203,7 @@ GrayImage binarizeNiblackMap(
             double const variance = sqmean - mean * mean;
             double const stddev = sqrt(fabs(variance));
 
-            double threshold = mean - k * stddev;
+            double threshold = mean - k * (stddev - delta);
 
             threshold = (threshold < 0.0) ? 0.0 : ((threshold < 255.0) ? threshold : 255.0);
             gray_line[x] = (uint8_t) threshold;
@@ -208,8 +216,10 @@ GrayImage binarizeNiblackMap(
 }
 
 BinaryImage binarizeNiblack(
-    QImage const& src, QSize const window_size,
-    double const k, int const delta)
+    QImage const& src,
+    QSize const window_size,
+    double const k,
+    int const delta)
 {
     if (window_size.isEmpty())
     {
@@ -227,15 +237,20 @@ BinaryImage binarizeNiblack(
         return BinaryImage();
     }
 
-    GrayImage threshold_map(binarizeNiblackMap(gray, window_size, k));
-    BinaryImage bw_img(binarizeFromMap(gray, threshold_map, 0, 255, delta));
+    GrayImage threshold_map(binarizeNiblackMap(gray, window_size, k, delta));
+    BinaryImage bw_img(binarizeFromMap(gray, threshold_map, 0, 255, 0));
 
     return bw_img;
 }
 
+/*
+ * gatos = bg - f(i, bg, q{, p1, p2}), q = 0.6, p1 = 0.5, p2 = 0.8
+ */
 BinaryImage binarizeGatosCleaner(
-    GrayImage& wiener, BinaryImage const& niblack,
-    QSize const window_size, double scale)
+    GrayImage& wiener,
+    BinaryImage const& niblack,
+    QSize const window_size,
+    double scale)
 {
     if (window_size.isEmpty())
     {
@@ -374,8 +389,12 @@ BinaryImage binarizeGatosCleaner(
 }
 
 BinaryImage binarizeGatos(
-    QImage const& src, QSize const window_size, double scale,
-    double const noise_sigma, double const k, int const delta)
+    QImage const& src,
+    QSize const window_size,
+    double const scale,
+    double const noise_sigma,
+    double const k,
+    int const delta)
 {
     if (window_size.isEmpty())
     {
@@ -400,8 +419,16 @@ BinaryImage binarizeGatos(
     return bw_img;
 }
 
+/*
+ * sauvola = mean * (1.0 + k * (stderr / 128.0 - 1.0)), k = 0.34
+ * modification by zvezdochiot:
+ * sauvola = mean * (1.0 + k * ((stderr + delta) / 128.0 - 1.0)), k = 0.34, delta = 0
+ */
 GrayImage binarizeSauvolaMap(
-    GrayImage const& src, QSize const window_size, double const k)
+    GrayImage const& src,
+    QSize const window_size,
+    double const k,
+    int const delta)
 {
     if (window_size.isEmpty())
     {
@@ -465,7 +492,7 @@ GrayImage binarizeSauvolaMap(
             long double const variance = sqmean - mean * mean;
             long double const deviation = sqrt(fabs(variance));
 
-            long double threshold = mean * (1.0 + k * (deviation / 128.0 - 1.0));
+            long double threshold = mean * (1.0 + k * ((deviation + delta) / 128.0 - 1.0));
 
             threshold = (threshold < 0.0) ? 0.0 : ((threshold < 255.0) ? threshold : 255.0);
             gray_line[x] = (uint8_t) threshold;
@@ -477,8 +504,10 @@ GrayImage binarizeSauvolaMap(
 }
 
 BinaryImage binarizeSauvola(
-    QImage const& src, QSize const window_size,
-    double const k, int const delta)
+    QImage const& src,
+    QSize const window_size,
+    double const k,
+    int const delta)
 {
     if (window_size.isEmpty())
     {
@@ -496,14 +525,22 @@ BinaryImage binarizeSauvola(
         return BinaryImage();
     }
 
-    GrayImage threshold_map(binarizeSauvolaMap(gray, window_size, k));
-    BinaryImage bw_img(binarizeFromMap(gray, threshold_map, 0, 255, delta));
+    GrayImage threshold_map(binarizeSauvolaMap(gray, window_size, k, delta));
+    BinaryImage bw_img(binarizeFromMap(gray, threshold_map, 0, 255, 0));
 
     return bw_img;
 }
 
+/*
+ * wolf = mean - k * (mean - min_v) * (1.0 - stderr / stdmax), k = 0.3
+ * modification by zvezdochiot:
+ * wolf = mean - k * (mean - min_v) * (1.0 - (stderr / stdmax + delta / 128.0), k = 0.3, delta = 0
+ */
 GrayImage binarizeWolfMap(
-    GrayImage const& src, QSize const window_size, double const k)
+    GrayImage const& src,
+    QSize const window_size,
+    double const k,
+    int const delta)
 {
     if (window_size.isEmpty())
     {
@@ -586,8 +623,8 @@ GrayImage binarizeWolfMap(
         for (int x = 0; x < w; ++x) {
             float const mean = means[y * w + x];
             float const deviation = deviations[y * w + x];
-            long double const a = 1.0 - deviation / max_deviation;
-            long double threshold = mean - k * a * (mean - min_gray_level);
+            long double const shift = 1.0 - (deviation / max_deviation + (double) delta / 128.0);
+            long double threshold = mean - k * shift * (mean - min_gray_level);
 
             threshold = (threshold < 0.0) ? 0.0 : ((threshold < 255.0) ? threshold : 255.0);
             gray_line[x] = (uint8_t) threshold;
@@ -619,8 +656,8 @@ BinaryImage binarizeWolf(
         return BinaryImage();
     }
 
-    GrayImage threshold_map(binarizeWolfMap(gray, window_size, k));
-    BinaryImage bw_img(binarizeFromMap(gray, threshold_map, lower_bound, upper_bound, delta));
+    GrayImage threshold_map(binarizeWolfMap(gray, window_size, k, delta));
+    BinaryImage bw_img(binarizeFromMap(gray, threshold_map, lower_bound, upper_bound, 0));
 
     return bw_img;
 }

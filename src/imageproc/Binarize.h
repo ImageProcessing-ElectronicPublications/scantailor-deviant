@@ -35,7 +35,9 @@ class GrayImage;
  * N. Otsu (1979). "A threshold selection method from gray-level histograms".
  * http://en.wikipedia.org/wiki/Otsu%27s_method
  */
-BinaryImage binarizeOtsu(QImage const& src, int delta = 0);
+BinaryImage binarizeOtsu(
+    QImage const& src,
+    int delta = 0);
 
 /**
  * \brief Image binarization using Mokji's global thresholding method.
@@ -51,7 +53,8 @@ BinaryImage binarizeOtsu(QImage const& src, int delta = 0);
  * \return A black and white image.
  */
 BinaryImage binarizeMokji(
-    QImage const& src, unsigned max_edge_width = 3,
+    QImage const& src,
+    unsigned max_edge_width = 3,
     unsigned min_edge_magnitude = 20);
 
 /**
@@ -61,10 +64,15 @@ BinaryImage binarizeMokji(
   * Englewood Cliffs, N. J., Prentice Hall (1986) 115-116
   */
 GrayImage binarizeNiblackMap(
-    GrayImage const& src, QSize window_size, double k = 0.20);
+    GrayImage const& src,
+    QSize window_size,
+    double k = 0.20,
+    int delta = 0);
 BinaryImage binarizeNiblack(
-    QImage const& src, QSize window_size,
-    double k = 0.20, int delta = 0);
+    QImage const& src,
+    QSize window_size,
+    double k = 0.20,
+    int delta = 0);
 
 /**
  * \brief Image binarization using Gatos' local thresholding method.
@@ -77,11 +85,17 @@ BinaryImage binarizeNiblack(
  * Document Analysis Systems VI. Springer Berlin Heidelberg, 2004. 102-113.
  */
 BinaryImage binarizeGatosCleaner(
-    GrayImage& wiener, BinaryImage const& niblack,
-    QSize const window_size, double scale);
+    GrayImage& wiener,
+    BinaryImage const& niblack,
+    QSize const window_size,
+    double scale);
 BinaryImage binarizeGatos(
-    QImage const& src, QSize window_size, double scale = 0.6,
-    double noise_sigma = 3.0, double k = 0.2, int delta = 0);
+    QImage const& src,
+    QSize window_size,
+    double scale = 0.6,
+    double noise_sigma = 3.0,
+    double k = 0.2,
+    int delta = 0);
 
 /**
  * \brief Image binarization using Sauvola's local thresholding method.
@@ -90,10 +104,15 @@ BinaryImage binarizeGatos(
  * http://www.mediateam.oulu.fi/publications/pdf/24.pdf
  */
 GrayImage binarizeSauvolaMap(
-    GrayImage const& src, QSize const window_size, double k = 0.34);
+    GrayImage const& src,
+    QSize const window_size,
+    double k = 0.34,
+    int delta = 0);
 BinaryImage binarizeSauvola(
-    QImage const& src, QSize window_size,
-    double k = 0.34, int delta = 0);
+    QImage const& src,
+    QSize window_size,
+    double k = 0.34,
+    int delta = 0);
 
 /**
  * \brief Image binarization using Wolf's local thresholding method.
@@ -108,11 +127,17 @@ BinaryImage binarizeSauvola(
  * \param upper_bound The maximum possible gray level that can be made black.
  */
 GrayImage binarizeWolfMap(
-    GrayImage const& src, QSize const window_size, double k = 0.30);
+    GrayImage const& src,
+    QSize const window_size,
+    double k = 0.30,
+    int delta = 0);
 BinaryImage binarizeWolf(
-    QImage const& src, QSize window_size,
-    unsigned char lower_bound = 1, unsigned char upper_bound = 254,
-    double k = 0.30, int delta = 0);
+    QImage const& src,
+    QSize window_size,
+    unsigned char lower_bound = 1,
+    unsigned char upper_bound = 254,
+    double k = 0.30,
+    int delta = 0);
 
 BinaryImage peakThreshold(QImage const& image);
 
