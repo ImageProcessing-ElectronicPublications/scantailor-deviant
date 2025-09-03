@@ -25,6 +25,7 @@
 #include "Settings.h"
 #include "PageInfo.h"
 #include "ImageTransformation.h"
+#include "imageproc/AffineImageTransform.h"
 #include "ThumbnailBase.h"
 #include "ThumbnailCollector.h"
 #include "ThumbnailVersionGenerator.h"
@@ -113,12 +114,15 @@ CacheDrivenTask::process(
                     params->perspectiveParams().corner(PerspectiveParams::BOTTOM_RIGHT)
                 };
 
+                QSizeF const orig_size = xform.origRect().size();
+                imageproc::AffineImageTransform orig_image_transform(QSize(orig_size.width(), orig_size.height()));
+
+                orig_image_transform.rotate(xform.preRotation().toDegrees());
+                orig_image_transform.setOrigCropArea(xform.transformBack().map(xform.resultingPreCropArea()));
+
                 DewarpingImageTransform perspective_transform(
-                    QSize(
-                        xform.origRect().width(),
-                        xform.origRect().height()
-                    ),
-                    xform.preCropArea(),
+                    orig_image_transform.origSize(),
+                    orig_image_transform.origCropArea(),
                     top_curve, bottom_curve,
                     params->perspectiveParams().fovParams(),
                     params->perspectiveParams().frameParams(),
@@ -146,12 +150,15 @@ CacheDrivenTask::process(
             }
             case DistortionType::WARP:
             {
+                QSizeF const orig_size = xform.origRect().size();
+                imageproc::AffineImageTransform orig_image_transform(QSize(orig_size.width(), orig_size.height()));
+
+                orig_image_transform.rotate(xform.preRotation().toDegrees());
+                orig_image_transform.setOrigCropArea(xform.transformBack().map(xform.resultingPreCropArea()));
+
                 DewarpingImageTransform dewarping_transform(
-                    QSize(
-                        xform.origRect().width(),
-                        xform.origRect().height()
-                    ),
-                    xform.preCropArea(),
+                    orig_image_transform.origSize(),
+                    orig_image_transform.origCropArea(),
                     params->dewarpingParams().distortionModel().topCurve().polyline(),
                     params->dewarpingParams().distortionModel().bottomCurve().polyline(),
                     params->dewarpingParams().fovParams(),
