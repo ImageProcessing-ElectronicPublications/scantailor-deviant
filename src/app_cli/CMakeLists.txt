@@ -12,6 +12,7 @@ ADD_EXECUTABLE(scantailor-deviant-cli ${cli_only_sources} )
 IF(APPLE)
         SET_TARGET_PROPERTIES(scantailor-deviant-cli PROPERTIES
                 INSTALL_RPATH "@executable_path/../Frameworks"
+                BUILD_RPATH   "@executable_path/../Frameworks"
         )
 ENDIF()
 

@@ -92,6 +92,7 @@ ELSEIF(APPLE)
         set_target_properties(scantailor-deviant PROPERTIES
                 MACOSX_BUNDLE_INFO_PLIST ${PROJECT_SOURCE_DIR}/src/packaging/osx/Info.plist.in
                 INSTALL_RPATH "@executable_path/../Frameworks"
+                BUILD_RPATH   "@executable_path/../Frameworks"
         )
 ELSE()
         ADD_EXECUTABLE(
