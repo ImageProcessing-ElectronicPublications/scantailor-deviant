@@ -5,14 +5,10 @@ Company: GTRONICK
 Last updated: 21/01/2019, 12:31.
 Available at: https://github.com/GTRONICK/QSS/blob/master/Ubuntu.qss
 */
-QMainWindow {
-	background-color:#f0f0f0;
-}
-QDialog {
-	background-color:#f0f0f0;
-}
-QColorDialog {
-	background-color:#f0f0f0;
+QWidget
+{
+	color: black;
+	background-color: #f0f0f0;
 }
 QLabel {
 	color:rgb(17,17,17);
@@ -36,7 +32,8 @@ QPlainTextEdit {
 	color:rgb(17,17,17);
 	selection-background-color:rgb(236,116,64);
 }
-QPushButton{
+QPushButton,
+QToolButton {
 	color:rgb(17,17,17);
 	border-width: 1px;
 	border-radius: 6px;
@@ -45,10 +42,16 @@ QPushButton{
 	border-left-color: rgb(165,165,165);
 	border-top-color: rgb(180,180,180);
 	border-style: solid;
+	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(220, 220, 220, 255), stop:1 rgba(255, 255, 255, 255));
+}
+QPushButton {
 	padding: 4px;
-	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(220, 220, 220, 255), stop:1 rgba(255, 255, 255, 255));
 }
-QPushButton:hover{
+QToolButton {
+	padding: 2px;
+}
+QPushButton:hover,
+QToolButton:hover {
 	color:rgb(17,17,17);
 	border-width: 1px;
 	border-radius:6px;
@@ -60,7 +63,8 @@ QPushButton:hover{
 	padding: 2px;
 	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(220, 220, 220, 255), stop:1 rgba(255, 255, 255, 255));
 }
-QPushButton:default{
+QPushButton:default,
+QToolButton:default {
 	color:rgb(17,17,17);
 	border-width: 1px;
 	border-radius:6px;
@@ -72,7 +76,8 @@ QPushButton:default{
 	padding: 2px;
 	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(220, 220, 220, 255), stop:1 rgba(255, 255, 255, 255));
 }
-QPushButton:pressed{
+QPushButton:pressed,
+QToolButton:pressed {
 	color:rgb(17,17,17);
 	border-width: 1px;
 	border-radius: 6px;
@@ -85,11 +90,19 @@ QPushButton:pressed{
 	padding: 2px;
 	background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(220, 220, 220, 255), stop:1 rgba(255, 255, 255, 255));
 }
-QPushButton:checked
+QPushButton:checked,
+QToolButton:checked
 {
     background: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(255,150,60, 255), stop:1 rgba(255, 225, 210, 255));
 }
-QPushButton:disabled{
+QToolButton#singlePageUncutBtn:checked,
+QToolButton#pagePlusOffcutBtn:checked,
+QToolButton#twoPagesBtn:checked
+{
+	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(220, 220, 220, 255), stop:1 rgba(255, 255, 255, 255));
+}
+QPushButton:disabled,
+QToolButton:disabled {
 	color:rgb(174,167,159);
 	border-width: 1px;
 	border-radius: 6px;
@@ -635,4 +648,22 @@ QWidget#bwGatosOptionsPanel > QLabel,
 QWidget#bwGatosOptionsPanel > QSlider
 {
     background-color: #eaebec;
+}
+QGroupBox {
+	background-color: #f0f0f0;
+	border-color: #dcdcdc;
+	border-style: solid;
+	border-width: 1px;
+	border-top-width: 1.5em;
+}
+QGroupBox::title {
+	background-color: transparent;
+	padding-top: 0.25em;
+	padding-left: 0.25em;
+}
+QComboBox,
+QDoubleSpinBox,
+QLineEdit,
+QSpinBox {
+	padding: 0.1em 0.3em 0.1em 0.3em;
 }
