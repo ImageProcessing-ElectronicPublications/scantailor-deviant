@@ -133,7 +133,8 @@ cmake\
  -B build\
  -D ENABLE_OPENGL=ON\
  -D ENABLE_EXIV2=ON\
- -D ENABLE_OPENJPEG=ON
+ -D ENABLE_OPENJPEG=ON\
+ -D CPACK_SYSTEM_NAME="macOS-10.14-x86_64"
 ```
 
 Configure if optional libraries were not installed:
@@ -156,7 +157,8 @@ cmake\
  -D CPACK_GENERATOR="DragNDrop;TGZ"\
  -D ENABLE_OPENGL=ON\
  -D ENABLE_EXIV2=OFF\
- -D ENABLE_OPENJPEG=OFF
+ -D ENABLE_OPENJPEG=OFF\
+ -D CPACK_SYSTEM_NAME="macOS-15.2-aarch64"
 ```
 
 ### Build

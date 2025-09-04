@@ -119,7 +119,8 @@ cmake\
  -B ./build\
  -D CPACK_GENERATOR:STRING="DEB;TGZ"\
  -D ENABLE_EXIV2:BOOL=ON\
- -D ENABLE_OPENJPEG:BOOL=ON
+ -D ENABLE_OPENJPEG:BOOL=ON\
+ -D CPACK_SYSTEM_NAME:STRING="ubuntu-24-amd64"
 ~~~
 
 Configure if optional libraries were not installed:
@@ -130,7 +131,8 @@ cmake\
  -B ./build\
  -D CPACK_GENERATOR:STRING="DEB;TGZ"\
  -D ENABLE_EXIV2:BOOL=OFF\
- -D ENABLE_OPENJPEG:BOOL=OFF
+ -D ENABLE_OPENJPEG:BOOL=OFF\
+ -D CPACK_SYSTEM_NAME:STRING="debian-12-arm64"
 ~~~
 
 You can also configure build using GUI if it is installed:
