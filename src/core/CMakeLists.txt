@@ -79,6 +79,8 @@ SET(
         JpegMetadataLoader.cpp JpegMetadataLoader.h
         GenericMetadataLoader.cpp GenericMetadataLoader.h
         ImageLoader.cpp ImageLoader.h
+        PdfReader.cpp PdfReader.h
+        PdfMetadataLoader.cpp PdfMetadataLoader.h
         OrthogonalRotation.cpp OrthogonalRotation.h
         WorkerThread.cpp WorkerThread.h
         LoadFileTask.cpp LoadFileTask.h

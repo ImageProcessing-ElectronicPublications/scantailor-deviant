@@ -71,6 +71,8 @@ INCLUDE(TestCXXAcceptsFlag)
 IF(UNIX AND NOT APPLE)
 INCLUDE(cmake/FindCanberra.cmake)
 ENDIF(UNIX AND NOT APPLE)
+INCLUDE(cmake/FindEXIV2.cmake)
+INCLUDE(cmake/FindMuPDF.cmake)
 INCLUDE(cmake/SetDefaultBuildType.cmake)
 INCLUDE(cmake/SetDefaultGccFlags.cmake)
 INCLUDE(cmake/UpdateTranslations.cmake)
@@ -81,6 +83,11 @@ ST_SET_DEFAULT_BUILD_TYPE(Release)
 IF(CMAKE_COMPILER_IS_GNUCC)
         ST_SET_DEFAULT_GCC_FLAGS()
 ENDIF(CMAKE_COMPILER_IS_GNUCC)
+
+# Define DEBUG macro for Debug builds to enable debug output
+IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
+        ADD_DEFINITIONS(-DDEBUG)
+ENDIF()
 
 GET_FILENAME_COMPONENT(source_outer_dir "${PROJECT_SOURCE_DIR}/.." ABSOLUTE)
 GET_FILENAME_COMPONENT(build_outer_dir "${PROJECT_BINARY_DIR}/.." ABSOLUTE)
@@ -98,8 +105,10 @@ SET(CMAKE_AUTOUIC ON)
 
 SET(Qt_MIN_VERSION 5.7.0)
 IF(APPLE)
-   # Not used but required for loading cocoa plugin
-   FIND_PACKAGE(Qt5PrintSupport ${Qt_MIN_VERSION} REQUIRED)
+   # hardcoded path to Qt5CoreConfig.cmake etc. [truf]
+   # Also set Homebrew Qt5 path if available
+   LIST(APPEND CMAKE_PREFIX_PATH "/opt/homebrew/Cellar/qt@5/5.15.17/lib/cmake")
+   LIST(APPEND CMAKE_PREFIX_PATH "/Users/robert/build/Qt/5.8/clang_64/")
 ENDIF(APPLE)
 FIND_PACKAGE(Qt5Core ${Qt_MIN_VERSION} REQUIRED)
 FIND_PACKAGE(Qt5Gui ${Qt_MIN_VERSION} REQUIRED)
@@ -108,6 +117,10 @@ FIND_PACKAGE(Qt5Xml ${Qt_MIN_VERSION} REQUIRED)
 FIND_PACKAGE(Qt5Network ${Qt_MIN_VERSION} REQUIRED)
 FIND_PACKAGE(Qt5Svg ${Qt_MIN_VERSION} REQUIRED)
 FIND_PACKAGE(Qt5LinguistTools ${Qt_MIN_VERSION} REQUIRED)
+
+# Find MuPDF for PDF support
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+FIND_PACKAGE(MuPDF)
 IF(ENABLE_OPENGL)
         FIND_PACKAGE(Qt5OpenGL ${Qt_MIN_VERSION} REQUIRED)
 ENDIF()
