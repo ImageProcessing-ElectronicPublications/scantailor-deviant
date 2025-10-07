@@ -68,15 +68,13 @@ struct ThumbnailPixmapCache::ThumbId
 
     bool operator<(ThumbId const& other) const
     {
-        int const comp_image_id = imageId.filePath().compare(other.imageId.filePath());
-        if (comp_image_id < 0) {
+        if (imageId < other.imageId) {
             return true;
-        }
-        else if (comp_image_id > 0) {
+        } else if (other.imageId < imageId) {
             return false;
+        } else {
+            return thumbVersion < other.thumbVersion;
         }
-
-        return thumbVersion < other.thumbVersion;
     }
 
     ImageId imageId;
