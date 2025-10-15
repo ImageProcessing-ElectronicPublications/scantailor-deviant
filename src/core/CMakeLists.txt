@@ -79,6 +79,8 @@ SET(
         JpegMetadataLoader.cpp JpegMetadataLoader.h
         GenericMetadataLoader.cpp GenericMetadataLoader.h
         ImageLoader.cpp ImageLoader.h
+        PdfReader.cpp PdfReader.h
+        PdfMetadataLoader.cpp PdfMetadataLoader.h
         OrthogonalRotation.cpp OrthogonalRotation.h
         WorkerThread.cpp WorkerThread.h
         LoadFileTask.cpp LoadFileTask.h
@@ -138,11 +140,18 @@ SOURCE_GROUP("Resources" FILES ${core_resource_sources})
 
 ADD_LIBRARY(stcore STATIC ${core_resource_sources} ${common_sources} ${core_ui_sources})
 
-IF(APPLE)
-        TARGET_LINK_LIBRARIES(stcore Qt5::Widgets Qt5::Xml Qt5::PrintSupport ${MAYBE_QT_OPENGL_MODULE})
-ELSE()
-        TARGET_LINK_LIBRARIES(stcore Qt5::Widgets Qt5::Xml ${MAYBE_QT_OPENGL_MODULE})
-ENDIF()
+FIND_PACKAGE(Qt5PrintSupport QUIET)
+IF(Qt5PrintSupport_FOUND)
+    SET(OPTIONAL_QT_MODULES ${OPTIONAL_QT_MODULES} Qt5::PrintSupport)
+ENDIF(Qt5PrintSupport_FOUND)
+
+IF(MuPDF_FOUND)
+        INCLUDE_DIRECTORIES(${MuPDF_INCLUDE_DIRS})
+        LIST(APPEND EXTRA_LIBS ${MuPDF_LIBRARIES})
+        ADD_DEFINITIONS(-DHAVE_MUPDF)
+ENDIF(MuPDF_FOUND)
+
+TARGET_LINK_LIBRARIES(stcore Qt5::Widgets Qt5::Xml ${MAYBE_QT_OPENGL_MODULE} ${OPTIONAL_QT_MODULES} ${EXTRA_LIBS})
 
 ADD_DEPENDENCIES(stcore core_ui_sources) 
 
